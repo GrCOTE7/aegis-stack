@@ -2,66 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://lbedner.github.io/aegis-stack/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/CLAUDE/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/cli-reference/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/integration-patterns/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/philosophy/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/technology/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/components/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/components/database/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/components/frontend/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/components/scheduler/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/components/webserver/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/components/frontend/extras/dashboard/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/components/worker/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/components/worker/configuration/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/components/worker/examples/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/components/worker/extras/load-testing/</loc>
-         <lastmod>2025-08-25</lastmod>
+         <lastmod>2025-08-26</lastmod>
     </url>
 </urlset>
