@@ -61,7 +61,16 @@
     
     
     
-  </head>
+   <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -381,7 +390,7 @@
         <li class="md-nav__item">
   <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
-      🚀 Quick Start
+      Quick Start
     </span>
   </a>
   
@@ -390,43 +399,58 @@
         <li class="md-nav__item">
   <a href="#available-components" class="md-nav__link">
     <span class="md-ellipsis">
-      🧩 Available Components
+      Available Components
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-you-get" class="md-nav__link">
+  <a href="#see-it-in-action" class="md-nav__link">
     <span class="md-ellipsis">
-      What You Get
+      See It In Action
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="See It In Action">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#system-health-dashboard" class="md-nav__link">
     <span class="md-ellipsis">
-      📱 System Health Dashboard
+      System Health Dashboard
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli-health-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI Health Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#learn-more" class="md-nav__link">
     <span class="md-ellipsis">
-      📚 Learn More
+      Learn More
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#development-commands" class="md-nav__link">
+  <a href="#for-the-veterans" class="md-nav__link">
     <span class="md-ellipsis">
-      Development Commands
+      For The Veterans
     </span>
   </a>
   
@@ -555,6 +579,29 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="components/database/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -567,10 +614,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
         
           
-          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
             
   
   
@@ -583,8 +630,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_3">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
             <span class="md-nav__icon md-icon"></span>
             Frontend
           </label>
@@ -631,10 +678,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_2" >
         
           
-          <label class="md-nav__link" for="__nav_3_3_2" id="__nav_3_3_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_4_2" id="__nav_3_4_2_label" tabindex="0">
             
   
   
@@ -647,8 +694,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_3_2">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4_2">
             <span class="md-nav__icon md-icon"></span>
             Extras
           </label>
@@ -734,10 +781,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
         
           
-          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
             
   
   
@@ -750,8 +797,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
             <span class="md-nav__icon md-icon"></span>
             Worker
           </label>
@@ -844,10 +891,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6_4" >
         
           
-          <label class="md-nav__link" for="__nav_3_5_4" id="__nav_3_5_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_6_4" id="__nav_3_6_4_label" tabindex="0">
             
   
   
@@ -860,8 +907,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_5_4">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6_4">
             <span class="md-nav__icon md-icon"></span>
             Extras
           </label>
@@ -1059,7 +1106,7 @@
         <li class="md-nav__item">
   <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
-      🚀 Quick Start
+      Quick Start
     </span>
   </a>
   
@@ -1068,43 +1115,58 @@
         <li class="md-nav__item">
   <a href="#available-components" class="md-nav__link">
     <span class="md-ellipsis">
-      🧩 Available Components
+      Available Components
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-you-get" class="md-nav__link">
+  <a href="#see-it-in-action" class="md-nav__link">
     <span class="md-ellipsis">
-      What You Get
+      See It In Action
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="See It In Action">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#system-health-dashboard" class="md-nav__link">
     <span class="md-ellipsis">
-      📱 System Health Dashboard
+      System Health Dashboard
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli-health-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI Health Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#learn-more" class="md-nav__link">
     <span class="md-ellipsis">
-      📚 Learn More
+      Learn More
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#development-commands" class="md-nav__link">
+  <a href="#for-the-veterans" class="md-nav__link">
     <span class="md-ellipsis">
-      Development Commands
+      For The Veterans
     </span>
   </a>
   
@@ -1127,12 +1189,12 @@
 
 
 <h1 id="aegis-stack">Aegis Stack 🛡️</h1>
+<p><strong>Build production-ready Python applications with your chosen components.</strong></p>
 <p><a href="https://github.com/lbedner/aegis-stack/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/lbedner/aegis-stack/workflows/CI/badge.svg" /></a>
 <a href="https://github.com/lbedner/aegis-stack/actions/workflows/docs.yml"><img alt="Documentation" src="https://github.com/lbedner/aegis-stack/workflows/Deploy%20Documentation/badge.svg" /></a>
 <a href="https://www.python.org/downloads/"><img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11+-blue.svg" /></a></p>
-<p><strong>Build production-ready Python applications with your chosen components.</strong></p>
 <p>Aegis Stack is a CLI-driven framework for creating custom Python applications. Select exactly the components you need - no bloat, no unused dependencies.</p>
-<h2 id="quick-start">🚀 Quick Start</h2>
+<h2 id="quick-start">Quick Start</h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># Install</span>
 pip<span class="w"> </span>install<span class="w"> </span>aegis-stack
 
@@ -1145,7 +1207,7 @@ aegis<span class="w"> </span>init<span class="w"> </span>task-processor<span cla
 <span class="c1"># Start building</span>
 <span class="nb">cd</span><span class="w"> </span>my-project<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>uv<span class="w"> </span>sync<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>run-local
 </code></pre></div>
-<h2 id="available-components">🧩 Available Components</h2>
+<h2 id="available-components">Available Components</h2>
 <table>
 <thead>
 <tr>
@@ -1158,7 +1220,12 @@ aegis<span class="w"> </span>init<span class="w"> </span>task-processor<span cla
 <tr>
 <td><strong>Core</strong> (FastAPI + Flet)</td>
 <td>Web API + Frontend</td>
-<td>✅ <strong>Included</strong></td>
+<td>✅ <strong>Always Included</strong></td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>SQLite + SQLModel ORM</td>
+<td>✅ <strong>Available</strong></td>
 </tr>
 <tr>
 <td><strong>Scheduler</strong></td>
@@ -1167,13 +1234,8 @@ aegis<span class="w"> </span>init<span class="w"> </span>task-processor<span cla
 </tr>
 <tr>
 <td><strong>Worker</strong></td>
-<td>Async task queues, job processing</td>
-<td>✅ <strong>Available</strong></td>
-</tr>
-<tr>
-<td><strong>Database</strong></td>
-<td>PostgreSQL + SQLAlchemy + Alembic</td>
-<td>🚧 <strong>Coming Soon</strong></td>
+<td>Async task queues (arq + Redis)</td>
+<td>🧪 <strong>Experimental</strong></td>
 </tr>
 <tr>
 <td><strong>Cache</strong></td>
@@ -1182,32 +1244,25 @@ aegis<span class="w"> </span>init<span class="w"> </span>task-processor<span cla
 </tr>
 </tbody>
 </table>
-<h2 id="what-you-get">What You Get</h2>
-<ul>
-<li><strong>FastAPI backend</strong> with automatic API documentation</li>
-<li><strong>Flet frontend</strong> with health dashboard  </li>
-<li><strong>CLI management</strong> with health monitoring commands</li>
-<li><strong>Worker queues</strong> with async task processing and load testing</li>
-<li><strong>Production ready</strong> with structured logging and containerization</li>
-<li><strong>Async-first</strong> architecture for high-concurrency workloads</li>
-</ul>
-<h2 id="system-health-dashboard">📱 System Health Dashboard</h2>
-<p><img alt="System Health Dashboard" src="images/dashboard-light.png#only-light" />
-<img alt="System Health Dashboard" src="images/dashboard-dark.png#only-dark" /></p>
+<h2 id="see-it-in-action">See It In Action</h2>
+<h3 id="system-health-dashboard">System Health Dashboard</h3>
+<p><a class="glightbox" href="images/dashboard-light.png#only-light" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="System Health Dashboard" src="images/dashboard-light.png#only-light" /></a>
+<a class="glightbox" href="images/dashboard-dark.png#only-dark" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="System Health Dashboard" src="images/dashboard-dark.png#only-dark" /></a></p>
 <p>Real-time monitoring with component status, health percentages, and cross-platform deployment (web, desktop, mobile).</p>
-<h2 id="learn-more">📚 Learn More</h2>
+<h3 id="cli-health-monitoring">CLI Health Monitoring</h3>
+<p><a class="glightbox" href="images/cli_health_check.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="CLI Health Check" src="images/cli_health_check.png" /></a></p>
+<p>Rich terminal output showing detailed component status, health metrics, and system diagnostics.</p>
+<h2 id="learn-more">Learn More</h2>
 <ul>
 <li><strong><a href="cli-reference/">📖 CLI Reference</a></strong> - Complete command reference</li>
 <li><strong><a href="components/">🏗️ Components</a></strong> - Deep dive into available components  </li>
 <li><strong><a href="philosophy/">🧠 Philosophy</a></strong> - Architecture and design principles</li>
 </ul>
-<h2 id="development-commands">Development Commands</h2>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>run-local<span class="w">    </span><span class="c1"># Start development server</span>
-make<span class="w"> </span><span class="nb">test</span><span class="w">         </span><span class="c1"># Run test suite  </span>
-make<span class="w"> </span>check<span class="w">        </span><span class="c1"># Run all quality checks</span>
-make<span class="w"> </span>docs-serve<span class="w">   </span><span class="c1"># Serve documentation</span>
-</code></pre></div>
-<p>Built on FastAPI, Flet, Typer, and other open-source tools.</p>
+<h2 id="for-the-veterans">For The Veterans</h2>
+<p><a class="glightbox" href="images/ron-swanson.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Ron Swanson" src="images/ron-swanson.gif" /></a></p>
+<p>No magic. No reinventing the wheel. Just the tools you already know, pre-configured and ready to compose.</p>
+<p>Aegis Stack respects your expertise. We maintain existing standards - FastAPI for APIs, SQLModel for databases, arq for workers. No custom abstractions or proprietary patterns to learn. Pick your components, get a production-ready foundation, and build your way.</p>
+<p>The framework gets out of your way so you can get started.</p>
 
 
 
@@ -1270,5 +1325,7 @@ make<span class="w"> </span>docs-serve<span class="w">   </span><span class="c1"
         <script src="https://unpkg.com/mermaid@10.4.0/dist/mermaid.min.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>
