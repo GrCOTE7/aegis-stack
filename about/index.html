@@ -12,13 +12,13 @@
         <meta name="author" content="Aegis Stack Contributors">
       
       
-        <link rel="canonical" href="https://lbedner.github.io/aegis-stack/philosophy/">
+        <link rel="canonical" href="https://lbedner.github.io/aegis-stack/about/">
       
       
-        <link rel="prev" href="../about/">
+        <link rel="prev" href="..">
       
       
-        <link rel="next" href="../components/">
+        <link rel="next" href="../philosophy/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Philosophy - Aegis Stack</title>
+        <title>About - Aegis Stack</title>
       
     
     
@@ -91,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#philosophy" class="md-skip">
+        <a href="#about" class="md-skip">
           Skip to content
         </a>
       
@@ -125,7 +125,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Philosophy
+              About
             
           </span>
         </div>
@@ -243,9 +243,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../about/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -262,11 +264,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../philosophy/" class="md-tabs__link">
         
   
   
@@ -378,28 +378,6 @@
       
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../about/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    About
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -417,7 +395,7 @@
   
   
   <span class="md-ellipsis">
-    Philosophy
+    About
     
   </span>
   
@@ -430,7 +408,7 @@
   
   
   <span class="md-ellipsis">
-    Philosophy
+    About
     
   </span>
   
@@ -453,36 +431,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#reliability-over-features" class="md-nav__link">
+  <a href="#how-did-we-get-here" class="md-nav__link">
     <span class="md-ellipsis">
-      Reliability Over Features
+      How did we get here?
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing-philosophy" class="md-nav__link">
+  <a href="#what-ive-learned" class="md-nav__link">
     <span class="md-ellipsis">
-      Testing Philosophy
+      What I've Learned
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#foundation-not-framework" class="md-nav__link">
+  <a href="#so-i-built-aegis-stack" class="md-nav__link">
     <span class="md-ellipsis">
-      Foundation, Not Framework
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#choose-your-battles" class="md-nav__link">
-    <span class="md-ellipsis">
-      Choose Your Battles
+      So I Built Aegis Stack
     </span>
   </a>
   
@@ -492,6 +461,28 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../philosophy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Philosophy
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1114,36 +1105,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#reliability-over-features" class="md-nav__link">
+  <a href="#how-did-we-get-here" class="md-nav__link">
     <span class="md-ellipsis">
-      Reliability Over Features
+      How did we get here?
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing-philosophy" class="md-nav__link">
+  <a href="#what-ive-learned" class="md-nav__link">
     <span class="md-ellipsis">
-      Testing Philosophy
+      What I've Learned
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#foundation-not-framework" class="md-nav__link">
+  <a href="#so-i-built-aegis-stack" class="md-nav__link">
     <span class="md-ellipsis">
-      Foundation, Not Framework
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#choose-your-battles" class="md-nav__link">
-    <span class="md-ellipsis">
-      Choose Your Battles
+      So I Built Aegis Stack
     </span>
   </a>
   
@@ -1165,32 +1147,34 @@
 
 
 
-<h1 id="philosophy">Philosophy</h1>
-<div class="admonition quote">
-<p class="admonition-title">Core Belief</p>
-<p><strong>"Let people do whatever the fuck they want."</strong> </p>
-<p>Aegis Stack gives you the foundation, then gets out of your way.</p>
-</div>
-<h2 id="reliability-over-features">Reliability Over Features</h2>
-<p>After maintaining a 24/7 distributed system for 15 years, I've learned that reliability beats features every time. When you've lived through weekend deployments and mystery failures, you stop chasing the latest shiny thing.</p>
-<p>The most boring, battle-tested option is usually the right choice.</p>
-<h2 id="testing-philosophy">Testing Philosophy</h2>
-<p>I'm testing the shit out of this because I know how important it is. Comprehensive testing stops being optional when you've seen what happens without it.</p>
+<h1 id="about">About</h1>
+<h2 id="how-did-we-get-here">How did we get here?</h2>
+<p>I've been developing software professionally since 2004. It started with Java, writing server code for mobile apps in the pre-iPhone era.</p>
+<p>My first task when I joined a new company in 2010 was to learn Ruby so I could work on a high volume, distributed audio encoding system, using drb (good times). I maintained that system for 15 years, watching it evolve, scale, and adapt through countless changes in technology and business requirements. Though there was one business requirment that never changed... It had to be up 24/7... Let's just say one can learn a lot about what could go wrong over the years 😊</p>
+<p>Around 2012, I picked up Python to write various ETLs, completing my core language toolkit. In that time I've seen old Java monorepos migrated to Python monorepos, then split up into real-time message-based microservices, only to be consolidated back into a monorepo.</p>
+<p>Such is the circle of life...</p>
+<h2 id="what-ive-learned">What I've Learned</h2>
+<p>You know, I was blessed to start my career working within a well-oiled machine, so I know what one looks like. Outside of pair-programming <em>(I didn't need someone lurking over my shoulder like a gargoyle telling me I missed a semi-colon on line 46)</em>, the methodology worked. Even that "write your tests first" shit was legit, something I never thought I would say. Test-driven development isn't just a buzzword - it's the difference between "I think this works" and "I know this works." It's why SQLite has more test code than actual code, with coverage that would make most projects weep.</p>
+<p>Experience teaches you what works and what doesn't. I've seen teams paralyzed by fear of deployments, and I've seen teams that push multiple times a day with confidence. The difference? Good tooling and testing.</p>
+<p>I've seen what happens when you don't have that foundation. When you're scared to refactor because something might break. When deployments are weekend affairs that require all hands on deck. When asking a question about the codebase gets you a shrug.</p>
+<p>It doesn't have to be like this, and I'm tired of it being the norm.</p>
+<h2 id="so-i-built-aegis-stack">So I Built Aegis Stack</h2>
+<p>Eventually, I started noticing the same patterns everywhere. Every project needed the same foundation: a web API, some background jobs, maybe a database, health checks, containerization. The requirements were always slightly different, but the core components? Always the same.</p>
+<p>Years ago, I had a boss who got it. We'd sit in his office dreaming about automation tools, sketching ideas, making plans. He even started working on something on the side. But that manager was long gone by the time I brought it to fruition. </p>
+<p>Post-pandemic, I discovered Streamlit and got tired of waiting for permission. So I built what I would later name, Overseer, myself. It actually worked - I actively used it to automate monotonous domain-specific tasks that were eating up our days.</p>
+<p>That experience taught me what happens when you stop waiting for permission and just build the tools you need.</p>
+<p>So Aegis Stack embodies the patterns that actually work:</p>
 <ul>
-<li><strong>Test-driven development</strong>: The difference between "I think this works" and "I know this works"</li>
-<li><strong>Integration tests</strong>: Components must work together, not just in isolation  </li>
-<li><strong>Real-world scenarios</strong>: Test what actually breaks in production</li>
+<li>Built-in testing and health monitoring because you should know your system is working</li>
+<li>Battle-tested components (SQLite, FastAPI, APScheduler) because boring technology wins  </li>
+<li>Clean separation of concerns because future you will thank present you</li>
+<li>Optional complexity because not every API needs a message queue</li>
 </ul>
-<h2 id="foundation-not-framework">Foundation, Not Framework</h2>
-<p>Aegis Stack provides the boring infrastructure so you can focus on solving your actual problem.</p>
-<ul>
-<li><strong>Pick what you need</strong>: Database? Sure. Background jobs? Add the scheduler. Task queues? Throw in the worker.</li>
-<li><strong>Skip what you don't</strong>: Don't force a kitchen sink when all you need is an API</li>
-<li><strong>Stay in control</strong>: Clear patterns, explicit dependencies, no magic</li>
-</ul>
-<h2 id="choose-your-battles">Choose Your Battles</h2>
-<p>Innovation belongs in your business logic, not your infrastructure. Use proven technology for the foundation, then build something amazing on top of it.</p>
-<p>The goal isn't to be cutting-edge. The goal is to ship working software that doesn't break at 3 AM.</p>
+<p>I'm testing the shit out of this because I know how important it is. It's kind of a dream to be able to do it like this and see how far I can get.</p>
+<hr />
+<p>At the end of the day, I just want peace. I want to write code and have the confidence to know that it works, and if something goes wrong, I don't have to spend a few days tracking it down, or only find out about it because some guy I've never heard of is having a panic attack. I've lived that life...</p>
+<p><a class="glightbox" href="../images/peace.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Peace" src="../images/peace.gif" /></a></p>
+<p>...I just want peace now.</p>
 
 
 
