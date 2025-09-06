@@ -1071,6 +1071,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Quick Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#see-it-in-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      See It In Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1309,6 +1324,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Quick Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#see-it-in-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      See It In Action
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1398,6 +1428,13 @@ full-stack<span class="w"> </span>load-test<span class="w"> </span>memory<span c
 <span class="c1"># View results</span>
 full-stack<span class="w"> </span>load-test<span class="w"> </span>results<span class="w"> </span>&lt;task_id&gt;
 </code></pre></div>
+<h3 id="see-it-in-action">See It In Action</h3>
+<p><a class="glightbox" href="../../../../images/load_tests.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Load Testing Demo" src="../../../../images/load_tests.gif" /></a></p>
+<div class="admonition note">
+<p class="admonition-title">About This Demo</p>
+<p>This GIF shows CPU-intensive tasks being processed. Since CPU tasks don't run async by default, you'll notice the recommendation to increase worker count for better throughput. </p>
+<p>Had we run I/O or memory tests instead, they would demonstrate much faster async processing with fewer workers needed.</p>
+</div>
 <h2 id="architecture">Architecture</h2>
 <p>The load testing extra adds one additional queue:</p>
 <table>

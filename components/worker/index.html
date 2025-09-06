@@ -971,6 +971,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#dashboard-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dashboard Monitoring
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1029,15 +1038,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#docker-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker (Recommended)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#testing-your-tasks" class="md-nav__link">
     <span class="md-ellipsis">
       Testing Your Tasks
@@ -1055,15 +1055,6 @@
   <a href="#api-reference" class="md-nav__link">
     <span class="md-ellipsis">
       API Reference
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#monitoring" class="md-nav__link">
-    <span class="md-ellipsis">
-      Monitoring
     </span>
   </a>
   
@@ -1391,6 +1382,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#dashboard-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dashboard Monitoring
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1449,15 +1449,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#docker-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker (Recommended)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#testing-your-tasks" class="md-nav__link">
     <span class="md-ellipsis">
       Testing Your Tasks
@@ -1475,15 +1466,6 @@
   <a href="#api-reference" class="md-nav__link">
     <span class="md-ellipsis">
       API Reference
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#monitoring" class="md-nav__link">
-    <span class="md-ellipsis">
-      Monitoring
     </span>
   </a>
   
@@ -1516,10 +1498,13 @@
 
 <h1 id="worker-component">Worker Component</h1>
 <p>Async background task processing using standard <a href="https://arq-docs.helpmanual.io/">arq</a> patterns.</p>
+<div class="admonition info">
+<p class="admonition-title">Adding Worker to Your Project</p>
 <p>Use <code>aegis init my-project --components worker</code> to include this component.</p>
+</div>
 <h2 id="what-you-get">What You Get</h2>
 <ul>
-<li><strong>Background task processing</strong> - Async tasks without blocking your API</li>
+<li><strong>Background task processing</strong> - Runs any code without blocking your API (async tasks get the best performance)</li>
 <li><strong>System queue</strong> - For maintenance and background operations (15 concurrent jobs, 300s timeout)</li>
 <li><strong>Auto-reload</strong> - Built-in development mode with file watching</li>
 <li><strong>Optional extras</strong> - Load testing queue and future media processing</li>
@@ -1554,18 +1539,37 @@ make<span class="w"> </span>serve<span class="w">  </span><span class="c1"># Sta
 <span class="c1"># In another terminal, trigger a background task</span>
 curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/tasks/enqueue<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;task_name&quot;: &quot;cpu_intensive_task&quot;, &quot;queue_type&quot;: &quot;load_test&quot;}&#39;</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;task_name&quot;: &quot;io_simulation_task&quot;, &quot;queue_type&quot;: &quot;load_test&quot;}&#39;</span>
 
 <span class="c1"># Check the result (replace {task_id} with actual ID from response)</span>
 curl<span class="w"> </span>http://localhost:8000/api/v1/tasks/result/<span class="o">{</span>task_id<span class="o">}</span>
 </code></pre></div>
 <p><strong>What just happened?</strong></p>
 <ol>
-<li>Worker processed <code>cpu_intensive_task</code> in the background</li>
+<li>Worker processed <code>io_simulation_task</code> in the background</li>
 <li>Task ran asynchronously without blocking your API</li>
 <li>Result was stored in Redis for retrieval</li>
 </ol>
 <p>Try the dashboard at <a href="http://localhost:8000/dashboard">http://localhost:8000/dashboard</a> to see health status including worker queues!</p>
+<h3 id="dashboard-monitoring">Dashboard Monitoring</h3>
+<p>The Worker component provides comprehensive queue monitoring through the dashboard interface:</p>
+<p><a class="glightbox" href="../../images/dashboard-light-worker.png#only-light" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="../../images/dashboard-light-worker.png#only-light" alt="Worker Queue Dashboard"></a>
+<a class="glightbox" href="../../images/dashboard-dark-worker.png#only-dark" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="../../images/dashboard-dark-worker.png#only-dark" alt="Worker Queue Dashboard"></a></p>
+<div class="admonition info">
+<p class="admonition-title">Worker Dashboard Features</p>
+<p>The Worker dashboard showcases queue monitoring:</p>
+<ul>
+<li><strong>Row-based queue display</strong> - Compact table format showing multiple queues at once</li>
+<li><strong>Intelligent status messages</strong> - Context-aware status reporting:<ul>
+<li>"worker offline" - When Redis connection is lost</li>
+<li>"no tasks defined" - When queue exists but no functions are registered </li>
+<li>"ready" - When worker is healthy and ready for tasks</li>
+</ul>
+</li>
+<li><strong>Real-time metrics</strong> - Live updates of queue counts and job status</li>
+<li><strong>Theme-aware design</strong> - Optimized visibility in both light and dark modes</li>
+</ul>
+</div>
 <h2 id="adding-your-first-task">Adding Your First Task</h2>
 <h3 id="1-create-your-task">1. Create Your Task</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># app/components/worker/tasks/my_tasks.py</span>
@@ -1600,7 +1604,6 @@ curl<span class="w"> </span>http://localhost:8000/api/v1/tasks/result/<span clas
 </code></pre></div>
 <p>That's it! The worker will process it automatically.</p>
 <h2 id="development-workflow">Development Workflow</h2>
-<h3 id="docker-recommended">Docker (Recommended)</h3>
 <div class="highlight"><pre><span></span><code>make<span class="w"> </span>serve<span class="w">           </span><span class="c1"># Start everything</span>
 make<span class="w"> </span>logs-worker<span class="w">     </span><span class="c1"># Watch workers live</span>
 make<span class="w"> </span>health-detailed<span class="w"> </span><span class="c1"># See queue metrics</span>
@@ -1635,24 +1638,6 @@ curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </spa
 curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/tasks/examples/load-test-medium
 curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/v1/tasks/examples/load-test-large
 </code></pre></div>
-<h2 id="monitoring">Monitoring</h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># Quick health check</span>
-make<span class="w"> </span>health-detailed
-
-<span class="c1"># Watch worker logs</span>
-make<span class="w"> </span>logs-worker
-
-<span class="c1"># Check Redis queues directly</span>
-make<span class="w"> </span>redis-cli
-&gt;<span class="w"> </span>KEYS<span class="w"> </span>arq:*
-</code></pre></div>
-<p>The health system tracks:</p>
-<ul>
-<li>✅ Worker connectivity</li>
-<li>✅ Jobs processed/failed</li>
-<li>✅ Queue depths</li>
-<li>✅ Performance metrics</li>
-</ul>
 <h2 id="next-steps">Next Steps</h2>
 <ul>
 <li><strong><a href="examples/">Examples</a></strong> - Real-world task patterns</li>
