@@ -12,28 +12,28 @@
         <meta name="author" content="Aegis Stack Contributors">
       
       
-        <link rel="canonical" href="https://lbedner.github.io/aegis-stack/components/database/">
+        <link rel="canonical" href="https://lbedner.github.io/aegis-stack/components/scheduler/cli/">
       
       
-        <link rel="prev" href="../webserver/">
+        <link rel="prev" href="../examples/">
       
       
-        <link rel="next" href="../frontend/">
+        <link rel="next" href="../extras/persistence/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
     
     
       
-        <title>Database - Aegis Stack</title>
+        <title>CLI Interface - Aegis Stack</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7e37652d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -52,18 +52,18 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../../stylesheets/custom.css">
+      <link rel="stylesheet" href="../../../stylesheets/custom.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
     html.glightbox-open { overflow: initial; height: 100%; }
     .gslide-title { margin-top: 0px; user-select: text; }
     .gslide-desc { color: #666; user-select: text; }
@@ -72,7 +72,7 @@
     .gdesc-inner { font-size: 0.75rem; }
     body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
     body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -91,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#database-component" class="md-skip">
+        <a href="#scheduler-cli-interface" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Aegis Stack" class="md-header__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
+    <a href="../../.." title="Aegis Stack" class="md-header__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -125,7 +125,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Database
+              CLI Interface
             
           </span>
         </div>
@@ -226,7 +226,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -245,7 +245,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../about/" class="md-tabs__link">
+      <a href="../../../about/" class="md-tabs__link">
         
   
   
@@ -264,7 +264,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../philosophy/" class="md-tabs__link">
+      <a href="../../../philosophy/" class="md-tabs__link">
         
   
   
@@ -287,7 +287,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+        <a href="../../" class="md-tabs__link">
           
   
   
@@ -307,7 +307,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../cli-reference/" class="md-tabs__link">
+        <a href="../../../cli-reference/" class="md-tabs__link">
           
   
   
@@ -341,7 +341,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Aegis Stack" class="md-nav__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
+    <a href="../../.." title="Aegis Stack" class="md-nav__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -359,7 +359,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -381,7 +381,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/" class="md-nav__link">
+      <a href="../../../about/" class="md-nav__link">
         
   
   
@@ -403,7 +403,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../philosophy/" class="md-nav__link">
+      <a href="../../../philosophy/" class="md-nav__link">
         
   
   
@@ -471,7 +471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   
@@ -494,7 +494,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../webserver/" class="md-nav__link">
+      <a href="../../webserver/" class="md-nav__link">
         
   
   
@@ -514,32 +514,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Database
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../database/" class="md-nav__link">
         
   
   
@@ -550,200 +528,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-you-get" class="md-nav__link">
-    <span class="md-ellipsis">
-      What You Get
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Start
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Quick Start">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#see-it-work" class="md-nav__link">
-    <span class="md-ellipsis">
-      See It Work
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#adding-your-first-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      Adding Your First Model
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Adding Your First Model">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-create-your-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Create Your Model
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-use-it" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Use It
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#connection-settings" class="md-nav__link">
-    <span class="md-ellipsis">
-      Connection Settings
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#development-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Development Workflow
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Development Workflow">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#docker-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker (Recommended)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#direct-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      Direct Access
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Patterns
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#session-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      Session Management
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Testing
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#monitoring" class="md-nav__link">
-    <span class="md-ellipsis">
-      Monitoring
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -797,7 +581,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../frontend/" class="md-nav__link">
+      <a href="../../frontend/" class="md-nav__link">
         
   
   
@@ -861,7 +645,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../frontend/extras/dashboard/" class="md-nav__link">
+      <a href="../../frontend/extras/dashboard/" class="md-nav__link">
         
   
   
@@ -897,6 +681,8 @@
                 
   
   
+    
+  
   
   
     
@@ -907,11 +693,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked>
         
           
           <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
@@ -927,7 +713,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_5">
             <span class="md-nav__icon md-icon"></span>
             Scheduler
@@ -941,7 +727,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scheduler/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -964,7 +750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scheduler/examples/" class="md-nav__link">
+      <a href="../examples/" class="md-nav__link">
         
   
   
@@ -984,10 +770,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../scheduler/cli/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    CLI Interface
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -998,6 +806,161 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Start
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tasks-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      tasks list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks-stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      tasks stats
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      tasks history
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks-trigger" class="md-nav__link">
+    <span class="md-ellipsis">
+      tasks trigger
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-availability" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI Availability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CLI Availability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checking-cli-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checking CLI Status
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting-cli-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting CLI Issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-with-development-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration with Development Workflow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Integration with Development Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#development-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Commands
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#production-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Production Usage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1051,7 +1014,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scheduler/extras/persistence/" class="md-nav__link">
+      <a href="../extras/persistence/" class="md-nav__link">
         
   
   
@@ -1131,7 +1094,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../worker/" class="md-nav__link">
+      <a href="../../worker/" class="md-nav__link">
         
   
   
@@ -1154,7 +1117,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../worker/configuration/" class="md-nav__link">
+      <a href="../../worker/configuration/" class="md-nav__link">
         
   
   
@@ -1177,7 +1140,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../worker/examples/" class="md-nav__link">
+      <a href="../../worker/examples/" class="md-nav__link">
         
   
   
@@ -1241,7 +1204,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../worker/extras/load-testing/" class="md-nav__link">
+      <a href="../../worker/extras/load-testing/" class="md-nav__link">
         
   
   
@@ -1328,7 +1291,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cli-reference/" class="md-nav__link">
+      <a href="../../../cli-reference/" class="md-nav__link">
         
   
   
@@ -1351,7 +1314,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../integration-patterns/" class="md-nav__link">
+      <a href="../../../integration-patterns/" class="md-nav__link">
         
   
   
@@ -1374,7 +1337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../technology/" class="md-nav__link">
+      <a href="../../../technology/" class="md-nav__link">
         
   
   
@@ -1424,28 +1387,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-you-get" class="md-nav__link">
-    <span class="md-ellipsis">
-      What You Get
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
       Quick Start
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Quick Start">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Commands">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#see-it-work" class="md-nav__link">
+  <a href="#tasks-list" class="md-nav__link">
     <span class="md-ellipsis">
-      See It Work
+      tasks list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks-stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      tasks stats
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      tasks history
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tasks-trigger" class="md-nav__link">
+    <span class="md-ellipsis">
+      tasks trigger
     </span>
   </a>
   
@@ -1457,28 +1447,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding-your-first-model" class="md-nav__link">
+  <a href="#cli-availability" class="md-nav__link">
     <span class="md-ellipsis">
-      Adding Your First Model
+      CLI Availability
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Adding Your First Model">
+    <nav class="md-nav" aria-label="CLI Availability">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-create-your-model" class="md-nav__link">
+  <a href="#checking-cli-status" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Create Your Model
+      Checking CLI Status
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-use-it" class="md-nav__link">
+  <a href="#troubleshooting-cli-issues" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Use It
+      Troubleshooting CLI Issues
     </span>
   </a>
   
@@ -1490,19 +1480,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
+  <a href="#integration-with-development-workflow" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuration
+      Integration with Development Workflow
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Configuration">
+    <nav class="md-nav" aria-label="Integration with Development Workflow">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#connection-settings" class="md-nav__link">
+  <a href="#development-commands" class="md-nav__link">
     <span class="md-ellipsis">
-      Connection Settings
+      Development Commands
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#production-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Production Usage
     </span>
   </a>
   
@@ -1510,81 +1509,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#development-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Development Workflow
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Development Workflow">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#docker-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker (Recommended)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#direct-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      Direct Access
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Patterns
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#session-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      Session Management
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Testing
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#monitoring" class="md-nav__link">
-    <span class="md-ellipsis">
-      Monitoring
-    </span>
-  </a>
   
 </li>
       
@@ -1613,127 +1537,186 @@
 
 
 
-<h1 id="database-component">Database Component</h1>
-<p>SQLite database with <a href="https://sqlmodel.tiangolo.com/">SQLModel</a> ORM for type-safe data operations.</p>
-<p>Use <code>aegis init my-project --components database</code> to include this component.</p>
-<h2 id="what-you-get">What You Get</h2>
-<ul>
-<li><strong>SQLite Database</strong> - File-based database at <code>data/app.db</code></li>
-<li><strong>SQLModel ORM</strong> - Type-safe database operations with Pydantic integration</li>
-<li><strong>Session Management</strong> - Context managers for transaction handling</li>
-<li><strong>Health Check Integration</strong> - Database connectivity monitoring</li>
-<li><strong>Test Infrastructure</strong> - Transaction rollback for test isolation</li>
-</ul>
+<h1 id="scheduler-cli-interface">Scheduler CLI Interface</h1>
+<div class="admonition warning">
+<p class="admonition-title">Persistence Required</p>
+<p>The scheduler CLI is only available when using database persistence for job storage.
+Memory-based scheduling (default) does not support CLI operations.</p>
+<p>Enable persistence with: <code>aegis init my-app --components scheduler,database</code></p>
+</div>
+<p>The scheduler provides a <code>tasks</code> CLI for managing scheduled jobs when persistence is enabled.</p>
 <h2 id="quick-start">Quick Start</h2>
-<h3 id="see-it-work">See It Work</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Generate project with database</span>
-aegis<span class="w"> </span>init<span class="w"> </span>my-project<span class="w"> </span>--components<span class="w"> </span>database
-<span class="nb">cd</span><span class="w"> </span>my-project
+<div class="highlight"><pre><span></span><code><span class="c1"># Check if CLI is available</span>
+my-app<span class="w"> </span>--help
 
-<span class="c1"># Setup and start</span>
-cp<span class="w"> </span>.env.example<span class="w"> </span>.env
-make<span class="w"> </span>serve<span class="w">  </span><span class="c1"># Starts backend with database</span>
+<span class="c1"># List all scheduled jobs</span>
+my-app<span class="w"> </span>tasks<span class="w"> </span>list
 
-<span class="c1"># Check database health</span>
-curl<span class="w"> </span>http://localhost:8000/health/detailed
-</code></pre></div>
-<p><strong>What just happened?</strong></p>
-<ol>
-<li>SQLite database created at <code>data/app.db</code></li>
-<li>Database connection verified via health check</li>
-<li>Session management ready for your models</li>
-</ol>
-<h2 id="adding-your-first-model">Adding Your First Model</h2>
-<h3 id="1-create-your-model">1. Create Your Model</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># app/models/shield.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sqlmodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLModel</span><span class="p">,</span> <span class="n">Field</span>
+<span class="c1"># View scheduler statistics</span>
+my-app<span class="w"> </span>tasks<span class="w"> </span>stats
 
-<span class="k">class</span><span class="w"> </span><span class="nc">Shield</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">defense_rating</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-    <span class="n">material</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;iron&quot;</span>
-    <span class="n">enchantment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="c1"># View execution history</span>
+my-app<span class="w"> </span>tasks<span class="w"> </span><span class="nb">history</span>
 </code></pre></div>
-<h3 id="2-use-it">2. Use It</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># In your API endpoint</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">app.core.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">db_session</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">app.models.shield</span><span class="w"> </span><span class="kn">import</span> <span class="n">Shield</span>
-
-<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/shields&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">forge_shield</span><span class="p">(</span><span class="n">shield_data</span><span class="p">:</span> <span class="n">ShieldCreate</span><span class="p">):</span>
-    <span class="k">with</span> <span class="n">db_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-        <span class="n">shield</span> <span class="o">=</span> <span class="n">Shield</span><span class="p">(</span><span class="o">**</span><span class="n">shield_data</span><span class="o">.</span><span class="n">dict</span><span class="p">())</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">shield</span><span class="p">)</span>
-        <span class="c1"># Automatically committed</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">shield</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">shield</span><span class="o">.</span><span class="n">name</span><span class="p">}</span>
+<h2 id="commands">Commands</h2>
+<h3 id="tasks-list"><code>tasks list</code></h3>
+<p>List all scheduled jobs with their status and next run times.</p>
+<div class="highlight"><pre><span></span><code>my-app<span class="w"> </span>tasks<span class="w"> </span>list
 </code></pre></div>
-<p>That's it! The database handles persistence automatically.</p>
-<h2 id="configuration">Configuration</h2>
-<p>Configure the database through environment variables:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># .env</span>
-<span class="nv">DATABASE_URL</span><span class="o">=</span>sqlite:///data/app.db<span class="w">      </span><span class="c1"># Database location</span>
-<span class="nv">DATABASE_ENGINE_ECHO</span><span class="o">=</span><span class="nb">false</span><span class="w">              </span><span class="c1"># SQL logging</span>
-</code></pre></div>
-<h3 id="connection-settings">Connection Settings</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># app/core/config.py (auto-generated)</span>
-<span class="n">DATABASE_CONNECT_ARGS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;check_same_thread&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># Allow multi-threading</span>
-    <span class="s2">&quot;foreign_keys&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>            <span class="c1"># Enable foreign key constraints</span>
-<span class="p">}</span>
-</code></pre></div>
-<h2 id="development-workflow">Development Workflow</h2>
-<h3 id="docker-recommended">Docker (Recommended)</h3>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>serve<span class="w">           </span><span class="c1"># Start everything</span>
-make<span class="w"> </span>health-detailed<span class="w"> </span><span class="c1"># See database status</span>
-</code></pre></div>
-<h3 id="direct-access">Direct Access</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Access SQLite database directly</span>
-sqlite3<span class="w"> </span>data/app.db
-.tables<span class="w">              </span><span class="c1"># List tables</span>
-.schema<span class="w">              </span><span class="c1"># Show schemas</span>
-</code></pre></div>
-<h2 id="common-patterns">Common Patterns</h2>
-<h3 id="session-management">Session Management</h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">app.core.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">db_session</span>
-
-<span class="c1"># Auto-commit on success, rollback on error</span>
-<span class="k">with</span> <span class="n">db_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-    <span class="n">shield</span> <span class="o">=</span> <span class="n">Shield</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Dragon Scale Shield&quot;</span><span class="p">)</span>
-    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">shield</span><span class="p">)</span>
-    <span class="c1"># Automatically committed when context exits</span>
-</code></pre></div>
-<h2 id="testing">Testing</h2>
-<p>The component includes test fixtures for database testing:</p>
+<p><strong>Example Output:</strong>
+<div class="highlight"><pre><span></span><code>📋 Scheduled Jobs (1 total)
+┌─────────────────────┬───────────────────────┬─────────┬──────────────────────────────┐
+│ Job ID              │ Name                  │ Status  │ Next Run                     │
+├─────────────────────┼───────────────────────┼─────────┼──────────────────────────────┤
+│ daily_health_check  │ Daily Health Check    │ active  │ 2024-09-07 09:00:00          │
+└─────────────────────┴───────────────────────┴─────────┴──────────────────────────────┘
+</code></pre></div></p>
+<p>Shows:</p>
 <ul>
-<li>In-memory test databases</li>
-<li>Transaction rollback patterns</li>
-<li>Isolated test environments</li>
+<li><strong>Job ID</strong> - Unique identifier for the scheduled task</li>
+<li><strong>Name</strong> - Human-readable job name</li>
+<li><strong>Status</strong> - <code>active</code> (scheduled) or <code>paused</code></li>
+<li><strong>Next Run</strong> - When the job will execute next</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="c1"># tests/conftest.py provides:</span>
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">db_session</span><span class="p">():</span>
-    <span class="c1"># Provides isolated test database session</span>
-    <span class="c1"># Automatically rolls back after each test</span>
+<h3 id="tasks-stats"><code>tasks stats</code></h3>
+<p>View overall scheduler statistics and metrics.</p>
+<div class="highlight"><pre><span></span><code>my-app<span class="w"> </span>tasks<span class="w"> </span>stats
 </code></pre></div>
-<h2 id="monitoring">Monitoring</h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># Quick health check</span>
+<p><strong>Example Output:</strong>
+<div class="highlight"><pre><span></span><code>📊 Overall Scheduler Statistics
+╭───────────────────────────────────────────────────────── 📊 Scheduler Statistics ─────────────────────────────────────────────────────────╮
+│ Scheduler Overview                                                                                                                        │
+│                                                                                                                                           │
+│ 📋 Total Jobs: 1                                                                                                                          │
+│ 🟢 Active Jobs: 1                                                                                                                         │
+│ 🔴 Paused Jobs: 0                                                                                                                         │
+│                                                                                                                                           │
+│ 🏃 Total Executions: 0                                                                                                                    │
+│ ✅ Successful: 0                                                                                                                          │
+│ ❌ Failed: 0                                                                                                                              │
+│                                                                                                                                           │
+│ 📊 Overall Success Rate: 0.0%                                                                                                             │
+│ ⏱️  Avg Execution Time: 0.0ms                                                                                                              │
+│                                                                                                                                           │
+│ 🕐 Scheduler Uptime: Unknown                                                                                                              │
+│ 🔄 Last Activity: No recent activity                                                                                                      │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+</code></pre></div></p>
+<p><strong>Job-Specific Statistics:</strong>
+<div class="highlight"><pre><span></span><code>my-app<span class="w"> </span>tasks<span class="w"> </span>stats<span class="w"> </span>--job-id<span class="w"> </span>JOB_ID
+</code></pre></div></p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code>my-app<span class="w"> </span>tasks<span class="w"> </span>stats<span class="w"> </span>--job-id<span class="w"> </span>daily_health_check
+</code></pre></div></p>
+<h3 id="tasks-history"><code>tasks history</code></h3>
+<p>View recent job execution history.</p>
+<div class="highlight"><pre><span></span><code>my-app<span class="w"> </span>tasks<span class="w"> </span><span class="nb">history</span><span class="w"> </span><span class="o">[</span>--limit<span class="w"> </span>N<span class="o">]</span><span class="w"> </span><span class="o">[</span>--job-id<span class="w"> </span>JOB_ID<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--limit N</code> - Limit results to N most recent executions (default: 10)</li>
+<li><code>--job-id JOB_ID</code> - Filter to specific job only</li>
+</ul>
+<p><strong>Examples:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Last 10 executions across all jobs</span>
+my-app<span class="w"> </span>tasks<span class="w"> </span><span class="nb">history</span>
+
+<span class="c1"># Last 20 executions  </span>
+my-app<span class="w"> </span>tasks<span class="w"> </span><span class="nb">history</span><span class="w"> </span>--limit<span class="w"> </span><span class="m">20</span>
+
+<span class="c1"># History for specific job</span>
+my-app<span class="w"> </span>tasks<span class="w"> </span><span class="nb">history</span><span class="w"> </span>--job-id<span class="w"> </span>daily_health_check
+
+<span class="c1"># Last 5 runs of specific job</span>
+my-app<span class="w"> </span>tasks<span class="w"> </span><span class="nb">history</span><span class="w"> </span>--job-id<span class="w"> </span>cleanup_temp_files<span class="w"> </span>--limit<span class="w"> </span><span class="m">5</span>
+</code></pre></div></p>
+<h3 id="tasks-trigger"><code>tasks trigger</code></h3>
+<p>Trigger manual execution of a scheduled job.</p>
+<div class="highlight"><pre><span></span><code>my-app<span class="w"> </span>tasks<span class="w"> </span>trigger<span class="w"> </span>JOB_ID<span class="w"> </span><span class="o">[</span>--wait<span class="o">]</span><span class="w"> </span><span class="o">[</span>--timeout<span class="w"> </span>SECONDS<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--wait</code> - Wait for job completion before returning</li>
+<li><code>--timeout SECONDS</code> - Maximum wait time when using <code>--wait</code> (default: 30)</li>
+</ul>
+<p><strong>Examples:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Trigger job and return immediately</span>
+my-app<span class="w"> </span>tasks<span class="w"> </span>trigger<span class="w"> </span>daily_health_check
+
+<span class="c1"># Trigger job and wait for completion</span>
+my-app<span class="w"> </span>tasks<span class="w"> </span>trigger<span class="w"> </span>daily_health_check<span class="w"> </span>--wait
+
+<span class="c1"># Trigger with custom timeout</span>
+my-app<span class="w"> </span>tasks<span class="w"> </span>trigger<span class="w"> </span>cleanup_temp_files<span class="w"> </span>--wait<span class="w"> </span>--timeout<span class="w"> </span><span class="m">60</span>
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Implementation Status</p>
+<p>Manual job triggering is currently not implemented but is planned for future releases.
+The command will return an appropriate message indicating this limitation.</p>
+</div>
+<h2 id="cli-availability">CLI Availability</h2>
+<h3 id="checking-cli-status">Checking CLI Status</h3>
+<p>The tasks CLI is automatically available when your project includes both scheduler and database components:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check available commands</span>
+my-app<span class="w"> </span>--help
+</code></pre></div>
+<p><strong>Example Output:</strong>
+<div class="highlight"><pre><span></span><code> Usage: my-app [OPTIONS] COMMAND [ARGS]...                                                                                                   
+
+ full-stack management CLI                                                                                                                   
+
+
+╭─ Options ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --install-completion          Install completion for the current shell.                                                                   │
+│ --show-completion             Show completion for the current shell, to copy it or customize the installation.                            │
+│ --help                        Show this message and exit.                                                                                 │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ health      System health monitoring commands                                                                                             │
+│ load-test   Load testing commands for worker performance analysis                                                                         │
+│ tasks       Scheduled task management commands                                                                                            │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+</code></pre></div></p>
+<p>The <code>tasks</code> command appears when your project includes both scheduler and database components.</p>
+<h3 id="troubleshooting-cli-issues">Troubleshooting CLI Issues</h3>
+<p><strong>CLI command not found:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Verify components are included</span>
+ls<span class="w"> </span>app/components/
+<span class="c1"># Should show both &#39;scheduler&#39; and database-related files</span>
+
+<span class="c1"># Check project was created with database component</span>
+grep<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;include_database&quot;</span><span class="w"> </span>.<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Database not included&quot;</span>
+</code></pre></div></p>
+<p><strong>"Persistence not available" errors:</strong></p>
+<ul>
+<li>Ensure database is running: <code>make serve</code> (starts all services)</li>
+<li>Check database connectivity: <code>my-app health detailed</code></li>
+<li>Verify database tables exist (created automatically on first scheduler start)</li>
+</ul>
+<h2 id="integration-with-development-workflow">Integration with Development Workflow</h2>
+<h3 id="development-commands">Development Commands</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Start all services (including database for CLI)</span>
+make<span class="w"> </span>serve
+
+<span class="c1"># Check scheduler health (includes CLI availability)</span>
 make<span class="w"> </span>health-detailed
 
-<span class="c1"># Direct database inspection</span>
-sqlite3<span class="w"> </span>data/app.db<span class="w"> </span><span class="s2">&quot;.tables&quot;</span>
+<span class="c1"># View scheduler logs while testing CLI</span>
+make<span class="w"> </span>logs-scheduler
 </code></pre></div>
-<p>The health system tracks:</p>
-<ul>
-<li>✅ Database connectivity</li>
-<li>✅ File existence and permissions</li>
-<li>✅ Table count and metadata</li>
-<li>✅ Database file size</li>
-</ul>
+<h3 id="production-usage">Production Usage</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># In production, ensure database persistence is configured</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">DATABASE_URL</span><span class="o">=</span>sqlite:///data/app.db
+
+<span class="c1"># CLI works the same way in production containers</span>
+docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>my-app-container<span class="w"> </span>my-app<span class="w"> </span>tasks<span class="w"> </span>list
+</code></pre></div>
 <h2 id="next-steps">Next Steps</h2>
 <ul>
-<li><strong><a href="https://sqlmodel.tiangolo.com/">SQLModel Documentation</a></strong> - Complete ORM capabilities</li>
-<li><strong><a href="../">Component Overview</a></strong> - Understanding Aegis Stack's component architecture</li>
+<li><strong><a href="../">Scheduler Component</a></strong> - Main scheduler documentation</li>
+<li><strong><a href="../examples/">Examples</a></strong> - Real-world scheduling patterns</li>
+<li><strong><a href="../extras/persistence/">Database Persistence</a></strong> - Job persistence setup</li>
+<li><strong><a href="../../">Component Overview</a></strong> - How components work together</li>
 </ul>
 
 
@@ -1789,10 +1772,10 @@ sqlite3<span class="w"> </span>data/app.db<span class="w"> </span><span class="s
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.50899def.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10.4.0/dist/mermaid.min.js"></script>
       
