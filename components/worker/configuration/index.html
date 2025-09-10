@@ -1060,6 +1060,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#cli-command-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI Command Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#production-settings" class="md-nav__link">
     <span class="md-ellipsis">
       Production Settings
@@ -1664,6 +1673,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#cli-command-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI Command Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#production-settings" class="md-nav__link">
     <span class="md-ellipsis">
       Production Settings
@@ -2012,13 +2030,33 @@
 </code></pre></div>
 <h3 id="local-development">Local Development</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># .env file for local development</span>
-<span class="nv">REDIS_URL</span><span class="o">=</span>redis://localhost:6379
+<span class="nv">REDIS_URL</span><span class="o">=</span>redis://redis:6379<span class="w">        </span><span class="c1"># Used by Docker containers</span>
+<span class="nv">REDIS_URL_LOCAL</span><span class="o">=</span>redis://localhost:6379<span class="w">  </span><span class="c1"># Used by CLI commands running locally</span>
 <span class="nv">REDIS_DB</span><span class="o">=</span><span class="m">0</span>
 <span class="nv">WORKER_KEEP_RESULT_SECONDS</span><span class="o">=</span><span class="m">3600</span><span class="w">     </span><span class="c1"># WorkerSettings will use this</span>
 <span class="nv">WORKER_MAX_TRIES</span><span class="o">=</span><span class="m">3</span><span class="w">                  </span><span class="c1"># WorkerSettings will use this  </span>
 <span class="nv">ENVIRONMENT</span><span class="o">=</span>development<span class="w">             </span><span class="c1"># WorkerSettings can check this</span>
 <span class="nv">APP_ENV</span><span class="o">=</span>dev<span class="w">                         </span><span class="c1"># Enables auto-reload in Docker</span>
 </code></pre></div>
+<h3 id="cli-command-configuration">CLI Command Configuration</h3>
+<p>When running CLI commands locally (outside Docker), the system automatically uses <code>REDIS_URL_LOCAL</code> if configured:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Local CLI commands use this pattern:</span>
+<span class="c1"># 1. Docker services connect to: redis://redis:6379</span>
+<span class="c1"># 2. Local CLI commands connect to: redis://localhost:6379</span>
+
+<span class="c1"># In your .env file:</span>
+<span class="nv">REDIS_URL</span><span class="o">=</span>redis://redis:6379<span class="w">        </span><span class="c1"># For Docker containers</span>
+<span class="nv">REDIS_URL_LOCAL</span><span class="o">=</span>redis://localhost:6379<span class="w">  </span><span class="c1"># For local CLI commands</span>
+
+<span class="c1"># Example CLI usage (automatically uses REDIS_URL_LOCAL):</span>
+my-app<span class="w"> </span>load-test<span class="w"> </span>io
+my-app<span class="w"> </span>health<span class="w"> </span>status
+</code></pre></div>
+<p>This dual-configuration approach allows:</p>
+<ul>
+<li><strong>Docker containers</strong> to connect to the <code>redis</code> service  </li>
+<li><strong>Local CLI commands</strong> to connect to <code>localhost</code> Redis without starting containers</li>
+</ul>
 <h3 id="production-settings">Production Settings</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Production environment variables</span>
 <span class="c1"># These are used by WorkerSettings classes through app.core.config</span>
