@@ -326,6 +326,26 @@
     
     
       <li class="md-tabs__item">
+        <a href="../services/" class="md-tabs__link">
+          
+  
+  
+  Services
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="../cli-reference/" class="md-tabs__link">
           
   
@@ -1284,7 +1304,7 @@
   
   
   <span class="md-ellipsis">
-    Reference
+    Services
     
   </span>
   
@@ -1294,6 +1314,100 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Services
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Authentication
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Reference
           </label>
@@ -1529,7 +1643,13 @@
 
 
 <h1 id="components-overview">Components Overview</h1>
-<p>Components are the building blocks of your Aegis Stack application. Each component provides a specific capability like API serving, background tasks, or data persistence.</p>
+<p>Components are the <strong>infrastructure building blocks</strong> of your Aegis Stack application. Each component provides a specific capability like API serving, background tasks, or data persistence.</p>
+<div class="admonition info">
+<p class="admonition-title">Components vs Services</p>
+<p><strong>Components</strong> = Infrastructure capabilities (database, workers, scheduling)
+<strong>Services</strong> = Business functionality (auth, payments, AI integrations)</p>
+<p>See <strong><a href="../services/">Services Overview</a></strong> for business-level features.</p>
+</div>
 <blockquote>
 <p>💡 <strong>New to Aegis Stack?</strong> See the <a href="../philosophy/">Philosophy Guide</a> for complete component design principles.</p>
 </blockquote>
@@ -1539,6 +1659,9 @@
 <div class="highlight"><pre><span></span><code><span class="c1"># Basic web application (FastAPI + Flet)</span>
 aegis<span class="w"> </span>init<span class="w"> </span>my-project
 
+<span class="c1"># Add user authentication (auto-includes database)</span>
+aegis<span class="w"> </span>init<span class="w"> </span>user-app<span class="w"> </span>--services<span class="w"> </span>auth
+
 <span class="c1"># Add background task scheduling</span>
 aegis<span class="w"> </span>init<span class="w"> </span>scheduled-app<span class="w"> </span>--components<span class="w"> </span>scheduler
 
@@ -1546,7 +1669,10 @@ aegis<span class="w"> </span>init<span class="w"> </span>scheduled-app<span clas
 aegis<span class="w"> </span>init<span class="w"> </span>persistent-jobs<span class="w"> </span>--components<span class="w"> </span>scheduler,database
 
 <span class="c1"># Full async task processing</span>
-aegis<span class="w"> </span>init<span class="w"> </span>task-processor<span class="w"> </span>--components<span class="w"> </span>worker,redis
+aegis<span class="w"> </span>init<span class="w"> </span>task-processor<span class="w"> </span>--components<span class="w"> </span>worker
+
+<span class="c1"># Business app with auth and background processing</span>
+aegis<span class="w"> </span>init<span class="w"> </span>business-app<span class="w"> </span>--services<span class="w"> </span>auth<span class="w"> </span>--components<span class="w"> </span>worker,scheduler
 </code></pre></div>
 <h2 id="component-architecture">Component Architecture</h2>
 <pre class="mermaid"><code>graph TB
@@ -1772,6 +1898,8 @@ aegis<span class="w"> </span>init<span class="w"> </span>task-processor<span cla
       <script src="../assets/javascripts/bundle.50899def.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10.4.0/dist/mermaid.min.js"></script>
+      
+        <script src="../javascripts/mermaid-config.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});

@@ -324,6 +324,26 @@
     
     
       <li class="md-tabs__item">
+        <a href="services/" class="md-tabs__link">
+          
+  
+  
+  Services
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="cli-reference/" class="md-tabs__link">
           
   
@@ -440,11 +460,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#available-components" class="md-nav__link">
+  <a href="#available-components-services" class="md-nav__link">
     <span class="md-ellipsis">
-      Available Components
+      Available Components &amp; Services
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Available Components &amp; Services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infrastructure Components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#business-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Business Services
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1240,7 +1284,7 @@
   
   
   <span class="md-ellipsis">
-    Reference
+    Services
     
   </span>
   
@@ -1250,6 +1294,100 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Services
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="services/auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Authentication
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Reference
           </label>
@@ -1374,11 +1512,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#available-components" class="md-nav__link">
+  <a href="#available-components-services" class="md-nav__link">
     <span class="md-ellipsis">
-      Available Components
+      Available Components &amp; Services
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Available Components &amp; Services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infrastructure Components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#business-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      Business Services
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1453,7 +1615,7 @@
 
 <p><a class="glightbox" href="images/aegis-manifesto.png#only-light" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="images/aegis-manifesto.png#only-light" alt="Aegis Stack" width="400"></a>
 <a class="glightbox" href="images/aegis-manifesto-dark.png#only-dark" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="images/aegis-manifesto-dark.png#only-dark" alt="Aegis Stack" width="400"></a></p>
-<p><strong>Build production-ready Python applications with your chosen components.</strong></p>
+<p><strong>Build production-ready Python applications with your chosen components and services.</strong></p>
 <p><a href="https://github.com/lbedner/aegis-stack/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/lbedner/aegis-stack/workflows/CI/badge.svg" /></a>
 <a href="https://github.com/lbedner/aegis-stack/actions/workflows/docs.yml"><img alt="Documentation" src="https://github.com/lbedner/aegis-stack/workflows/Deploy%20Documentation/badge.svg" /></a>
 <a href="https://www.python.org/downloads/"><img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11+-blue.svg" /></a></p>
@@ -1462,11 +1624,14 @@
 <div class="highlight"><pre><span></span><code><span class="c1"># Run instantly without installation</span>
 uvx<span class="w"> </span>aegis-stack<span class="w"> </span>init<span class="w"> </span>my-api
 
-<span class="c1"># Create with background processing  </span>
+<span class="c1"># Create with user authentication</span>
+uvx<span class="w"> </span>aegis-stack<span class="w"> </span>init<span class="w"> </span>user-app<span class="w"> </span>--services<span class="w"> </span>auth
+
+<span class="c1"># Create with background processing</span>
 uvx<span class="w"> </span>aegis-stack<span class="w"> </span>init<span class="w"> </span>task-processor<span class="w"> </span>--components<span class="w"> </span>scheduler,worker
 
 <span class="c1"># Start building</span>
-<span class="nb">cd</span><span class="w"> </span>my-api<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>uv<span class="w"> </span>sync<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cp<span class="w"> </span>.env.example<span class="w"> </span>.env<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>run-local
+<span class="nb">cd</span><span class="w"> </span>my-api<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>uv<span class="w"> </span>sync<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cp<span class="w"> </span>.env.example<span class="w"> </span>.env<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>server
 </code></pre></div>
 <h2 id="installation">Installation</h2>
 <p>Choose the method that works best for your workflow:</p>
@@ -1481,7 +1646,8 @@ aegis<span class="w"> </span>init<span class="w"> </span>my-project
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>aegis-stack
 aegis<span class="w"> </span>init<span class="w"> </span>my-project
 </code></pre></div></p>
-<h2 id="available-components">Available Components</h2>
+<h2 id="available-components-services">Available Components &amp; Services</h2>
+<h3 id="infrastructure-components">Infrastructure Components</h3>
 <table>
 <thead>
 <tr>
@@ -1518,6 +1684,28 @@ aegis<span class="w"> </span>init<span class="w"> </span>my-project
 </tr>
 </tbody>
 </table>
+<h3 id="business-services">Business Services</h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Purpose</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Auth</strong></td>
+<td>User authentication &amp; JWT</td>
+<td>✅ <strong>Available</strong></td>
+</tr>
+<tr>
+<td><strong>AI</strong></td>
+<td>OpenAI integration</td>
+<td>🚧 <strong>Coming Soon</strong></td>
+</tr>
+</tbody>
+</table>
 <h2 id="see-it-in-action">See It In Action</h2>
 <h3 id="system-health-dashboard">System Health Dashboard</h3>
 <p><a class="glightbox" href="images/dashboard-light.png#only-light" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="System Health Dashboard" src="images/dashboard-light.png#only-light" /></a>
@@ -1529,7 +1717,8 @@ aegis<span class="w"> </span>init<span class="w"> </span>my-project
 <h2 id="learn-more">Learn More</h2>
 <ul>
 <li><strong><a href="cli-reference/">📖 CLI Reference</a></strong> - Complete command reference</li>
-<li><strong><a href="components/">🏗️ Components</a></strong> - Deep dive into available components  </li>
+<li><strong><a href="components/">🏗️ Components</a></strong> - Deep dive into available components</li>
+<li><strong><a href="services/">🔧 Services</a></strong> - Business services (auth, AI)</li>
 <li><strong><a href="philosophy/">🧠 Philosophy</a></strong> - Architecture and design principles</li>
 </ul>
 <h2 id="for-the-veterans">For The Veterans</h2>
@@ -1597,6 +1786,8 @@ aegis<span class="w"> </span>init<span class="w"> </span>my-project
       <script src="assets/javascripts/bundle.50899def.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10.4.0/dist/mermaid.min.js"></script>
+      
+        <script src="javascripts/mermaid-config.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
