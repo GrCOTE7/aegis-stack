@@ -12,28 +12,28 @@
         <meta name="author" content="Aegis Stack Contributors">
       
       
-        <link rel="canonical" href="https://lbedner.github.io/aegis-stack/components/frontend/">
+        <link rel="canonical" href="https://lbedner.github.io/aegis-stack/services/auth/cli/">
       
       
-        <link rel="prev" href="../database/">
+        <link rel="prev" href="../integration/">
       
       
-        <link rel="next" href="extras/dashboard/">
+        <link rel="next" href="../examples/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
     
     
       
-        <title>Getting Started - Aegis Stack</title>
+        <title>CLI Commands - Aegis Stack</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7e37652d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -52,18 +52,18 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../../stylesheets/custom.css">
+      <link rel="stylesheet" href="../../../stylesheets/custom.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
     html.glightbox-open { overflow: initial; height: 100%; }
     .gslide-title { margin-top: 0px; user-select: text; }
     .gslide-desc { color: #666; user-select: text; }
@@ -72,7 +72,7 @@
     .gdesc-inner { font-size: 0.75rem; }
     body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
     body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -91,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#frontend-component" class="md-skip">
+        <a href="#cli-commands" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Aegis Stack" class="md-header__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
+    <a href="../../.." title="Aegis Stack" class="md-header__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -125,7 +125,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Getting Started
+              CLI Commands
             
           </span>
         </div>
@@ -226,7 +226,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -245,7 +245,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../installation/" class="md-tabs__link">
+      <a href="../../../installation/" class="md-tabs__link">
         
   
   
@@ -264,7 +264,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../about/" class="md-tabs__link">
+      <a href="../../../about/" class="md-tabs__link">
         
   
   
@@ -283,7 +283,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../philosophy/" class="md-tabs__link">
+      <a href="../../../philosophy/" class="md-tabs__link">
         
   
   
@@ -300,13 +300,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../components/" class="md-tabs__link">
           
   
   
@@ -322,11 +320,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../services/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
           
   
   
@@ -346,7 +346,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../cli-reference/" class="md-tabs__link">
+        <a href="../../../cli-reference/" class="md-tabs__link">
           
   
   
@@ -380,7 +380,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Aegis Stack" class="md-nav__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
+    <a href="../../.." title="Aegis Stack" class="md-nav__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -398,7 +398,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -420,7 +420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/" class="md-nav__link">
+      <a href="../../../installation/" class="md-nav__link">
         
   
   
@@ -442,7 +442,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/" class="md-nav__link">
+      <a href="../../../about/" class="md-nav__link">
         
   
   
@@ -464,7 +464,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../philosophy/" class="md-nav__link">
+      <a href="../../../philosophy/" class="md-nav__link">
         
   
   
@@ -483,29 +483,24 @@
       
   
   
-    
   
   
-  
     
     
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -518,7 +513,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Components
@@ -532,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../../components/" class="md-nav__link">
         
   
   
@@ -555,7 +550,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../webserver/" class="md-nav__link">
+      <a href="../../../components/webserver/" class="md-nav__link">
         
   
   
@@ -578,7 +573,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../database/" class="md-nav__link">
+      <a href="../../../components/database/" class="md-nav__link">
         
   
   
@@ -598,8 +593,6 @@
                 
   
   
-    
-  
   
   
     
@@ -610,11 +603,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
         
           
           <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
@@ -630,7 +623,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5_4">
             <span class="md-nav__icon md-icon"></span>
             Frontend
@@ -641,32 +634,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Getting Started
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../components/frontend/" class="md-nav__link">
         
   
   
@@ -677,86 +648,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-you-get" class="md-nav__link">
-    <span class="md-ellipsis">
-      What You Get
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Start
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Quick Start">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#basic-dashboard" class="md-nav__link">
-    <span class="md-ellipsis">
-      Basic Dashboard
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mount-on-fastapi" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mount on FastAPI
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#key-advantages" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Advantages
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -810,7 +701,7 @@
   
   
     <li class="md-nav__item">
-      <a href="extras/dashboard/" class="md-nav__link">
+      <a href="../../../components/frontend/extras/dashboard/" class="md-nav__link">
         
   
   
@@ -890,7 +781,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scheduler/" class="md-nav__link">
+      <a href="../../../components/scheduler/" class="md-nav__link">
         
   
   
@@ -913,7 +804,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scheduler/examples/" class="md-nav__link">
+      <a href="../../../components/scheduler/examples/" class="md-nav__link">
         
   
   
@@ -936,7 +827,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scheduler/cli/" class="md-nav__link">
+      <a href="../../../components/scheduler/cli/" class="md-nav__link">
         
   
   
@@ -1000,7 +891,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../scheduler/extras/persistence/" class="md-nav__link">
+      <a href="../../../components/scheduler/extras/persistence/" class="md-nav__link">
         
   
   
@@ -1080,7 +971,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../worker/" class="md-nav__link">
+      <a href="../../../components/worker/" class="md-nav__link">
         
   
   
@@ -1103,7 +994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../worker/configuration/" class="md-nav__link">
+      <a href="../../../components/worker/configuration/" class="md-nav__link">
         
   
   
@@ -1126,7 +1017,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../worker/examples/" class="md-nav__link">
+      <a href="../../../components/worker/examples/" class="md-nav__link">
         
   
   
@@ -1190,7 +1081,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../worker/extras/load-testing/" class="md-nav__link">
+      <a href="../../../components/worker/extras/load-testing/" class="md-nav__link">
         
   
   
@@ -1233,24 +1124,29 @@
       
   
   
+    
   
   
+  
     
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
             
   
   
@@ -1263,7 +1159,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             Services
@@ -1277,7 +1173,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   
@@ -1297,6 +1193,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1307,11 +1205,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" checked>
         
           
           <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
@@ -1327,7 +1225,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6_2">
             <span class="md-nav__icon md-icon"></span>
             Authentication
@@ -1341,7 +1239,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services/auth/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -1364,7 +1262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services/auth/api/" class="md-nav__link">
+      <a href="../api/" class="md-nav__link">
         
   
   
@@ -1387,7 +1285,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services/auth/integration/" class="md-nav__link">
+      <a href="../integration/" class="md-nav__link">
         
   
   
@@ -1407,10 +1305,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../services/auth/cli/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1421,6 +1341,86 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#available-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Available Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-test-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      create-test-user
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-test-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      create-test-users
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      list-users
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-api-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing API Integration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1433,7 +1433,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services/auth/examples/" class="md-nav__link">
+      <a href="../examples/" class="md-nav__link">
         
   
   
@@ -1512,7 +1512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cli-reference/" class="md-nav__link">
+      <a href="../../../cli-reference/" class="md-nav__link">
         
   
   
@@ -1535,7 +1535,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../integration-patterns/" class="md-nav__link">
+      <a href="../../../integration-patterns/" class="md-nav__link">
         
   
   
@@ -1558,7 +1558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../technology/" class="md-nav__link">
+      <a href="../../../technology/" class="md-nav__link">
         
   
   
@@ -1608,37 +1608,46 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-you-get" class="md-nav__link">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
-      What You Get
+      Overview
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
+  <a href="#available-commands" class="md-nav__link">
     <span class="md-ellipsis">
-      Quick Start
+      Available Commands
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Quick Start">
+    <nav class="md-nav" aria-label="Available Commands">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#basic-dashboard" class="md-nav__link">
+  <a href="#create-test-user" class="md-nav__link">
     <span class="md-ellipsis">
-      Basic Dashboard
+      create-test-user
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mount-on-fastapi" class="md-nav__link">
+  <a href="#create-test-users" class="md-nav__link">
     <span class="md-ellipsis">
-      Mount on FastAPI
+      create-test-users
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      list-users
     </span>
   </a>
   
@@ -1650,18 +1659,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-advantages" class="md-nav__link">
+  <a href="#testing-api-integration" class="md-nav__link">
     <span class="md-ellipsis">
-      Key Advantages
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
+      Testing API Integration
     </span>
   </a>
   
@@ -1683,86 +1683,86 @@
 
 
 
-<h1 id="frontend-component">Frontend Component</h1>
-<p>Build user interfaces entirely in Python using <a href="https://flet.dev/">Flet</a> - no JavaScript required.</p>
-<div class="admonition info">
-<p class="admonition-title">Always Included</p>
-<p>The frontend component is automatically included in all Aegis Stack projects.</p>
-</div>
-<h2 id="what-you-get">What You Get</h2>
+<h1 id="cli-commands">CLI Commands</h1>
+<p>Manage users from the command line with development-focused CLI commands.</p>
+<h2 id="overview">Overview</h2>
+<p>The auth service includes 3 CLI commands designed for development and testing workflows. All commands are accessible through your project's CLI tool.</p>
+<h2 id="available-commands">Available Commands</h2>
+<h3 id="create-test-user">create-test-user</h3>
+<p>Create a single test user with automatic email generation and password creation.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create test user with auto-generated email and password</span>
+my-app<span class="w"> </span>auth<span class="w"> </span>create-test-user
+
+<span class="c1"># Create with specific email</span>
+my-app<span class="w"> </span>auth<span class="w"> </span>create-test-user<span class="w"> </span>--email<span class="w"> </span><span class="s2">&quot;admin@example.com&quot;</span>
+
+<span class="c1"># Create with custom password</span>
+my-app<span class="w"> </span>auth<span class="w"> </span>create-test-user<span class="w"> </span>--password<span class="w"> </span><span class="s2">&quot;mypassword123&quot;</span>
+
+<span class="c1"># Create with full name</span>
+my-app<span class="w"> </span>auth<span class="w"> </span>create-test-user<span class="w"> </span>--full-name<span class="w"> </span><span class="s2">&quot;Test Admin&quot;</span>
+
+<span class="c1"># Customize auto-generated email pattern</span>
+my-app<span class="w"> </span>auth<span class="w"> </span>create-test-user<span class="w"> </span>--prefix<span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="w"> </span>--domain<span class="w"> </span><span class="s2">&quot;company.com&quot;</span>
+</code></pre></div>
+<p><strong>Options:</strong></p>
 <ul>
-<li><strong>Python-only development</strong> - Same language for frontend and backend</li>
-<li><strong>Direct service integration</strong> - Call Python functions instead of REST APIs</li>
-<li><strong>Cross-platform foundation</strong> - Web, desktop, and mobile from same code</li>
-<li><strong><a href="extras/dashboard/">Health Dashboard Extra</a></strong> - Production monitoring interface</li>
+<li><code>--email</code> - User email address (auto-generated if not provided)</li>
+<li><code>--password</code> - User password (auto-generated if not provided)</li>
+<li><code>--full-name</code> - User's full name</li>
+<li><code>--prefix</code> - Email prefix for auto-generated emails (default: "test")</li>
+<li><code>--domain</code> - Email domain for auto-generated emails (default: "example.com")</li>
 </ul>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="basic-dashboard">Basic Dashboard</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># app/components/frontend/main.py</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">flet</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ft</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">app.services.health_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_system_health</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">create_frontend_app</span><span class="p">():</span>
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">page</span><span class="p">:</span> <span class="n">ft</span><span class="o">.</span><span class="n">Page</span><span class="p">):</span>
-        <span class="n">page</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Dashboard&quot;</span>
-        <span class="n">page</span><span class="o">.</span><span class="n">theme_mode</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">ThemeMode</span><span class="o">.</span><span class="n">SYSTEM</span>
-
-        <span class="n">health_view</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Loading...&quot;</span><span class="p">)</span>
-
-        <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">refresh_health</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
-            <span class="n">health</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_system_health</span><span class="p">()</span>  <span class="c1"># Direct Python call</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;🟢 Healthy&quot;</span> <span class="k">if</span> <span class="n">health</span><span class="o">.</span><span class="n">healthy</span> <span class="k">else</span> <span class="s2">&quot;🔴 Unhealthy&quot;</span>
-            <span class="n">health_view</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Status: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">page</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-
-        <span class="n">page</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-            <span class="n">ft</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s2">&quot;System Dashboard&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">24</span><span class="p">),</span>
-            <span class="n">ft</span><span class="o">.</span><span class="n">ElevatedButton</span><span class="p">(</span><span class="s2">&quot;Refresh&quot;</span><span class="p">,</span> <span class="n">on_click</span><span class="o">=</span><span class="n">refresh_health</span><span class="p">),</span>
-            <span class="n">health_view</span>
-        <span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">main</span>
-</code></pre></div>
-<h3 id="mount-on-fastapi">Mount on FastAPI</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># app/integrations/main.py</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">flet.fastapi</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">flet_fastapi</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">app.components.frontend.main</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_frontend_app</span>
-
-<span class="n">flet_app</span> <span class="o">=</span> <span class="n">flet_fastapi</span><span class="o">.</span><span class="n">app</span><span class="p">(</span><span class="n">create_frontend_app</span><span class="p">())</span>
-<span class="n">app</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s2">&quot;/dashboard&quot;</span><span class="p">,</span> <span class="n">flet_app</span><span class="p">)</span>
-<span class="c1"># Access at http://localhost:8000/dashboard</span>
-</code></pre></div>
-<h2 id="key-advantages">Key Advantages</h2>
-<table>
-<thead>
-<tr>
-<th>Traditional Stack</th>
-<th>Aegis Stack</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Python + JavaScript</td>
-<td>Python only</td>
-</tr>
-<tr>
-<td>REST API calls</td>
-<td>Direct function calls</td>
-</tr>
-<tr>
-<td>Separate build processes</td>
-<td>Single container</td>
-</tr>
-<tr>
-<td>Multiple services</td>
-<td>Single application</td>
-</tr>
-</tbody>
-</table>
-<h2 id="next-steps">Next Steps</h2>
+<p><strong>Auto-increment Email Feature:</strong></p>
+<p>If you don't specify an email, the command automatically finds the next available email in sequence:</p>
 <ul>
-<li><strong><a href="extras/dashboard/">Health Dashboard Extra</a></strong> - Production monitoring interface</li>
-<li><strong><a href="https://flet.dev/docs/">Flet Documentation</a></strong> - Complete UI framework reference</li>
+<li>First user: <code>test@example.com</code></li>
+<li>Second user: <code>test1@example.com</code></li>
+<li>Third user: <code>test2@example.com</code></li>
+</ul>
+<h3 id="create-test-users">create-test-users</h3>
+<p>Create multiple test users with shared credentials for bulk testing.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create 5 test users with auto-generated emails</span>
+my-app<span class="w"> </span>auth<span class="w"> </span>create-test-users<span class="w"> </span>--count<span class="w"> </span><span class="m">5</span>
+
+<span class="c1"># Create users with custom prefix and shared password</span>
+my-app<span class="w"> </span>auth<span class="w"> </span>create-test-users<span class="w"> </span>--count<span class="w"> </span><span class="m">3</span><span class="w"> </span>--prefix<span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="w"> </span>--password<span class="w"> </span><span class="s2">&quot;shared123&quot;</span>
+
+<span class="c1"># Create users with custom domain</span>
+my-app<span class="w"> </span>auth<span class="w"> </span>create-test-users<span class="w"> </span>--count<span class="w"> </span><span class="m">10</span><span class="w"> </span>--domain<span class="w"> </span><span class="s2">&quot;company.com&quot;</span>
+</code></pre></div>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--count</code> - Number of test users to create (default: 5)</li>
+<li><code>--prefix</code> - Email prefix for generated users (default: "test")</li>
+<li><code>--domain</code> - Email domain for generated users (default: "example.com")</li>
+<li><code>--password</code> - Shared password for all users (auto-generated if not provided)</li>
+</ul>
+<h3 id="list-users">list-users</h3>
+<p>Display all users in the system.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># List all users</span>
+my-app<span class="w"> </span>auth<span class="w"> </span>list-users
+</code></pre></div>
+<p>Shows user ID, email, full name (if set), and creation date.</p>
+<h2 id="testing-api-integration">Testing API Integration</h2>
+<p>After creating test users, you can immediately test the authentication API:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create test user</span>
+my-app<span class="w"> </span>auth<span class="w"> </span>create-test-user<span class="w"> </span>--email<span class="w"> </span><span class="s2">&quot;api@test.com&quot;</span><span class="w"> </span>--password<span class="w"> </span><span class="s2">&quot;test123&quot;</span>
+
+<span class="c1"># Test login endpoint</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/auth/token<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;username=api@test.com&amp;password=test123&quot;</span>
+
+<span class="c1"># Use returned token for protected endpoints</span>
+curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>http://localhost:8000/auth/me<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer YOUR_TOKEN_HERE&quot;</span>
+</code></pre></div>
+<hr />
+<p><strong>Next Steps:</strong></p>
+<ul>
+<li><strong><a href="../api/">API Reference</a></strong> - Test the endpoints with your created users</li>
+<li><strong><a href="../integration/">Integration Guide</a></strong> - Build frontend login forms</li>
+<li><strong><a href="../examples/">Examples</a></strong> - See complete application examples</li>
 </ul>
 
 
@@ -1818,14 +1818,14 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.50899def.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10.4.0/dist/mermaid.min.js"></script>
       
-        <script src="../../javascripts/mermaid-config.js"></script>
+        <script src="../../../javascripts/mermaid-config.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});

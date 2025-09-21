@@ -1348,9 +1348,23 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="auth/" class="md-nav__link">
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -1359,7 +1373,134 @@
   </span>
   
 
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            Authentication
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="auth/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="auth/integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Service Layer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="auth/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="auth/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1681,9 +1822,9 @@
 <div class="highlight"><pre><span></span><code><span class="c1"># Basic API project (no services)</span>
 aegis<span class="w"> </span>init<span class="w"> </span>my-api
 
-<span class="c1"># Interactive mode - services auto-add their required components</span>
-aegis<span class="w"> </span>init<span class="w"> </span>user-app<span class="w"> </span>--services<span class="w"> </span>auth
-<span class="c1"># Interactive mode: database component auto-added (backend+frontend always included)</span>
+<span class="c1"># Interactive mode - must explicitly specify required components</span>
+aegis<span class="w"> </span>init<span class="w"> </span>user-app<span class="w"> </span>--services<span class="w"> </span>auth<span class="w"> </span>--components<span class="w"> </span>database
+<span class="c1"># Required: must include database component that auth service needs</span>
 
 <span class="c1"># Non-interactive mode - must explicitly specify all components</span>
 aegis<span class="w"> </span>init<span class="w"> </span>user-app<span class="w"> </span>--services<span class="w"> </span>auth<span class="w"> </span>--components<span class="w"> </span>database<span class="w"> </span>--no-interactive
@@ -1848,19 +1989,19 @@ aegis<span class="w"> </span>init<span class="w"> </span>full-app<span class="w"
   No services available yet.
 </code></pre></div>
 <h3 id="create-project-with-services">Create Project with Services</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># With specific services</span>
-aegis<span class="w"> </span>init<span class="w"> </span>my-app<span class="w"> </span>--services<span class="w"> </span>auth
+<div class="highlight"><pre><span></span><code><span class="c1"># With specific services - must include required components</span>
+aegis<span class="w"> </span>init<span class="w"> </span>my-app<span class="w"> </span>--services<span class="w"> </span>auth<span class="w"> </span>--components<span class="w"> </span>database
 
 <span class="c1"># Interactive service selection</span>
 aegis<span class="w"> </span>init<span class="w"> </span>my-app<span class="w"> </span>--interactive
 
 <span class="c1"># Multiple services (future)</span>
-aegis<span class="w"> </span>init<span class="w"> </span>full-app<span class="w"> </span>--services<span class="w"> </span>auth,ai
+aegis<span class="w"> </span>init<span class="w"> </span>full-app<span class="w"> </span>--services<span class="w"> </span>auth,ai<span class="w"> </span>--components<span class="w"> </span>database,worker
 </code></pre></div>
 <hr />
 <p><strong>Next Steps:</strong></p>
 <ul>
-<li><strong><a href="auth/">Authentication Service</a></strong> - Complete JWT auth implementation</li>
+<li><strong><a href="auth.md">Authentication Service</a></strong> - Complete JWT auth implementation</li>
 <li><strong><a href="../cli-reference/">CLI Reference</a></strong> - Service command reference</li>
 <li><strong><a href="../components/">Components Overview</a></strong> - Infrastructure layer</li>
 </ul>

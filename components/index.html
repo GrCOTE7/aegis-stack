@@ -1348,9 +1348,23 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../services/auth/" class="md-nav__link">
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -1359,7 +1373,134 @@
   </span>
   
 
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            Authentication
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/auth/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/auth/integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Service Layer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/auth/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/auth/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1659,8 +1800,8 @@
 <div class="highlight"><pre><span></span><code><span class="c1"># Basic web application (FastAPI + Flet)</span>
 aegis<span class="w"> </span>init<span class="w"> </span>my-project
 
-<span class="c1"># Add user authentication (auto-includes database)</span>
-aegis<span class="w"> </span>init<span class="w"> </span>user-app<span class="w"> </span>--services<span class="w"> </span>auth
+<span class="c1"># Add user authentication (requires database)</span>
+aegis<span class="w"> </span>init<span class="w"> </span>user-app<span class="w"> </span>--services<span class="w"> </span>auth<span class="w"> </span>--components<span class="w"> </span>database
 
 <span class="c1"># Add background task scheduling</span>
 aegis<span class="w"> </span>init<span class="w"> </span>scheduled-app<span class="w"> </span>--components<span class="w"> </span>scheduler
@@ -1672,7 +1813,7 @@ aegis<span class="w"> </span>init<span class="w"> </span>persistent-jobs<span cl
 aegis<span class="w"> </span>init<span class="w"> </span>task-processor<span class="w"> </span>--components<span class="w"> </span>worker
 
 <span class="c1"># Business app with auth and background processing</span>
-aegis<span class="w"> </span>init<span class="w"> </span>business-app<span class="w"> </span>--services<span class="w"> </span>auth<span class="w"> </span>--components<span class="w"> </span>worker,scheduler
+aegis<span class="w"> </span>init<span class="w"> </span>business-app<span class="w"> </span>--services<span class="w"> </span>auth<span class="w"> </span>--components<span class="w"> </span>database,worker,scheduler
 </code></pre></div>
 <h2 id="component-architecture">Component Architecture</h2>
 <pre class="mermaid"><code>graph TB

@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://lbedner.github.io/aegis-stack/cli-reference/">
       
       
-        <link rel="prev" href="../services/auth/">
+        <link rel="prev" href="../services/auth/examples/">
       
       
         <link rel="next" href="../integration-patterns/">
@@ -1190,9 +1190,23 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../services/auth/" class="md-nav__link">
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -1201,7 +1215,134 @@
   </span>
   
 
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            Authentication
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/auth/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/auth/integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Service Layer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/auth/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/auth/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1595,13 +1736,13 @@ aegis<span class="w"> </span>init<span class="w"> </span>task-processor<span cla
 aegis<span class="w"> </span>init<span class="w"> </span>task-processor<span class="w"> </span>--components<span class="w"> </span>worker
 
 <span class="c1"># User authentication system</span>
-aegis<span class="w"> </span>init<span class="w"> </span>user-app<span class="w"> </span>--services<span class="w"> </span>auth
+aegis<span class="w"> </span>init<span class="w"> </span>user-app<span class="w"> </span>--services<span class="w"> </span>auth<span class="w"> </span>--components<span class="w"> </span>database
 
 <span class="c1"># Full business application</span>
-aegis<span class="w"> </span>init<span class="w"> </span>business-app<span class="w"> </span>--services<span class="w"> </span>auth,payment<span class="w"> </span>--components<span class="w"> </span>worker
+aegis<span class="w"> </span>init<span class="w"> </span>business-app<span class="w"> </span>--services<span class="w"> </span>auth,payment<span class="w"> </span>--components<span class="w"> </span>database,worker
 
 <span class="c1"># Non-interactive with custom location</span>
-aegis<span class="w"> </span>init<span class="w"> </span>my-app<span class="w"> </span>--services<span class="w"> </span>auth<span class="w"> </span>--no-interactive<span class="w"> </span>--output-dir<span class="w"> </span>/projects<span class="w"> </span>--yes
+aegis<span class="w"> </span>init<span class="w"> </span>my-app<span class="w"> </span>--services<span class="w"> </span>auth<span class="w"> </span>--components<span class="w"> </span>database<span class="w"> </span>--no-interactive<span class="w"> </span>--output-dir<span class="w"> </span>/projects<span class="w"> </span>--yes
 
 <span class="c1"># Combined services and components (must include auth&#39;s required components)</span>
 aegis<span class="w"> </span>init<span class="w"> </span>full-stack<span class="w"> </span>--services<span class="w"> </span>auth<span class="w"> </span>--components<span class="w"> </span>database,scheduler,worker
@@ -1667,18 +1808,18 @@ aegis<span class="w"> </span>init<span class="w"> </span>full-stack<span class="
 <p>When you select services, required components are automatically included:</p>
 <pre class="mermaid"><code>graph LR
     Service["--services auth"] --&gt; Core["backend + frontend&lt;br/&gt;Always included"]
-    Service --&gt; Database["database component&lt;br/&gt;Auto-added by auth"]
+    Service --&gt; Database["database component&lt;br/&gt;Must be explicitly added"]
     Service --&gt; AuthFiles["Auth API routes + User models"]
 
     style Service fill:#e8f5e8
     style Core fill:#e8f4fd
-    style Database fill:#fff3e0
+    style Database fill:#ffebee
     style AuthFiles fill:#f1f8e9</code></pre>
 <p><strong>Important CLI Behavior:</strong>
 - <code>backend</code> and <code>frontend</code> components are always included in every project
-- <strong>Interactive mode</strong> (<code>aegis init project</code>): Services auto-add their required components
-- <strong>Non-interactive mode</strong> (<code>--components</code> specified): You must explicitly include all required components
-- Example: <code>--services auth</code> requires <code>--components database</code> (auth won't auto-add it)</p>
+- <strong>All modes</strong>: Services require their dependencies to be explicitly specified
+- <strong>Required components</strong>: <code>--services auth</code> requires <code>--components database</code>
+- Example: Must use <code>--services auth --components database</code> (auth requires database)</p>
 <h2 id="aegis-services">aegis services</h2>
 <p>List available services and their dependencies.</p>
 <p><strong>Usage:</strong>

@@ -18,7 +18,7 @@
         <link rel="prev" href="../">
       
       
-        <link rel="next" href="../../cli-reference/">
+        <link rel="next" href="api/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Authentication - Aegis Stack</title>
+        <title>Getting Started - Aegis Stack</title>
       
     
     
@@ -125,7 +125,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Authentication
+              Getting Started
             
           </span>
         </div>
@@ -1197,6 +1197,49 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Authentication
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            Authentication
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
@@ -1210,7 +1253,7 @@
   
   
   <span class="md-ellipsis">
-    Authentication
+    Getting Started
     
   </span>
   
@@ -1223,7 +1266,7 @@
   
   
   <span class="md-ellipsis">
-    Authentication
+    Getting Started
     
   </span>
   
@@ -1273,109 +1316,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#api-endpoints" class="md-nav__link">
+  <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
-      API Endpoints
+      Quick Start
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="API Endpoints">
+    <nav class="md-nav" aria-label="Quick Start">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#public-endpoints" class="md-nav__link">
+  <a href="#1-generate-project-with-auth" class="md-nav__link">
     <span class="md-ellipsis">
-      Public Endpoints
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Public Endpoints">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#post-authregister" class="md-nav__link">
-    <span class="md-ellipsis">
-      POST /auth/register
+      1. Generate Project with Auth
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#post-authtoken" class="md-nav__link">
+  <a href="#2-test-authentication" class="md-nav__link">
     <span class="md-ellipsis">
-      POST /auth/token
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#protected-endpoints" class="md-nav__link">
-    <span class="md-ellipsis">
-      Protected Endpoints
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Protected Endpoints">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get-authme" class="md-nav__link">
-    <span class="md-ellipsis">
-      GET /auth/me
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#integration-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      Integration Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Integration Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#frontend-integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Frontend Integration
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#backend-route-protection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Backend Route Protection
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#service-layer-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Service Layer Usage
+      2. Test Authentication
     </span>
   </a>
   
@@ -1406,105 +1368,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#password-requirements" class="md-nav__link">
-    <span class="md-ellipsis">
-      Password Requirements
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#database-schema" class="md-nav__link">
-    <span class="md-ellipsis">
-      Database Schema
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Database Schema">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#user-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      User Model
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#database-migrations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Database Migrations
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Testing
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Testing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#auth-service-tests" class="md-nav__link">
-    <span class="md-ellipsis">
-      Auth Service Tests
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#api-endpoint-tests" class="md-nav__link">
-    <span class="md-ellipsis">
-      API Endpoint Tests
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#security-best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      Security Best Practices
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Security Best Practices">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#token-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      Token Security
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#password-security" class="md-nav__link">
     <span class="md-ellipsis">
       Password Security
@@ -1513,56 +1376,123 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#api-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      API Security
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
-      Troubleshooting
+      Next Steps
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Issues
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#debug-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      Debug Commands
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Service Layer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -1747,109 +1677,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#api-endpoints" class="md-nav__link">
+  <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
-      API Endpoints
+      Quick Start
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="API Endpoints">
+    <nav class="md-nav" aria-label="Quick Start">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#public-endpoints" class="md-nav__link">
+  <a href="#1-generate-project-with-auth" class="md-nav__link">
     <span class="md-ellipsis">
-      Public Endpoints
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Public Endpoints">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#post-authregister" class="md-nav__link">
-    <span class="md-ellipsis">
-      POST /auth/register
+      1. Generate Project with Auth
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#post-authtoken" class="md-nav__link">
+  <a href="#2-test-authentication" class="md-nav__link">
     <span class="md-ellipsis">
-      POST /auth/token
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#protected-endpoints" class="md-nav__link">
-    <span class="md-ellipsis">
-      Protected Endpoints
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Protected Endpoints">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get-authme" class="md-nav__link">
-    <span class="md-ellipsis">
-      GET /auth/me
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#integration-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      Integration Examples
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Integration Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#frontend-integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Frontend Integration
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#backend-route-protection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Backend Route Protection
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#service-layer-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Service Layer Usage
+      2. Test Authentication
     </span>
   </a>
   
@@ -1880,105 +1729,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#password-requirements" class="md-nav__link">
-    <span class="md-ellipsis">
-      Password Requirements
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#database-schema" class="md-nav__link">
-    <span class="md-ellipsis">
-      Database Schema
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Database Schema">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#user-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      User Model
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#database-migrations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Database Migrations
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Testing
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Testing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#auth-service-tests" class="md-nav__link">
-    <span class="md-ellipsis">
-      Auth Service Tests
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#api-endpoint-tests" class="md-nav__link">
-    <span class="md-ellipsis">
-      API Endpoint Tests
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#security-best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      Security Best Practices
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Security Best Practices">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#token-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      Token Security
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#password-security" class="md-nav__link">
     <span class="md-ellipsis">
       Password Security
@@ -1987,50 +1737,17 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#api-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      API Security
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
-      Troubleshooting
+      Next Steps
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Issues
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#debug-commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      Debug Commands
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2055,7 +1772,7 @@
 <div class="admonition info">
 <p class="admonition-title">Ready-to-Use Authentication</p>
 <p>Generate a project with auth service and start building immediately:</p>
-<div class="highlight"><pre><span></span><code>aegis<span class="w"> </span>init<span class="w"> </span>my-app<span class="w"> </span>--services<span class="w"> </span>auth
+<div class="highlight"><pre><span></span><code>aegis<span class="w"> </span>init<span class="w"> </span>my-app<span class="w"> </span>--services<span class="w"> </span>auth<span class="w"> </span>--components<span class="w"> </span>database
 <span class="nb">cd</span><span class="w"> </span>my-app
 uv<span class="w"> </span>sync<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
 make<span class="w"> </span>server
@@ -2175,136 +1892,32 @@ make<span class="w"> </span>server
     S--&gt;&gt;A: User object
     A--&gt;&gt;F: 200 OK + User profile
     F--&gt;&gt;U: Show user data</code></pre>
-<h2 id="api-endpoints">API Endpoints</h2>
-<h3 id="public-endpoints">Public Endpoints</h3>
-<h4 id="post-authregister">POST /auth/register</h4>
-<p>Register a new user account.</p>
-<p><strong>Request Body:</strong>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user@example.com&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;securepassword123&quot;</span>
-<span class="p">}</span>
-</code></pre></div></p>
-<p><strong>Response (201 Created):</strong>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user@example.com&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-15T10:30:00Z&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-15T10:30:00Z&quot;</span>
-<span class="p">}</span>
-</code></pre></div></p>
-<h4 id="post-authtoken">POST /auth/token</h4>
-<p>Login and receive an access token.</p>
-<p><strong>Request Body (Form Data):</strong>
-<div class="highlight"><pre><span></span><code>username=user@example.com&amp;password=securepassword123
-</code></pre></div></p>
-<p><strong>Response (200 OK):</strong>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;access_token&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;token_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bearer&quot;</span>
-<span class="p">}</span>
-</code></pre></div></p>
-<h3 id="protected-endpoints">Protected Endpoints</h3>
-<h4 id="get-authme">GET /auth/me</h4>
-<p>Get current user profile information.</p>
-<p><strong>Headers:</strong>
-<div class="highlight"><pre><span></span><code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-</code></pre></div></p>
-<p><strong>Response (200 OK):</strong>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user@example.com&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-15T10:30:00Z&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;updated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-15T10:30:00Z&quot;</span>
-<span class="p">}</span>
-</code></pre></div></p>
-<h2 id="integration-examples">Integration Examples</h2>
-<h3 id="frontend-integration">Frontend Integration</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># app/components/frontend/auth/login.py</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">flet</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ft</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">httpx</span>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="1-generate-project-with-auth">1. Generate Project with Auth</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create project with auth service</span>
+aegis<span class="w"> </span>init<span class="w"> </span>my-auth-app<span class="w"> </span>--services<span class="w"> </span>auth<span class="w"> </span>--components<span class="w"> </span>database
 
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">login_user</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Login user and return token data.&quot;&quot;&quot;</span>
-    <span class="k">async</span> <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-            <span class="s2">&quot;http://localhost:8000/auth/token&quot;</span><span class="p">,</span>
-            <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">password</span><span class="p">}</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-    <span class="k">return</span> <span class="kc">None</span>
+<span class="c1"># Navigate and setup</span>
+<span class="nb">cd</span><span class="w"> </span>my-auth-app
+uv<span class="w"> </span>sync<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
 
-<span class="k">def</span><span class="w"> </span><span class="nf">create_login_form</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">ft</span><span class="o">.</span><span class="n">Container</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create login form UI.&quot;&quot;&quot;</span>
-    <span class="n">email_field</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Email&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
-    <span class="n">password_field</span> <span class="o">=</span> <span class="n">ft</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Password&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">on_login</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
-        <span class="n">token_data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">login_user</span><span class="p">(</span><span class="n">email_field</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">password_field</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">token_data</span><span class="p">:</span>
-            <span class="c1"># Store token and redirect</span>
-            <span class="k">await</span> <span class="n">page</span><span class="o">.</span><span class="n">client_storage</span><span class="o">.</span><span class="n">set_async</span><span class="p">(</span><span class="s2">&quot;auth_token&quot;</span><span class="p">,</span> <span class="n">token_data</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">])</span>
-            <span class="n">page</span><span class="o">.</span><span class="n">go</span><span class="p">(</span><span class="s2">&quot;/dashboard&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">ft</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span>
-        <span class="n">content</span><span class="o">=</span><span class="n">ft</span><span class="o">.</span><span class="n">Column</span><span class="p">([</span>
-            <span class="n">ft</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Login&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">ft</span><span class="o">.</span><span class="n">FontWeight</span><span class="o">.</span><span class="n">BOLD</span><span class="p">),</span>
-            <span class="n">email_field</span><span class="p">,</span>
-            <span class="n">password_field</span><span class="p">,</span>
-            <span class="n">ft</span><span class="o">.</span><span class="n">ElevatedButton</span><span class="p">(</span><span class="s2">&quot;Login&quot;</span><span class="p">,</span> <span class="n">on_click</span><span class="o">=</span><span class="n">on_login</span><span class="p">),</span>
-        <span class="p">]),</span>
-        <span class="n">padding</span><span class="o">=</span><span class="mi">20</span>
-    <span class="p">)</span>
+<span class="c1"># Run the application</span>
+make<span class="w"> </span>server
 </code></pre></div>
-<h3 id="backend-route-protection">Backend Route Protection</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># app/components/backend/api/protected.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">APIRouter</span><span class="p">,</span> <span class="n">Depends</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">app.services.auth.auth_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_current_user</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">app.models.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
+<h3 id="2-test-authentication">2. Test Authentication</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Register a new user</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/auth/register<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;email&quot;:&quot;test@example.com&quot;,&quot;password&quot;:&quot;secure123&quot;}&#39;</span>
 
-<span class="n">router</span> <span class="o">=</span> <span class="n">APIRouter</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/protected&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;protected&quot;</span><span class="p">])</span>
+<span class="c1"># Login and get token</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/auth/token<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/x-www-form-urlencoded&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;username=test@example.com&amp;password=secure123&quot;</span>
 
-<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/profile&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_user_profile</span><span class="p">(</span><span class="n">current_user</span><span class="p">:</span> <span class="n">User</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_current_user</span><span class="p">)):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get current user profile - requires authentication.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Hello </span><span class="si">{</span><span class="n">current_user</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">current_user</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-        <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">current_user</span><span class="o">.</span><span class="n">email</span>
-    <span class="p">}</span>
-
-<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/update-profile&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">update_profile</span><span class="p">(</span>
-    <span class="n">profile_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
-    <span class="n">current_user</span><span class="p">:</span> <span class="n">User</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_current_user</span><span class="p">)</span>
-<span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update user profile - requires authentication.&quot;&quot;&quot;</span>
-    <span class="c1"># Update logic here</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Profile updated successfully&quot;</span><span class="p">}</span>
-</code></pre></div>
-<h3 id="service-layer-usage">Service Layer Usage</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># app/services/my_service.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">app.services.auth.user_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserService</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">app.components.backend.api.deps</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_db</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sqlmodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">MyBusinessService</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">:</span> <span class="n">Session</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">user_service</span> <span class="o">=</span> <span class="n">UserService</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_user_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get user-specific business data.&quot;&quot;&quot;</span>
-        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_service</span><span class="o">.</span><span class="n">get_user_by_id</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">user</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;User not found&quot;</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
-            <span class="s2">&quot;permissions&quot;</span><span class="p">:</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_user_permissions</span><span class="p">(</span><span class="n">user</span><span class="p">),</span>
-            <span class="s2">&quot;settings&quot;</span><span class="p">:</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_user_settings</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-        <span class="p">}</span>
+<span class="c1"># Access protected endpoint</span>
+curl<span class="w"> </span>-X<span class="w"> </span>GET<span class="w"> </span>http://localhost:8000/auth/me<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer YOUR_TOKEN_HERE&quot;</span>
 </code></pre></div>
 <h2 id="configuration">Configuration</h2>
 <h3 id="jwt-settings">JWT Settings</h3>
@@ -2314,7 +1927,7 @@ make<span class="w"> </span>server
 <span class="nv">JWT_ALGORITHM</span><span class="o">=</span>HS256
 <span class="nv">JWT_ACCESS_TOKEN_EXPIRE_MINUTES</span><span class="o">=</span><span class="m">30</span>
 </code></pre></div>
-<h3 id="password-requirements">Password Requirements</h3>
+<h3 id="password-security">Password Security</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># app/core/security.py</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">passlib.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">CryptContext</span>
 
@@ -2328,194 +1941,38 @@ make<span class="w"> </span>server
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate password hash.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">pwd_context</span><span class="o">.</span><span class="n">hash</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="database-schema">Database Schema</h2>
-<h3 id="user-model">User Model</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># app/models/user.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sqlmodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLModel</span><span class="p">,</span> <span class="n">Field</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">UserBase</span><span class="p">(</span><span class="n">SQLModel</span><span class="p">):</span>
-    <span class="n">email</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span><span class="n">UserBase</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;User database model.&quot;&quot;&quot;</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">hashed_password</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">created_at</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">)</span>
-    <span class="n">updated_at</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">)</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">UserCreate</span><span class="p">(</span><span class="n">UserBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;User creation schema.&quot;&quot;&quot;</span>
-    <span class="n">password</span><span class="p">:</span> <span class="nb">str</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">UserResponse</span><span class="p">(</span><span class="n">UserBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;User response schema (excludes password).&quot;&quot;&quot;</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">created_at</span><span class="p">:</span> <span class="n">datetime</span>
-    <span class="n">updated_at</span><span class="p">:</span> <span class="n">datetime</span>
-</code></pre></div>
-<h3 id="database-migrations">Database Migrations</h3>
-<p>The auth service automatically creates the required database tables:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># app/core/db.py</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sqlmodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLModel</span><span class="p">,</span> <span class="n">create_engine</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">app.models.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>  <span class="c1"># Imports register the table</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">create_db_and_tables</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create database and all tables.&quot;&quot;&quot;</span>
-    <span class="n">SQLModel</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="testing">Testing</h2>
-<h3 id="auth-service-tests">Auth Service Tests</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># tests/services/test_auth_service.py</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">app.services.auth.user_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserService</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">app.models.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserCreate</span>
-
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">asyncio</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">test_user_registration</span><span class="p">(</span><span class="n">db_session</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test user registration flow.&quot;&quot;&quot;</span>
-    <span class="n">user_service</span> <span class="o">=</span> <span class="n">UserService</span><span class="p">(</span><span class="n">db_session</span><span class="p">)</span>
-
-    <span class="n">user_data</span> <span class="o">=</span> <span class="n">UserCreate</span><span class="p">(</span>
-        <span class="n">email</span><span class="o">=</span><span class="s2">&quot;test@example.com&quot;</span><span class="p">,</span>
-        <span class="n">password</span><span class="o">=</span><span class="s2">&quot;testpassword123&quot;</span>
-    <span class="p">)</span>
-
-    <span class="n">user</span> <span class="o">=</span> <span class="n">user_service</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span>
-
-    <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="o">==</span> <span class="s2">&quot;test@example.com&quot;</span>
-    <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-    <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">hashed_password</span> <span class="o">!=</span> <span class="s2">&quot;testpassword123&quot;</span>  <span class="c1"># Should be hashed</span>
-
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">asyncio</span>
-<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">test_duplicate_email_registration</span><span class="p">(</span><span class="n">db_session</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test that duplicate emails are rejected.&quot;&quot;&quot;</span>
-    <span class="n">user_service</span> <span class="o">=</span> <span class="n">UserService</span><span class="p">(</span><span class="n">db_session</span><span class="p">)</span>
-
-    <span class="n">user_data</span> <span class="o">=</span> <span class="n">UserCreate</span><span class="p">(</span>
-        <span class="n">email</span><span class="o">=</span><span class="s2">&quot;duplicate@example.com&quot;</span><span class="p">,</span>
-        <span class="n">password</span><span class="o">=</span><span class="s2">&quot;password123&quot;</span>
-    <span class="p">)</span>
-
-    <span class="c1"># First registration should succeed</span>
-    <span class="n">user1</span> <span class="o">=</span> <span class="n">user_service</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">user1</span><span class="o">.</span><span class="n">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-
-    <span class="c1"># Second registration should fail</span>
-    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;Email already registered&quot;</span><span class="p">):</span>
-        <span class="n">user_service</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="api-endpoint-tests">API Endpoint Tests</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># tests/api/test_auth_endpoints.py</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi.testclient</span><span class="w"> </span><span class="kn">import</span> <span class="n">TestClient</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_user_registration</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">TestClient</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test user registration endpoint.&quot;&quot;&quot;</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-        <span class="s2">&quot;/auth/register&quot;</span><span class="p">,</span>
-        <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-            <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;newuser@example.com&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;securepassword123&quot;</span>
-        <span class="p">}</span>
-    <span class="p">)</span>
-
-    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">201</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;newuser@example.com&quot;</span>
-    <span class="k">assert</span> <span class="s2">&quot;id&quot;</span> <span class="ow">in</span> <span class="n">data</span>
-    <span class="k">assert</span> <span class="s2">&quot;hashed_password&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span>  <span class="c1"># Should not expose password</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_user_login</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">TestClient</span><span class="p">,</span> <span class="n">test_user</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test user login endpoint.&quot;&quot;&quot;</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-        <span class="s2">&quot;/auth/token&quot;</span><span class="p">,</span>
-        <span class="n">data</span><span class="o">=</span><span class="p">{</span>
-            <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">test_user</span><span class="o">.</span><span class="n">email</span><span class="p">,</span>
-            <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;testpassword&quot;</span>
-        <span class="p">}</span>
-    <span class="p">)</span>
-
-    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="s2">&quot;access_token&quot;</span> <span class="ow">in</span> <span class="n">data</span>
-    <span class="k">assert</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;token_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;bearer&quot;</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_protected_endpoint</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">TestClient</span><span class="p">,</span> <span class="n">auth_headers</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test accessing protected endpoint with valid token.&quot;&quot;&quot;</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/auth/me&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">auth_headers</span><span class="p">)</span>
-
-    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="s2">&quot;email&quot;</span> <span class="ow">in</span> <span class="n">data</span>
-    <span class="k">assert</span> <span class="s2">&quot;id&quot;</span> <span class="ow">in</span> <span class="n">data</span>
-</code></pre></div>
-<h2 id="security-best-practices">Security Best Practices</h2>
-<h3 id="token-security">Token Security</h3>
-<ul>
-<li><strong>Short expiration</strong> - Default 30-minute token lifetime</li>
-<li><strong>Secure storage</strong> - Store tokens securely in frontend</li>
-<li><strong>HTTPS only</strong> - Always use HTTPS in production</li>
-<li><strong>Rotation</strong> - Implement token refresh for long-lived sessions</li>
-</ul>
-<h3 id="password-security">Password Security</h3>
-<ul>
-<li><strong>Strong hashing</strong> - bcrypt with automatic salt generation</li>
-<li><strong>Minimum requirements</strong> - Enforce password complexity</li>
-<li><strong>Rate limiting</strong> - Prevent brute force attacks</li>
-<li><strong>Secure reset</strong> - Implement secure password reset flow</li>
-</ul>
-<h3 id="api-security">API Security</h3>
-<ul>
-<li><strong>Input validation</strong> - Validate all input data</li>
-<li><strong>Error handling</strong> - Don't expose internal errors</li>
-<li><strong>CORS configuration</strong> - Configure CORS appropriately</li>
-<li><strong>Request logging</strong> - Log authentication attempts</li>
-</ul>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<h3 id="common-issues">Common Issues</h3>
-<p><strong>401 Unauthorized on /auth/me</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check token format</span>
-curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer YOUR_TOKEN&quot;</span><span class="w"> </span>http://localhost:8000/auth/me
-
-<span class="c1"># Verify token hasn&#39;t expired</span>
-<span class="c1"># Check JWT_ACCESS_TOKEN_EXPIRE_MINUTES setting</span>
-</code></pre></div></p>
-<p><strong>400 Bad Request on registration</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check for duplicate email</span>
-<span class="c1"># Verify password requirements</span>
-<span class="c1"># Check request format (JSON vs form data)</span>
-</code></pre></div></p>
-<p><strong>Database connection errors</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Verify database file exists</span>
-ls<span class="w"> </span>-la<span class="w"> </span>data/app.db
-
-<span class="c1"># Check database permissions</span>
-<span class="c1"># Verify SQLModel table creation</span>
-</code></pre></div></p>
-<h3 id="debug-commands">Debug Commands</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check auth service status</span>
-curl<span class="w"> </span>http://localhost:8000/auth/register<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;email&quot;:&quot;debug@test.com&quot;,&quot;password&quot;:&quot;test123&quot;}&#39;</span>
-
-<span class="c1"># Verify JWT token</span>
-python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
-<span class="s2">import jwt</span>
-<span class="s2">token = &#39;YOUR_TOKEN_HERE&#39;</span>
-<span class="s2">print(jwt.decode(token, options={&#39;verify_signature&#39;: False}))</span>
-<span class="s2">&quot;</span>
-
-<span class="c1"># Check database tables</span>
-sqlite3<span class="w"> </span>data/app.db<span class="w"> </span><span class="s1">&#39;.tables&#39;</span>
-sqlite3<span class="w"> </span>data/app.db<span class="w"> </span><span class="s1">&#39;SELECT * FROM users;&#39;</span>
-</code></pre></div>
+<h2 id="next-steps">Next Steps</h2>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="api/">API Reference</a></strong></td>
+<td>Complete endpoint documentation with schemas</td>
+</tr>
+<tr>
+<td><strong><a href="integration/">Integration Guide</a></strong></td>
+<td>Frontend/backend integration patterns</td>
+</tr>
+<tr>
+<td><strong><a href="cli/">CLI Commands</a></strong></td>
+<td>User management and utility commands</td>
+</tr>
+<tr>
+<td><strong><a href="examples/">Examples</a></strong></td>
+<td>Real-world usage patterns and implementations</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<p><strong>Next Steps:</strong></p>
+<p><strong>Related Documentation:</strong></p>
 <ul>
 <li><strong><a href="../">Services Overview</a></strong> - Complete services architecture</li>
-<li><strong><a href="../../components/database/">Components Database</a></strong> - Database component details</li>
+<li><strong><a href="../../components/database/">Database Component</a></strong> - Database component details</li>
 <li><strong><a href="../../cli-reference/">CLI Reference</a></strong> - Auth service CLI commands</li>
 </ul>
 
