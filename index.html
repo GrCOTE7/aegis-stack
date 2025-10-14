@@ -488,6 +488,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#your-stack-grows-with-you" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌱 Your Stack Grows With You
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#available-components-services" class="md-nav__link">
     <span class="md-ellipsis">
       Available Components &amp; Services
@@ -1788,6 +1797,29 @@
   
   
     <li class="md-nav__item">
+      <a href="evolving-your-stack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Evolving Your Stack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="integration-patterns/" class="md-nav__link">
         
   
@@ -1871,6 +1903,15 @@
   <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
       Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#your-stack-grows-with-you" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌱 Your Stack Grows With You
     </span>
   </a>
   
@@ -1999,18 +2040,51 @@
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nb">cd</span><span class="w"> </span>my-api<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>uv<span class="w"> </span>sync<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cp<span class="w"> </span>.env.example<span class="w"> </span>.env<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>server
 </span></code></pre></div>
 <h2 id="installation">Installation</h2>
-<p>Choose the method that works best for your workflow:</p>
-<p><strong>Instant usage (recommended):</strong>
+<p><strong>No installation needed</strong> - just run it:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>uvx<span class="w"> </span>aegis-stack<span class="w"> </span>init<span class="w"> </span>my-project
-</span></code></pre></div></p>
-<p><strong>Install globally with uv:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>aegis-stack
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>aegis<span class="w"> </span>init<span class="w"> </span>my-project
-</span></code></pre></div></p>
-<p><strong>Traditional pip:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>aegis-stack
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>aegis<span class="w"> </span>init<span class="w"> </span>my-project
-</span></code></pre></div></p>
+</span></code></pre></div>
+<p>That's it. <a href="https://docs.astral.sh/uv/"><code>uvx</code></a> downloads, installs, and runs Aegis Stack in one command.</p>
+<hr />
+<p><strong>Alternative methods:</strong> <a href="installation/">Installation Guide</a> covers <code>uv tool install</code> and <code>pip install</code> for specific workflows.</p>
+<h2 id="your-stack-grows-with-you">🌱 Your Stack Grows With You</h2>
+<p><strong>Your choices aren't permanent.</strong> Start with what you need today, add components when requirements change, remove what you outgrow.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Monday: Ship MVP</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>aegis<span class="w"> </span>init<span class="w"> </span>my-api
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Week 3: Add scheduled reports</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>aegis<span class="w"> </span>add<span class="w"> </span>scheduler<span class="w"> </span>--project-path<span class="w"> </span>./my-api
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># Month 2: Need async workers</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>aegis<span class="w"> </span>add<span class="w"> </span>worker<span class="w"> </span>--project-path<span class="w"> </span>./my-api
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># Month 6: Scheduler not needed</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler<span class="w"> </span>--project-path<span class="w"> </span>./my-api
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Framework</th>
+<th>Add Later?</th>
+<th>Remove Later?</th>
+<th>Git Conflicts?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Others</strong></td>
+<td>❌ Locked at init</td>
+<td>❌ Manual deletion</td>
+<td>⚠️ High risk</td>
+</tr>
+<tr>
+<td><strong>Aegis Stack</strong></td>
+<td>✅ One command</td>
+<td>✅ One command</td>
+<td>✅ Auto-handled</td>
+</tr>
+</tbody>
+</table>
+<p>Most frameworks lock you in at <code>init</code>. Aegis Stack doesn't. See <strong><a href="evolving-your-stack/">Evolving Your Stack</a></strong> for the complete guide.</p>
 <h2 id="available-components-services">Available Components &amp; Services</h2>
 <h3 id="infrastructure-components">Infrastructure Components</h3>
 <table>
