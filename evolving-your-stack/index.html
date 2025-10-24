@@ -1757,6 +1757,72 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#month-4-adding-user-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Month 4: Adding User Authentication
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Month 4: Adding User Authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#post-addition-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post-Addition Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-auth-in-your-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Auth in Your API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#month-5-adding-ai-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      Month 5: Adding AI Chat
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Month 5: Adding AI Chat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#post-addition-setup_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post-Addition Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combining-services-ai-auth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Combining Services: AI + Auth
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#month-6-refactoring" class="md-nav__link">
     <span class="md-ellipsis">
       Month 6: Refactoring
@@ -1924,6 +1990,72 @@
   <a href="#move-work-to-background" class="md-nav__link">
     <span class="md-ellipsis">
       Move Work to Background
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#month-4-adding-user-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Month 4: Adding User Authentication
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Month 4: Adding User Authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#post-addition-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post-Addition Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-auth-in-your-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Auth in Your API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#month-5-adding-ai-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      Month 5: Adding AI Chat
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Month 5: Adding AI Chat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#post-addition-setup_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Post-Addition Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combining-services-ai-auth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Combining Services: AI + Auth
     </span>
   </a>
   
@@ -2104,9 +2236,135 @@
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;complete&quot;</span><span class="p">,</span> <span class="s2">&quot;report_id&quot;</span><span class="p">:</span> <span class="n">report</span><span class="o">.</span><span class="n">id</span><span class="p">}</span>
 </span></code></pre></div>
 <hr />
+<h2 id="month-4-adding-user-authentication">Month 4: Adding User Authentication</h2>
+<p>Product wants to add user accounts. You need authentication.</p>
+<p><strong>Before Aegis Stack:</strong></p>
+<ul>
+<li>Research auth libraries</li>
+<li>Set up database models</li>
+<li>Create migration system</li>
+<li>Build JWT token handling</li>
+<li>Write auth endpoints</li>
+<li>Add password hashing</li>
+<li>Configure environment variables</li>
+<li>Test everything manually</li>
+</ul>
+<p><strong>With Aegis Stack:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>aegis<span class="w"> </span>add-service<span class="w"> </span>auth<span class="w"> </span>--project-path<span class="w"> </span>./mvp-api
+</span></code></pre></div>
+<p><strong>Added:</strong></p>
+<ul>
+<li><code>app/components/backend/api/auth/</code> - Auth API endpoints (login, register, etc.)</li>
+<li><code>app/models/user.py</code> - User model with password hashing</li>
+<li><code>app/services/auth/</code> - Authentication service layer</li>
+<li><code>app/core/security.py</code> - JWT token handling</li>
+<li><code>app/cli/auth.py</code> - User management CLI commands</li>
+<li><code>alembic/</code> - Database migration infrastructure</li>
+<li><code>tests/</code> - Comprehensive auth test suite (52 tests)</li>
+<li>Database component (auto-added as required dependency)</li>
+</ul>
+<p><strong>Updated:</strong></p>
+<ul>
+<li><code>pyproject.toml</code> - Auth dependencies (python-jose, passlib, python-multipart)</li>
+<li><code>.env.example</code> - Auth configuration (JWT_SECRET, etc.)</li>
+<li><code>docker-compose.yml</code> - No changes (database already there from worker)</li>
+</ul>
+<h3 id="post-addition-setup">Post-Addition Setup</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Apply auth migrations</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>make<span class="w"> </span>migrate
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Create test users</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>mvp-api<span class="w"> </span>auth<span class="w"> </span>create-test-users<span class="w"> </span>--count<span class="w"> </span><span class="m">5</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># Test authentication</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/auth/login<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;email&quot;: &quot;admin@example.com&quot;, &quot;password&quot;: &quot;admin123&quot;}&#39;</span>
+</span></code></pre></div>
+<h3 id="using-auth-in-your-api">Using Auth in Your API</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># app/components/backend/api/reports.py</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">APIRouter</span><span class="p">,</span> <span class="n">Depends</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">app.components.backend.api.deps</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_current_active_user</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">app.models.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">router</span> <span class="o">=</span> <span class="n">APIRouter</span><span class="p">()</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/reports/generate&quot;</span><span class="p">)</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate_report_async</span><span class="p">(</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>    <span class="n">report_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>    <span class="n">current_user</span><span class="p">:</span> <span class="n">User</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_current_active_user</span><span class="p">)</span>  <span class="c1"># Protected!</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="p">):</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Queue report generation (requires authentication).&quot;&quot;&quot;</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>    <span class="n">redis</span> <span class="o">=</span> <span class="k">await</span> <span class="n">create_pool</span><span class="p">(</span><span class="n">RedisSettings</span><span class="p">())</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>    <span class="n">job</span> <span class="o">=</span> <span class="k">await</span> <span class="n">redis</span><span class="o">.</span><span class="n">enqueue_job</span><span class="p">(</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>        <span class="s2">&quot;generate_report&quot;</span><span class="p">,</span>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>        <span class="n">report_data</span><span class="p">,</span>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>        <span class="n">user_id</span><span class="o">=</span><span class="n">current_user</span><span class="o">.</span><span class="n">id</span>  <span class="c1"># Track who requested it</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>    <span class="p">)</span>
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;job_id&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">job_id</span><span class="p">),</span> <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;queued&quot;</span><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="month-5-adding-ai-chat">Month 5: Adding AI Chat</h2>
+<p>Product wants an AI chatbot for customer support.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>aegis<span class="w"> </span>add-service<span class="w"> </span>ai<span class="w"> </span>--project-path<span class="w"> </span>./mvp-api
+</span></code></pre></div>
+<p><strong>Added:</strong></p>
+<ul>
+<li><code>app/services/ai/</code> - PydanticAI integration with multiple providers</li>
+<li><code>app/components/backend/api/ai/</code> - AI API endpoints (chat, streaming)</li>
+<li><code>app/cli/ai.py</code> - Interactive CLI chat interface with markdown rendering</li>
+<li>AI provider support (OpenAI, Anthropic, Google Gemini, Groq)</li>
+<li>Conversation persistence and memory management</li>
+</ul>
+<p><strong>Updated:</strong></p>
+<ul>
+<li><code>pyproject.toml</code> - PydanticAI dependencies</li>
+<li><code>.env.example</code> - AI provider configuration</li>
+</ul>
+<h3 id="post-addition-setup_1">Post-Addition Setup</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Configure AI provider</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;AI_PROVIDER=openai&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>.env
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;OPENAI_API_KEY=your-key-here&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>.env
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1"># Test via CLI</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>mvp-api<span class="w"> </span>ai<span class="w"> </span>chat
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1"># &gt; How can I help you today?</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="c1"># Hello! Can you explain webhooks?</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="c1"># Test via API</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8000/api/ai/chat<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;message&quot;: &quot;Explain webhooks&quot;, &quot;stream&quot;: false}&#39;</span>
+</span></code></pre></div>
+<h3 id="combining-services-ai-auth">Combining Services: AI + Auth</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># app/components/backend/api/ai/router.py</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">APIRouter</span><span class="p">,</span> <span class="n">Depends</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">app.components.backend.api.deps</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_current_active_user</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">app.models.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">User</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">app.services.ai</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_ai_response</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="n">router</span> <span class="o">=</span> <span class="n">APIRouter</span><span class="p">()</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/ai/chat&quot;</span><span class="p">)</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">chat</span><span class="p">(</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>    <span class="n">current_user</span><span class="p">:</span> <span class="n">User</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_current_active_user</span><span class="p">)</span>  <span class="c1"># Require auth</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="p">):</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;User-specific AI chat with conversation history.&quot;&quot;&quot;</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_ai_response</span><span class="p">(</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>        <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>        <span class="n">user_id</span><span class="o">=</span><span class="n">current_user</span><span class="o">.</span><span class="n">id</span>  <span class="c1"># Personalized context</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>    <span class="p">)</span>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;response&quot;</span><span class="p">:</span> <span class="n">response</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">current_user</span><span class="o">.</span><span class="n">email</span><span class="p">}</span>
+</span></code></pre></div>
+<hr />
 <h2 id="month-6-refactoring">Month 6: Refactoring</h2>
 <p>You've learned your system. Turns out scheduled jobs work better as worker tasks. Time to clean up.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler<span class="w"> </span>--project-path<span class="w"> </span>./mvp-api
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler<span class="w"> </span>--project-path<span class="w"> </span>./mvp-api
 </span></code></pre></div>
 <p><strong>Removed:</strong></p>
 <ul>
@@ -2127,25 +2385,25 @@
 </ul>
 <h3 id="migration-pattern">Migration Pattern</h3>
 <p><strong>Before removal</strong>, move jobs to workers:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># app/components/worker/queues/system.py</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">arq</span><span class="w"> </span><span class="kn">import</span> <span class="n">cron</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># Daily report - now a worker cron job</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate_daily_report</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate and send daily report.&quot;&quot;&quot;</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    <span class="c1"># Your logic here</span>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="k">pass</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="k">class</span><span class="w"> </span><span class="nc">WorkerSettings</span><span class="p">:</span>
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="n">cron_jobs</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>        <span class="n">cron</span><span class="p">(</span><span class="n">generate_daily_report</span><span class="p">,</span> <span class="n">hour</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Daily at 9 AM</span>
-</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="p">]</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># app/components/worker/queues/system.py</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">arq</span><span class="w"> </span><span class="kn">import</span> <span class="n">cron</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="c1"># Daily report - now a worker cron job</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate_daily_report</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate and send daily report.&quot;&quot;&quot;</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>    <span class="c1"># Your logic here</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>    <span class="k">pass</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="k">class</span><span class="w"> </span><span class="nc">WorkerSettings</span><span class="p">:</span>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>    <span class="n">cron_jobs</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>        <span class="n">cron</span><span class="p">(</span><span class="n">generate_daily_report</span><span class="p">,</span> <span class="n">hour</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Daily at 9 AM</span>
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>    <span class="p">]</span>
 </span></code></pre></div>
 <p>Then remove scheduler:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Migrate to worker-based scheduling&quot;</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler<span class="w"> </span>--project-path<span class="w"> </span>./mvp-api
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Remove scheduler component&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Migrate to worker-based scheduling&quot;</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler<span class="w"> </span>--project-path<span class="w"> </span>./mvp-api
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Remove scheduler component&quot;</span>
 </span></code></pre></div></p>
 <hr />
 <h2 id="next-steps">Next Steps</h2>

@@ -1749,6 +1749,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#aegis-add-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis add-service
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#aegis-remove" class="md-nav__link">
     <span class="md-ellipsis">
       aegis remove
@@ -1959,6 +1968,15 @@
   <a href="#aegis-add" class="md-nav__link">
     <span class="md-ellipsis">
       aegis add
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aegis-add-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis add-service
     </span>
   </a>
   
@@ -2272,10 +2290,64 @@
 <li>Changes are non-destructive (commit before running for easy rollback)</li>
 </ul>
 <hr />
+<h2 id="aegis-add-service">aegis add-service</h2>
+<p>Add services to an existing Aegis Stack project.</p>
+<p><strong>Usage:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>aegis<span class="w"> </span>add-service<span class="w"> </span>SERVICES<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</span></code></pre></div></p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>SERVICES</code> - Comma-separated list of services to add (auth,ai)</li>
+</ul>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--interactive, -i</code> - Use interactive service selection</li>
+<li><code>--project-path, -p PATH</code> - Path to the Aegis Stack project (default: current directory)</li>
+<li><code>--yes, -y</code> - Skip confirmation prompt</li>
+</ul>
+<p><strong>Examples:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Add auth service (auto-adds database if not present)</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>aegis<span class="w"> </span>add-service<span class="w"> </span>auth
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Add AI service</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>aegis<span class="w"> </span>add-service<span class="w"> </span>ai
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># Add multiple services</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>aegis<span class="w"> </span>add-service<span class="w"> </span>auth,ai
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="c1"># Add with custom project path</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>aegis<span class="w"> </span>add-service<span class="w"> </span>auth<span class="w"> </span>--project-path<span class="w"> </span>../my-project
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="c1"># Interactive service selection</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>aegis<span class="w"> </span>add-service<span class="w"> </span>--interactive
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="c1"># Non-interactive with auto-yes</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>aegis<span class="w"> </span>add-service<span class="w"> </span>auth<span class="w"> </span>--yes
+</span></code></pre></div></p>
+<p><strong>Service Auto-Resolution:</strong></p>
+<p>Services automatically add their required components:
+- <code>auth</code> → Requires <code>database</code> component (auto-added if missing)
+- <code>ai</code> → Requires <code>backend</code> component (always present)</p>
+<p><strong>Post-Addition Setup:</strong></p>
+<p>After adding services, follow these steps:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># For auth service</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>make<span class="w"> </span>migrate<span class="w">                       </span><span class="c1"># Apply auth migrations</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>my-project<span class="w"> </span>auth<span class="w"> </span>create-test-users<span class="w">  </span><span class="c1"># Create test users</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1"># For AI service</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="c1"># Set AI_PROVIDER in .env (openai, anthropic, google, groq)</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1"># Set provider API key (OPENAI_API_KEY, etc.)</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>my-project<span class="w"> </span>ai<span class="w"> </span>chat<span class="w">                 </span><span class="c1"># Test CLI chat interface</span>
+</span></code></pre></div>
+<p><strong>Important Notes:</strong>
+- Only works with Copier-generated projects (default since v0.2.0)
+- Requires git repository (for change tracking)
+- Services require their dependencies - they will be auto-added
+- Review changes with <code>git diff</code> before committing</p>
 <h2 id="aegis-remove">aegis remove</h2>
 <p>Remove components from an existing Aegis Stack project.</p>
 <p><strong>Usage:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>aegis<span class="w"> </span>remove<span class="w"> </span>COMPONENTS<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>aegis<span class="w"> </span>remove<span class="w"> </span>COMPONENTS<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
 </span></code></pre></div></p>
 <p><strong>Arguments:</strong></p>
 <ul>
@@ -2288,17 +2360,17 @@
 <li><code>--yes, -y</code> - Skip confirmation prompt</li>
 </ul>
 <p><strong>Examples:</strong>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Remove scheduler component</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Remove multiple components</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler,worker
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># Remove from specific project</span>
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler<span class="w"> </span>--project-path<span class="w"> </span>../my-project
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
-</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="c1"># Interactive mode</span>
-</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>aegis<span class="w"> </span>remove<span class="w"> </span>--interactive
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Remove scheduler component</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1"># Remove multiple components</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler,worker
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="c1"># Remove from specific project</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler<span class="w"> </span>--project-path<span class="w"> </span>../my-project
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="c1"># Interactive mode</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>aegis<span class="w"> </span>remove<span class="w"> </span>--interactive
 </span></code></pre></div></p>
 <p><strong>How It Works:</strong></p>
 <ol>
@@ -2321,24 +2393,24 @@
 <hr />
 <h2 id="development-workflow">Development Workflow</h2>
 <p>After creating a project:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nb">cd</span><span class="w"> </span>my-project
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>uv<span class="w"> </span>sync<span class="w">                    </span><span class="c1"># Install dependencies and create virtual environment</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate<span class="w">  </span><span class="c1"># Activate virtual environment (important!)</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env<span class="w">       </span><span class="c1"># Configure environment</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>make<span class="w"> </span>server<span class="w">               </span><span class="c1"># Start development server</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>make<span class="w"> </span><span class="nb">test</span><span class="w">                  </span><span class="c1"># Run test suite</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>make<span class="w"> </span>check<span class="w">                 </span><span class="c1"># Run all quality checks</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">cd</span><span class="w"> </span>my-project
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>uv<span class="w"> </span>sync<span class="w">                    </span><span class="c1"># Install dependencies and create virtual environment</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate<span class="w">  </span><span class="c1"># Activate virtual environment (important!)</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env<span class="w">       </span><span class="c1"># Configure environment</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>make<span class="w"> </span>server<span class="w">               </span><span class="c1"># Start development server</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>make<span class="w"> </span><span class="nb">test</span><span class="w">                  </span><span class="c1"># Run test suite</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>make<span class="w"> </span>check<span class="w">                 </span><span class="c1"># Run all quality checks</span>
 </span></code></pre></div>
 <h3 id="evolving-your-project">Evolving Your Project</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Add components as you need them</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>aegis<span class="w"> </span>add<span class="w"> </span>scheduler
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>aegis<span class="w"> </span>add<span class="w"> </span>worker
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="c1"># Remove components you don&#39;t need</span>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="c1"># Always commit before making changes</span>
-</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add scheduler component&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Add components as you need them</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>aegis<span class="w"> </span>add<span class="w"> </span>scheduler
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>aegis<span class="w"> </span>add<span class="w"> </span>worker
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="c1"># Remove components you don&#39;t need</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="c1"># Always commit before making changes</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add scheduler component&quot;</span>
 </span></code></pre></div>
 
 
