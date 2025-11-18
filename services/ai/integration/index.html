@@ -536,6 +536,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../process/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How I Build
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2010,7 +2033,7 @@
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">conversations</span> <span class="o">=</span> <span class="n">ai_service</span><span class="o">.</span><span class="n">list_conversations</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;user-123&quot;</span><span class="p">)</span>
 </span></code></pre></div>
 <div class="admonition example">
-<p class="admonition-title">Musings: Persistent Storage Coming</p>
+<p class="admonition-title">Musings: Persistent Storage Coming (October 2025)</p>
 <p>Right now conversations are in-memory and reset on restart. That's intentional for v0.1.0 - keeps things simple while I focus on getting the core experience right.</p>
 <p>Database-backed storage is definitely planned. The architecture's pretty straightforward: "If database component detected, store conversations there." The design is solid, I just need to think through some things.</p>
 <p>In the meantime, anyone who knows what they're doing can easily modify ConversationManager to add their own datastore.</p>

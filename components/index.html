@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://lbedner.github.io/aegis-stack/components/">
       
       
-        <link rel="prev" href="../technology/">
+        <link rel="prev" href="../process/">
       
       
         <link rel="next" href="webserver/">
@@ -536,6 +536,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../process/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How I Build
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -651,21 +674,6 @@
       Evolving Your Stack
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Evolving Your Stack">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#start-lean-grow-as-needed" class="md-nav__link">
-    <span class="md-ellipsis">
-      Start Lean, Grow As Needed
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1877,21 +1885,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Evolving Your Stack">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#start-lean-grow-as-needed" class="md-nav__link">
-    <span class="md-ellipsis">
-      Start Lean, Grow As Needed
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1946,21 +1939,14 @@
 <p>See <strong><a href="../services/">Services Overview</a></strong> for business-level features.</p>
 </div>
 <h2 id="evolving-your-stack">Evolving Your Stack</h2>
-<p><strong>Your choices aren't permanent.</strong> Start with what you need today, add components as requirements evolve, remove what you don't use anymore.</p>
-<h3 id="start-lean-grow-as-needed">Start Lean, Grow As Needed</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Monday: Ship MVP with just FastAPI + Flet</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>aegis<span class="w"> </span>init<span class="w"> </span>my-api
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Week 3: Product needs scheduled reports</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>aegis<span class="w"> </span>add<span class="w"> </span>scheduler<span class="w"> </span>--project-path<span class="w"> </span>./my-api
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Month 2: Scale demands async workers</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>aegis<span class="w"> </span>add<span class="w"> </span>worker<span class="w"> </span>--project-path<span class="w"> </span>./my-api
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Month 6: Scheduler not needed anymore</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler<span class="w"> </span>--project-path<span class="w"> </span>./my-api
-</span></code></pre></div>
-<p>Most frameworks lock you in at <code>init</code>. Aegis Stack doesn't. See the complete guide: <strong><a href="../evolving-your-stack/">Evolving Your Stack</a></strong></p>
+<p><strong>Your choices aren't permanent.</strong> Components can be added or removed as your requirements change.</p>
+<p>Unlike most frameworks that lock you in at <code>init</code>, Aegis Stack lets you evolve:</p>
+<ul>
+<li><strong>Add components</strong>: <code>aegis add scheduler --project-path ./my-api</code></li>
+<li><strong>Remove components</strong>: <code>aegis remove scheduler --project-path ./my-api</code></li>
+<li><strong>Update templates</strong>: Stay current with upstream improvements</li>
+</ul>
+<p>For complete workflows with real-world examples, see <strong><a href="../evolving-your-stack/">Evolving Your Stack →</a></strong></p>
 <h2 id="component-architecture">Component Architecture</h2>
 <pre class="mermaid"><code>graph TB
     subgraph "Always Included"
@@ -2061,6 +2047,8 @@
 <p class="admonition-title">Component Composition</p>
 <p>Components can be combined to enable different capabilities. For detailed patterns on how components integrate with services and each other, see the <strong><a href="../integration-patterns/">Integration Patterns Reference</a></strong>.</p>
 </div>
+<p><a class="glightbox" href="../images/voltron.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Components forming your complete stack" src="../images/voltron.gif" /></a></p>
+<p><strong>Individual components combine to form your complete application.</strong> Database + Scheduler + Worker + Auth + AI = A unified, production-ready system.</p>
 <hr />
 <p><strong>Next:</strong> Choose your first component combination and see the integration in action:</p>
 <ul>

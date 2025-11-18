@@ -536,6 +536,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../process/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How I Build
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -690,15 +713,6 @@
   <a href="#integration" class="md-nav__link">
     <span class="md-ellipsis">
       Integration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration
     </span>
   </a>
   
@@ -1892,15 +1906,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
       Next Steps
@@ -1926,6 +1931,12 @@
 
 
 <h1 id="backend-component">Backend Component</h1>
+<div class="admonition example">
+<p class="admonition-title">Musings: On Backend Choices (November 2025)</p>
+<p>Most of my experience is with <a href="https://fastapi.tiangolo.com/">FastAPI</a>, but I did have the chance to do some <a href="https://flask.palletsprojects.com/">Flask</a> work in a production environment this past summer, and it was rather fun.</p>
+<p>Regarding using it as a backend, I mean, it's just another backend to learn, and if I can just deal with the sync/async stuff, it's something I can confidently say I wouldn't mind throwing in as an option.</p>
+<p>Of course, with Flet as the frontend (though perhaps forced dependency goes away?), FastAPI will always be there as its own backend. But all API related stuff is handled in Flask... In theory...</p>
+</div>
 <p>The <strong>Backend Component</strong> handles HTTP requests and API endpoints for your Aegis Stack application using <a href="https://fastapi.tiangolo.com/">FastAPI</a>.</p>
 <h2 id="adding-api-routes">Adding API Routes</h2>
 <p>API routes require <strong>explicit registration</strong> to maintain clear dependency tracking:</p>
@@ -1986,8 +1997,6 @@
 <li><strong>Health check</strong> at <code>/health</code></li>
 <li><strong>CORS enabled</strong> for frontend integration</li>
 </ul>
-<h2 id="configuration">Configuration</h2>
-<p>The backend runs on port 8000 and is configured through the integration layer with automatic JSON serialization and validation.</p>
 <h2 id="next-steps">Next Steps</h2>
 <ul>
 <li><strong><a href="https://fastapi.tiangolo.com/">FastAPI Documentation</a></strong> - Complete API framework capabilities</li>

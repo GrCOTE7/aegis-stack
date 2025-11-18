@@ -29,6 +29,10 @@
          <lastmod>2025-11-18</lastmod>
     </url>
     <url>
+         <loc>https://lbedner.github.io/aegis-stack/process/</loc>
+         <lastmod>2025-11-18</lastmod>
+    </url>
+    <url>
          <loc>https://lbedner.github.io/aegis-stack/technology/</loc>
          <lastmod>2025-11-18</lastmod>
     </url>
@@ -50,6 +54,14 @@
     </url>
     <url>
          <loc>https://lbedner.github.io/aegis-stack/components/webserver/</loc>
+         <lastmod>2025-11-18</lastmod>
+    </url>
+    <url>
+         <loc>https://lbedner.github.io/aegis-stack/components/database/postgresql/</loc>
+         <lastmod>2025-11-18</lastmod>
+    </url>
+    <url>
+         <loc>https://lbedner.github.io/aegis-stack/components/database/sqlite/</loc>
          <lastmod>2025-11-18</lastmod>
     </url>
     <url>
