@@ -148,4 +148,24 @@
          <loc>https://lbedner.github.io/aegis-stack/services/auth/integration/</loc>
          <lastmod>2025-11-20</lastmod>
     </url>
+    <url>
+         <loc>https://lbedner.github.io/aegis-stack/services/comms/</loc>
+         <lastmod>2025-11-20</lastmod>
+    </url>
+    <url>
+         <loc>https://lbedner.github.io/aegis-stack/services/comms/api/</loc>
+         <lastmod>2025-11-20</lastmod>
+    </url>
+    <url>
+         <loc>https://lbedner.github.io/aegis-stack/services/comms/cli/</loc>
+         <lastmod>2025-11-20</lastmod>
+    </url>
+    <url>
+         <loc>https://lbedner.github.io/aegis-stack/services/comms/examples/</loc>
+         <lastmod>2025-11-20</lastmod>
+    </url>
+    <url>
+         <loc>https://lbedner.github.io/aegis-stack/services/comms/setup/</loc>
+         <lastmod>2025-11-20</lastmod>
+    </url>
 </urlset>

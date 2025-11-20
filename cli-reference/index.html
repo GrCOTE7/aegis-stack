@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://lbedner.github.io/aegis-stack/cli-reference/">
       
       
-        <link rel="prev" href="../services/ai/examples/">
+        <link rel="prev" href="../services/comms/cli/">
       
       
         <link rel="next" href="../evolving-your-stack/">
@@ -1645,6 +1645,147 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Communications
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Communications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/comms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/comms/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Provider Setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/comms/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/comms/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2420,8 +2561,14 @@
 </tr>
 <tr>
 <td><code>ai</code></td>
-<td>✅ Available</td>
+<td>🧪 Experimental</td>
 <td>AI chatbot with 7 provider options</td>
+<td>backend</td>
+</tr>
+<tr>
+<td><code>comms</code></td>
+<td>🧪 Experimental</td>
+<td>Email (Resend), SMS &amp; voice (Twilio)</td>
 <td>backend</td>
 </tr>
 </tbody>
@@ -2431,6 +2578,7 @@
 <ul>
 <li><code>--services auth</code> → Auto-adds <code>database</code> component</li>
 <li><code>--services ai</code> → No additional components (backend always included)</li>
+<li><code>--services comms</code> → No additional components (backend always included)</li>
 <li>Backend and frontend components are <strong>always included</strong> in every project</li>
 </ul>
 <p><strong>Component Dependencies:</strong></p>
