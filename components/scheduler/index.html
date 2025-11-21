@@ -2328,9 +2328,9 @@
 </span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">scheduler</span><span class="o">.</span><span class="n">modify_job</span><span class="p">(</span><span class="s2">&quot;daily_reports&quot;</span><span class="p">,</span> <span class="n">hour</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>  <span class="c1"># Change to 7 AM</span>
 </span></code></pre></div>
 <h2 id="configuration">Configuration</h2>
-<p>The scheduler uses APScheduler's default settings. The only environment variable is:</p>
+<p>The scheduler uses APScheduler's default settings. Configuration is managed via <code>app/core/config.py</code>:</p>
 <ul>
-<li><code>SCHEDULER_FORCE_UPDATE</code>: Set to "true" to force update jobs from code during restart (persistence mode only)</li>
+<li><code>SCHEDULER_FORCE_UPDATE</code> (bool, default: <code>False</code>): Force update jobs from code during restart (persistence mode only). Set via environment variable <code>SCHEDULER_FORCE_UPDATE=true</code></li>
 </ul>
 <p>Individual jobs can configure their own behavior when defined:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">scheduler</span><span class="o">.</span><span class="n">add_job</span><span class="p">(</span>
