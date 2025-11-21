@@ -2119,28 +2119,36 @@
 <h2 id="component-deployment">Component Deployment</h2>
 <p>Understanding how components deploy and scale is crucial for architectural decisions:</p>
 <pre class="mermaid"><code>graph TB
-    subgraph "Development"
-        A1[All Components&lt;br/&gt;Single Container + Volumes]
+    subgraph "Multi-Container Architecture"
+        A1[Webserver&lt;br/&gt;Backend + Frontend]
+        A2[Scheduler&lt;br/&gt;Background Jobs]
+        A3[Worker Pool&lt;br/&gt;Task Processing]
+        A4[Infrastructure&lt;br/&gt;Redis + Database]
     end
 
-    subgraph "Production Scaling"
-        B1[Web Service&lt;br/&gt;Backend + Frontend]
-        B2[Scheduler Service&lt;br/&gt;Background Jobs]
-        B3[Worker Pool&lt;br/&gt;Task Processing]
-        B4[Infrastructure&lt;br/&gt;Redis + Database]
+    subgraph "Independent Scaling"
+        B1[Webserver × N]
+        B2[Scheduler × N]
+        B3[Worker × N]
+        B4[Infrastructure × N]
     end
 
     A1 --&gt; B1
-    A1 --&gt; B2
-    A1 --&gt; B3
-    A1 --&gt; B4
+    A2 --&gt; B2
+    A3 --&gt; B3
+    A4 --&gt; B4
 
-    style A1 fill:#e1f5fe
+    style A1 fill:#e8f5e8
+    style A2 fill:#fff3e0
+    style A3 fill:#f3e5f5
+    style A4 fill:#e1f5fe
     style B1 fill:#e8f5e8
     style B2 fill:#fff3e0
-    style B3 fill:#f3e5f5</code></pre>
-<p><strong>Development:</strong> All components run in a single container with shared volumes for simplicity.</p>
-<p><strong>Production:</strong> Components can be deployed as independent services, each scaling based on demand.</p>
+    style B3 fill:#f3e5f5
+    style B4 fill:#e1f5fe</code></pre>
+<p><strong>Multi-Container Architecture:</strong> Each component runs in its own Docker container (via docker-compose) for isolation and maintainability.</p>
+<p><strong>Backend + Frontend Container:</strong> FastAPI serves the Flet UI as an integrated web app - this is an architectural choice, not a limitation.</p>
+<p><strong>Independent Scaling:</strong> Each service can be scaled separately based on demand using Docker Compose replicas or orchestration tools.</p>
 <h2 id="available-components">Available Components</h2>
 <table>
 <thead>
