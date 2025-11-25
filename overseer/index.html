@@ -12,22 +12,28 @@
         <meta name="author" content="Aegis Stack Contributors">
       
       
+        <link rel="canonical" href="https://lbedner.github.io/aegis-stack/overseer/">
       
       
+        <link rel="prev" href="../services/comms/cli/">
       
-      <link rel="icon" href="/aegis-stack/assets/images/favicon.png">
+      
+        <link rel="next" href="story/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
     
     
       
-        <title>Aegis Stack</title>
+        <title>Overview - Aegis Stack</title>
       
     
     
-      <link rel="stylesheet" href="/aegis-stack/assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
       
         
-        <link rel="stylesheet" href="/aegis-stack/assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -46,18 +52,27 @@
       
     
     
-      <link rel="stylesheet" href="/aegis-stack/assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="/aegis-stack/stylesheets/custom.css">
+      <link rel="stylesheet" href="../stylesheets/custom.css">
     
-    <script>__md_scope=new URL("/aegis-stack/",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-  </head>
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -75,6 +90,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#overseer" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -85,7 +105,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/aegis-stack/." title="Aegis Stack" class="md-header__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
+    <a href=".." title="Aegis Stack" class="md-header__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -105,7 +125,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Overview
             
           </span>
         </div>
@@ -208,7 +228,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="/aegis-stack/." class="md-tabs__link">
+        <a href=".." class="md-tabs__link">
           
   
   
@@ -228,7 +248,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="/aegis-stack/about/" class="md-tabs__link">
+        <a href="../about/" class="md-tabs__link">
           
   
   
@@ -248,7 +268,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="/aegis-stack/components/" class="md-tabs__link">
+        <a href="../components/" class="md-tabs__link">
           
   
   
@@ -268,7 +288,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="/aegis-stack/services/" class="md-tabs__link">
+        <a href="../services/" class="md-tabs__link">
           
   
   
@@ -284,11 +304,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="/aegis-stack/overseer/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
           
   
   
@@ -308,7 +330,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="/aegis-stack/cli-reference/" class="md-tabs__link">
+        <a href="../cli-reference/" class="md-tabs__link">
           
   
   
@@ -342,7 +364,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/aegis-stack/." title="Aegis Stack" class="md-nav__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
+    <a href=".." title="Aegis Stack" class="md-nav__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -401,7 +423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -424,7 +446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/installation/" class="md-nav__link">
+      <a href="../installation/" class="md-nav__link">
         
   
   
@@ -495,7 +517,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/about/" class="md-nav__link">
+      <a href="../about/" class="md-nav__link">
         
   
   
@@ -518,7 +540,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/technology/" class="md-nav__link">
+      <a href="../technology/" class="md-nav__link">
         
   
   
@@ -541,7 +563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/process/" class="md-nav__link">
+      <a href="../process/" class="md-nav__link">
         
   
   
@@ -612,7 +634,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/components/" class="md-nav__link">
+      <a href="../components/" class="md-nav__link">
         
   
   
@@ -635,7 +657,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/components/webserver/" class="md-nav__link">
+      <a href="../components/webserver/" class="md-nav__link">
         
   
   
@@ -658,7 +680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/components/database/" class="md-nav__link">
+      <a href="../components/database/" class="md-nav__link">
         
   
   
@@ -722,7 +744,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/components/frontend/" class="md-nav__link">
+      <a href="../components/frontend/" class="md-nav__link">
         
   
   
@@ -786,7 +808,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/components/frontend/extras/dashboard/" class="md-nav__link">
+      <a href="../components/frontend/extras/dashboard/" class="md-nav__link">
         
   
   
@@ -866,7 +888,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/components/scheduler/" class="md-nav__link">
+      <a href="../components/scheduler/" class="md-nav__link">
         
   
   
@@ -889,7 +911,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/components/scheduler/examples/" class="md-nav__link">
+      <a href="../components/scheduler/examples/" class="md-nav__link">
         
   
   
@@ -912,7 +934,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/components/scheduler/cli/" class="md-nav__link">
+      <a href="../components/scheduler/cli/" class="md-nav__link">
         
   
   
@@ -976,7 +998,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/components/scheduler/extras/persistence/" class="md-nav__link">
+      <a href="../components/scheduler/extras/persistence/" class="md-nav__link">
         
   
   
@@ -1056,7 +1078,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/components/worker/" class="md-nav__link">
+      <a href="../components/worker/" class="md-nav__link">
         
   
   
@@ -1079,7 +1101,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/components/worker/configuration/" class="md-nav__link">
+      <a href="../components/worker/configuration/" class="md-nav__link">
         
   
   
@@ -1102,7 +1124,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/components/worker/examples/" class="md-nav__link">
+      <a href="../components/worker/examples/" class="md-nav__link">
         
   
   
@@ -1166,7 +1188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/components/worker/extras/load-testing/" class="md-nav__link">
+      <a href="../components/worker/extras/load-testing/" class="md-nav__link">
         
   
   
@@ -1253,7 +1275,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/" class="md-nav__link">
+      <a href="../services/" class="md-nav__link">
         
   
   
@@ -1276,7 +1298,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/dashboard/" class="md-nav__link">
+      <a href="../services/dashboard/" class="md-nav__link">
         
   
   
@@ -1340,7 +1362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/auth/" class="md-nav__link">
+      <a href="../services/auth/" class="md-nav__link">
         
   
   
@@ -1363,7 +1385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/auth/api/" class="md-nav__link">
+      <a href="../services/auth/api/" class="md-nav__link">
         
   
   
@@ -1386,7 +1408,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/auth/integration/" class="md-nav__link">
+      <a href="../services/auth/integration/" class="md-nav__link">
         
   
   
@@ -1409,7 +1431,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/auth/cli/" class="md-nav__link">
+      <a href="../services/auth/cli/" class="md-nav__link">
         
   
   
@@ -1432,7 +1454,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/auth/examples/" class="md-nav__link">
+      <a href="../services/auth/examples/" class="md-nav__link">
         
   
   
@@ -1504,7 +1526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/ai/" class="md-nav__link">
+      <a href="../services/ai/" class="md-nav__link">
         
   
   
@@ -1527,7 +1549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/ai/providers/" class="md-nav__link">
+      <a href="../services/ai/providers/" class="md-nav__link">
         
   
   
@@ -1550,7 +1572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/ai/api/" class="md-nav__link">
+      <a href="../services/ai/api/" class="md-nav__link">
         
   
   
@@ -1573,7 +1595,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/ai/integration/" class="md-nav__link">
+      <a href="../services/ai/integration/" class="md-nav__link">
         
   
   
@@ -1596,7 +1618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/ai/cli/" class="md-nav__link">
+      <a href="../services/ai/cli/" class="md-nav__link">
         
   
   
@@ -1619,7 +1641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/ai/examples/" class="md-nav__link">
+      <a href="../services/ai/examples/" class="md-nav__link">
         
   
   
@@ -1691,7 +1713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/comms/" class="md-nav__link">
+      <a href="../services/comms/" class="md-nav__link">
         
   
   
@@ -1714,7 +1736,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/comms/setup/" class="md-nav__link">
+      <a href="../services/comms/setup/" class="md-nav__link">
         
   
   
@@ -1737,7 +1759,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/comms/api/" class="md-nav__link">
+      <a href="../services/comms/api/" class="md-nav__link">
         
   
   
@@ -1760,7 +1782,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/services/comms/cli/" class="md-nav__link">
+      <a href="../services/comms/cli/" class="md-nav__link">
         
   
   
@@ -1795,24 +1817,29 @@
       
   
   
+    
   
   
+  
     
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
             
   
   
@@ -1825,7 +1852,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Overseer
@@ -1836,10 +1863,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/aegis-stack/overseer/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1850,6 +1899,116 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why This Exists
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-it-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      What It Is
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#current-capabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current Capabilities
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-service-cards" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component &amp; Service Cards
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#health-status-indicators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Health Status Indicators
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theme-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Theme Support
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-health-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI Health Access
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-coming" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's Coming
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1862,7 +2021,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/overseer/story/" class="md-nav__link">
+      <a href="story/" class="md-nav__link">
         
   
   
@@ -1885,7 +2044,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/overseer/integration/" class="md-nav__link">
+      <a href="integration/" class="md-nav__link">
         
   
   
@@ -1956,7 +2115,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/cli-reference/" class="md-nav__link">
+      <a href="../cli-reference/" class="md-nav__link">
         
   
   
@@ -1979,7 +2138,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/evolving-your-stack/" class="md-nav__link">
+      <a href="../evolving-your-stack/" class="md-nav__link">
         
   
   
@@ -2002,7 +2161,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/aegis-stack/integration-patterns/" class="md-nav__link">
+      <a href="../integration-patterns/" class="md-nav__link">
         
   
   
@@ -2042,6 +2201,106 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why This Exists
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-it-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      What It Is
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#current-capabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current Capabilities
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-service-cards" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component &amp; Service Cards
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#health-status-indicators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Health Status Indicators
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theme-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Theme Support
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-health-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI Health Access
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-coming" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's Coming
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -2053,8 +2312,160 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+
+
+<h1 id="overseer">Overseer</h1>
+<h2 id="why-this-exists">Why This Exists</h2>
+<p><strong>Nothing is more annoying than the shrug.</strong></p>
+<p><a class="glightbox" href="../images/druski-shrug.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Druski Shrug" src="../images/druski-shrug.gif" /></a></p>
+<p>Something's broken in production. You ask what happened. You get a shrug. You ask when it started. Another shrug. You ask where the logs are. Shrug. You ask how we can fix it. The biggest fucking shrug you've ever seen.</p>
+<p>If something is wrong, I want to know <strong>where</strong>, <strong>when</strong>, <strong>how</strong>, <strong>why</strong>, and <strong>how can we reconcile it</strong>. Christ! Is that too much to ask?</p>
+<p><strong>It shouldn't be so fucking hard to know what happened, when, where.</strong></p>
+<p>You work with Datadog until management decides to migrate to New Relic. Or you're a solo dev who just wants to see if your background jobs are running without paying enterprise prices. Overseer solves this: centralized monitoring that you own, built into every Aegis Stack project from day one.</p>
+<h2 id="what-it-is">What It Is</h2>
+<p><strong>Overseer is a read-only health monitoring dashboard</strong> built into your Aegis Stack application. It provides real-time visibility into component and service health through a web UI and CLI commands.</p>
+<p><a class="glightbox" href="../images/overseer-dashboard-1-dark.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Overseer Dashboard" src="../images/overseer-dashboard-1-dark.png" /></a></p>
+<p>The dashboard displays:</p>
+<ul>
+<li><strong>Component Cards</strong>: Backend, Database, Worker, Scheduler health</li>
+<li><strong>Service Cards</strong>: Auth, AI, Comms health (when included)</li>
+<li><strong>Header</strong>: Overall health summary and theme toggle</li>
+<li><strong>Auto-refresh</strong>: Polls health endpoint every 30 seconds</li>
+</ul>
+<h2 id="current-capabilities">Current Capabilities</h2>
+<ul>
+<li>Component health monitoring (Backend, Database, Worker, Scheduler)</li>
+<li>Service health monitoring (Auth, AI, Comms)</li>
+<li>System metrics (CPU, memory, disk usage)</li>
+<li>Status hierarchy (Healthy, Warning, Unhealthy, Info)</li>
+<li>Web dashboard with auto-refresh (30-second polling)</li>
+<li>CLI health commands via your generated app</li>
+</ul>
+<h2 id="how-it-works">How It Works</h2>
+<pre class="mermaid"><code>sequenceDiagram
+    participant C as Components/Services
+    participant R as Health Registry
+    participant E as /health/ Endpoint
+    participant D as Dashboard UI
+
+    Note over C,R: Startup: Registration Phase
+    C-&gt;&gt;R: register_health_check("backend", check_func)
+    C-&gt;&gt;R: register_health_check("database", check_func)
+    C-&gt;&gt;R: register_service_health_check("auth", check_func)
+
+    Note over E,D: Runtime: Monitoring Phase
+    D-&gt;&gt;E: GET /health/ (every 30s)
+    E-&gt;&gt;R: Run all registered checks
+    R-&gt;&gt;C: Execute health check functions
+    C-&gt;&gt;R: Return ComponentStatus
+    R-&gt;&gt;E: Aggregate into SystemStatus
+    E-&gt;&gt;D: Return health data
+    D-&gt;&gt;D: Render component/service cards</code></pre>
+<p><strong>The Flow:</strong></p>
+<ol>
+<li><strong>Registration</strong>: During app startup, components and services register their health check functions with the health registry</li>
+<li><strong>Aggregation</strong>: The <code>/health/</code> endpoint runs all registered checks and aggregates results into a hierarchical status tree</li>
+<li><strong>Polling</strong>: The dashboard polls the health endpoint every 30 seconds</li>
+<li><strong>Display</strong>: Component and service cards render with real-time status, metrics, and details</li>
+</ol>
+<h2 id="component-service-cards">Component &amp; Service Cards</h2>
+<p>Each card shows real-time health status, component-specific metrics, and configuration details. Click any card to open a detailed modal with diagnostics, performance data, and system information.</p>
+<h2 id="health-status-indicators">Health Status Indicators</h2>
+<p>Each card displays a status indicator using the Overseer status hierarchy:</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Color</th>
+<th>Visual</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>✅ Healthy</strong></td>
+<td>Green</td>
+<td>Solid green border</td>
+<td>Component/service fully operational</td>
+</tr>
+<tr>
+<td><strong>ℹ️ Info</strong></td>
+<td>Blue</td>
+<td>Solid blue border</td>
+<td>Informational status, not a problem</td>
+</tr>
+<tr>
+<td><strong>⚠️ Warning</strong></td>
+<td>Yellow</td>
+<td>Orange border</td>
+<td>Operational but with issues</td>
+</tr>
+<tr>
+<td><strong>❌ Unhealthy</strong></td>
+<td>Red</td>
+<td>Red border</td>
+<td>Component/service down or failing</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status Propagation</strong>: Parent components inherit the worst child status:</p>
+<ul>
+<li>Any child <strong>Unhealthy</strong> → Parent <strong>Unhealthy</strong></li>
+<li>Any child <strong>Warning</strong> (no unhealthy) → Parent <strong>Warning</strong></li>
+<li>Any child <strong>Info</strong> (no unhealthy/warning) → Parent <strong>Info</strong></li>
+<li>All children <strong>Healthy</strong> → Parent <strong>Healthy</strong></li>
+</ul>
+<h2 id="theme-support">Theme Support</h2>
+<p>The dashboard automatically adapts to light and dark themes:</p>
+<ul>
+<li><strong>Light Mode</strong>: White cards, dark text, subtle shadows</li>
+<li><strong>Dark Mode</strong>: Dark cards, light text, enhanced contrast</li>
+<li><strong>Toggle</strong>: Click the theme icon in the header to switch</li>
+</ul>
+<p>Images and status colors adjust automatically to maintain visibility in both themes.</p>
+<h2 id="cli-health-access">CLI Health Access</h2>
+<p>The same health data is accessible via CLI:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># View system health</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>your-app<span class="w"> </span>health
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Example output:</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>┌────────────────────────────────────────┐
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│<span class="w"> </span>System<span class="w"> </span>Health<span class="w">                          </span>│
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>├────────────────────────────────────────┤
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│<span class="w"> </span>Components<span class="w">                             </span>│
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│<span class="w">   </span>✅<span class="w"> </span>backend<span class="w">    </span>-<span class="w"> </span>FastAPI<span class="w"> </span>healthy<span class="w">      </span>│
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│<span class="w">   </span>✅<span class="w"> </span>database<span class="w">   </span>-<span class="w"> </span>SQLite<span class="w"> </span>connected<span class="w">     </span>│
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│<span class="w">   </span>✅<span class="w"> </span>worker<span class="w">     </span>-<span class="w"> </span>arq<span class="w"> </span>processing<span class="w">       </span>│
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│<span class="w">   </span>✅<span class="w"> </span>scheduler<span class="w">  </span>-<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="nb">jobs</span><span class="w"> </span>scheduled<span class="w">     </span>│
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│<span class="w">                                        </span>│
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│<span class="w"> </span>Services<span class="w">                               </span>│
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│<span class="w">   </span>✅<span class="w"> </span>auth<span class="w">       </span>-<span class="w"> </span><span class="m">42</span><span class="w"> </span>users,<span class="w"> </span>HS256<span class="w">      </span>│
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│<span class="w">   </span>✅<span class="w"> </span>ai<span class="w">         </span>-<span class="w"> </span>Anthropic/Claude<span class="w">     </span>│
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>└────────────────────────────────────────┘
+</span></code></pre></div>
+<h2 id="whats-coming">What's Coming</h2>
+<p>Overseer is evolving into a full operational control plane. Want to know where this is headed and why I'm so confident it'll work?</p>
+<p><strong><a href="story/">Read the full story →</a></strong> - How Overseer evolved from solving production problems at iHeartMedia (2022-2024) to becoming the built-in control plane for Aegis Stack.</p>
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li><strong><a href="story/">The Overseer Story</a></strong> - Evolution from Streamlit to Aegis Stack, roadmap, and vision</li>
+<li><strong><a href="integration/">Integration Guide</a></strong> - Add health checks to custom components/services</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -2096,15 +2507,17 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "/aegis-stack/", "features": ["navigation.tabs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate"], "search": "/aegis-stack/assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="/aegis-stack/assets/javascripts/bundle.50899def.min.js"></script>
+      <script src="../assets/javascripts/bundle.50899def.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10.4.0/dist/mermaid.min.js"></script>
       
-        <script src="/aegis-stack/javascripts/mermaid-config.js"></script>
+        <script src="../javascripts/mermaid-config.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>

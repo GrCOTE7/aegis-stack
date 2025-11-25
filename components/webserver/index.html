@@ -310,6 +310,26 @@
     
     
       <li class="md-tabs__item">
+        <a href="../../overseer/" class="md-tabs__link">
+          
+  
+  
+  Overseer
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="../../cli-reference/" class="md-tabs__link">
           
   
@@ -1902,7 +1922,7 @@
   
   
   <span class="md-ellipsis">
-    Reference
+    Overseer
     
   </span>
   
@@ -1912,6 +1932,123 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Overseer
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overseer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overseer/story/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    The Story
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overseer/integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             Reference
           </label>
@@ -2130,6 +2267,11 @@
 </span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="p">)</span>
 </span></code></pre></div></p>
 <p><strong>No registration required</strong> - just drop the file and restart. See the <a href="../../integration-patterns/">Integration Patterns</a> for complete details.</p>
+<div class="admonition example">
+<p class="admonition-title">Musings: Backend Middleware Auto-Discovery (November 22nd, 2025)</p>
+<p>I'm not sure how I ultimately feel about the auto-discovery middleware pattern. I don't have enough experience with FastAPI plugins yet, but it's something I'm thinking about as the architecture evolves.</p>
+<p>The current approach works well for explicit component registration, but auto-discovery could reduce boilerplate at the cost of making the registration flow less obvious. Trade-offs worth considering as Aegis Stack matures.</p>
+</div>
 <h2 id="integration">Integration</h2>
 <p>FastAPI integrates with your application and provides:</p>
 <ul>

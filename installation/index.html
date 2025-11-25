@@ -310,6 +310,26 @@
     
     
       <li class="md-tabs__item">
+        <a href="../overseer/" class="md-tabs__link">
+          
+  
+  
+  Overseer
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="../cli-reference/" class="md-tabs__link">
           
   
@@ -479,6 +499,48 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#system-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="System Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    <span class="md-ellipsis">
+      Required
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Docker?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing Docker
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#installation" class="md-nav__link">
@@ -1875,7 +1937,7 @@
   
   
   <span class="md-ellipsis">
-    Reference
+    Overseer
     
   </span>
   
@@ -1885,6 +1947,123 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Overseer
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overseer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overseer/story/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    The Story
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overseer/integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             Reference
           </label>
@@ -1993,6 +2172,48 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#system-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="System Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required" class="md-nav__link">
+    <span class="md-ellipsis">
+      Required
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Docker?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing Docker
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
       Installation
@@ -2019,6 +2240,30 @@
 
 <h1 id="installation-guide">Installation Guide</h1>
 <p>Aegis Stack can be used in multiple ways depending on your needs and preferences.</p>
+<h2 id="system-requirements">System Requirements</h2>
+<p>Before installing Aegis Stack, ensure you have the following:</p>
+<h3 id="required">Required</h3>
+<ul>
+<li><strong>Python 3.11 or higher</strong> - Core runtime for Aegis Stack and generated projects</li>
+<li><strong>Docker &amp; Docker Compose</strong> - Required for generated projects' development workflow</li>
+</ul>
+<h3 id="why-docker">Why Docker?</h3>
+<p>Generated projects use Docker for:</p>
+<ul>
+<li><strong>Consistent development environments</strong> - Same setup across all machines</li>
+<li><strong>Service dependencies</strong> - Redis for worker component, health monitoring infrastructure</li>
+<li><strong>Standard workflow</strong> - The <code>make serve</code> command uses <code>docker compose</code> under the hood</li>
+<li><strong>Production parity</strong> - Development closely mirrors production deployment</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Docker Alternatives</p>
+<p>While the standard workflow uses Docker, generated projects are standard Python applications. Advanced users can manually run components (uvicorn for backend, direct Redis installation, etc.), but this workflow is currently undocumented and unsupported.</p>
+</div>
+<h3 id="installing-docker">Installing Docker</h3>
+<ul>
+<li><strong>macOS/Windows</strong>: <a href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a></li>
+<li><strong>Linux</strong>: <a href="https://docs.docker.com/engine/install/">Docker Engine</a> + <a href="https://docs.docker.com/compose/install/">Docker Compose</a></li>
+</ul>
 <h2 id="installation">Installation</h2>
 <p>Choose the method that works best for your workflow:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">uvx (Recommended)</label><label for="__tabbed_1_2">uv tool</label><label for="__tabbed_1_3">pip</label><label for="__tabbed_1_4">Development</label></div>
