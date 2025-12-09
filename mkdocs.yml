@@ -74,6 +74,18 @@ nav:
     - Overview: overseer/index.md
     - The Story: overseer/story.md
     - Integration: overseer/integration.md
+  - Cookbook:
+    - Overview: cookbook/index.md
+    - Recipes:
+      - Getting Started: cookbook/recipes/getting-started.md
+    - Projects:
+      - Party Manager:
+        - Overview: cookbook/projects/party-manager/index.md
+        - 1. First Endpoint: cookbook/projects/party-manager/01-first-endpoint.md
+        - 2. Protected Routes: cookbook/projects/party-manager/02-protected-routes.md
+        - 3. Background Jobs: cookbook/projects/party-manager/03-background-jobs.md
+        - 4. Scheduled Tasks: cookbook/projects/party-manager/04-scheduled-tasks.md
+        - 5. AI Advisor: cookbook/projects/party-manager/05-ai-advisor.md
   - Reference:
     - CLI Reference: cli-reference.md
     - Evolving Your Stack: evolving-your-stack.md
