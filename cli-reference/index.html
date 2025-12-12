@@ -2703,8 +2703,9 @@
 </span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a># ANTHROPIC_API_KEY=sk-ant-...
 </span></code></pre></div></p>
 <p>Test the AI service:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>my-project<span class="w"> </span>ai<span class="w"> </span>chat<span class="w">                 </span><span class="c1"># Start interactive chat</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>my-project<span class="w"> </span>ai<span class="w"> </span>providers<span class="w"> </span>list<span class="w">       </span><span class="c1"># See all available providers</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>my-project<span class="w"> </span>ai<span class="w"> </span>status<span class="w">               </span><span class="c1"># Check configuration</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>my-project<span class="w"> </span>ai<span class="w"> </span>chat<span class="w">                 </span><span class="c1"># Start interactive chat</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>my-project<span class="w"> </span>ai<span class="w"> </span>providers<span class="w">            </span><span class="c1"># See all available providers</span>
 </span></code></pre></div></p>
 <p><strong>Important Notes:</strong></p>
 <ul>
@@ -2861,10 +2862,12 @@
 <p><strong>→ <a href="../services/auth/cli/">Complete Auth CLI Reference</a></strong></p>
 <p><strong>AI Service</strong> - <code>my-app ai</code></p>
 <p>Multi-provider AI chat interface with conversation management:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat<span class="w">                 </span><span class="c1"># Interactive chat session</span>
-</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat<span class="w"> </span>send<span class="w"> </span><span class="s2">&quot;Hello&quot;</span><span class="w">    </span><span class="c1"># Send single message</span>
-</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>my-app<span class="w"> </span>ai<span class="w"> </span>config<span class="w"> </span>show<span class="w">          </span><span class="c1"># View AI configuration</span>
-</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>my-app<span class="w"> </span>ai<span class="w"> </span>providers<span class="w"> </span>list<span class="w">       </span><span class="c1"># List all 7 AI providers</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>my-app<span class="w"> </span>ai<span class="w"> </span>status<span class="w">               </span><span class="c1"># Show configuration and validation</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>my-app<span class="w"> </span>ai<span class="w"> </span>providers<span class="w">            </span><span class="c1"># List all 7 AI providers</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat<span class="w"> </span><span class="s2">&quot;Hello&quot;</span><span class="w">         </span><span class="c1"># Send single message</span>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat<span class="w">                 </span><span class="c1"># Interactive chat session</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>my-app<span class="w"> </span>ai<span class="w"> </span>conversations<span class="w">        </span><span class="c1"># List user conversations</span>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>my-app<span class="w"> </span>ai<span class="w"> </span><span class="nb">history</span><span class="w"> </span>&lt;id&gt;<span class="w">         </span><span class="c1"># View conversation history</span>
 </span></code></pre></div>
 <p><strong>→ <a href="../services/ai/cli/">Complete AI CLI Reference</a></strong></p>
 <hr />
