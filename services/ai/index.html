@@ -18,7 +18,7 @@
         <link rel="prev" href="../auth/examples/">
       
       
-        <link rel="next" href="providers/">
+        <link rel="next" href="engines/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -1571,6 +1571,29 @@
   
   
     <li class="md-nav__item">
+      <a href="engines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Engines
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="providers/" class="md-nav__link">
         
   
@@ -2229,7 +2252,7 @@
 
 
 <h1 id="ai-service">AI Service</h1>
-<p>The <strong>AI Service</strong> provides multi-provider AI chat capabilities with conversation management, streaming responses, and both CLI and API interfaces powered by <a href="https://ai.pydantic.dev/">PydanticAI</a>.</p>
+<p>The <strong>AI Service</strong> provides multi-provider AI chat capabilities with conversation management, streaming responses, and both CLI and API interfaces. Choose between <a href="https://ai.pydantic.dev/">Pydantic AI</a> or <a href="https://python.langchain.com/">LangChain</a> as your underlying engine.</p>
 <p><a class="glightbox" href="../../images/aegis-ai-demo.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="AI Service Demo" src="../../images/aegis-ai-demo.gif" /></a></p>
 <div class="admonition info">
 <p class="admonition-title">Start Chatting in 30 Seconds</p>
@@ -2254,15 +2277,15 @@
 <h2 id="architecture">Architecture</h2>
 <pre class="mermaid"><code>graph TB
     subgraph "AI Service"
-        AIService[🤖 AI Service&lt;br/&gt;PydanticAI]
+        AIService[AI Service&lt;br/&gt;Pydantic AI / LangChain]
 
-        CLI[💻 CLI Interface&lt;br/&gt;ai chat, config, providers]
-        API[🌐 REST API&lt;br/&gt;/ai/chat, /ai/conversations]
-        Providers[🔌 Providers&lt;br/&gt;OpenAI, Anthropic, Google&lt;br/&gt;Groq, Mistral, Cohere, PUBLIC]
-        Conv[💬 Conversations&lt;br/&gt;In-memory storage]
+        CLI[CLI Interface&lt;br/&gt;ai chat, config, providers]
+        API[REST API&lt;br/&gt;/ai/chat, /ai/conversations]
+        Providers[Providers&lt;br/&gt;OpenAI, Anthropic, Google&lt;br/&gt;Groq, Mistral, Cohere, PUBLIC]
+        Conv[Conversations&lt;br/&gt;In-memory storage]
     end
 
-    Backend[⚡ Backend Component&lt;br/&gt;FastAPI]
+    Backend[Backend Component&lt;br/&gt;FastAPI]
 
     AIService --&gt; CLI
     AIService --&gt; API
@@ -2353,6 +2376,8 @@
 <hr />
 <p><strong>Next Steps:</strong></p>
 <ul>
+<li><strong><a href="engines/">Engines</a></strong> - Choose between Pydantic AI and LangChain</li>
+<li><strong><a href="providers/">Provider Setup</a></strong> - Configure your AI provider</li>
 <li><strong><a href="api/">API Reference</a></strong> - Complete REST API documentation</li>
 <li><strong><a href="integration/">Service Layer</a></strong> - Integration patterns and architecture</li>
 <li><strong><a href="cli/">CLI Commands</a></strong> - Command-line interface reference</li>

@@ -1412,6 +1412,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../engines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Engines
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../providers/" class="md-nav__link">
         
   
@@ -2086,6 +2109,10 @@
 
 <h1 id="ai-service-layer">AI Service Layer</h1>
 <p>How the AI service works internally and basic usage in your code.</p>
+<div class="admonition info">
+<p class="admonition-title">Engine-Agnostic API</p>
+<p>All code examples on this page work identically whether you chose Pydantic AI or LangChain as your engine. The <code>AIService</code> class provides a unified interface. See <a href="../engines/">Engines</a> for implementation details.</p>
+</div>
 <h2 id="aiservice-class">AIService Class</h2>
 <p><strong>Location:</strong> <code>app/services/ai/service.py</code></p>
 <p>Basic usage:</p>
@@ -2199,6 +2226,7 @@
 <hr />
 <p><strong>Next Steps:</strong></p>
 <ul>
+<li><strong><a href="../engines/">Engines</a></strong> - Pydantic AI vs LangChain internals</li>
 <li><strong><a href="../api/">API Reference</a></strong> - REST API endpoints</li>
 <li><strong><a href="../cli/">CLI Commands</a></strong> - Command-line interface</li>
 <li><strong><a href="../examples/">Examples</a></strong> - Usage examples</li>
