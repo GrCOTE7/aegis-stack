@@ -1,17 +1,15 @@
 """
 TTS provider implementations.
 
-Provides a unified interface for Text-to-Speech synthesis across
-multiple providers: OpenAI TTS and local Piper.
+Provides a unified interface for Text-to-Speech synthesis.
 """
 
-import asyncio
 import logging
 from abc import ABC, abstractmethod
 from collections.abc import AsyncIterator
 from typing import Any
 
-from .models import (
+from ..models import (
     AudioFormat,
     SpeechRequest,
     SpeechResult,
@@ -55,6 +53,94 @@ class BaseTTSProvider(ABC):
         """
         result = await self.synthesize(request)
         yield result.audio
+
+
+class Qwen3TTSProvider(BaseTTSProvider):
+    """Qwen3-TTS local provider.
+
+    Uses Alibaba's Qwen3-TTS for high-quality local speech synthesis.
+    Requires GPU with CUDA support. Apache 2.0 license.
+
+    Features:
+    - 97ms latency (ultra-fast)
+    - 10 languages supported
+    - Voice cloning from 3s audio
+    - Cross-lingual synthesis
+    """
+
+    provider_type = TTSProvider.QWEN3
+
+    # Language mapping for Qwen3-TTS
+    LANGUAGE_MAP = {
+        "en": "English",
+        "zh": "Chinese",
+        "ja": "Japanese",
+        "ko": "Korean",
+        "de": "German",
+        "fr": "French",
+        "ru": "Russian",
+        "pt": "Portuguese",
+        "es": "Spanish",
+        "it": "Italian",
+    }
+
+    def __init__(
+        self,
+        model: str = "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+        voice: str = "Vivian",
+        language: str | None = None,
+    ) -> None:
+        """Initialize Qwen3-TTS provider.
+
+        Args:
+            model: Qwen3-TTS model to use.
+            voice: Default voice/speaker (Vivian, Ethan, Chelsie, Layla).
+            language: Default language for synthesis (None = read from settings).
+        """
+        self.model = model
+        self.default_voice = voice
+
+        # Get language from settings if not provided
+        if language is None:
+            from app.core.config import settings
+
+            language = settings.TTS_QWEN_LANGUAGE
+        self.default_language = language
+
+    async def synthesize(self, request: SpeechRequest) -> SpeechResult:
+        """Synthesize speech using Qwen3-TTS."""
+        import asyncio
+
+        voice = request.voice or self.default_voice
+
+        # Map language code to Qwen3 language name
+        language = self.default_language
+        if request.language:
+            language = self.LANGUAGE_MAP.get(
+                request.language.lower()[:2], self.default_language
+            )
+
+        try:
+            from .qwen3 import synthesize_to_bytes
+
+            # Run in thread pool since model inference is CPU/GPU bound
+            audio_data = await asyncio.to_thread(
+                synthesize_to_bytes,
+                text=request.text,
+                language=language,
+                speaker=voice,
+                format="wav",
+            )
+
+            return SpeechResult(
+                audio=audio_data,
+                format=AudioFormat.WAV,
+                provider=self.provider_type,
+            )
+
+        except Exception as e:
+            logger.error(f"Qwen3-TTS synthesis failed: {e}")
+            raise RuntimeError(f"Speech synthesis failed: {e}") from e
 
 
 class OpenAITTSProvider(BaseTTSProvider):
@@ -166,90 +252,6 @@ class OpenAITTSProvider(BaseTTSProvider):
             raise RuntimeError(f"Speech synthesis failed: {e}") from e
 
 
-class PiperLocalProvider(BaseTTSProvider):
-    """Piper local TTS provider (ONNX-based).
-
-    High-quality, fast local TTS that doesn't require a GPU.
-    Requires piper-tts to be installed.
-    """
-
-    provider_type = TTSProvider.PIPER_LOCAL
-
-    def __init__(
-        self,
-        model_path: str | None = None,
-        voice: str = "en_US-lessac-medium",
-    ) -> None:
-        """Initialize Piper local TTS provider.
-
-        Args:
-            model_path: Path to Piper model file (.onnx).
-                If None, uses voice name to find model.
-            voice: Voice/model name (e.g., en_US-lessac-medium).
-        """
-        self.model_path = model_path
-        self.voice = voice
-        self._piper: Any = None
-
-    def _get_piper(self) -> Any:
-        """Lazy-load the Piper TTS engine."""
-        if self._piper is None:
-            try:
-                from piper import PiperVoice
-            except ImportError as e:
-                raise RuntimeError(
-                    "Piper TTS not installed. Install with: uv add piper-tts"
-                ) from e
-
-            if self.model_path:
-                self._piper = PiperVoice.load(self.model_path)
-            else:
-                # Try to find model by voice name
-                raise RuntimeError(
-                    f"Piper model path required. Download a model for voice '{self.voice}' "
-                    "from https://github.com/rhasspy/piper/releases"
-                )
-
-        return self._piper
-
-    async def synthesize(self, request: SpeechRequest) -> SpeechResult:
-        """Synthesize speech using local Piper TTS."""
-        import io
-        import wave
-
-        piper = self._get_piper()
-
-        try:
-            # Run synthesis in thread pool to avoid blocking
-            loop = asyncio.get_event_loop()
-
-            def _synthesize() -> bytes:
-                # Piper outputs raw PCM audio, we need to wrap it in WAV
-                audio_buffer = io.BytesIO()
-
-                with wave.open(audio_buffer, "wb") as wav_file:
-                    wav_file.setnchannels(1)  # Mono
-                    wav_file.setsampwidth(2)  # 16-bit
-                    wav_file.setframerate(22050)  # Piper default sample rate
-
-                    for audio_chunk in piper.synthesize(request.text):
-                        wav_file.writeframes(audio_chunk)
-
-                return audio_buffer.getvalue()
-
-            audio_data = await loop.run_in_executor(None, _synthesize)
-
-            return SpeechResult(
-                audio=audio_data,
-                format=AudioFormat.WAV,
-                provider=self.provider_type,
-            )
-
-        except Exception as e:
-            logger.error(f"Piper TTS synthesis failed: {e}")
-            raise RuntimeError(f"Speech synthesis failed: {e}") from e
-
-
 def get_tts_provider(
     provider: TTSProvider,
     api_key: str | None = None,
@@ -279,9 +281,10 @@ def get_tts_provider(
             voice=voice or "alloy",
             **kwargs,
         )
-    elif provider == TTSProvider.PIPER_LOCAL:
-        return PiperLocalProvider(
-            voice=voice or "en_US-lessac-medium",
+    elif provider == TTSProvider.QWEN3:
+        return Qwen3TTSProvider(
+            model=model or "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+            voice=voice or "Vivian",
             **kwargs,
         )
     else:

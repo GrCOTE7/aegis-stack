@@ -17,6 +17,7 @@ def build_system_prompt(
     use_rag: bool = False,
     current_model: str | None = None,
     current_provider: str | None = None,
+    voice_mode: bool = False,
 ) -> str:
     """
     Build system prompt with project context.
@@ -31,6 +32,7 @@ def build_system_prompt(
         use_rag: Whether RAG is being used in this session
         current_model: Current model being used for this request
         current_provider: Current provider (openai, anthropic, etc.)
+        voice_mode: When True, append instructions for voice-friendly output
 
     Returns:
         Complete system prompt for the AI assistant
@@ -137,6 +139,15 @@ The following code was retrieved from THIS project's codebase.
 
 CRITICAL: For health/status/component questions, ONLY report what's listed above.
 Code documentation shows what CAN exist - System Status shows what IS running.
+"""
+
+    # Voice mode instructions - appended at the very end for emphasis
+    if voice_mode:
+        prompt += """
+## Voice Mode
+Respond conversationally, as if speaking aloud. Avoid markdown formatting, code blocks,
+bullet points, and technical symbols. Keep your response natural and concise for speech
+synthesis. Stay under 4000 characters.
 """
 
     return prompt

@@ -92,17 +92,18 @@ def _transform_api_response(api_data: dict[str, Any]) -> dict[str, Any]:
             }
         )
 
-    # Transform recent activity
+    # Transform recent activity (handles both LLM and voice entries)
     recent = []
     for r in api_data.get("recent_activity", []):
         recent.append(
             {
                 "timestamp": r.get("timestamp", ""),
                 "model": r.get("model", "Unknown"),
-                "action": r.get("action", ""),
-                "input_tokens": r.get("input_tokens", 0),
-                "output_tokens": r.get("output_tokens", 0),
-                "cost": r.get("cost", 0.0),
+                "type": r.get("type", "llm"),
+                "action": r.get("action") or r.get("type", ""),
+                "input_tokens": r.get("input_tokens") or 0,
+                "output_tokens": r.get("output_tokens") or 0,
+                "cost": r.get("cost") or 0.0,
                 "success": r.get("success", True),
             }
         )
@@ -252,18 +253,20 @@ class RecentActivitySection(ft.Container):
             success = activity.get("success", True)
             status_text = "Success" if success else "Failed"
             status_color = Theme.Colors.SUCCESS if success else Theme.Colors.ERROR
-            input_tokens = activity.get("input_tokens", 0)
-            output_tokens = activity.get("output_tokens", 0)
+            # Handle None values for voice entries (stt, tts, native_audio)
+            input_tokens = activity.get("input_tokens") or 0
+            output_tokens = activity.get("output_tokens") or 0
+            action = activity.get("action") or activity.get("type", "")
             relative_time = _format_relative_time(activity.get("timestamp", ""))
 
             rows.append(
                 [
                     relative_time,
                     activity.get("model", ""),
-                    activity.get("action", ""),
+                    action,
                     format_number(input_tokens),
                     format_number(output_tokens),
-                    format_cost(activity.get("cost", 0)),
+                    format_cost(activity.get("cost") or 0),
                     Tag(text=status_text, color=status_color),
                 ]
             )

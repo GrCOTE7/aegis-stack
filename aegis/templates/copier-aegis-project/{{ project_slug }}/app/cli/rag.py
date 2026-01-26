@@ -71,7 +71,7 @@ def _is_model_cached() -> bool:
 
 
 def _ensure_model_ready() -> None:
-    """Check if model/API is ready, download local model if needed."""
+    """Ensure embedding model is ready (preload if not cached)."""
     # OpenAI embeddings don't require local model
     if settings.RAG_EMBEDDING_PROVIDER == "openai":
         # Early validation: check API key is configured
@@ -85,36 +85,32 @@ def _ensure_model_ready() -> None:
             raise typer.Exit(code=1)
         return
 
-    # sentence-transformers: check cache and download if needed
-    if _is_model_cached():
+    from app.services.rag.embeddings import is_model_loaded, preload_embedding_model
+
+    # Already loaded in memory - instant
+    if is_model_loaded():
         return
 
-    model_name = settings.RAG_EMBEDDING_MODEL
-    cache_dir = settings.RAG_MODEL_CACHE_DIR
-
-    console.print()
-    console.print("[yellow]Embedding model not found locally.[/yellow]")
-    console.print(f"[dim]Model: {model_name} (~400MB download)[/dim]")
-    console.print()
-
-    try:
-        from sentence_transformers import SentenceTransformer
-
+    # Show progress only for first-time download
+    if not _is_model_cached():
+        console.print()
+        console.print("[yellow]Embedding model not found locally.[/yellow]")
+        console.print(f"[dim]Model: {settings.RAG_EMBEDDING_MODEL}[/dim]")
+        console.print()
         console.print(
             "[bold cyan]Downloading embedding model (first-time setup)...[/bold cyan]"
         )
-        console.print()  # Blank line before tqdm progress bars
-
-        if cache_dir:
-            SentenceTransformer(model_name, cache_folder=cache_dir)
-        else:
-            SentenceTransformer(model_name)
-
-        console.print()  # Blank line after progress bars
-        console.print("[green]✓ Model downloaded successfully[/green]")
         console.print()
+
+    try:
+        preload_embedding_model()
+
+        if not _is_model_cached():
+            console.print()
+            console.print("[green]Model ready[/green]")
+            console.print()
     except Exception as e:
-        console.print(f"[red]Failed to download model: {e}[/red]")
+        console.print(f"[red]Failed to load model: {e}[/red]")
         console.print("[dim]Try running: rag install-model[/dim]")
         raise typer.Exit(code=1)
 

@@ -5,11 +5,14 @@ Configuration management for TTS providers and settings.
 Follows the same pattern as STTConfig for consistency.
 """
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from pydantic import BaseModel, Field
 
-from .models import TTSProvider
+from ..models import TTSProvider
+
+if TYPE_CHECKING:
+    from app.core.config import Settings
 
 
 class TTSConfig(BaseModel):
@@ -29,7 +32,7 @@ class TTSConfig(BaseModel):
     DEFAULT_MODELS: dict[TTSProvider, str] = Field(
         default={
             TTSProvider.OPENAI: "tts-1",
-            TTSProvider.PIPER_LOCAL: "en_US-lessac-medium",
+            TTSProvider.QWEN3: "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
         },
         exclude=True,
     )
@@ -37,26 +40,35 @@ class TTSConfig(BaseModel):
     DEFAULT_VOICES: dict[TTSProvider, str] = Field(
         default={
             TTSProvider.OPENAI: "alloy",
-            TTSProvider.PIPER_LOCAL: "default",
+            TTSProvider.QWEN3: "Vivian",
         },
         exclude=True,
     )
 
     @classmethod
-    def from_settings(cls, settings: Any) -> "TTSConfig":
+    def from_settings(cls, settings: "Settings") -> "TTSConfig":
         """Create configuration from main application settings."""
-        provider_str = getattr(settings, "TTS_PROVIDER", "openai")
-
         try:
-            provider = TTSProvider(provider_str)
+            provider = TTSProvider(settings.TTS_PROVIDER)
         except ValueError:
             provider = TTSProvider.OPENAI
 
+        # Get provider-specific model/voice from settings
+        model = settings.TTS_MODEL
+        voice = settings.TTS_VOICE
+
+        # For Qwen3, use specific settings if generic ones aren't set
+        if provider == TTSProvider.QWEN3:
+            if not model:
+                model = settings.TTS_QWEN_MODEL
+            if not voice:
+                voice = settings.TTS_QWEN_SPEAKER
+
         return cls(
             provider=provider,
-            model=getattr(settings, "TTS_MODEL", None),
-            voice=getattr(settings, "TTS_VOICE", None),
-            speed=getattr(settings, "TTS_SPEED", 1.0),
+            model=model,
+            voice=voice,
+            speed=settings.TTS_SPEED,
         )
 
     def get_model(self) -> str:
@@ -75,6 +87,7 @@ class TTSConfig(BaseModel):
         """Get API key for the current provider."""
         api_key_mapping = {
             TTSProvider.OPENAI: "OPENAI_API_KEY",
+            # Qwen3 is local, no API key needed
         }
 
         key_name = api_key_mapping.get(self.provider)
@@ -82,6 +95,10 @@ class TTSConfig(BaseModel):
             return getattr(settings, key_name, None)
 
         return None  # Local providers don't need API keys
+
+    def is_local_provider(self) -> bool:
+        """Check if the current provider runs locally."""
+        return self.provider in {TTSProvider.QWEN3}
 
     def validate(self, settings: Any) -> list[str]:
         """

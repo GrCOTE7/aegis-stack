@@ -66,8 +66,15 @@ dependencies = [
     "alembic==1.16.5",
 {%- endif %}
 {%- if include_ai %}
-    # File uploads for voice/STT endpoints
+    # File uploads for API endpoints
     "python-multipart==0.0.9",
+{%- if ai_voice %}
+    # Voice/STT dependencies (audio recording and playback)
+    "sounddevice>=0.4.6",
+    "soundfile>=0.12.1",
+    # LiteLLM for unified native audio support across providers
+    "litellm>=1.70.0",
+{%- endif %}
 {%- if ai_framework == "pydantic-ai" %}
 {# Map provider names to pydantic-ai-slim extras (OpenAI-compatible providers -> openai) #}
 {%- set pydantic_extras = ai_providers | replace("public", "openai") | replace("openrouter", "openai") | replace("ollama", "openai") %}
@@ -134,6 +141,12 @@ docs = [
     "mkdocs-gen-files==0.5.0",
     "pymdown-extensions==10.16.1",
 ]
+{%- if include_ai %}
+# Local TTS with Qwen3-TTS (requires GPU/CUDA)
+qwen-tts = [
+    "qwen-tts>=0.0.5",
+]
+{%- endif %}
 
 [build-system]
 requires = ["hatchling"]

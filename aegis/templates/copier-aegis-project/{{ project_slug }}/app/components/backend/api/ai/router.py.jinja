@@ -81,24 +81,32 @@ class ModelUsageStats(BaseModel):
 
 
 class RecentActivity(BaseModel):
-    """A single recent usage activity entry."""
+    """A single recent usage activity entry (LLM or voice)."""
 
     timestamp: str
+    type: str = "llm"  # "llm", "stt", "tts", "native_audio"
     model: str
-    input_tokens: int
-    output_tokens: int
     cost: float
     success: bool
-    action: str
+    # LLM-specific fields (optional for voice entries)
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    action: str | None = None
+    # Voice-specific fields (optional for LLM entries)
+    voice: str | None = None
+    latency_ms: int | None = None
 
 
 class UsageStatsResponse(BaseModel):
-    """Aggregated LLM usage statistics response."""
+    """Aggregated LLM and voice usage statistics response."""
 
     total_tokens: int
     input_tokens: int
     output_tokens: int
     total_cost: float
+    llm_cost: float = 0.0
+    voice_cost: float = 0.0
+    voice_requests: int = 0
     total_requests: int
     success_rate: float
     models: list[ModelUsageStats]
@@ -451,7 +459,7 @@ class VoiceChatApiResponse(BaseModel):
     has_audio: bool = False  # Indicates if audio_response is available
 
 
-@router.post("/voice-chat")
+@router.post("/voice-chat", response_model=None)
 async def voice_chat(
     audio: UploadFile = File(..., description="Audio file to transcribe"),
     conversation_id: str | None = Query(None, description="Continue existing conversation"),

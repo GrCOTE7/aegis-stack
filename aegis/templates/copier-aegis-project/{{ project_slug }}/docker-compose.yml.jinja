@@ -10,10 +10,17 @@ x-app: &app
     - ${AEGIS_STACK_ENV_FILE:-.env}
   volumes:
     - .:/code
+{%- if ai_rag %}
+    - models-cache:/app/models
+{%- endif %}
   environment:
     # Docker container marker for entrypoint script
     - DOCKER_CONTAINER=1
     - PORT=${PORT:-8000}
+{%- if ai_rag %}
+    # RAG model cache (shared across containers)
+    - RAG_MODEL_CACHE_DIR=/app/models
+{%- endif %}
   labels:
     logging: "aegis-stack"
 
@@ -72,13 +79,13 @@ services:
     <<: *app
     command:
       - scheduler
-{%- if include_redis or scheduler_backend == 'postgres' %}
+{%- if include_redis or scheduler_backend == 'postgres' or database_engine == 'postgres' %}
     depends_on:
 {%- if include_redis %}
       redis:
         condition: service_healthy
 {%- endif %}
-{%- if scheduler_backend == 'postgres' %}
+{%- if scheduler_backend == 'postgres' or database_engine == 'postgres' %}
       webserver:
         condition: service_healthy
 {%- endif %}
@@ -294,4 +301,7 @@ volumes:
 {%- endif %}
 {%- if ollama_mode == "docker" %}
   ollama-data:
+{%- endif %}
+{%- if ai_rag %}
+  models-cache:
 {%- endif %}

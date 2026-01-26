@@ -7,10 +7,10 @@ codebase question answering using ChromaDB with built-in embeddings.
 
 import os
 
-# Suppress HuggingFace tokenizer parallelism warnings.
-# IMPORTANT: This must be set before any HuggingFace tokenizers (e.g., via
-# sentence-transformers or transformers) are imported. This module should be
-# imported early in the application startup to ensure this takes effect.
+# Suppress HuggingFace noise (MUST be set before any HF imports)
+# This module should be imported early in application startup.
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+os.environ.setdefault("HF_HUB_DISABLE_PROGRESS_BARS", "1")
+os.environ.setdefault("TRANSFORMERS_VERBOSITY", "error")
 
 __all__ = []

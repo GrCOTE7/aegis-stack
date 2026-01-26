@@ -20,6 +20,9 @@ from sqlmodel import Session, select
 from app.core.db import db_session, engine
 from .llm_catalog_context import get_llm_catalog_context
 from .models.llm import LargeLanguageModel, LLMPrice, LLMUsage, LLMVendor
+{%- if ai_voice %}
+from .voice.usage import VoiceUsage
+{%- endif %}
 {% endif %}
 
 from app.core.log import logger
@@ -232,11 +235,12 @@ class AIService:
                 language=transcription.language,
             )
 
-            # 2. Pass transcription to chat
+            # 2. Pass transcription to chat (with voice_mode for voice-friendly response)
             response = await self.chat(
                 message=transcription.text,
                 conversation_id=conversation_id,
                 user_id=user_id,
+                voice_mode=voice_mode,
 {% if ai_rag %}
                 use_rag=use_rag,
                 rag_collection=rag_collection,
@@ -244,16 +248,11 @@ class AIService:
 {% endif %}
             )
 
-            # 3. Get the full response content
+            # 3. Get the response content (already voice-ready when voice_mode=True)
             full_response = response.content
-
-            # 4. Optionally summarize for voice output
             voice_response = full_response
-            if voice_mode and len(full_response) > 200:
-                # Only summarize longer responses
-                voice_response = await self._summarize_for_voice(full_response)
 
-            # 5. Optionally synthesize voice response
+            # 4. Optionally synthesize voice response
             audio_response: bytes | None = None
             if return_audio:
                 logger.info("voice_chat.tts_start", text_length=len(voice_response))
@@ -279,47 +278,12 @@ class AIService:
             logger.error(error_msg)
             raise AIServiceError(error_msg) from e
 
-    async def _summarize_for_voice(self, text: str) -> str:
-        """
-        Summarize a response for spoken output.
-
-        Creates a concise, conversational version of the response
-        that's natural to speak aloud.
-
-        Args:
-            text: The full response text to summarize
-
-        Returns:
-            A voice-optimized summary (2-3 sentences)
-        """
-        summary_prompt = (
-            "Summarize the following response for spoken output. "
-            "Keep it concise (2-3 sentences max), conversational, and natural to speak aloud. "
-            "Remove technical formatting, lists, code blocks, and markdown. "
-            "Focus on the key information:\n\n"
-            f"{text}"
-        )
-
-        # Use a temporary conversation for summarization
-        # Don't save to history as this is an internal operation
-        try:
-            # Create a lightweight chat call for summarization
-            result = await self.chat(
-                message=summary_prompt,
-                conversation_id=None,  # New conversation
-                user_id="system_voice_summarize",
-            )
-            return result.content
-        except Exception as e:
-            logger.warning(f"Voice summarization failed, using truncated original: {e}")
-            # Fallback: return first 200 chars
-            return text[:200] + "..." if len(text) > 200 else text
-
     async def chat(
         self,
         message: str,
         conversation_id: str | None = None,
         user_id: str = "default",
+        voice_mode: bool = False,
 {% if ai_rag %}
         use_rag: bool = False,
         rag_collection: str | None = None,
@@ -333,6 +297,7 @@ class AIService:
             message: The user's message
             conversation_id: Optional conversation ID (creates new if None)
             user_id: User identifier for conversation ownership
+            voice_mode: When True, response will be optimized for speech synthesis
 {% if ai_rag %}
             use_rag: Enable RAG context injection from indexed codebase
             rag_collection: Collection to search (uses config default if None)
@@ -396,6 +361,7 @@ class AIService:
                 health_warning=health_warning,
                 usage_context=usage_context,
                 catalog_context=catalog_context,
+                voice_mode=voice_mode,
             )
 
             # Get AI response
@@ -790,6 +756,7 @@ class AIService:
         health_warning: str | None = None,
         usage_context: UsageContext | None = None,
         catalog_context: str | None = None,
+        voice_mode: bool = False,
     ) -> tuple[Any, str]:
         """
         Create agent for request and build conversation context.
@@ -804,6 +771,7 @@ class AIService:
             health_warning: Optional warning if server is down
             usage_context: Optional usage context for self-awareness
             catalog_context: Optional LLM catalog context for model awareness
+            voice_mode: When True, append voice-friendly output instructions
 
         Returns:
             tuple[Any, str]: (agent instance, conversation context string)
@@ -847,6 +815,7 @@ class AIService:
             use_rag=formatted_rag is not None,
             current_model=config.model,
             current_provider=config.provider.value,
+            voice_mode=voice_mode,
         )
 
         # Add server-down warning if applicable
@@ -1571,6 +1540,9 @@ class AIService:
                 "input_tokens": 0,
                 "output_tokens": 0,
                 "total_cost": 0.0,
+                "llm_cost": 0.0,
+                "voice_cost": 0.0,
+                "voice_requests": 0,
                 "total_requests": 0,
                 "success_rate": 100.0,
                 "models": [],
@@ -1585,6 +1557,7 @@ class AIService:
         end_time: datetime | None,
     ) -> dict[str, Any]:
         """Get aggregated usage totals using SQL-level aggregations."""
+        # LLM usage totals
         stmt = select(
             func.coalesce(func.sum(LLMUsage.input_tokens), 0).label("input_tokens"),
             func.coalesce(func.sum(LLMUsage.output_tokens), 0).label("output_tokens"),
@@ -1600,6 +1573,10 @@ class AIService:
         output_tokens = result.output_tokens if result else 0
         total_requests = result.total_requests if result else 0
         success_count = result.success_count if result else 0
+        llm_cost = float(result.total_cost) if result else 0.0
+
+        # Voice usage totals
+        voice_stats = self._get_voice_totals(session, user_id, start_time, end_time)
 
         success_rate = (
             (success_count / total_requests * 100) if total_requests > 0 else 100.0
@@ -1609,10 +1586,46 @@ class AIService:
             "total_tokens": input_tokens + output_tokens,
             "input_tokens": input_tokens,
             "output_tokens": output_tokens,
-            "total_cost": float(result.total_cost) if result else 0.0,
+            "total_cost": llm_cost + voice_stats["voice_cost"],
+            "llm_cost": llm_cost,
+            "voice_cost": voice_stats["voice_cost"],
+            "voice_requests": voice_stats["voice_requests"],
             "total_requests": total_requests,
             "success_rate": round(success_rate, 1),
         }
+
+    def _get_voice_totals(
+        self,
+        session: Any,
+        user_id: str | None,
+        start_time: datetime | None,
+        end_time: datetime | None,
+    ) -> dict[str, Any]:
+        """Get voice usage totals (STT, TTS, native audio)."""
+{%- if ai_voice %}
+        stmt = select(
+            func.coalesce(func.sum(VoiceUsage.total_cost), 0.0).label("total_cost"),
+            func.count(VoiceUsage.id).label("total_requests"),
+        )
+
+        # Apply filters for VoiceUsage
+        if user_id:
+            stmt = stmt.where(VoiceUsage.user_id == user_id)
+        if start_time:
+            stmt = stmt.where(VoiceUsage.timestamp >= start_time)
+        if end_time:
+            stmt = stmt.where(VoiceUsage.timestamp <= end_time)
+
+        result = session.exec(stmt).first()
+
+        return {
+            "voice_cost": float(result.total_cost) if result else 0.0,
+            "voice_requests": result.total_requests if result else 0,
+        }
+{%- else %}
+        # Voice not enabled
+        return {"voice_cost": 0.0, "voice_requests": 0}
+{%- endif %}
 
     def _get_model_breakdown(
         self,
@@ -1686,9 +1699,10 @@ class AIService:
     ) -> list[dict[str, Any]]:
         """Get recent usage activity with model info.
 
-        Uses LEFT JOIN to include orphan usage records (models not in catalog).
+        Combines LLM and voice usage, sorted by timestamp.
         """
-        stmt = (
+        # LLM usage
+        llm_stmt = (
             select(
                 LLMUsage.timestamp,
                 LLMUsage.model_id,
@@ -1702,12 +1716,13 @@ class AIService:
             .limit(limit)
         )
 
-        stmt = self._apply_usage_filters(stmt, user_id, start_time, end_time)
-        results = session.exec(stmt).all()
+        llm_stmt = self._apply_usage_filters(llm_stmt, user_id, start_time, end_time)
+        llm_results = session.exec(llm_stmt).all()
 
-        return [
+        activities = [
             {
                 "timestamp": r.timestamp.isoformat(),
+                "type": "llm",
                 "model": r.model_id,
                 "input_tokens": r.input_tokens,
                 "output_tokens": r.output_tokens,
@@ -1715,8 +1730,52 @@ class AIService:
                 "success": r.success,
                 "action": r.action,
             }
-            for r in results
+            for r in llm_results
         ]
+
+{%- if ai_voice %}
+        # Voice usage
+        voice_stmt = (
+            select(
+                VoiceUsage.timestamp,
+                VoiceUsage.usage_type,
+                VoiceUsage.provider,
+                VoiceUsage.model,
+                VoiceUsage.voice,
+                VoiceUsage.total_cost,
+                VoiceUsage.success,
+                VoiceUsage.latency_ms,
+            )
+            .order_by(VoiceUsage.timestamp.desc())
+            .limit(limit)
+        )
+
+        if user_id:
+            voice_stmt = voice_stmt.where(VoiceUsage.user_id == user_id)
+        if start_time:
+            voice_stmt = voice_stmt.where(VoiceUsage.timestamp >= start_time)
+        if end_time:
+            voice_stmt = voice_stmt.where(VoiceUsage.timestamp <= end_time)
+
+        voice_results = session.exec(voice_stmt).all()
+
+        activities.extend([
+            {
+                "timestamp": r.timestamp.isoformat(),
+                "type": r.usage_type,  # stt, tts, native_audio
+                "model": r.model or r.provider,
+                "voice": r.voice,
+                "cost": float(r.total_cost),
+                "success": r.success,
+                "latency_ms": r.latency_ms,
+            }
+            for r in voice_results
+        ])
+{%- endif %}
+
+        # Sort combined results by timestamp and limit
+        activities.sort(key=lambda x: x["timestamp"], reverse=True)
+        return activities[:limit]
 
     def _apply_usage_filters(
         self,

@@ -1,10 +1,12 @@
 """
 AI service module.
 
-Provides AI chatbot functionality with configurable AI framework,
-including Speech-to-Text (STT) capabilities for voice interactions.
+Provides AI chatbot functionality with configurable AI framework.
+{%- if ai_voice == "yes" %}
+Includes Speech-to-Text (STT) and Text-to-Speech (TTS) capabilities for voice interactions.
+{%- endif %}
 """
-
+{% if ai_voice == "yes" %}
 from .voice import (
     AudioFormat,
     AudioInput,
@@ -25,3 +27,6 @@ __all__ = [
     "VoiceChatResponse",
     "STTService",
 ]
+{% else %}
+__all__: list[str] = []
+{% endif %}

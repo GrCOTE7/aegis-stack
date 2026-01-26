@@ -83,50 +83,12 @@ class VectorStoreManager:
 
     @property
     def embedding_function(self) -> Any:
-        """Get embedding function based on configured provider (lazy initialization)."""
+        """Get embedding function from shared singleton."""
         if self._embedding_function is None:
-            self._embedding_function = self._create_embedding_function()
+            from .embeddings import get_embedding_function
+
+            self._embedding_function = get_embedding_function()
         return self._embedding_function
-
-    def _create_embedding_function(self) -> Any:
-        """Create embedding function based on configured provider."""
-        if self.embedding_provider == "openai":
-            if not self.openai_api_key:
-                raise VectorStoreError(
-                    "OpenAI API key required when using openai embedding provider. "
-                    "Set OPENAI_API_KEY in your environment."
-                )
-            from chromadb.utils.embedding_functions import OpenAIEmbeddingFunction
-
-            logger.debug(
-                "vectorstore.embedding.openai",
-                model=self.embedding_model,
-            )
-            return OpenAIEmbeddingFunction(
-                api_key=self.openai_api_key,
-                model_name=self.embedding_model,
-            )
-        else:
-            # Default: sentence-transformers
-            from chromadb.utils.embedding_functions import (
-                SentenceTransformerEmbeddingFunction,
-            )
-
-            logger.debug(
-                "vectorstore.embedding.sentence_transformers",
-                model=self.embedding_model,
-                cache_dir=self.model_cache_dir,
-            )
-            # Pass cache_folder if specified (for local development)
-            # In Docker, SENTENCE_TRANSFORMERS_HOME env var handles this
-            if self.model_cache_dir:
-                return SentenceTransformerEmbeddingFunction(
-                    model_name=self.embedding_model,
-                    cache_folder=self.model_cache_dir,
-                )
-            return SentenceTransformerEmbeddingFunction(
-                model_name=self.embedding_model,
-            )
 
     async def add_documents(
         self,
