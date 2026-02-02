@@ -27,7 +27,7 @@ from .voice.usage import VoiceUsage
 
 from app.core.log import logger
 
-from .config import get_ai_config
+from .config import AIServiceConfig, get_ai_config
 from .conversation import ConversationManager
 from .voice import (
     AudioInput,
@@ -132,10 +132,16 @@ class AIService:
     Handles chat completions, conversation management, and provider abstraction.
     """
 
-    def __init__(self, settings: Any):
-        """Initialize AI service with configuration."""
+    def __init__(self, settings: Any, config: AIServiceConfig | None = None):
+        """Initialize AI service with configuration.
+
+        Args:
+            settings: Application settings object.
+            config: Optional config override. If None, uses get_ai_config(settings).
+                    Use AIServiceConfig.for_speech_text(settings) for voice pipelines.
+        """
         self.settings = settings
-        self.config = get_ai_config(settings)
+        self.config = config if config is not None else get_ai_config(settings)
         self.conversation_manager = ConversationManager()
         self._stt_service: STTService | None = None
         self._tts_service: TTSService | None = None
@@ -432,6 +438,10 @@ class AIService:
             error_msg = f"AI provider error: {e}"
             logger.error(error_msg)
             raise ProviderError(error_msg) from e
+
+        except ProviderNotInstalledError:
+            # Re-raise so CLI can show helpful install message
+            raise
 {% endif %}
         except Exception as e:
             error_msg = f"Chat processing failed: {e}"
@@ -1331,12 +1341,11 @@ class AIService:
             dict: Token usage with input_tokens and output_tokens
         """
 {% if ai_framework == "pydantic-ai" %}
-        # PydanticAI stores usage in result.usage (attribute, not method)
-        if hasattr(result, "usage") and result.usage and not callable(result.usage):
-            return {
-                "input_tokens": result.usage.request_tokens or 0,
-                "output_tokens": result.usage.response_tokens or 0,
-            }
+        usage = result.usage()
+        return {
+            "input_tokens": usage.request_tokens or 0,
+            "output_tokens": usage.response_tokens or 0,
+        }
 {% else %}
         # LangChain stores usage in response_metadata
         if hasattr(result, "response_metadata") and result.response_metadata is not None:

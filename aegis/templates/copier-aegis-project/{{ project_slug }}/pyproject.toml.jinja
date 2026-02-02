@@ -74,6 +74,8 @@ dependencies = [
     "soundfile>=0.12.1",
     # LiteLLM for unified native audio support across providers
     "litellm>=1.70.0",
+    # Local STT with faster-whisper
+    "faster-whisper>=1.0.0",
 {%- endif %}
 {%- if ai_framework == "pydantic-ai" %}
 {# Map provider names to pydantic-ai-slim extras (OpenAI-compatible providers -> openai) #}
@@ -141,10 +143,11 @@ docs = [
     "mkdocs-gen-files==0.5.0",
     "pymdown-extensions==10.16.1",
 ]
-{%- if include_ai %}
-# Local TTS with Qwen3-TTS (requires GPU/CUDA)
-qwen-tts = [
-    "qwen-tts>=0.0.5",
+{%- if include_ai and ai_voice %}
+# Local TTS with MLX (Apple Silicon Mac only)
+mlx-tts = [
+    "mlx-audio>=0.3.0; sys_platform == 'darwin'",
+    "transformers>=5.0.0rc3; sys_platform == 'darwin'",  # mlx-audio requires pre-release
 ]
 {%- endif %}
 

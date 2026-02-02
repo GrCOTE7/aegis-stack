@@ -22,8 +22,15 @@ class STTProvider(str, Enum):
 class TTSProvider(str, Enum):
     """Supported Text-to-Speech providers."""
 
+    # Cloud providers (via LiteLLM)
     OPENAI = "openai"  # OpenAI TTS API
-    QWEN3 = "qwen3"  # Qwen3-TTS (local, Apache 2.0)
+    GOOGLE = "google"  # Google Gemini TTS
+    ELEVENLABS = "elevenlabs"  # ElevenLabs API
+    AZURE = "azure"  # Azure Cognitive Services
+    DEEPGRAM = "deepgram"  # Deepgram Aura
+
+    # Local providers
+    MLX_QWEN3 = "mlx_qwen3"  # Qwen3-TTS via MLX (Apple Silicon Mac)
 
 
 class OpenAIVoice(str, Enum):
@@ -37,14 +44,18 @@ class OpenAIVoice(str, Enum):
     SHIMMER = "shimmer"  # Clear, expressive voice
 
 
-class Qwen3Voice(str, Enum):
-    """Available Qwen3-TTS preset voices."""
+class ElevenLabsVoice(str, Enum):
+    """Available ElevenLabs TTS voices."""
 
-    # Custom voice model preset speakers
-    VIVIAN = "Vivian"
-    ETHAN = "Ethan"
-    CHELSIE = "Chelsie"
-    LAYLA = "Layla"
+    RACHEL = "rachel"  # Calm, warm voice
+    DOMI = "domi"  # Strong, confident voice
+    BELLA = "bella"  # Soft, gentle voice
+    ANTONI = "antoni"  # Well-rounded male voice
+    ELLI = "elli"  # Emotional range
+    JOSH = "josh"  # Deep, young male
+    ARNOLD = "arnold"  # Crisp, authoritative
+    ADAM = "adam"  # Deep, narrative
+    SAM = "sam"  # Raspy, dynamic
 
 
 class AudioFormat(str, Enum):
@@ -240,13 +251,20 @@ class VoiceInfo(BaseModel):
 class VoiceSettingsResponse(BaseModel):
     """Current voice settings response."""
 
+    # STT (Speech-to-Text)
+    stt_provider: str = "openai_whisper"
+    stt_model: str = "whisper-1"
+    stt_language: str | None = None
+
+    # Speech Text LLM (generates text before TTS)
+    speech_text_provider: str = "openai"
+    speech_text_model: str = "gpt-4o-mini"
+
+    # TTS (Text-to-Speech)
     tts_provider: str = "openai"
     tts_model: str = "tts-1"
     tts_voice: str = "alloy"
     tts_speed: float = 1.0
-    stt_provider: str = "openai_whisper"
-    stt_model: str = "whisper-1"
-    stt_language: str | None = None
 
 
 class VoiceSettingsUpdate(BaseModel):

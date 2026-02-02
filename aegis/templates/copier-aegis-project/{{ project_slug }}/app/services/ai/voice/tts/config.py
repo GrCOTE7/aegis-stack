@@ -31,16 +31,28 @@ class TTSConfig(BaseModel):
     # Provider-specific defaults
     DEFAULT_MODELS: dict[TTSProvider, str] = Field(
         default={
+            # Cloud providers (via LiteLLM)
             TTSProvider.OPENAI: "tts-1",
-            TTSProvider.QWEN3: "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+            TTSProvider.GOOGLE: "gemini-2.5-flash-preview-tts",
+            TTSProvider.ELEVENLABS: "eleven_monolingual_v1",
+            TTSProvider.AZURE: "tts",
+            TTSProvider.DEEPGRAM: "aura-asteria-en",
+            # Local providers
+            TTSProvider.MLX_QWEN3: "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit",
         },
         exclude=True,
     )
 
     DEFAULT_VOICES: dict[TTSProvider, str] = Field(
         default={
+            # Cloud providers (via LiteLLM)
             TTSProvider.OPENAI: "alloy",
-            TTSProvider.QWEN3: "Vivian",
+            TTSProvider.GOOGLE: "Kore",
+            TTSProvider.ELEVENLABS: "rachel",
+            TTSProvider.AZURE: "en-US-JennyNeural",
+            TTSProvider.DEEPGRAM: "aura-asteria-en",
+            # Local providers
+            TTSProvider.MLX_QWEN3: "vivian",
         },
         exclude=True,
     )
@@ -53,16 +65,9 @@ class TTSConfig(BaseModel):
         except ValueError:
             provider = TTSProvider.OPENAI
 
-        # Get provider-specific model/voice from settings
+        # Get model/voice from settings
         model = settings.TTS_MODEL
         voice = settings.TTS_VOICE
-
-        # For Qwen3, use specific settings if generic ones aren't set
-        if provider == TTSProvider.QWEN3:
-            if not model:
-                model = settings.TTS_QWEN_MODEL
-            if not voice:
-                voice = settings.TTS_QWEN_SPEAKER
 
         return cls(
             provider=provider,
@@ -87,7 +92,11 @@ class TTSConfig(BaseModel):
         """Get API key for the current provider."""
         api_key_mapping = {
             TTSProvider.OPENAI: "OPENAI_API_KEY",
-            # Qwen3 is local, no API key needed
+            TTSProvider.GOOGLE: "GOOGLE_API_KEY",
+            TTSProvider.ELEVENLABS: "ELEVENLABS_API_KEY",
+            TTSProvider.AZURE: "AZURE_API_KEY",
+            TTSProvider.DEEPGRAM: "DEEPGRAM_API_KEY",
+            # MLX Qwen3 is local, no API key needed
         }
 
         key_name = api_key_mapping.get(self.provider)
@@ -98,7 +107,7 @@ class TTSConfig(BaseModel):
 
     def is_local_provider(self) -> bool:
         """Check if the current provider runs locally."""
-        return self.provider in {TTSProvider.QWEN3}
+        return self.provider == TTSProvider.MLX_QWEN3
 
     def validate(self, settings: Any) -> list[str]:
         """
@@ -110,14 +119,18 @@ class TTSConfig(BaseModel):
         errors = []
 
         # Check API key for cloud providers
-        cloud_providers = {TTSProvider.OPENAI}
+        api_key_mapping = {
+            TTSProvider.OPENAI: "OPENAI_API_KEY",
+            TTSProvider.GOOGLE: "GOOGLE_API_KEY",
+            TTSProvider.ELEVENLABS: "ELEVENLABS_API_KEY",
+            TTSProvider.AZURE: "AZURE_API_KEY",
+            TTSProvider.DEEPGRAM: "DEEPGRAM_API_KEY",
+        }
 
-        if self.provider in cloud_providers:
+        if self.provider in api_key_mapping:
             api_key = self.get_api_key(settings)
             if not api_key:
-                key_name = {
-                    TTSProvider.OPENAI: "OPENAI_API_KEY",
-                }.get(self.provider)
+                key_name = api_key_mapping[self.provider]
                 errors.append(
                     f"Missing API key for {self.provider.value}. "
                     f"Set {key_name} environment variable."

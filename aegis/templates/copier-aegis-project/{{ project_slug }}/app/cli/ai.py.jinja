@@ -7,7 +7,6 @@ Command-line interface for AI service management and chat functionality.
 import os
 import shutil
 
-import typer
 from prompt_toolkit import PromptSession
 from prompt_toolkit.formatted_text import HTML
 from prompt_toolkit.key_binding import KeyBindings
@@ -17,10 +16,12 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import Prompt
 from rich.table import Table
+import typer
 
 from app.cli.chat_completer import ChatCompleter
 from app.cli.slash_commands import SlashCommandHandler
 from app.cli.status_line import ChatSessionState, create_toolbar_callback
+
 from ..core.config import settings
 from ..core.log import setup_logging, suppress_logs
 from ..services.ai.config import get_ai_config
@@ -62,7 +63,7 @@ def status() -> None:
 
     # Basic info
     typer.echo(
-        typer.style("Engine: ", fg=typer.colors.CYAN) + "{{ ai_framework }}"
+        typer.style("Engine: ", fg=typer.colors.CYAN) + "pydantic-ai"
     )
     status_color = typer.colors.GREEN if ai_config.enabled else typer.colors.RED
     status_text = "Enabled" if ai_config.enabled else "Disabled"
@@ -200,7 +201,7 @@ def providers() -> None:
     console.print(table)
     console.print()
     console.print(
-        "[dim]Tip: Run '{{ project_slug }} ai add-provider <name>' "
+        "[dim]Tip: Run 'my-app ai add-provider <name>' "
         "to install missing providers.[/dim]"
     )
 
@@ -266,7 +267,7 @@ def add_provider(
     # Check if dependency is installed
     missing_dep = get_missing_dependency(provider)
     if missing_dep:
-        console.print(f"  [dim]>[/dim] Checking dependencies...")
+        console.print("  [dim]>[/dim] Checking dependencies...")
         # Escape brackets for Rich (otherwise [google] is interpreted as style)
         display_dep = missing_dep.replace("[", r"\[")
         console.print(f"    [yellow]{display_dep} not installed[/yellow]")
@@ -300,7 +301,7 @@ def add_provider(
             console.print(f"  [cyan]pip install {missing_dep}[/cyan]")
             raise typer.Exit(1)
     else:
-        console.print(f"  [green]✓[/green] Dependencies already installed")
+        console.print("  [green]✓[/green] Dependencies already installed")
 
     # Handle API key configuration
     if provider_enum != AIProvider.PUBLIC and not skip_api_key:
@@ -312,7 +313,7 @@ def add_provider(
             console.print(f"  [green]✓[/green] {env_var_name} already set")
         else:
             api_key_url = PROVIDER_API_KEY_URLS.get(provider.lower())
-            console.print(f"  [dim]>[/dim] Checking API key...")
+            console.print("  [dim]>[/dim] Checking API key...")
             console.print(f"    [yellow]No {env_var_name} found[/yellow]")
             console.print()
 
@@ -350,7 +351,7 @@ def add_provider(
     console.print()
     console.print("[bold green]Provider added successfully![/bold green]")
     console.print()
-    console.print(f"[dim]Test with: {{ project_slug }} ai chat \"Hello\"[/dim]")
+    console.print("[dim]Test with: my-app ai chat \"Hello\"[/dim]")
 
 
 @app.command("use-provider")
@@ -397,11 +398,11 @@ def use_provider(
         console.print()
         console.print("[yellow]Run this command first:[/yellow]")
         console.print(
-            f"  [cyan]{{ project_slug }} ai add-provider {provider}[/cyan]"
+            f"  [cyan]my-app ai add-provider {provider}[/cyan]"
         )
         raise typer.Exit(1)
 
-    console.print(f"  [green]✓[/green] Dependencies installed")
+    console.print("  [green]✓[/green] Dependencies installed")
 
     # Check API key (except for PUBLIC)
     if provider_enum != AIProvider.PUBLIC:
@@ -413,7 +414,7 @@ def use_provider(
             console.print()
             console.print("[yellow]Consider running:[/yellow]")
             console.print(
-                f"  [cyan]{{ project_slug }} ai add-provider {provider}[/cyan]"
+                f"  [cyan]my-app ai add-provider {provider}[/cyan]"
             )
             console.print("[dim]to configure your API key[/dim]")
             console.print()
@@ -450,7 +451,7 @@ def chat(
     verbose: bool = typer.Option(
         False, "--verbose", "-v", help="Show conversation metadata"
     ),
-{% if ai_rag %}
+
     use_rag: bool | None = typer.Option(
         None, "--rag/--no-rag", help="Enable RAG (auto-enables if collections exist)"
     ),
@@ -463,7 +464,7 @@ def chat(
     show_sources: bool = typer.Option(
         False, "--sources/--no-sources", help="Show source references in output"
     ),
-{% endif %}
+
 ) -> None:
     """Send a chat message or start interactive session.
 
@@ -474,10 +475,10 @@ def chat(
         ai chat                       - Interactive session (resumes last conversation)
         ai chat --new                 - Start fresh conversation
         ai chat -c abc123 "Continue"  - Continue a specific conversation
-{% if ai_rag %}
+
         ai chat --rag "How does auth work?" - Query with RAG context
         ai chat --rag -k 10 --collection my-codebase "Explain the API"
-{% endif %}
+
     """
     import asyncio
 
@@ -500,7 +501,7 @@ def chat(
                             err=True,
                         )
 
-{% if ai_rag %}
+
                 # Auto-detect RAG if not explicitly set
                 rag_enabled = use_rag
                 rag_collection = collection
@@ -526,7 +527,7 @@ def chat(
                     except Exception:
                         rag_enabled = False
 
-{% endif %}
+
                 if message:
                     # Single message mode
                     await _send_message(
@@ -536,31 +537,31 @@ def chat(
                         user_id,
                         stream,
                         verbose,
-{% if ai_rag %}
+
                         use_rag=rag_enabled,
                         rag_collection=rag_collection,
                         rag_top_k=top_k,
                         show_sources=show_sources,
-{% endif %}
+
                     )
                 else:
                     # Interactive session mode
                     await _interactive_chat_session(
                         ai_service,
                         conversation_id,
-{% if ai_rag %}
+
                         use_rag=rag_enabled,
                         rag_collection=rag_collection,
                         rag_top_k=top_k,
                         show_sources=show_sources,
-{% endif %}
+
                     )
         except KeyboardInterrupt:
             typer.echo("\nChat interrupted", err=True)
             raise typer.Exit(1)
         except Exception as e:
             error_str = str(e)
-{% if ai_rag %}
+
             # Provide helpful guidance for RAG collection errors
             if "No RAG collection specified" in error_str:
                 console.print()
@@ -569,14 +570,14 @@ def chat(
                 console.print("To get started:")
                 console.print()
                 console.print("  1. Index your codebase:")
-                console.print("     [cyan]{{ project_slug }} rag index . --collection my-code[/cyan]")
+                console.print("     [cyan]my-app rag index . --collection my-code[/cyan]")
                 console.print()
                 console.print("  2. Query with the collection:")
-                console.print('     [cyan]{{ project_slug }} ai chat --rag --collection my-code "Your question"[/cyan]')
+                console.print('     [cyan]my-app ai chat --rag --collection my-code "Your question"[/cyan]')
                 console.print()
-                console.print("  [dim]Tip: Run '{{ project_slug }} rag list' to see existing collections.[/dim]")
+                console.print("  [dim]Tip: Run 'my-app rag list' to see existing collections.[/dim]")
                 raise typer.Exit(1)
-{% endif %}
+
             typer.echo(f"Error: {e}", err=True)
             raise typer.Exit(1)
 
@@ -661,7 +662,7 @@ def voice(
         False, "--voice", "-v", help="Summarize response for spoken output"
     ),
     user_id: str = typer.Option("cli-user", "--user-id", "-u", help="User identifier"),
-{% if ai_rag %}
+
     use_rag: bool = typer.Option(
         False, "--rag", help="Enable RAG context injection"
     ),
@@ -671,7 +672,7 @@ def voice(
     top_k: int | None = typer.Option(
         None, "--top-k", "-k", help="Number of RAG results to use"
     ),
-{% endif %}
+
 ) -> None:
     """
     Send voice input to AI agent.
@@ -684,9 +685,9 @@ def voice(
         my-app ai voice recording.wav
         my-app ai voice recording.mp3 --voice
         my-app ai voice recording.wav -c abc123
-{% if ai_rag %}
+
         my-app ai voice recording.wav --rag
-{% endif %}
+
     """
     import asyncio
     from pathlib import Path
@@ -722,7 +723,10 @@ def voice(
             )
 
             with suppress_logs():
-                ai_service = AIService(settings)
+                # Use speech_text config for voice pipeline (separate from main AI settings)
+                from app.services.ai.config import AIServiceConfig
+                speech_config = AIServiceConfig.for_speech_text(settings)
+                ai_service = AIService(settings, config=speech_config)
 
             # Show transcription progress
             from rich.progress import Progress, SpinnerColumn, TextColumn
@@ -741,11 +745,11 @@ def voice(
                     conversation_id=conversation_id,
                     user_id=user_id,
                     voice_mode=voice_mode,
-{% if ai_rag %}
+
                     use_rag=use_rag,
                     rag_collection=collection,
                     rag_top_k=top_k,
-{% endif %}
+
                 )
 
             # Display results
@@ -781,6 +785,13 @@ def voice(
 
         except KeyboardInterrupt:
             typer.echo("\nVoice chat interrupted", err=True)
+            raise typer.Exit(1)
+        except ProviderNotInstalledError as e:
+            # Clean display for missing provider
+            console.print()
+            console.print(f"[yellow]Provider not installed:[/yellow] {e.provider}")
+            console.print()
+            console.print(f"Run [green]'{e.cli_command}'[/green] to install it.")
             raise typer.Exit(1)
         except Exception as e:
             console.print(f"[red]Error:[/red] {e}")
@@ -819,10 +830,10 @@ def record(
 
     \b
     Examples:
-        {{ project_slug }} ai record                    # Record and transcribe
-        {{ project_slug }} ai record --send             # Record, transcribe, send to agent
-        {{ project_slug }} ai record --send --voice     # Record, transcribe, agent, TTS response
-        {{ project_slug }} ai record -o meeting.wav     # Save recording to file
+        my-app ai record                    # Record and transcribe
+        my-app ai record --send             # Record, transcribe, send to agent
+        my-app ai record --send --voice     # Record, transcribe, agent, TTS response
+        my-app ai record -o meeting.wav     # Save recording to file
 
     \b
     Controls:
@@ -830,10 +841,10 @@ def record(
         Press Ctrl+C to cancel
     """
     import asyncio
+    from pathlib import Path
     import subprocess
     import tempfile
     import time
-    from pathlib import Path
 
     # Check for sounddevice
     try:
@@ -968,7 +979,10 @@ def record(
             )
 
             with suppress_logs():
-                ai_service = AIService(settings)
+                # Use speech_text config for voice pipeline (separate from main AI settings)
+                from app.services.ai.config import AIServiceConfig
+                speech_config = AIServiceConfig.for_speech_text(settings)
+                ai_service = AIService(settings, config=speech_config)
 
             # Transcribe
             from rich.progress import Progress, SpinnerColumn, TextColumn
@@ -1071,6 +1085,7 @@ def record(
                             message=result.text,
                             conversation_id=conversation_id,
                             user_id=user_id,
+                            voice_mode=voice_response,  # Voice-friendly output when TTS enabled
                             use_rag=use_rag,
                             rag_collection=collection,
                         )
@@ -1102,8 +1117,9 @@ def record(
                             speech_request = SpeechRequest(text=tts_text)
                             speech_result = await ai_service.tts.synthesize(speech_request)
 
-                        # Save and play audio
-                        speech_path = Path(tempfile.mktemp(suffix=".mp3"))
+                        # Save and play audio (use correct extension for format)
+                        audio_ext = f".{speech_result.format.value}"
+                        speech_path = Path(tempfile.mktemp(suffix=audio_ext))
                         with open(speech_path, "wb") as f:
                             f.write(speech_result.audio)
 
@@ -1136,6 +1152,13 @@ def record(
         except KeyboardInterrupt:
             console.print("\n[yellow]Cancelled[/yellow]")
             raise typer.Exit(0)
+        except ProviderNotInstalledError as e:
+            # Clean display for missing provider
+            console.print()
+            console.print(f"[yellow]Provider not installed:[/yellow] {e.provider}")
+            console.print()
+            console.print(f"Run [green]'{e.cli_command}'[/green] to install it.")
+            raise typer.Exit(1)
         except Exception as e:
             console.print(f"[red]Error:[/red] {e}")
             raise typer.Exit(1)
@@ -1255,6 +1278,13 @@ def transcribe(
 
         except KeyboardInterrupt:
             typer.echo("\nTranscription interrupted", err=True)
+            raise typer.Exit(1)
+        except ProviderNotInstalledError as e:
+            # Clean display for missing provider
+            console.print()
+            console.print(f"[yellow]Provider not installed:[/yellow] {e.provider}")
+            console.print()
+            console.print(f"Run [green]'{e.cli_command}'[/green] to install it.")
             raise typer.Exit(1)
         except Exception as e:
             console.print(f"[red]Error:[/red] {e}")
@@ -1402,7 +1432,7 @@ def tts_status() -> None:
 
 
 
-{% if ai_backend != "memory" %}
+
 # ============================================================================
 # Usage Statistics Command (requires database backend)
 # ============================================================================
@@ -1448,9 +1478,9 @@ def usage(
         ai usage -r 20        - Show 20 recent activities
     """
     import asyncio
+    from datetime import datetime
     import json
     import sys
-    from datetime import datetime
 
     import httpx
     from pydantic import BaseModel
@@ -1680,7 +1710,7 @@ def usage(
     except Exception as e:
         console.print(f"[red]Error:[/red] {e}")
         sys.exit(1)
-{% endif %}
+
 
 
 # ============================================================================
@@ -1695,12 +1725,12 @@ async def _send_message(
     user_id: str,
     stream: bool,
     verbose: bool,
-{% if ai_rag %}
+
     use_rag: bool = False,
     rag_collection: str | None = None,
     rag_top_k: int | None = None,
     show_sources: bool = True,
-{% endif %}
+
 ) -> None:
     """Send a single message and display the response."""
     # Disable streaming for PUBLIC provider (fake streaming causes duplicates)
@@ -1715,12 +1745,12 @@ async def _send_message(
             conversation_id,
             user_id,
             verbose=verbose,
-{% if ai_rag %}
+
             use_rag=use_rag,
             rag_collection=rag_collection,
             rag_top_k=rag_top_k,
             show_sources=show_sources,
-{% endif %}
+
         )
     else:
         # Show thinking spinner for non-streaming responses
@@ -1738,11 +1768,11 @@ async def _send_message(
                 message=message,
                 conversation_id=conversation_id,
                 user_id=user_id,
-{% if ai_rag %}
+
                 use_rag=use_rag,
                 rag_collection=rag_collection,
                 rag_top_k=rag_top_k,
-{% endif %}
+
             )
         finally:
             spinner_live.stop()
@@ -1768,7 +1798,7 @@ async def _send_message(
         render_ai_header(console, inline=True)
         render_markdown_response(console, response.content)
 
-{% if ai_rag %}
+
         # Display source references if RAG was used
         if show_sources and response.metadata.get("rag_sources"):
             console.print()
@@ -1789,7 +1819,7 @@ async def _send_message(
                     style="dim",
                 )
 
-{% endif %}
+
         # Show response metadata (only in verbose mode)
         if verbose and conversation:
             response_time = conversation.metadata.get("last_response_time_ms")
@@ -1804,12 +1834,12 @@ async def _send_message(
 async def _interactive_chat_session(
     ai_service,
     conversation_id: str | None = None,
-{% if ai_rag %}
+
     use_rag: bool = False,
     rag_collection: str | None = None,
     rag_top_k: int | None = None,
     show_sources: bool = False,
-{% endif %}
+
 ) -> None:
     """Start an interactive chat session with continuous conversation."""
     import asyncio
@@ -1836,7 +1866,7 @@ async def _interactive_chat_session(
 
     console.print(f"  [dim]>[/dim] Model: [cyan]{ai_config.model}[/cyan]")
 
-{% if ai_rag %}
+
     # Check RAG status - verify collections exist if RAG is enabled
     if use_rag:
         try:
@@ -1855,7 +1885,7 @@ async def _interactive_chat_session(
     else:
         rag_status = "[dim]OFF[/dim]"
     console.print(f"  [dim]>[/dim] RAG: {rag_status}")
-{% endif %}
+
 
     # Fetch and display health status
     console.print("  [dim]>[/dim] Health: ", end="")
@@ -1895,15 +1925,11 @@ async def _interactive_chat_session(
     session_state = ChatSessionState(
         provider=get_provider_display_name(ai_config.provider),
         model=ai_config.model,
-{% if ai_rag %}
+
         rag_enabled=use_rag,
         rag_collection=rag_collection,
         show_sources=show_sources,
-{% else %}
-        rag_enabled=False,
-        rag_collection=None,
-        show_sources=False,
-{% endif %}
+
         cumulative_tokens=initial_tokens,
         cumulative_cost=initial_cost,
         version=__aegis_version__,
@@ -1916,19 +1942,19 @@ async def _interactive_chat_session(
         session_state=session_state,
         console=console,
         current_conversation_id=current_conversation_id,
-{% if ai_rag %}
+
         rag_enabled=use_rag,
         rag_collection=rag_collection,
         show_sources=show_sources,
-{% endif %}
+
     )
 
     # Pre-load model cache for tab completion (includes Ollama models)
     await command_handler.load_model_cache()
-{% if ai_rag %}
+
     # Pre-load collection cache for /rag tab completion
     await command_handler.load_collection_cache()
-{% endif %}
+
     # Create completer for slash command autocomplete
     chat_completer = ChatCompleter(command_handler)
 
@@ -2002,7 +2028,7 @@ async def _interactive_chat_session(
                             result.update_provider or session_state.provider,
                             result.update_model or session_state.model,
                         )
-{% if ai_rag %}
+
                     if result.update_rag is not None:
                         use_rag = result.update_rag
                         session_state.toggle_rag(use_rag, result.update_rag_collection)
@@ -2014,7 +2040,7 @@ async def _interactive_chat_session(
                         show_sources = result.update_show_sources
                         session_state.toggle_sources(show_sources)
                         command_handler.show_sources = show_sources
-{% endif %}
+
                 continue
 
             # Check for exit commands (kept for backwards compatibility)
@@ -2040,12 +2066,12 @@ async def _interactive_chat_session(
                         user_message,
                         current_conversation_id,
                         "cli-user",
-{% if ai_rag %}
+
                         use_rag=use_rag,
                         rag_collection=rag_collection,
                         rag_top_k=rag_top_k,
                         show_sources=show_sources,
-{% endif %}
+
                         session_state=session_state,
                     )
                     if returned_conversation_id:
@@ -2074,11 +2100,11 @@ async def _interactive_chat_session(
                             message=user_message,
                             conversation_id=current_conversation_id,
                             user_id="cli-user",
-{% if ai_rag %}
+
                             use_rag=use_rag,
                             rag_collection=rag_collection,
                             rag_top_k=rag_top_k,
-{% endif %}
+
                         )
                     finally:
                         spinner_live.stop()
@@ -2092,7 +2118,7 @@ async def _interactive_chat_session(
                     render_ai_header(console, inline=True)
                     render_markdown_response(console, response.content)
 
-{% if ai_rag %}
+
                     # Display source references if RAG was used
                     if show_sources and response.metadata.get("rag_sources"):
                         console.print()
@@ -2113,7 +2139,7 @@ async def _interactive_chat_session(
                                 style="dim",
                             )
 
-{% endif %}
+
                     # Update conversation reference
                     current_conversation_id = response.metadata.get(
                         "conversation_id", current_conversation_id
@@ -2147,12 +2173,12 @@ async def _stream_chat_response(
     conversation_id: str | None,
     user_id: str,
     verbose: bool = False,
-{% if ai_rag %}
+
     use_rag: bool = False,
     rag_collection: str | None = None,
     rag_top_k: int | None = None,
     show_sources: bool = True,
-{% endif %}
+
     session_state: ChatSessionState | None = None,
 ) -> str | None:
     """
@@ -2171,9 +2197,9 @@ async def _stream_chat_response(
     renderer = StreamingMarkdownRenderer(console)
     conversation_info = None
     response_time = None
-{% if ai_rag %}
+
     rag_sources = None
-{% endif %}
+
 
     # Set up signal handler for graceful interruption
     interrupted = False
@@ -2204,11 +2230,11 @@ async def _stream_chat_response(
                     conversation_id=conversation_id,
                     user_id=user_id,
                     stream_delta=True,
-{% if ai_rag %}
+
                     use_rag=use_rag,
                     rag_collection=rag_collection,
                     rag_top_k=rag_top_k,
-{% endif %}
+
                 ):
                     if interrupted:
                         spinner_live.stop()
@@ -2239,9 +2265,9 @@ async def _stream_chat_response(
                     if chunk.is_final:
                         conversation_info = chunk.conversation_id
                         response_time = chunk.metadata.get("response_time_ms")
-{% if ai_rag %}
+
                         rag_sources = chunk.metadata.get("rag_sources")
-{% endif %}
+
 
                         # Update status line token count and cost
                         if session_state is not None:
@@ -2293,7 +2319,7 @@ async def _stream_chat_response(
             renderer.finalize()
             console.print()
 
-{% if ai_rag %}
+
             # Display source references if RAG was used
             if show_sources and rag_sources:
                 console.print("---", style="dim")
@@ -2314,7 +2340,7 @@ async def _stream_chat_response(
                     )
                 console.print()
 
-{% endif %}
+
             if verbose and conversation_info:
                 conversation = ai_service.get_conversation(conversation_info)
                 if conversation:

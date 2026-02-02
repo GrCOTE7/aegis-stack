@@ -296,6 +296,219 @@ class VoicePreviewPlayer(ft.Container):
 
 
 # =============================================================================
+# Voice Pipeline Section
+# =============================================================================
+
+
+class VoicePipelineSection(ft.Container):
+    """Interactive voice pipeline: STT → LLM → TTS with dropdowns."""
+
+    def __init__(
+        self,
+        current_settings: dict[str, Any],
+        stt_providers: list[dict[str, Any]],
+        tts_providers: list[dict[str, Any]],
+        tts_voices: list[dict[str, Any]],
+        on_stt_provider_change: Callable[[ft.ControlEvent], None],
+        on_llm_provider_change: Callable[[ft.ControlEvent], None],
+        on_llm_model_change: Callable[[ft.ControlEvent], None],
+        on_tts_provider_change: Callable[[ft.ControlEvent], None],
+        on_tts_voice_change: Callable[[ft.ControlEvent], None],
+    ) -> None:
+        """Initialize voice pipeline section with interactive dropdowns."""
+        super().__init__()
+
+        self._settings = current_settings
+
+        # Known LLM providers for speech text generation
+        llm_providers = ["ollama", "openai", "anthropic", "google", "groq"]
+
+        # Extract current values
+        stt_provider = current_settings.get("stt_provider", "faster_whisper")
+        speech_text_provider = current_settings.get("speech_text_provider", "ollama")
+        speech_text_model = current_settings.get("speech_text_model", "qwen2.5:7b")
+        tts_provider = current_settings.get("tts_provider", "google")
+        tts_voice = current_settings.get("tts_voice", "Kore")
+
+        # STT Card with provider dropdown
+        stt_card = self._create_pipeline_card(
+            title="STT",
+            subtitle="Speech-to-Text",
+            icon=ft.Icons.MIC,
+            color=Theme.Colors.INFO,
+            dropdown=ft.Dropdown(
+                label="Provider",
+                value=stt_provider,
+                options=[
+                    ft.dropdown.Option(p["id"], p.get("name", p["id"]))
+                    for p in stt_providers
+                ],
+                on_change=on_stt_provider_change,
+                width=170,
+                border_radius=Theme.Components.INPUT_RADIUS,
+                bgcolor=ft.Colors.SURFACE,
+                border_color=ft.Colors.OUTLINE,
+                focused_border_color=Theme.Colors.PRIMARY,
+                text_size=12,
+            ),
+        )
+
+        # LLM Card with provider and model dropdowns
+        self._llm_model_field = ft.TextField(
+            label="Model",
+            value=speech_text_model,
+            width=170,
+            border_radius=Theme.Components.INPUT_RADIUS,
+            bgcolor=ft.Colors.SURFACE,
+            border_color=ft.Colors.OUTLINE,
+            focused_border_color=Theme.Colors.PRIMARY,
+            text_size=12,
+            on_change=on_llm_model_change,
+        )
+
+        llm_card = self._create_pipeline_card(
+            title="LLM",
+            subtitle="Speech Text",
+            icon=ft.Icons.AUTO_AWESOME,
+            color=Theme.Colors.PRIMARY,
+            dropdown=ft.Dropdown(
+                label="Provider",
+                value=speech_text_provider,
+                options=[ft.dropdown.Option(p, p.title()) for p in llm_providers],
+                on_change=on_llm_provider_change,
+                width=170,
+                border_radius=Theme.Components.INPUT_RADIUS,
+                bgcolor=ft.Colors.SURFACE,
+                border_color=ft.Colors.OUTLINE,
+                focused_border_color=Theme.Colors.PRIMARY,
+                text_size=12,
+            ),
+            extra_control=self._llm_model_field,
+        )
+
+        # TTS Card with provider and voice dropdowns
+        self._tts_voice_dropdown = ft.Dropdown(
+            label="Voice",
+            value=tts_voice,
+            options=[
+                ft.dropdown.Option(v["id"], v.get("name", v["id"])) for v in tts_voices
+            ]
+            if tts_voices
+            else [ft.dropdown.Option(tts_voice, tts_voice)],
+            on_change=on_tts_voice_change,
+            width=170,
+            border_radius=Theme.Components.INPUT_RADIUS,
+            bgcolor=ft.Colors.SURFACE,
+            border_color=ft.Colors.OUTLINE,
+            focused_border_color=Theme.Colors.PRIMARY,
+            text_size=12,
+        )
+
+        tts_card = self._create_pipeline_card(
+            title="TTS",
+            subtitle="Text-to-Speech",
+            icon=ft.Icons.VOLUME_UP,
+            color=Theme.Colors.SUCCESS,
+            dropdown=ft.Dropdown(
+                label="Provider",
+                value=tts_provider,
+                options=[
+                    ft.dropdown.Option(p["id"], p.get("name", p["id"]))
+                    for p in tts_providers
+                ],
+                on_change=on_tts_provider_change,
+                width=170,
+                border_radius=Theme.Components.INPUT_RADIUS,
+                bgcolor=ft.Colors.SURFACE,
+                border_color=ft.Colors.OUTLINE,
+                focused_border_color=Theme.Colors.PRIMARY,
+                text_size=12,
+            ),
+            extra_control=self._tts_voice_dropdown,
+        )
+
+        # Arrow connector - centered vertically
+        def make_arrow() -> ft.Container:
+            return ft.Container(
+                content=ft.Icon(
+                    ft.Icons.ARROW_FORWARD,
+                    size=28,
+                    color=ft.Colors.ON_SURFACE_VARIANT,
+                ),
+                padding=ft.padding.symmetric(horizontal=Theme.Spacing.MD),
+                alignment=ft.alignment.center,
+            )
+
+        # Pipeline row - center aligned
+        pipeline_row = ft.Row(
+            [stt_card, make_arrow(), llm_card, make_arrow(), tts_card],
+            alignment=ft.MainAxisAlignment.CENTER,
+            vertical_alignment=ft.CrossAxisAlignment.CENTER,
+            spacing=0,
+        )
+
+        self.content = CollapsibleSection(
+            title="Voice Pipeline",
+            content=ft.Container(
+                content=pipeline_row,
+                padding=ft.padding.symmetric(vertical=Theme.Spacing.SM),
+            ),
+            initially_expanded=True,
+        )
+
+    def update_tts_voices(
+        self, voices: list[dict[str, Any]], current_voice: str
+    ) -> None:
+        """Update TTS voice dropdown options."""
+        self._tts_voice_dropdown.options = [
+            ft.dropdown.Option(v["id"], v.get("name", v["id"])) for v in voices
+        ]
+        self._tts_voice_dropdown.value = current_voice
+        self._tts_voice_dropdown.update()
+
+    def _create_pipeline_card(
+        self,
+        title: str,
+        subtitle: str,
+        icon: str,
+        color: str,
+        dropdown: ft.Dropdown,
+        extra_control: ft.Control | None = None,
+    ) -> ft.Container:
+        """Create a pipeline step card with dropdown."""
+        controls = [
+            # Header
+            ft.Row(
+                [
+                    ft.Icon(icon, size=20, color=color),
+                    ft.Text(title, weight=ft.FontWeight.W_700, size=14, color=color),
+                ],
+                spacing=6,
+                alignment=ft.MainAxisAlignment.CENTER,
+            ),
+            ft.Text(subtitle, size=10, color=ft.Colors.ON_SURFACE_VARIANT),
+            ft.Divider(height=1, thickness=0.5),
+            dropdown,
+        ]
+
+        if extra_control:
+            controls.append(extra_control)
+
+        return ft.Container(
+            content=ft.Column(
+                controls,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                spacing=6,
+            ),
+            width=200,
+            padding=Theme.Spacing.MD,
+            bgcolor=ft.Colors.SURFACE_CONTAINER_HIGHEST,
+            border_radius=Theme.Components.CARD_RADIUS,
+            border=ft.border.all(1, ft.Colors.with_opacity(0.3, color)),
+        )
+
+
+# =============================================================================
 # TTS Settings Section
 # =============================================================================
 
@@ -326,13 +539,21 @@ class TTSSettingsSection(ft.Container):
         # Find current voice info
         current_voice_info = self._get_voice_info(self.current_voice)
 
-        # Provider dropdown
+        # Provider dropdown - unavailable providers (no API key) are disabled
+        provider_options = []
+        for p in providers:
+            name = p["name"]
+            is_available = p.get("is_available", True)
+            if not is_available:
+                name = f"{name} (No API Key)"
+            provider_options.append(
+                ft.dropdown.Option(key=p["id"], text=name, disabled=not is_available)
+            )
+
         provider_dropdown = ft.Dropdown(
             label="Provider",
             value=self.current_provider,
-            options=[
-                ft.dropdown.Option(key=p["id"], text=p["name"]) for p in providers
-            ],
+            options=provider_options,
             width=180,
             border_radius=Theme.Components.INPUT_RADIUS,
             bgcolor=ft.Colors.SURFACE,
@@ -363,16 +584,25 @@ class TTSSettingsSection(ft.Container):
         )
 
         # Voice dropdown - shows "Name - Description"
+        # Unavailable voices (no API key) are disabled and greyed out
         voice_options = []
         for v in voices:
             name = v.get("name", "Unknown")
             desc = v.get("description", "")
+            is_available = v.get("is_available", True)
             # Truncate long descriptions
             if len(desc) > 30:
                 desc = desc[:27] + "..."
             display_text = f"{name} - {desc}" if desc else name
+            # Mark unavailable voices
+            if not is_available:
+                display_text = f"{display_text} (No API Key)"
             voice_options.append(
-                ft.dropdown.Option(key=v.get("id", ""), text=display_text)
+                ft.dropdown.Option(
+                    key=v.get("id", ""),
+                    text=display_text,
+                    disabled=not is_available,
+                )
             )
 
         voice_dropdown = ft.Dropdown(
@@ -1340,6 +1570,9 @@ class VoiceSettingsTab(ft.Container):
         # Reference to STT recorder section
         self._stt_recorder: STTRecorderSection | None = None
 
+        # Reference to pipeline section for updating dropdowns
+        self._pipeline_section: VoicePipelineSection | None = None
+
         # Content container that will be updated after data loads
         self._content_column = ft.Column(
             [
@@ -1477,10 +1710,24 @@ class VoiceSettingsTab(ft.Container):
             current_settings=self._settings,
         )
 
+        # Voice Pipeline Section (shows STT → LLM → TTS flow)
+        self._pipeline_section = VoicePipelineSection(
+            current_settings=self._settings,
+            stt_providers=self._stt_providers,
+            tts_providers=self._tts_providers,
+            tts_voices=self._tts_voices,
+            on_stt_provider_change=self._on_stt_provider_change,
+            on_llm_provider_change=self._on_llm_provider_change,
+            on_llm_model_change=self._on_llm_model_change,
+            on_tts_provider_change=self._on_tts_provider_change,
+            on_tts_voice_change=self._on_voice_change,
+        )
+
         self._content_column.controls = [
             refresh_row,
-            self._tts_section,
+            self._pipeline_section,
             stt_section,
+            self._tts_section,
             self._stt_recorder,
         ]
         self._content_column.scroll = ft.ScrollMode.AUTO
@@ -1537,6 +1784,18 @@ class VoiceSettingsTab(ft.Container):
         self._settings["tts_provider"] = new_provider
         # Reload models and voices for new provider
         self.page.run_task(self._reload_tts_catalog, new_provider)
+
+    def _on_llm_provider_change(self, e: ft.ControlEvent) -> None:
+        """Handle speech text LLM provider change."""
+        new_provider = e.control.value
+        self._settings["speech_text_provider"] = new_provider
+        # Note: Model needs to be updated manually since we don't have a catalog
+        # for all LLM providers' models in the voice API
+
+    def _on_llm_model_change(self, e: ft.ControlEvent) -> None:
+        """Handle speech text LLM model change."""
+        new_model = e.control.value
+        self._settings["speech_text_model"] = new_model
 
     async def _reload_tts_catalog(self, provider_id: str) -> None:
         """Reload TTS models and voices for a provider."""
@@ -1645,9 +1904,37 @@ class VoiceSettingsTab(ft.Container):
 
             logger.info(f"Playing voice preview: {audio_url}")
 
+            # Pre-check the URL to catch errors (e.g., missing API keys)
+            async with httpx.AsyncClient() as client:
+                response = await client.get(audio_url, timeout=30.0)
+                if response.status_code != 200:
+                    # Extract error message from response
+                    try:
+                        error_detail = response.json().get("detail", response.text)
+                    except Exception:
+                        error_detail = response.text or f"HTTP {response.status_code}"
+                    logger.warning(f"Voice preview failed: {error_detail}")
+                    self.page.open(
+                        ft.SnackBar(
+                            content=ft.Text(f"Preview unavailable: {error_detail}"),
+                            bgcolor=Theme.Colors.WARNING,
+                        )
+                    )
+                    return
+
+                # Got audio data - save it temporarily and play
+                audio_bytes = response.content
+                content_type = response.headers.get("content-type", "audio/mpeg")
+
+            # Create a data URL from the audio bytes for playback
+            import base64
+
+            audio_b64 = base64.b64encode(audio_bytes).decode("utf-8")
+            audio_data_url = f"data:{content_type};base64,{audio_b64}"
+
             # Create new audio player with state change handler
             self._audio_player = ft.Audio(
-                src=audio_url,
+                src=audio_data_url,
                 autoplay=True,
                 volume=1.0,
                 on_state_changed=self._on_audio_state_changed,
@@ -1667,12 +1954,12 @@ class VoiceSettingsTab(ft.Container):
             logger.exception(f"Preview error: {e}")
             if self._tts_section:
                 self._tts_section.preview_player.set_playing(False)
-            self.page.snack_bar = ft.SnackBar(
-                content=ft.Text(f"Preview error: {e}"),
-                bgcolor=Theme.Colors.ERROR,
+            self.page.open(
+                ft.SnackBar(
+                    content=ft.Text(f"Preview error: {e}"),
+                    bgcolor=Theme.Colors.ERROR,
+                )
             )
-            self.page.snack_bar.open = True
-            self.page.update()
 
     def _on_speed_change(self, e: ft.ControlEvent) -> None:
         """Handle speed slider change."""

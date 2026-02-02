@@ -257,7 +257,7 @@ class AIDetailDialog(BaseDetailPopup):
             subtitle_text=subtitle,
             sections=[tabs],
             scrollable=False,
-            width=1100,
-            height=800,
+            width=1300,
+            height=900,
             status_detail=get_status_detail(component_data),
         )

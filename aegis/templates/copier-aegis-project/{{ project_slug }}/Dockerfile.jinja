@@ -30,7 +30,7 @@ WORKDIR /code
 # Copy dependency files and README (needed by pyproject.toml)
 COPY pyproject.toml uv.lock README.md /code/
 
-# Install dependencies (excluding GPU-only extras like qwen-tts)
+# Install dependencies (excluding platform-specific extras like mlx-tts)
 RUN uv sync --extra dev && \
     rm -rf /tmp/uv-cache
 

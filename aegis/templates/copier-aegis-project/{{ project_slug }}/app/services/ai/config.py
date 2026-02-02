@@ -56,6 +56,39 @@ class AIServiceConfig(BaseModel):
             rag_min_score=getattr(settings, "RAG_CHAT_MIN_SCORE", 0.1),
         )
 
+    @classmethod
+    def for_speech_text(cls, settings: Any) -> "AIServiceConfig":
+        """Create configuration for speech text generation.
+
+        Uses SPEECH_TEXT_PROVIDER/MODEL if set, otherwise falls back to
+        main AI_PROVIDER/AI_MODEL settings.
+        """
+        # Use property methods if available (Settings class), otherwise fallback
+        if hasattr(settings, "speech_text_provider"):
+            provider = settings.speech_text_provider
+            model = settings.speech_text_model
+        else:
+            provider = getattr(settings, "SPEECH_TEXT_PROVIDER", None) or getattr(
+                settings, "AI_PROVIDER", "public"
+            )
+            model = getattr(settings, "SPEECH_TEXT_MODEL", None) or getattr(
+                settings, "AI_MODEL", "gpt-3.5-turbo"
+            )
+
+        return cls(
+            enabled=getattr(settings, "AI_ENABLED", True),
+            provider=AIProvider(provider),
+            model=model,
+            temperature=getattr(settings, "AI_TEMPERATURE", 0.7),
+            max_tokens=getattr(settings, "AI_MAX_TOKENS", 1000),
+            timeout_seconds=getattr(settings, "AI_TIMEOUT_SECONDS", 120.0),
+            rag_default_collection=getattr(
+                settings, "RAG_CHAT_DEFAULT_COLLECTION", "default"
+            ),
+            rag_top_k=getattr(settings, "RAG_CHAT_TOP_K", 10),
+            rag_min_score=getattr(settings, "RAG_CHAT_MIN_SCORE", 0.1),
+        )
+
     def get_provider_config(self, settings: Any) -> ProviderConfig:
         """Get provider-specific configuration."""
         # Get API key based on provider

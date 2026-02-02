@@ -64,6 +64,12 @@ DEFAULT_VOICES: dict[str, str] = {
 def supports_native_audio(model: str, provider: str) -> bool:
     """Check if model/provider supports native audio output.
 
+    Native audio = single API call that does chat AND returns audio.
+    Only OpenAI has this (gpt-4o-audio-preview).
+
+    Google's Gemini TTS models are pure text-to-speech (not chat models),
+    so we return False for Google and let the caller use standard chat + TTS.
+
     Args:
         model: Model name
         provider: Provider name (openai, google)
@@ -71,9 +77,10 @@ def supports_native_audio(model: str, provider: str) -> bool:
     Returns:
         True if native audio is supported
     """
-    # Google always supports native audio (we'll use the TTS model)
+    # Google TTS models are pure text-to-speech, not chat+audio
+    # Only OpenAI has models that do chat with audio output
     if provider == "google":
-        return True
+        return False
 
     # Check LiteLLM's built-in detection
     try:

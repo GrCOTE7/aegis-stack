@@ -9,6 +9,7 @@ doesn't require database storage.
 from typing import Any
 
 from .models import (
+    ElevenLabsVoice,
     ModelInfo,
     OpenAIVoice,
     ProviderInfo,
@@ -23,6 +24,7 @@ from .models import (
 # =============================================================================
 
 _TTS_PROVIDERS: list[ProviderInfo] = [
+    # Cloud providers (via LiteLLM)
     ProviderInfo(
         id=TTSProvider.OPENAI.value,
         name="OpenAI",
@@ -31,6 +33,43 @@ _TTS_PROVIDERS: list[ProviderInfo] = [
         api_key_env_var="OPENAI_API_KEY",
         is_local=False,
         description="OpenAI Text-to-Speech API with natural-sounding voices",
+    ),
+    ProviderInfo(
+        id=TTSProvider.ELEVENLABS.value,
+        name="ElevenLabs",
+        type="tts",
+        requires_api_key=True,
+        api_key_env_var="ELEVENLABS_API_KEY",
+        is_local=False,
+        description="ElevenLabs - premium AI voice synthesis with emotional range",
+    ),
+    ProviderInfo(
+        id=TTSProvider.AZURE.value,
+        name="Azure",
+        type="tts",
+        requires_api_key=True,
+        api_key_env_var="AZURE_API_KEY",
+        is_local=False,
+        description="Azure Cognitive Services Speech - enterprise-grade TTS",
+    ),
+    ProviderInfo(
+        id=TTSProvider.DEEPGRAM.value,
+        name="Deepgram",
+        type="tts",
+        requires_api_key=True,
+        api_key_env_var="DEEPGRAM_API_KEY",
+        is_local=False,
+        description="Deepgram Aura - fast, natural text-to-speech",
+    ),
+    # Local providers
+    ProviderInfo(
+        id=TTSProvider.MLX_QWEN3.value,
+        name="Qwen3-TTS (MLX)",
+        type="tts",
+        requires_api_key=False,
+        api_key_env_var=None,
+        is_local=True,
+        description="Qwen3-TTS via MLX - optimized for Apple Silicon Macs",
     ),
 ]
 
@@ -43,7 +82,7 @@ _TTS_MODELS: list[ModelInfo] = [
         quality="standard",
         description="Standard quality, lower latency",
         supports_streaming=True,
-        max_input_chars=4096,  # OpenAI TTS limit
+        max_input_chars=4096,
     ),
     ModelInfo(
         id="tts-1-hd",
@@ -52,7 +91,75 @@ _TTS_MODELS: list[ModelInfo] = [
         quality="hd",
         description="High definition quality",
         supports_streaming=True,
-        max_input_chars=4096,  # OpenAI TTS limit
+        max_input_chars=4096,
+    ),
+    # ElevenLabs Models
+    ModelInfo(
+        id="eleven_monolingual_v1",
+        name="Monolingual v1",
+        provider_id=TTSProvider.ELEVENLABS.value,
+        quality="standard",
+        description="English-only, optimized for speed",
+        supports_streaming=True,
+    ),
+    ModelInfo(
+        id="eleven_multilingual_v2",
+        name="Multilingual v2",
+        provider_id=TTSProvider.ELEVENLABS.value,
+        quality="hd",
+        description="29 languages, most expressive",
+        supports_streaming=True,
+    ),
+    # Azure Models
+    ModelInfo(
+        id="tts",
+        name="Azure Neural TTS",
+        provider_id=TTSProvider.AZURE.value,
+        quality="standard",
+        description="Azure Cognitive Services neural TTS",
+        supports_streaming=True,
+    ),
+    # Deepgram Models
+    ModelInfo(
+        id="aura-asteria-en",
+        name="Aura Asteria",
+        provider_id=TTSProvider.DEEPGRAM.value,
+        quality="standard",
+        description="Aura Asteria - natural female voice",
+        supports_streaming=True,
+    ),
+    ModelInfo(
+        id="aura-luna-en",
+        name="Aura Luna",
+        provider_id=TTSProvider.DEEPGRAM.value,
+        quality="standard",
+        description="Aura Luna - warm female voice",
+        supports_streaming=True,
+    ),
+    ModelInfo(
+        id="aura-orion-en",
+        name="Aura Orion",
+        provider_id=TTSProvider.DEEPGRAM.value,
+        quality="standard",
+        description="Aura Orion - confident male voice",
+        supports_streaming=True,
+    ),
+    # MLX Qwen3-TTS Models (Apple Silicon)
+    ModelInfo(
+        id="mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit",
+        name="Qwen3-TTS 0.6B (8-bit)",
+        provider_id=TTSProvider.MLX_QWEN3.value,
+        quality="standard",
+        description="Lightweight 0.6B model, fast on Mac",
+        supports_streaming=False,
+    ),
+    ModelInfo(
+        id="mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit",
+        name="Qwen3-TTS 1.7B (8-bit)",
+        provider_id=TTSProvider.MLX_QWEN3.value,
+        quality="hd",
+        description="Full 1.7B model, best quality",
+        supports_streaming=False,
     ),
 ]
 
@@ -111,6 +218,271 @@ _TTS_VOICES: list[VoiceInfo] = [
         description="Clear, expressive voice",
         category=VoiceCategory.EXPRESSIVE,
         gender="female",
+    ),
+    # ElevenLabs Voices
+    VoiceInfo(
+        id=ElevenLabsVoice.RACHEL.value,
+        name="Rachel",
+        provider_id=TTSProvider.ELEVENLABS.value,
+        model_ids=["eleven_monolingual_v1", "eleven_multilingual_v2"],
+        description="Calm, warm voice - great for narration",
+        category=VoiceCategory.WARM,
+        gender="female",
+    ),
+    VoiceInfo(
+        id=ElevenLabsVoice.DOMI.value,
+        name="Domi",
+        provider_id=TTSProvider.ELEVENLABS.value,
+        model_ids=["eleven_monolingual_v1", "eleven_multilingual_v2"],
+        description="Strong, confident voice",
+        category=VoiceCategory.AUTHORITATIVE,
+        gender="female",
+    ),
+    VoiceInfo(
+        id=ElevenLabsVoice.BELLA.value,
+        name="Bella",
+        provider_id=TTSProvider.ELEVENLABS.value,
+        model_ids=["eleven_monolingual_v1", "eleven_multilingual_v2"],
+        description="Soft, gentle voice",
+        category=VoiceCategory.WARM,
+        gender="female",
+    ),
+    VoiceInfo(
+        id=ElevenLabsVoice.ANTONI.value,
+        name="Antoni",
+        provider_id=TTSProvider.ELEVENLABS.value,
+        model_ids=["eleven_monolingual_v1", "eleven_multilingual_v2"],
+        description="Well-rounded male voice",
+        category=VoiceCategory.NEUTRAL,
+        gender="male",
+    ),
+    VoiceInfo(
+        id=ElevenLabsVoice.ELLI.value,
+        name="Elli",
+        provider_id=TTSProvider.ELEVENLABS.value,
+        model_ids=["eleven_monolingual_v1", "eleven_multilingual_v2"],
+        description="Emotional range, expressive",
+        category=VoiceCategory.EXPRESSIVE,
+        gender="female",
+    ),
+    VoiceInfo(
+        id=ElevenLabsVoice.JOSH.value,
+        name="Josh",
+        provider_id=TTSProvider.ELEVENLABS.value,
+        model_ids=["eleven_monolingual_v1", "eleven_multilingual_v2"],
+        description="Deep, young male voice",
+        category=VoiceCategory.AUTHORITATIVE,
+        gender="male",
+    ),
+    VoiceInfo(
+        id=ElevenLabsVoice.ARNOLD.value,
+        name="Arnold",
+        provider_id=TTSProvider.ELEVENLABS.value,
+        model_ids=["eleven_monolingual_v1", "eleven_multilingual_v2"],
+        description="Crisp, authoritative voice",
+        category=VoiceCategory.AUTHORITATIVE,
+        gender="male",
+    ),
+    VoiceInfo(
+        id=ElevenLabsVoice.ADAM.value,
+        name="Adam",
+        provider_id=TTSProvider.ELEVENLABS.value,
+        model_ids=["eleven_monolingual_v1", "eleven_multilingual_v2"],
+        description="Deep, narrative voice",
+        category=VoiceCategory.AUTHORITATIVE,
+        gender="male",
+    ),
+    VoiceInfo(
+        id=ElevenLabsVoice.SAM.value,
+        name="Sam",
+        provider_id=TTSProvider.ELEVENLABS.value,
+        model_ids=["eleven_monolingual_v1", "eleven_multilingual_v2"],
+        description="Raspy, dynamic voice",
+        category=VoiceCategory.EXPRESSIVE,
+        gender="male",
+    ),
+    # Azure Voices (common ones)
+    VoiceInfo(
+        id="en-US-JennyNeural",
+        name="Jenny (US)",
+        provider_id=TTSProvider.AZURE.value,
+        model_ids=["tts"],
+        description="US English female neural voice",
+        category=VoiceCategory.NEUTRAL,
+        gender="female",
+    ),
+    VoiceInfo(
+        id="en-US-GuyNeural",
+        name="Guy (US)",
+        provider_id=TTSProvider.AZURE.value,
+        model_ids=["tts"],
+        description="US English male neural voice",
+        category=VoiceCategory.NEUTRAL,
+        gender="male",
+    ),
+    VoiceInfo(
+        id="en-GB-SoniaNeural",
+        name="Sonia (UK)",
+        provider_id=TTSProvider.AZURE.value,
+        model_ids=["tts"],
+        description="British English female neural voice",
+        category=VoiceCategory.WARM,
+        gender="female",
+    ),
+    VoiceInfo(
+        id="en-GB-RyanNeural",
+        name="Ryan (UK)",
+        provider_id=TTSProvider.AZURE.value,
+        model_ids=["tts"],
+        description="British English male neural voice",
+        category=VoiceCategory.AUTHORITATIVE,
+        gender="male",
+    ),
+    # Deepgram Aura Voices
+    VoiceInfo(
+        id="aura-asteria-en",
+        name="Asteria",
+        provider_id=TTSProvider.DEEPGRAM.value,
+        model_ids=["aura-asteria-en"],
+        description="Natural female voice",
+        category=VoiceCategory.NEUTRAL,
+        gender="female",
+    ),
+    VoiceInfo(
+        id="aura-luna-en",
+        name="Luna",
+        provider_id=TTSProvider.DEEPGRAM.value,
+        model_ids=["aura-luna-en"],
+        description="Warm female voice",
+        category=VoiceCategory.WARM,
+        gender="female",
+    ),
+    VoiceInfo(
+        id="aura-orion-en",
+        name="Orion",
+        provider_id=TTSProvider.DEEPGRAM.value,
+        model_ids=["aura-orion-en"],
+        description="Confident male voice",
+        category=VoiceCategory.AUTHORITATIVE,
+        gender="male",
+    ),
+    VoiceInfo(
+        id="aura-arcas-en",
+        name="Arcas",
+        provider_id=TTSProvider.DEEPGRAM.value,
+        model_ids=["aura-arcas-en"],
+        description="Energetic male voice",
+        category=VoiceCategory.ENERGETIC,
+        gender="male",
+    ),
+    # MLX Qwen3-TTS Voices
+    VoiceInfo(
+        id="vivian",
+        name="Vivian",
+        provider_id=TTSProvider.MLX_QWEN3.value,
+        model_ids=[
+            "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit",
+            "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit",
+        ],
+        description="Clear, professional female voice",
+        category=VoiceCategory.NEUTRAL,
+        gender="female",
+    ),
+    VoiceInfo(
+        id="serena",
+        name="Serena",
+        provider_id=TTSProvider.MLX_QWEN3.value,
+        model_ids=[
+            "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit",
+            "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit",
+        ],
+        description="Warm, friendly female voice",
+        category=VoiceCategory.WARM,
+        gender="female",
+    ),
+    VoiceInfo(
+        id="ryan",
+        name="Ryan",
+        provider_id=TTSProvider.MLX_QWEN3.value,
+        model_ids=[
+            "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit",
+            "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit",
+        ],
+        description="Confident male voice",
+        category=VoiceCategory.AUTHORITATIVE,
+        gender="male",
+    ),
+    VoiceInfo(
+        id="aiden",
+        name="Aiden",
+        provider_id=TTSProvider.MLX_QWEN3.value,
+        model_ids=[
+            "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit",
+            "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit",
+        ],
+        description="Youthful, energetic male voice",
+        category=VoiceCategory.ENERGETIC,
+        gender="male",
+    ),
+    VoiceInfo(
+        id="eric",
+        name="Eric",
+        provider_id=TTSProvider.MLX_QWEN3.value,
+        model_ids=[
+            "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit",
+            "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit",
+        ],
+        description="Mature, balanced male voice",
+        category=VoiceCategory.NEUTRAL,
+        gender="male",
+    ),
+    VoiceInfo(
+        id="dylan",
+        name="Dylan",
+        provider_id=TTSProvider.MLX_QWEN3.value,
+        model_ids=[
+            "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit",
+            "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit",
+        ],
+        description="Casual, friendly male voice",
+        category=VoiceCategory.WARM,
+        gender="male",
+    ),
+    VoiceInfo(
+        id="sohee",
+        name="Sohee",
+        provider_id=TTSProvider.MLX_QWEN3.value,
+        model_ids=[
+            "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit",
+            "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit",
+        ],
+        description="Korean female voice",
+        category=VoiceCategory.EXPRESSIVE,
+        gender="female",
+    ),
+    VoiceInfo(
+        id="ono_anna",
+        name="Ono Anna",
+        provider_id=TTSProvider.MLX_QWEN3.value,
+        model_ids=[
+            "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit",
+            "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit",
+        ],
+        description="Japanese female voice",
+        category=VoiceCategory.EXPRESSIVE,
+        gender="female",
+    ),
+    VoiceInfo(
+        id="uncle_fu",
+        name="Uncle Fu",
+        provider_id=TTSProvider.MLX_QWEN3.value,
+        model_ids=[
+            "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit",
+            "mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit",
+        ],
+        description="Chinese male voice",
+        category=VoiceCategory.WARM,
+        gender="male",
     ),
 ]
 
@@ -302,12 +674,26 @@ def get_current_voice_config(settings: Any) -> dict[str, Any]:
     stt_model = getattr(settings, "STT_MODEL", None) or "whisper-1"
     stt_language = getattr(settings, "STT_LANGUAGE", None)
 
+    # Speech text LLM settings (uses properties with fallback to AI_PROVIDER/AI_MODEL)
+    speech_text_provider = (
+        getattr(settings, "speech_text_provider", None)
+        or getattr(settings, "SPEECH_TEXT_PROVIDER", None)
+        or getattr(settings, "AI_PROVIDER", "openai")
+    )
+    speech_text_model = (
+        getattr(settings, "speech_text_model", None)
+        or getattr(settings, "SPEECH_TEXT_MODEL", None)
+        or getattr(settings, "AI_MODEL", "gpt-4o-mini")
+    )
+
     return {
+        "stt_provider": stt_provider,
+        "stt_model": stt_model,
+        "stt_language": stt_language,
+        "speech_text_provider": speech_text_provider,
+        "speech_text_model": speech_text_model,
         "tts_provider": tts_provider,
         "tts_model": tts_model,
         "tts_voice": tts_voice,
         "tts_speed": tts_speed,
-        "stt_provider": stt_provider,
-        "stt_model": stt_model,
-        "stt_language": stt_language,
     }

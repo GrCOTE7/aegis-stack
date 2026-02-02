@@ -25,6 +25,7 @@ from .catalog import (
 from .models import (
     AudioFormat,
     AudioInput,
+    ElevenLabsVoice,
     ModelInfo,
     OpenAIVoice,
     ProviderInfo,
@@ -56,7 +57,8 @@ from .stt import (
 )
 from .tts import (
     BaseTTSProvider,
-    OpenAITTSProvider,
+    LiteLLMTTSProvider,
+    MLXQwen3TTSProvider,
     TTSConfig,
     TTSService,
     get_tts_config,
@@ -74,6 +76,7 @@ __all__ = [
     "STTProvider",
     "TTSProvider",
     "OpenAIVoice",
+    "ElevenLabsVoice",
     "AudioFormat",
     "AudioInput",
     "TranscriptionSegment",
@@ -98,7 +101,8 @@ __all__ = [
     "get_stt_provider",
     # TTS Providers
     "BaseTTSProvider",
-    "OpenAITTSProvider",
+    "LiteLLMTTSProvider",
+    "MLXQwen3TTSProvider",
     "get_tts_provider",
     # Services
     "STTService",

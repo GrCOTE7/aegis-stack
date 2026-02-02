@@ -198,17 +198,28 @@ class Settings(BaseSettings):
     STT_DEVICE: str | None = None  # Device: 'cpu', 'cuda', 'mps' (None = auto-detect)
 
     # Text-to-Speech (TTS) Configuration
-    # Provider: openai, qwen3
+    # Cloud: openai, elevenlabs, azure, deepgram
+    # Local: mlx_qwen3 (Apple Silicon Mac only, install: uv sync --extra mlx-tts)
     TTS_PROVIDER: str = "openai"  # Default to OpenAI TTS API
     TTS_MODEL: str | None = None  # Model: tts-1 (fast), tts-1-hd (quality). None = default
     TTS_VOICE: str | None = None  # Voice: alloy, echo, fable, onyx, nova, shimmer. None = alloy
     TTS_SPEED: float = 1.0  # Speech speed multiplier (0.25 to 4.0)
 
-    # Qwen3-TTS Configuration (local, Apache 2.0)
-    # Requires: pip install qwen-tts, GPU with CUDA
-    TTS_QWEN_MODEL: str = "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice"
-    TTS_QWEN_SPEAKER: str = "Vivian"  # Vivian, Ethan, Chelsie, Layla
-    TTS_QWEN_LANGUAGE: str = "English"  # English, Chinese, Japanese, Korean, etc.
+    # Speech Text Generation (the LLM that generates text for TTS)
+    # Separate from main AI settings - allows voice pipeline to use a different model
+    # None = fall back to AI_PROVIDER/AI_MODEL
+    SPEECH_TEXT_PROVIDER: str | None = None
+    SPEECH_TEXT_MODEL: str | None = None
+
+    @property
+    def speech_text_provider(self) -> str:
+        """Get effective speech text provider, falling back to main AI_PROVIDER."""
+        return self.SPEECH_TEXT_PROVIDER or self.AI_PROVIDER
+
+    @property
+    def speech_text_model(self) -> str:
+        """Get effective speech text model, falling back to main AI_MODEL."""
+        return self.SPEECH_TEXT_MODEL or self.AI_MODEL
 {% endif %}
 {% endif %}
 

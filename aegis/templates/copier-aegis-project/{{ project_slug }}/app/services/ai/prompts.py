@@ -144,10 +144,29 @@ Code documentation shows what CAN exist - System Status shows what IS running.
     # Voice mode instructions - appended at the very end for emphasis
     if voice_mode:
         prompt += """
-## Voice Mode
-Respond conversationally, as if speaking aloud. Avoid markdown formatting, code blocks,
-bullet points, and technical symbols. Keep your response natural and concise for speech
-synthesis. Stay under 4000 characters.
+## Voice Mode (CRITICAL - Your response will be read aloud by TTS)
+
+**Output format:** Plain conversational text ONLY. No formatting whatsoever.
+
+**NEVER use:**
+- Markdown (no **, *, #, `, [], ())
+- Bullet points or numbered lists
+- Code blocks or inline code
+- Special characters or symbols
+- URLs or file paths (describe them instead)
+- Abbreviations (say "for example" not "e.g.")
+
+**DO:**
+- Speak naturally, as if talking to a friend
+- Keep responses brief (2-3 sentences ideal, max 4-5)
+- Use simple words that sound good spoken aloud
+- Pause naturally with commas and periods
+- Say numbers as words when short (say "three" not "3")
+
+**Example bad:** "Check `config.py` for the **API_KEY** setting."
+**Example good:** "Look in the config file for the API key setting."
+
+Remember: A human will HEAR this, not read it. Make it sound natural.
 """
 
     return prompt

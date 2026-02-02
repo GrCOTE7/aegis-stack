@@ -2,6 +2,8 @@
 TTS provider implementations.
 
 Provides a unified interface for Text-to-Speech synthesis.
+Cloud providers use LiteLLM for a unified API, while local providers
+(MLX Qwen3) have their own implementation.
 """
 
 import logging
@@ -55,20 +57,145 @@ class BaseTTSProvider(ABC):
         yield result.audio
 
 
-class Qwen3TTSProvider(BaseTTSProvider):
-    """Qwen3-TTS local provider.
+class LiteLLMTTSProvider(BaseTTSProvider):
+    """Unified TTS provider using LiteLLM.
 
-    Uses Alibaba's Qwen3-TTS for high-quality local speech synthesis.
-    Requires GPU with CUDA support. Apache 2.0 license.
+    Supports multiple cloud TTS providers through LiteLLM's unified API:
+    - OpenAI (tts-1, tts-1-hd)
+    - ElevenLabs (eleven_monolingual_v1, eleven_multilingual_v2)
+    - Azure (tts)
+    - Deepgram (aura-*)
 
-    Features:
-    - 97ms latency (ultra-fast)
-    - 10 languages supported
-    - Voice cloning from 3s audio
-    - Cross-lingual synthesis
+    Each provider requires its own API key set via environment variables.
     """
 
-    provider_type = TTSProvider.QWEN3
+    # Map provider to environment variable name for API key
+    _ENV_VAR_MAP: dict[TTSProvider, str] = {
+        TTSProvider.OPENAI: "OPENAI_API_KEY",
+        TTSProvider.GOOGLE: "GOOGLE_API_KEY",
+        TTSProvider.ELEVENLABS: "ELEVENLABS_API_KEY",
+        TTSProvider.AZURE: "AZURE_API_KEY",
+        TTSProvider.DEEPGRAM: "DEEPGRAM_API_KEY",
+    }
+
+    def __init__(
+        self,
+        provider: TTSProvider,
+        litellm_provider: str,
+        model: str,
+        voice: str,
+        audio_format: AudioFormat = AudioFormat.MP3,
+        api_key: str | None = None,
+    ) -> None:
+        """Initialize LiteLLM TTS provider.
+
+        Args:
+            provider: The TTS provider type.
+            litellm_provider: The LiteLLM provider prefix (e.g., 'openai', 'gemini').
+            model: Model name (e.g., 'tts-1', 'gemini-2.5-flash-preview-tts').
+            voice: Default voice ID for this provider.
+            audio_format: Output audio format (MP3, WAV, etc.).
+            api_key: Optional API key override. If not provided, uses env var.
+        """
+        self.provider = provider
+        self.provider_type = provider
+        self.litellm_provider = litellm_provider
+        self.model = model
+        self.default_voice = voice
+        self.audio_format = audio_format
+        self.api_key = api_key
+
+    async def synthesize(self, request: SpeechRequest) -> SpeechResult:
+        """Synthesize speech using LiteLLM."""
+        import os
+
+        try:
+            import litellm
+        except ImportError as e:
+            raise RuntimeError(
+                "LiteLLM not installed. Install with: uv add litellm"
+            ) from e
+
+        voice = request.voice or self.default_voice
+
+        # Build model string: "litellm_provider/model"
+        model_str = f"{self.litellm_provider}/{self.model}"
+
+        # Temporarily set env var if explicit api_key provided
+        env_var = self._ENV_VAR_MAP.get(self.provider)
+        old_value = None
+
+        if self.api_key and env_var:
+            old_value = os.environ.get(env_var)
+            os.environ[env_var] = self.api_key
+
+        try:
+            import tempfile
+            from pathlib import Path
+
+            # Use LiteLLM's async speech API
+            response = await litellm.aspeech(
+                model=model_str,
+                voice=voice,
+                input=request.text,
+                speed=request.speed,
+            )
+
+            # Some providers (e.g., Gemini) return pcm16 raw audio that needs stream_to_file
+            if self.audio_format == AudioFormat.WAV:
+                # Use stream_to_file for proper audio handling
+                with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
+                    tmp_path = Path(tmp.name)
+                response.stream_to_file(tmp_path)
+                audio_data = tmp_path.read_bytes()
+                tmp_path.unlink(missing_ok=True)
+            else:
+                # Response is an HttpxBinaryResponseContent object
+                audio_data = response.content
+
+            return SpeechResult(
+                audio=audio_data,
+                format=self.audio_format,
+                provider=self.provider_type,
+            )
+
+        except Exception as e:
+            logger.error(f"LiteLLM TTS synthesis failed for {self.provider.value}: {e}")
+            raise RuntimeError(f"Speech synthesis failed: {e}") from e
+
+        finally:
+            # Restore original env var
+            if self.api_key and env_var:
+                if old_value is not None:
+                    os.environ[env_var] = old_value
+                else:
+                    os.environ.pop(env_var, None)
+
+    async def synthesize_stream(self, request: SpeechRequest) -> AsyncIterator[bytes]:
+        """Stream audio chunks from LiteLLM TTS."""
+        # LiteLLM returns full response, stream in chunks
+        result = await self.synthesize(request)
+        audio_data = result.audio
+        chunk_size = 4096
+
+        for i in range(0, len(audio_data), chunk_size):
+            yield audio_data[i : i + chunk_size]
+
+
+class MLXQwen3TTSProvider(BaseTTSProvider):
+    """MLX-optimized Qwen3-TTS provider for Apple Silicon Macs.
+
+    Uses mlx-audio library for fast, efficient TTS on M1/M2/M3/M4 Macs.
+    Runs entirely locally using Apple's MLX framework.
+
+    Features:
+    - Optimized for Apple Silicon (2-3GB RAM vs 10GB+ PyTorch)
+    - Low CPU temperature (40-50°C vs 80-90°C)
+    - Same Qwen3-TTS quality as CUDA version
+    - Voice cloning and voice design support
+    """
+
+    provider_type = TTSProvider.MLX_QWEN3
 
     # Language mapping for Qwen3-TTS
     LANGUAGE_MAP = {
@@ -86,50 +213,50 @@ class Qwen3TTSProvider(BaseTTSProvider):
 
     def __init__(
         self,
-        model: str = "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
-        voice: str = "Vivian",
+        model: str = "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit",
+        voice: str = "vivian",
         language: str | None = None,
     ) -> None:
-        """Initialize Qwen3-TTS provider.
+        """Initialize MLX Qwen3-TTS provider.
 
         Args:
-            model: Qwen3-TTS model to use.
-            voice: Default voice/speaker (Vivian, Ethan, Chelsie, Layla).
-            language: Default language for synthesis (None = read from settings).
+            model: MLX-converted Qwen3-TTS model from HuggingFace.
+            voice: Default voice/speaker (vivian, serena, ryan, aiden, eric, dylan, etc.).
+            language: Default language for synthesis (None = English).
         """
         self.model = model
         self.default_voice = voice
+        self.default_language = language or "English"
+        self._mlx_model: Any = None
 
-        # Get language from settings if not provided
-        if language is None:
-            from app.core.config import settings
+    def _get_model(self) -> Any:
+        """Lazy-load the MLX model."""
+        if self._mlx_model is None:
+            try:
+                from mlx_audio.tts.utils import load_model
+            except ImportError as e:
+                raise RuntimeError(
+                    "mlx-audio not installed. Install with: uv sync --extra mlx-tts"
+                ) from e
 
-            language = settings.TTS_QWEN_LANGUAGE
-        self.default_language = language
+            logger.info(f"Loading MLX Qwen3-TTS model: {self.model}")
+            self._mlx_model = load_model(self.model)
+            logger.info("MLX Qwen3-TTS model loaded")
+
+        return self._mlx_model
 
     async def synthesize(self, request: SpeechRequest) -> SpeechResult:
-        """Synthesize speech using Qwen3-TTS."""
+        """Synthesize speech using MLX Qwen3-TTS."""
         import asyncio
 
         voice = request.voice or self.default_voice
 
-        # Map language code to Qwen3 language name
-        language = self.default_language
-        if request.language:
-            language = self.LANGUAGE_MAP.get(
-                request.language.lower()[:2], self.default_language
-            )
-
         try:
-            from .qwen3 import synthesize_to_bytes
-
             # Run in thread pool since model inference is CPU/GPU bound
             audio_data = await asyncio.to_thread(
-                synthesize_to_bytes,
+                self._synthesize_sync,
                 text=request.text,
-                language=language,
-                speaker=voice,
-                format="wav",
+                voice=voice,
             )
 
             return SpeechResult(
@@ -139,133 +266,81 @@ class Qwen3TTSProvider(BaseTTSProvider):
             )
 
         except Exception as e:
-            logger.error(f"Qwen3-TTS synthesis failed: {e}")
+            logger.error(f"MLX Qwen3-TTS synthesis failed: {e}")
             raise RuntimeError(f"Speech synthesis failed: {e}") from e
 
+    def _synthesize_sync(self, text: str, voice: str) -> bytes:
+        """Synchronous synthesis for thread pool execution."""
+        import io
 
-class OpenAITTSProvider(BaseTTSProvider):
-    """OpenAI TTS API provider.
+        import numpy as np
+        import soundfile as sf
 
-    Uses the OpenAI API for high-quality cloud-based speech synthesis.
-    Requires OPENAI_API_KEY environment variable.
+        model = self._get_model()
 
-    Supports two models:
-    - tts-1: Optimized for speed
-    - tts-1-hd: Higher quality, slightly slower
-    """
+        # Generate audio
+        results = list(model.generate(text=text, voice=voice))
 
-    provider_type = TTSProvider.OPENAI
+        if not results:
+            raise RuntimeError("No audio generated")
 
-    def __init__(
-        self,
-        api_key: str | None = None,
-        model: str = "tts-1",
-        voice: str = "alloy",
-        base_url: str | None = None,
-    ) -> None:
-        """Initialize OpenAI TTS provider.
+        result = results[0]
+        audio = result.audio
+        sample_rate = result.sample_rate or 24000
 
-        Args:
-            api_key: OpenAI API key. If None, uses OPENAI_API_KEY env var.
-            model: TTS model to use (tts-1 or tts-1-hd).
-            voice: Default voice (alloy, echo, fable, onyx, nova, shimmer).
-            base_url: Optional base URL for OpenAI-compatible APIs.
-        """
-        self.api_key = api_key
-        self.model = model
-        self.default_voice = voice
-        self.base_url = base_url
-        self._client: Any = None
+        # Convert MLX array to numpy
+        if hasattr(audio, "tolist"):
+            audio_np = np.array(audio.tolist(), dtype=np.float32)
+        else:
+            audio_np = np.array(audio, dtype=np.float32)
 
-    def _get_client(self) -> Any:
-        """Lazy-load the OpenAI client."""
-        if self._client is None:
-            try:
-                from openai import AsyncOpenAI
-            except ImportError as e:
-                raise RuntimeError(
-                    "OpenAI SDK not installed. Install with: uv add openai"
-                ) from e
+        # Save to WAV buffer
+        buffer = io.BytesIO()
+        sf.write(buffer, audio_np, sample_rate, format="WAV")
+        buffer.seek(0)
 
-            kwargs: dict[str, Any] = {}
-            if self.api_key:
-                kwargs["api_key"] = self.api_key
-            if self.base_url:
-                kwargs["base_url"] = self.base_url
+        return buffer.read()
 
-            self._client = AsyncOpenAI(**kwargs)
 
-        return self._client
-
-    async def synthesize(self, request: SpeechRequest) -> SpeechResult:
-        """Synthesize speech using OpenAI TTS API."""
-        client = self._get_client()
-
-        voice = request.voice or self.default_voice
-
-        try:
-            response = await client.audio.speech.create(
-                model=self.model,
-                voice=voice,
-                input=request.text,
-                speed=request.speed,
-                response_format="mp3",
-            )
-
-            # Read the audio content
-            audio_data = response.content
-
-            return SpeechResult(
-                audio=audio_data,
-                format=AudioFormat.MP3,
-                provider=self.provider_type,
-            )
-
-        except Exception as e:
-            logger.error(f"OpenAI TTS synthesis failed: {e}")
-            raise RuntimeError(f"Speech synthesis failed: {e}") from e
-
-    async def synthesize_stream(self, request: SpeechRequest) -> AsyncIterator[bytes]:
-        """Stream audio from OpenAI TTS."""
-        client = self._get_client()
-
-        voice = request.voice or self.default_voice
-
-        try:
-            response = await client.audio.speech.create(
-                model=self.model,
-                voice=voice,
-                input=request.text,
-                speed=request.speed,
-                response_format="mp3",
-            )
-
-            # OpenAI returns the full response, stream in chunks
-            audio_data = response.content
-            chunk_size = 4096
-
-            for i in range(0, len(audio_data), chunk_size):
-                yield audio_data[i : i + chunk_size]
-
-        except Exception as e:
-            logger.error(f"OpenAI TTS streaming failed: {e}")
-            raise RuntimeError(f"Speech synthesis failed: {e}") from e
+# Provider configuration: (litellm_provider, default_model, default_voice, audio_format)
+_PROVIDER_CONFIG: dict[TTSProvider, tuple[str, str, str, AudioFormat]] = {
+    TTSProvider.OPENAI: ("openai", "tts-1", "alloy", AudioFormat.MP3),
+    TTSProvider.GOOGLE: (
+        "gemini",
+        "gemini-2.5-flash-preview-tts",
+        "Kore",
+        AudioFormat.WAV,
+    ),
+    TTSProvider.ELEVENLABS: (
+        "elevenlabs",
+        "eleven_monolingual_v1",
+        "rachel",
+        AudioFormat.MP3,
+    ),
+    TTSProvider.AZURE: ("azure", "tts", "en-US-JennyNeural", AudioFormat.MP3),
+    TTSProvider.DEEPGRAM: (
+        "deepgram",
+        "aura-asteria-en",
+        "aura-asteria-en",
+        AudioFormat.MP3,
+    ),
+}
 
 
 def get_tts_provider(
     provider: TTSProvider,
-    api_key: str | None = None,
     model: str | None = None,
     voice: str | None = None,
+    api_key: str | None = None,
     **kwargs: Any,
 ) -> BaseTTSProvider:
     """Factory function to create a TTS provider instance.
 
     Args:
         provider: The TTS provider type to create.
-        api_key: Optional API key for cloud providers.
-        model: Optional model name to use.
-        voice: Optional voice name to use.
+        model: Optional model name to use (uses provider default if None).
+        voice: Optional voice name to use (uses provider default if None).
+        api_key: Optional API key override for cloud providers.
         **kwargs: Additional provider-specific arguments.
 
     Returns:
@@ -274,18 +349,26 @@ def get_tts_provider(
     Raises:
         ValueError: If provider type is not supported.
     """
-    if provider == TTSProvider.OPENAI:
-        return OpenAITTSProvider(
-            api_key=api_key,
-            model=model or "tts-1",
-            voice=voice or "alloy",
+    # Local provider: MLX Qwen3 (no api_key needed)
+    if provider == TTSProvider.MLX_QWEN3:
+        return MLXQwen3TTSProvider(
+            model=model or "mlx-community/Qwen3-TTS-12Hz-0.6B-CustomVoice-8bit",
+            voice=voice or "vivian",
             **kwargs,
         )
-    elif provider == TTSProvider.QWEN3:
-        return Qwen3TTSProvider(
-            model=model or "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
-            voice=voice or "Vivian",
-            **kwargs,
-        )
-    else:
+
+    # Cloud providers: use LiteLLM
+    config = _PROVIDER_CONFIG.get(provider)
+    if not config:
         raise ValueError(f"Unsupported TTS provider: {provider}")
+
+    litellm_provider, default_model, default_voice, audio_format = config
+
+    return LiteLLMTTSProvider(
+        provider=provider,
+        litellm_provider=litellm_provider,
+        model=model or default_model,
+        voice=voice or default_voice,
+        audio_format=audio_format,
+        api_key=api_key,
+    )

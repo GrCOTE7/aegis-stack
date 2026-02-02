@@ -7,11 +7,11 @@ as well as managing voice settings and generating voice previews.
 
 from app.core.config import settings
 from app.core.log import logger
-from app.services.ai.service import AIService
 from app.services.ai.voice import (
     ModelInfo,
     ProviderInfo,
     SpeechRequest,
+    TTSProvider,
     VoiceInfo,
     VoicePreviewRequest,
     VoiceSettingsResponse,
@@ -46,9 +46,12 @@ class ProviderResponse(BaseModel):
     api_key_env_var: str | None = None
     is_local: bool
     description: str | None = None
+    is_available: bool = True  # Whether API key is configured (if required)
 
     @classmethod
-    def from_provider_info(cls, p: ProviderInfo) -> "ProviderResponse":
+    def from_provider_info(
+        cls, p: ProviderInfo, is_available: bool = True
+    ) -> "ProviderResponse":
         """Create from ProviderInfo."""
         return cls(
             id=p.id,
@@ -58,6 +61,7 @@ class ProviderResponse(BaseModel):
             api_key_env_var=p.api_key_env_var,
             is_local=p.is_local,
             description=p.description,
+            is_available=is_available,
         )
 
 
@@ -95,9 +99,12 @@ class VoiceResponse(BaseModel):
     category: str | None = None
     gender: str | None = None
     preview_text: str
+    is_available: bool = True  # Whether provider's API key is configured
 
     @classmethod
-    def from_voice_info(cls, v: VoiceInfo) -> "VoiceResponse":
+    def from_voice_info(
+        cls, v: VoiceInfo, is_available: bool = True
+    ) -> "VoiceResponse":
         """Create from VoiceInfo."""
         return cls(
             id=v.id,
@@ -108,6 +115,7 @@ class VoiceResponse(BaseModel):
             category=v.category.value if v.category else None,
             gender=v.gender,
             preview_text=v.preview_text,
+            is_available=is_available,
         )
 
 
@@ -134,6 +142,26 @@ class CatalogSummaryResponse(BaseModel):
 # TTS Catalog Endpoints
 # =============================================================================
 
+# Map of TTS provider IDs to their API key settings attribute names
+_TTS_API_KEY_MAP: dict[str, str] = {
+    "openai": "OPENAI_API_KEY",
+    "elevenlabs": "ELEVENLABS_API_KEY",
+    "azure": "AZURE_API_KEY",
+    "deepgram": "DEEPGRAM_API_KEY",
+}
+
+
+def _is_tts_provider_available(provider_id: str) -> bool:
+    """Check if a TTS provider's API key is configured."""
+    # Local providers are always available
+    if provider_id == "mlx_qwen3":
+        return True
+    # Check if API key is set
+    api_key_attr = _TTS_API_KEY_MAP.get(provider_id)
+    if api_key_attr:
+        return bool(getattr(settings, api_key_attr, None))
+    return True  # Unknown providers default to available
+
 
 @router.get("/catalog/tts/providers", response_model=list[ProviderResponse])
 async def list_tts_providers() -> list[ProviderResponse]:
@@ -144,7 +172,12 @@ async def list_tts_providers() -> list[ProviderResponse]:
     it requires an API key and if it runs locally.
     """
     providers = get_tts_providers()
-    return [ProviderResponse.from_provider_info(p) for p in providers]
+    return [
+        ProviderResponse.from_provider_info(
+            p, is_available=_is_tts_provider_available(p.id)
+        )
+        for p in providers
+    ]
 
 
 @router.get("/catalog/tts/{provider_id}/models", response_model=list[ModelResponse])
@@ -194,7 +227,9 @@ async def list_tts_voices(provider_id: str) -> list[VoiceResponse]:
                 detail=f"TTS provider not found: {provider_id}. "
                 f"Available: {', '.join(provider_ids)}",
             )
-    return [VoiceResponse.from_voice_info(v) for v in voices]
+    # Check availability based on provider
+    is_available = _is_tts_provider_available(provider_id)
+    return [VoiceResponse.from_voice_info(v, is_available=is_available) for v in voices]
 
 
 # =============================================================================
@@ -352,17 +387,56 @@ async def _generate_preview(
     speed: float | None = None,
 ) -> Response:
     """Internal helper to generate voice preview."""
+    import sys
+
+    from app.services.ai.voice.tts.providers import get_tts_provider
+
     # Look up voice
     voice = get_voice(voice_id)
     if not voice:
         raise HTTPException(status_code=404, detail=f"Voice not found: {voice_id}")
 
+    # Check if MLX provider on non-Mac platform
+    if voice.provider_id == TTSProvider.MLX_QWEN3.value and sys.platform != "darwin":
+        raise HTTPException(
+            status_code=400,
+            detail="MLX Qwen3-TTS is only available on macOS with Apple Silicon. "
+            "Use the CLI on your Mac for local TTS, or select an OpenAI voice.",
+        )
+
+    # Check for required API keys for cloud providers
+    api_key_requirements = {
+        TTSProvider.OPENAI.value: ("OPENAI_API_KEY", "OpenAI"),
+        TTSProvider.ELEVENLABS.value: ("ELEVENLABS_API_KEY", "ElevenLabs"),
+        TTSProvider.AZURE.value: ("AZURE_API_KEY", "Azure"),
+        TTSProvider.DEEPGRAM.value: ("DEEPGRAM_API_KEY", "Deepgram"),
+    }
+
+    api_key: str | None = None
+    if voice.provider_id in api_key_requirements:
+        env_var, provider_name = api_key_requirements[voice.provider_id]
+        api_key = getattr(settings, env_var, None)
+        if not api_key:
+            logger.warning(
+                f"Voice preview blocked: {provider_name} API key not configured "
+                f"(voice={voice_id}, env_var={env_var})"
+            )
+            raise HTTPException(
+                status_code=400,
+                detail=f"{provider_name} API key not configured. "
+                f"Set the {env_var} environment variable to use {provider_name} voices.",
+            )
+
     # Determine preview text
     preview_text = text or voice.preview_text.format(voice_name=voice.name)
 
     try:
-        # Initialize AI service to get TTS
-        ai_service = AIService(settings)
+        # Get the provider for this voice (not the default from settings)
+        provider = get_tts_provider(
+            provider=TTSProvider(voice.provider_id),
+            voice=voice_id,
+            api_key=api_key,
+        )
 
         # Generate speech with optional speed
         speech_request = SpeechRequest(
@@ -370,14 +444,18 @@ async def _generate_preview(
             voice=voice_id,
             speed=speed or 1.0,
         )
-        result = await ai_service.tts.synthesize(speech_request)
+        result = await provider.synthesize(speech_request)
+
+        # Determine content type based on format
+        content_type = "audio/wav" if result.format.value == "wav" else "audio/mpeg"
+        file_ext = result.format.value
 
         # Return audio response
         return Response(
             content=result.audio,
-            media_type="audio/mpeg",
+            media_type=content_type,
             headers={
-                "Content-Disposition": f'inline; filename="{voice_id}_preview.mp3"',
+                "Content-Disposition": f'inline; filename="{voice_id}_preview.{file_ext}"',
                 "Cache-Control": "no-cache",
             },
         )
