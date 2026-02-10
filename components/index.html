@@ -345,6 +345,26 @@
     
     
       <li class="md-tabs__item">
+        <a href="../deployment/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="../cli-reference/" class="md-tabs__link">
           
   
@@ -1209,6 +1229,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ingress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ingress
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1945,7 +1988,7 @@
   
   
   <span class="md-ellipsis">
-    Reference
+    Deployment
     
   </span>
   
@@ -1955,6 +1998,77 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Deployment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Reference
           </label>
@@ -2147,6 +2261,7 @@
         Scheduler[Scheduler&lt;br/&gt;APScheduler Jobs]
         Database[Database&lt;br/&gt;SQLite + SQLModel]
         Worker[Worker Queues&lt;br/&gt;arq + Redis]
+        Ingress[Ingress&lt;br/&gt;Traefik Proxy]
         Cache[Cache Layer&lt;br/&gt;Redis Sessions]
     end
 
@@ -2162,11 +2277,13 @@
     style CLI fill:#e1f5fe
     style Scheduler fill:#f3e5f5
     style Database fill:#f3e5f5
-    style Worker fill:#e8f5e8</code></pre>
+    style Worker fill:#e8f5e8
+    style Ingress fill:#e1f5fe</code></pre>
 <h2 id="component-deployment">Component Deployment</h2>
 <p>Understanding how components deploy and scale is crucial for architectural decisions:</p>
 <pre class="mermaid"><code>graph TB
     subgraph "Multi-Container Architecture"
+        A0[Ingress&lt;br/&gt;Traefik Proxy]
         A1[Webserver&lt;br/&gt;Backend + Frontend]
         A2[Scheduler&lt;br/&gt;Background Jobs]
         A3[Worker Pool&lt;br/&gt;Task Processing]
@@ -2174,21 +2291,25 @@
     end
 
     subgraph "Independent Scaling"
+        B0[Ingress × 1]
         B1[Webserver × N]
         B2[Scheduler × N]
         B3[Worker × N]
         B4[Infrastructure × N]
     end
 
+    A0 --&gt; B0
     A1 --&gt; B1
     A2 --&gt; B2
     A3 --&gt; B3
     A4 --&gt; B4
 
+    style A0 fill:#e1f5fe
     style A1 fill:#e8f5e8
     style A2 fill:#fff3e0
     style A3 fill:#f3e5f5
     style A4 fill:#e1f5fe
+    style B0 fill:#e1f5fe
     style B1 fill:#e8f5e8
     style B2 fill:#fff3e0
     style B3 fill:#f3e5f5
@@ -2232,6 +2353,12 @@
 <td>🧪 Experimental</td>
 </tr>
 <tr>
+<td><strong>Ingress</strong></td>
+<td>Reverse proxy, TLS, routing</td>
+<td>Traefik v3</td>
+<td>✅ Available</td>
+</tr>
+<tr>
 <td><strong>Cache</strong></td>
 <td>Session storage, performance</td>
 <td>Redis</td>
@@ -2248,9 +2375,10 @@
 <hr />
 <p><strong>Next:</strong> Choose your first component combination and see the integration in action:</p>
 <ul>
-<li><strong><a href="database/">Database Component</a></strong> - SQLite persistence with SQLModel ORM  </li>
+<li><strong><a href="database/">Database Component</a></strong> - SQLite persistence with SQLModel ORM</li>
 <li><strong><a href="scheduler/">Scheduler Component</a></strong> - Background tasks and cron jobs</li>
 <li><strong><a href="worker/">Worker Component</a></strong> - Async task processing and queues</li>
+<li><strong><a href="ingress/">Ingress Component</a></strong> - Traefik reverse proxy and TLS</li>
 </ul>
 
 

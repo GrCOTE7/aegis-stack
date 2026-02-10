@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://lbedner.github.io/aegis-stack/cli-reference/">
       
       
-        <link rel="prev" href="../overseer/integration/">
+        <link rel="prev" href="../deployment/">
       
       
         <link rel="next" href="../evolving-your-stack/">
@@ -328,6 +328,26 @@
   
   
   Overseer
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../deployment/" class="md-tabs__link">
+          
+  
+  
+  Deployment
 
         </a>
       </li>
@@ -1126,6 +1146,29 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../components/ingress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ingress
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1840,6 +1883,77 @@
       
   
   
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Deployment
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Deployment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -1859,10 +1973,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
             
   
   
@@ -1875,8 +1989,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Reference
           </label>
@@ -2039,6 +2153,102 @@
   <a href="#aegis-update" class="md-nav__link">
     <span class="md-ellipsis">
       aegis update
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-init
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-logs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-status
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-stop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-restart" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-restart
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-shell
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-ingress-enable" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis ingress-enable
     </span>
   </a>
   
@@ -2333,6 +2543,102 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#deployment-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-init
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-logs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-status
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-stop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-restart" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-restart
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-deploy-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis deploy-shell
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aegis-ingress-enable" class="md-nav__link">
+    <span class="md-ellipsis">
+      aegis ingress-enable
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#generated-project-cli" class="md-nav__link">
     <span class="md-ellipsis">
       Generated Project CLI
@@ -2581,6 +2887,11 @@
 <td><code>redis</code></td>
 <td>✅ Available</td>
 <td>Redis cache and message broker</td>
+</tr>
+<tr>
+<td><code>ingress</code></td>
+<td>✅ Available</td>
+<td>Traefik reverse proxy with auto-discovery and admin protection</td>
 </tr>
 <tr>
 <td><code>cache</code></td>
@@ -2879,102 +3190,242 @@
 <li>Use <code>--dry-run</code> first to preview changes</li>
 </ul>
 <hr />
+<h2 id="deployment-commands">Deployment Commands</h2>
+<p>Commands for deploying your project to a remote server. See the <strong><a href="../deployment/">Deployment Guide</a></strong> for full workflows and examples.</p>
+<h3 id="aegis-deploy-init">aegis deploy-init</h3>
+<p>Initialize deployment configuration for a project.</p>
+<p><strong>Usage:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>aegis<span class="w"> </span>deploy-init<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</span></code></pre></div></p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--host, -h TEXT</code> — Server IP address or hostname</li>
+<li><code>--user, -u TEXT</code> — SSH user for deployment (default: <code>root</code>)</li>
+<li><code>--path, -p TEXT</code> — Deployment path on server (default: <code>/opt/{project-name}</code>)</li>
+<li><code>--project-path TEXT</code> — Path to the project (default: current directory)</li>
+</ul>
+<p><strong>Examples:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>aegis<span class="w"> </span>deploy-init<span class="w"> </span>--host<span class="w"> </span><span class="m">192</span>.168.1.100
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>aegis<span class="w"> </span>deploy-init<span class="w"> </span>--host<span class="w"> </span>myserver.com<span class="w"> </span>--user<span class="w"> </span>deploy
+</span></code></pre></div></p>
+<hr />
+<h3 id="aegis-deploy-setup">aegis deploy-setup</h3>
+<p>Provision a remote server for deployment. Installs Docker, configures firewall, and prepares the server.</p>
+<p><strong>Usage:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>aegis<span class="w"> </span>deploy-setup<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</span></code></pre></div></p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--project-path TEXT</code> — Path to the project (default: current directory)</li>
+</ul>
+<p><strong>Examples:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>aegis<span class="w"> </span>deploy-setup
+</span></code></pre></div></p>
+<hr />
+<h3 id="aegis-deploy">aegis deploy</h3>
+<p>Deploy the project to the configured server. Syncs files, builds Docker images, and starts services.</p>
+<p><strong>Usage:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>aegis<span class="w"> </span>deploy<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</span></code></pre></div></p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--build / --no-build</code> — Build images before deploying (default: <code>--build</code>)</li>
+<li><code>--project-path TEXT</code> — Path to the project (default: current directory)</li>
+</ul>
+<p><strong>Examples:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>aegis<span class="w"> </span>deploy
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>aegis<span class="w"> </span>deploy<span class="w"> </span>--no-build
+</span></code></pre></div></p>
+<hr />
+<h3 id="aegis-deploy-logs">aegis deploy-logs</h3>
+<p>View logs from the deployed application.</p>
+<p><strong>Usage:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>aegis<span class="w"> </span>deploy-logs<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</span></code></pre></div></p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--follow / --no-follow, -f</code> — Follow log output (default: <code>--follow</code>)</li>
+<li><code>--service, -s TEXT</code> — Show logs for a specific service</li>
+<li><code>--project-path TEXT</code> — Path to the project (default: current directory)</li>
+</ul>
+<p><strong>Examples:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>aegis<span class="w"> </span>deploy-logs
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>aegis<span class="w"> </span>deploy-logs<span class="w"> </span>--no-follow
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>aegis<span class="w"> </span>deploy-logs<span class="w"> </span>--service<span class="w"> </span>webserver
+</span></code></pre></div></p>
+<hr />
+<h3 id="aegis-deploy-status">aegis deploy-status</h3>
+<p>Check the status of deployed services.</p>
+<p><strong>Usage:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>aegis<span class="w"> </span>deploy-status<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</span></code></pre></div></p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--project-path TEXT</code> — Path to the project (default: current directory)</li>
+</ul>
+<p><strong>Examples:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>aegis<span class="w"> </span>deploy-status
+</span></code></pre></div></p>
+<hr />
+<h3 id="aegis-deploy-stop">aegis deploy-stop</h3>
+<p>Stop all deployed services.</p>
+<p><strong>Usage:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>aegis<span class="w"> </span>deploy-stop<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</span></code></pre></div></p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--project-path TEXT</code> — Path to the project (default: current directory)</li>
+</ul>
+<p><strong>Examples:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>aegis<span class="w"> </span>deploy-stop
+</span></code></pre></div></p>
+<hr />
+<h3 id="aegis-deploy-restart">aegis deploy-restart</h3>
+<p>Restart all deployed services.</p>
+<p><strong>Usage:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>aegis<span class="w"> </span>deploy-restart<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</span></code></pre></div></p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--project-path TEXT</code> — Path to the project (default: current directory)</li>
+</ul>
+<p><strong>Examples:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>aegis<span class="w"> </span>deploy-restart
+</span></code></pre></div></p>
+<hr />
+<h3 id="aegis-deploy-shell">aegis deploy-shell</h3>
+<p>Open a shell in a deployed container.</p>
+<p><strong>Usage:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>aegis<span class="w"> </span>deploy-shell<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</span></code></pre></div></p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--service, -s TEXT</code> — Service to connect to (default: <code>webserver</code>)</li>
+<li><code>--project-path TEXT</code> — Path to the project (default: current directory)</li>
+</ul>
+<p><strong>Examples:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>aegis<span class="w"> </span>deploy-shell
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>aegis<span class="w"> </span>deploy-shell<span class="w"> </span>--service<span class="w"> </span>redis
+</span></code></pre></div></p>
+<hr />
+<h3 id="aegis-ingress-enable">aegis ingress-enable</h3>
+<p>Enable TLS (HTTPS) on a project with the ingress component. Configures Let's Encrypt certificates via Traefik.</p>
+<p><strong>Usage:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>aegis<span class="w"> </span>ingress-enable<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</span></code></pre></div></p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--domain, -d TEXT</code> — Domain name for TLS certificate (e.g., <code>example.com</code>)</li>
+<li><code>--email, -e TEXT</code> — Email for Let's Encrypt certificate notifications</li>
+<li><code>--project-path, -p TEXT</code> — Path to the project (default: current directory)</li>
+<li><code>--yes, -y</code> — Skip confirmation prompts</li>
+</ul>
+<p><strong>Examples:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>aegis<span class="w"> </span>ingress-enable<span class="w"> </span>--domain<span class="w"> </span>example.com<span class="w"> </span>--email<span class="w"> </span>admin@example.com
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>aegis<span class="w"> </span>ingress-enable<span class="w"> </span>-d<span class="w"> </span>example.com<span class="w"> </span>-e<span class="w"> </span>admin@example.com<span class="w"> </span>-y
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>aegis<span class="w"> </span>ingress-enable<span class="w">  </span><span class="c1"># interactive prompts</span>
+</span></code></pre></div></p>
+<hr />
 <h2 id="generated-project-cli">Generated Project CLI</h2>
 <p>When you add services to a project, they install their own CLI commands as entry point scripts. These commands are available after running <code>uv sync</code> in your generated project.</p>
 <p><strong>Script Installation:</strong></p>
 <p>All generated projects get a CLI script matching the project name:
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># If project is named &quot;my-app&quot;</span>
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>my-app<span class="w"> </span>--help
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
-</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># If project is named &quot;chatbot&quot;</span>
-</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>chatbot<span class="w"> </span>--help
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="c1"># If project is named &quot;my-app&quot;</span>
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>my-app<span class="w"> </span>--help
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="c1"># If project is named &quot;chatbot&quot;</span>
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>chatbot<span class="w"> </span>--help
 </span></code></pre></div></p>
 <h3 id="component-clis">Component CLIs</h3>
 <p>Components that add CLI capabilities to your generated projects:</p>
 <p><strong>Scheduler</strong> - <code>my-app tasks</code></p>
 <p>Manage scheduled tasks with persistent job tracking:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>my-app<span class="w"> </span>tasks<span class="w"> </span>list<span class="w">       </span><span class="c1"># List all scheduled jobs</span>
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>my-app<span class="w"> </span>tasks<span class="w"> </span>stats<span class="w">      </span><span class="c1"># View scheduler statistics</span>
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>my-app<span class="w"> </span>tasks<span class="w"> </span><span class="nb">history</span><span class="w">    </span><span class="c1"># View execution history</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>my-app<span class="w"> </span>tasks<span class="w"> </span>list<span class="w">       </span><span class="c1"># List all scheduled jobs</span>
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>my-app<span class="w"> </span>tasks<span class="w"> </span>stats<span class="w">      </span><span class="c1"># View scheduler statistics</span>
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>my-app<span class="w"> </span>tasks<span class="w"> </span><span class="nb">history</span><span class="w">    </span><span class="c1"># View execution history</span>
 </span></code></pre></div>
 <p><strong>→ <a href="../components/scheduler/cli/">Complete Scheduler CLI Reference</a></strong></p>
 <p><strong>Worker</strong> - Native <code>arq</code> CLI</p>
 <p>Background task processing with Redis-backed queues:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>arq<span class="w"> </span>my_project.components.worker.WorkerSettings<span class="w">  </span><span class="c1"># Start worker</span>
-</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>arq<span class="w"> </span>--watch<span class="w"> </span>my_project.components.worker.WorkerSettings<span class="w">  </span><span class="c1"># Auto-reload</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>arq<span class="w"> </span>my_project.components.worker.WorkerSettings<span class="w">  </span><span class="c1"># Start worker</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>arq<span class="w"> </span>--watch<span class="w"> </span>my_project.components.worker.WorkerSettings<span class="w">  </span><span class="c1"># Auto-reload</span>
 </span></code></pre></div>
 <p><strong>→ <a href="../components/worker/#arq-cli-commands">Complete Worker CLI Reference</a></strong></p>
 <h3 id="service-clis">Service CLIs</h3>
 <p>Services that add CLI capabilities to your generated projects:</p>
 <p><strong>Auth Service</strong> - <code>my-app auth</code></p>
 <p>User management and testing utilities:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>my-app<span class="w"> </span>auth<span class="w"> </span>create-test-user<span class="w">   </span><span class="c1"># Create single test user</span>
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>my-app<span class="w"> </span>auth<span class="w"> </span>create-test-users<span class="w">  </span><span class="c1"># Create multiple test users</span>
-</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>my-app<span class="w"> </span>auth<span class="w"> </span>list-users<span class="w">         </span><span class="c1"># List all users</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>my-app<span class="w"> </span>auth<span class="w"> </span>create-test-user<span class="w">   </span><span class="c1"># Create single test user</span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>my-app<span class="w"> </span>auth<span class="w"> </span>create-test-users<span class="w">  </span><span class="c1"># Create multiple test users</span>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>my-app<span class="w"> </span>auth<span class="w"> </span>list-users<span class="w">         </span><span class="c1"># List all users</span>
 </span></code></pre></div>
 <p><strong>→ <a href="../services/auth/cli/">Complete Auth CLI Reference</a></strong></p>
 <p><strong>AI Service</strong> - <code>my-app ai</code></p>
 <p>Multi-provider AI chat interface with conversation management:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>my-app<span class="w"> </span>ai<span class="w"> </span>status<span class="w">               </span><span class="c1"># Show configuration and validation</span>
-</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>my-app<span class="w"> </span>ai<span class="w"> </span>providers<span class="w">            </span><span class="c1"># List all 7 AI providers</span>
-</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat<span class="w"> </span><span class="s2">&quot;Hello&quot;</span><span class="w">         </span><span class="c1"># Send single message</span>
-</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat<span class="w">                 </span><span class="c1"># Interactive chat session</span>
-</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>my-app<span class="w"> </span>ai<span class="w"> </span>conversations<span class="w">        </span><span class="c1"># List user conversations</span>
-</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>my-app<span class="w"> </span>ai<span class="w"> </span><span class="nb">history</span><span class="w"> </span>&lt;id&gt;<span class="w">         </span><span class="c1"># View conversation history</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>my-app<span class="w"> </span>ai<span class="w"> </span>status<span class="w">               </span><span class="c1"># Show configuration and validation</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>my-app<span class="w"> </span>ai<span class="w"> </span>providers<span class="w">            </span><span class="c1"># List all 7 AI providers</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat<span class="w"> </span><span class="s2">&quot;Hello&quot;</span><span class="w">         </span><span class="c1"># Send single message</span>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat<span class="w">                 </span><span class="c1"># Interactive chat session</span>
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>my-app<span class="w"> </span>ai<span class="w"> </span>conversations<span class="w">        </span><span class="c1"># List user conversations</span>
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>my-app<span class="w"> </span>ai<span class="w"> </span><span class="nb">history</span><span class="w"> </span>&lt;id&gt;<span class="w">         </span><span class="c1"># View conversation history</span>
 </span></code></pre></div>
 <p><strong>→ <a href="../services/ai/cli/">Complete AI CLI Reference</a></strong></p>
 <hr />
 <h2 id="project-structure">Project Structure</h2>
 <p>Projects created with <code>aegis init</code> follow this structure:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>my-project/
-</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>├── app/
-</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>│   ├── components/
-</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>│   │   ├── backend/        # FastAPI backend
-</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>│   │   ├── frontend/       # Flet frontend
-</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>│   │   ├── scheduler.py    # APScheduler (if included)
-</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>│   │   ├── worker/         # arq worker queues (if included)
-</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>│   │   └── database.py     # Database setup (if included)
-</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a>│   ├── core/              # Framework utilities
-</span><span id="__span-27-10"><a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a>│   ├── services/          # Business logic
-</span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a>│   ├── cli/               # CLI commands (if services added)
-</span><span id="__span-27-12"><a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a>│   └── integrations/      # App composition
-</span><span id="__span-27-13"><a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a>├── tests/                 # Test suite
-</span><span id="__span-27-14"><a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a>├── docs/                  # Documentation
-</span><span id="__span-27-15"><a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a>├── data/                  # SQLite databases (if database included)
-</span><span id="__span-27-16"><a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a>├── pyproject.toml         # Project configuration
-</span><span id="__span-27-17"><a id="__codelineno-27-17" name="__codelineno-27-17" href="#__codelineno-27-17"></a>├── Dockerfile             # Container definition
-</span><span id="__span-27-18"><a id="__codelineno-27-18" name="__codelineno-27-18" href="#__codelineno-27-18"></a>├── docker-compose.yml     # Multi-service orchestration
-</span><span id="__span-27-19"><a id="__codelineno-27-19" name="__codelineno-27-19" href="#__codelineno-27-19"></a>├── Makefile              # Development commands
-</span><span id="__span-27-20"><a id="__codelineno-27-20" name="__codelineno-27-20" href="#__codelineno-27-20"></a>└── .env.example          # Environment template
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>my-project/
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>├── app/
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>│   ├── components/
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>│   │   ├── backend/        # FastAPI backend
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>│   │   ├── frontend/       # Flet frontend
+</span><span id="__span-45-6"><a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>│   │   ├── scheduler.py    # APScheduler (if included)
+</span><span id="__span-45-7"><a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>│   │   ├── worker/         # arq worker queues (if included)
+</span><span id="__span-45-8"><a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a>│   │   └── database.py     # Database setup (if included)
+</span><span id="__span-45-9"><a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a>│   ├── core/              # Framework utilities
+</span><span id="__span-45-10"><a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a>│   ├── services/          # Business logic
+</span><span id="__span-45-11"><a id="__codelineno-45-11" name="__codelineno-45-11" href="#__codelineno-45-11"></a>│   ├── cli/               # CLI commands (if services added)
+</span><span id="__span-45-12"><a id="__codelineno-45-12" name="__codelineno-45-12" href="#__codelineno-45-12"></a>│   └── integrations/      # App composition
+</span><span id="__span-45-13"><a id="__codelineno-45-13" name="__codelineno-45-13" href="#__codelineno-45-13"></a>├── traefik/               # Traefik config (if ingress included)
+</span><span id="__span-45-14"><a id="__codelineno-45-14" name="__codelineno-45-14" href="#__codelineno-45-14"></a>│   └── traefik.yml        # Traefik static configuration
+</span><span id="__span-45-15"><a id="__codelineno-45-15" name="__codelineno-45-15" href="#__codelineno-45-15"></a>├── scripts/               # Deployment scripts (if ingress included)
+</span><span id="__span-45-16"><a id="__codelineno-45-16" name="__codelineno-45-16" href="#__codelineno-45-16"></a>│   └── server-setup.sh    # Server provisioning
+</span><span id="__span-45-17"><a id="__codelineno-45-17" name="__codelineno-45-17" href="#__codelineno-45-17"></a>├── tests/                 # Test suite
+</span><span id="__span-45-18"><a id="__codelineno-45-18" name="__codelineno-45-18" href="#__codelineno-45-18"></a>├── docs/                  # Documentation
+</span><span id="__span-45-19"><a id="__codelineno-45-19" name="__codelineno-45-19" href="#__codelineno-45-19"></a>├── data/                  # SQLite databases (if database included)
+</span><span id="__span-45-20"><a id="__codelineno-45-20" name="__codelineno-45-20" href="#__codelineno-45-20"></a>├── pyproject.toml         # Project configuration
+</span><span id="__span-45-21"><a id="__codelineno-45-21" name="__codelineno-45-21" href="#__codelineno-45-21"></a>├── Dockerfile             # Container definition
+</span><span id="__span-45-22"><a id="__codelineno-45-22" name="__codelineno-45-22" href="#__codelineno-45-22"></a>├── docker-compose.yml     # Multi-service orchestration
+</span><span id="__span-45-23"><a id="__codelineno-45-23" name="__codelineno-45-23" href="#__codelineno-45-23"></a>├── Makefile              # Development commands
+</span><span id="__span-45-24"><a id="__codelineno-45-24" name="__codelineno-45-24" href="#__codelineno-45-24"></a>└── .env.example          # Environment template
 </span></code></pre></div>
 <hr />
 <h2 id="development-workflow">Development Workflow</h2>
 <p>After creating a project:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nb">cd</span><span class="w"> </span>my-project
-</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>uv<span class="w"> </span>sync<span class="w">                    </span><span class="c1"># Install dependencies and create virtual environment</span>
-</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate<span class="w">  </span><span class="c1"># Activate virtual environment (important!)</span>
-</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env<span class="w">       </span><span class="c1"># Configure environment (edit API keys, etc.)</span>
-</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>make<span class="w"> </span>serve<span class="w">                 </span><span class="c1"># Start development server</span>
-</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>make<span class="w"> </span><span class="nb">test</span><span class="w">                  </span><span class="c1"># Run test suite</span>
-</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>make<span class="w"> </span>check<span class="w">                 </span><span class="c1"># Run all quality checks (lint + typecheck + test)</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="nb">cd</span><span class="w"> </span>my-project
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>uv<span class="w"> </span>sync<span class="w">                    </span><span class="c1"># Install dependencies and create virtual environment</span>
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate<span class="w">  </span><span class="c1"># Activate virtual environment (important!)</span>
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env<span class="w">       </span><span class="c1"># Configure environment (edit API keys, etc.)</span>
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>make<span class="w"> </span>serve<span class="w">                 </span><span class="c1"># Start development server</span>
+</span><span id="__span-46-6"><a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>make<span class="w"> </span><span class="nb">test</span><span class="w">                  </span><span class="c1"># Run test suite</span>
+</span><span id="__span-46-7"><a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>make<span class="w"> </span>check<span class="w">                 </span><span class="c1"># Run all quality checks (lint + typecheck + test)</span>
 </span></code></pre></div>
 <h3 id="evolving-your-project">Evolving Your Project</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="c1"># Add components as you need them</span>
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>aegis<span class="w"> </span>add<span class="w"> </span>scheduler
-</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>aegis<span class="w"> </span>add<span class="w"> </span>worker
-</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>
-</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="c1"># Add services for new features</span>
-</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>aegis<span class="w"> </span>add-service<span class="w"> </span>auth
-</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>aegis<span class="w"> </span>add-service<span class="w"> </span>ai
-</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>
-</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a><span class="c1"># Remove components you don&#39;t need</span>
-</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler
-</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>
-</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a><span class="c1"># Update to latest template version</span>
-</span><span id="__span-29-13"><a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a>aegis<span class="w"> </span>update
-</span><span id="__span-29-14"><a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a>
-</span><span id="__span-29-15"><a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a><span class="c1"># Always commit before making changes</span>
-</span><span id="__span-29-16"><a id="__codelineno-29-16" name="__codelineno-29-16" href="#__codelineno-29-16"></a>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add scheduler component&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="c1"># Add components as you need them</span>
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>aegis<span class="w"> </span>add<span class="w"> </span>scheduler
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>aegis<span class="w"> </span>add<span class="w"> </span>worker
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>
+</span><span id="__span-47-5"><a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a><span class="c1"># Add services for new features</span>
+</span><span id="__span-47-6"><a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a>aegis<span class="w"> </span>add-service<span class="w"> </span>auth
+</span><span id="__span-47-7"><a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a>aegis<span class="w"> </span>add-service<span class="w"> </span>ai
+</span><span id="__span-47-8"><a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>
+</span><span id="__span-47-9"><a id="__codelineno-47-9" name="__codelineno-47-9" href="#__codelineno-47-9"></a><span class="c1"># Remove components you don&#39;t need</span>
+</span><span id="__span-47-10"><a id="__codelineno-47-10" name="__codelineno-47-10" href="#__codelineno-47-10"></a>aegis<span class="w"> </span>remove<span class="w"> </span>scheduler
+</span><span id="__span-47-11"><a id="__codelineno-47-11" name="__codelineno-47-11" href="#__codelineno-47-11"></a>
+</span><span id="__span-47-12"><a id="__codelineno-47-12" name="__codelineno-47-12" href="#__codelineno-47-12"></a><span class="c1"># Update to latest template version</span>
+</span><span id="__span-47-13"><a id="__codelineno-47-13" name="__codelineno-47-13" href="#__codelineno-47-13"></a>aegis<span class="w"> </span>update
+</span><span id="__span-47-14"><a id="__codelineno-47-14" name="__codelineno-47-14" href="#__codelineno-47-14"></a>
+</span><span id="__span-47-15"><a id="__codelineno-47-15" name="__codelineno-47-15" href="#__codelineno-47-15"></a><span class="c1"># Always commit before making changes</span>
+</span><span id="__span-47-16"><a id="__codelineno-47-16" name="__codelineno-47-16" href="#__codelineno-47-16"></a>git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add scheduler component&quot;</span>
 </span></code></pre></div>
 <h3 id="best-practices">Best Practices</h3>
 <ol>
