@@ -2259,9 +2259,10 @@
 
     subgraph "Optional Infrastructure"
         Scheduler[Scheduler&lt;br/&gt;APScheduler Jobs]
-        Database[Database&lt;br/&gt;SQLite + SQLModel]
-        Worker[Worker Queues&lt;br/&gt;arq + Redis]
+        Database[Database&lt;br/&gt;SQLite / PostgreSQL]
+        Worker[Worker Queues&lt;br/&gt;arq / Dramatiq / TaskIQ]
         Ingress[Ingress&lt;br/&gt;Traefik Proxy]
+        Observability[Observability&lt;br/&gt;Logfire]
         Cache[Cache Layer&lt;br/&gt;Redis Sessions]
     end
 
@@ -2329,7 +2330,7 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>Core</strong> (Backend + Frontend + CLI)</td>
+<td><strong>Core</strong> (Backend + Overseer + CLI)</td>
 <td>API + UI + Management</td>
 <td>FastAPI + Flet + Typer</td>
 <td>✅ Always included</td>
@@ -2337,7 +2338,25 @@
 <tr>
 <td><strong>Database</strong></td>
 <td>Data persistence, ORM</td>
-<td>SQLite + SQLModel</td>
+<td>SQLite or PostgreSQL + SQLModel</td>
+<td>✅ Available</td>
+</tr>
+<tr>
+<td><strong>Inference</strong></td>
+<td>Local AI model serving</td>
+<td>Ollama (Docker or external)</td>
+<td>✅ Available</td>
+</tr>
+<tr>
+<td><strong>Cache</strong></td>
+<td>Message broker, pub/sub</td>
+<td>Redis</td>
+<td>✅ Available</td>
+</tr>
+<tr>
+<td><strong>Worker</strong></td>
+<td>Background task queues</td>
+<td>arq, Dramatiq, or TaskIQ</td>
 <td>✅ Available</td>
 </tr>
 <tr>
@@ -2347,22 +2366,16 @@
 <td>✅ Available</td>
 </tr>
 <tr>
-<td><strong>Worker</strong></td>
-<td>Async task queues</td>
-<td>arq + Redis</td>
-<td>🧪 Experimental</td>
-</tr>
-<tr>
 <td><strong>Ingress</strong></td>
 <td>Reverse proxy, TLS, routing</td>
 <td>Traefik v3</td>
 <td>✅ Available</td>
 </tr>
 <tr>
-<td><strong>Cache</strong></td>
-<td>Session storage, performance</td>
-<td>Redis</td>
-<td>🚧 Coming soon</td>
+<td><strong>Observability</strong></td>
+<td>Tracing, metrics, logging</td>
+<td>Pydantic Logfire</td>
+<td>✅ Available</td>
 </tr>
 </tbody>
 </table>
@@ -2375,10 +2388,13 @@
 <hr />
 <p><strong>Next:</strong> Choose your first component combination and see the integration in action:</p>
 <ul>
-<li><strong><a href="database/">Database Component</a></strong> - SQLite persistence with SQLModel ORM</li>
+<li><strong><a href="database/">Database Component</a></strong> - SQLite or PostgreSQL with SQLModel ORM</li>
 <li><strong><a href="scheduler/">Scheduler Component</a></strong> - Background tasks and cron jobs</li>
-<li><strong><a href="worker/">Worker Component</a></strong> - Async task processing and queues</li>
+<li><strong><a href="worker/">Worker Component</a></strong> - Background task processing and queues</li>
 <li><strong><a href="ingress/">Ingress Component</a></strong> - Traefik reverse proxy and TLS</li>
+<li><strong><a href="../services/auth/">Auth Service</a></strong> - User authentication with JWT</li>
+<li><strong><a href="../services/ai/">AI Service</a></strong> - Multi-provider AI conversations</li>
+<li><strong><a href="../services/comms/">Comms Service</a></strong> - Email, SMS, and voice</li>
 </ul>
 
 

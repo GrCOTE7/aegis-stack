@@ -2417,9 +2417,10 @@
 
     subgraph "Components Layer (Infrastructure)"
         Backend[⚡ Backend&lt;br/&gt;FastAPI Routes]
-        Database[💾 Database&lt;br/&gt;SQLite + SQLModel]
-        Worker[🔄 Worker&lt;br/&gt;arq + Redis]
+        Database[💾 Database&lt;br/&gt;SQLite / PostgreSQL]
+        Worker[🔄 Worker&lt;br/&gt;arq / Dramatiq / TaskIQ]
         Scheduler[⏰ Scheduler&lt;br/&gt;APScheduler]
+        Observability[🔍 Observability&lt;br/&gt;Logfire]
         Cache[🗄️ Cache&lt;br/&gt;Redis Sessions&lt;br/&gt;🚧 Coming Soon]
     end
 
@@ -2475,7 +2476,7 @@
         AuthAPI["Auth API routes"]
         UserModel["User model"]
         JWT["JWT security"]
-        DB[SQLite database]
+        DB[Database]
         API[FastAPI app]
         UI[Flet frontend]
     end
