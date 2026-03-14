@@ -2318,16 +2318,18 @@
 <p><a href="https://github.com/lbedner/aegis-stack/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/lbedner/aegis-stack/workflows/CI/badge.svg" /></a>
 <a href="https://github.com/lbedner/aegis-stack/actions/workflows/docs.yml"><img alt="Documentation" src="https://github.com/lbedner/aegis-stack/workflows/Deploy%20Documentation/badge.svg" /></a>
 <a href="https://www.python.org/downloads/"><img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11+-blue.svg" /></a>
-<a href="https://github.com/lbedner/aegis-stack/commits"><img alt="Commits per Month" src="https://img.shields.io/github/commit-activity/m/lbedner/aegis-stack" /></a>
-<a href="https://github.com/lbedner/aegis-stack/commits"><img alt="Total Commits" src="https://img.shields.io/github/commit-activity/t/lbedner/aegis-stack" /></a>
-<a href="https://pypi.org/project/aegis-stack/"><img alt="Monthly Downloads" src="https://img.shields.io/pypi/dm/aegis-stack" /></a>
-<a href="https://pepy.tech/project/aegis-stack"><img alt="Total Downloads" src="https://static.pepy.tech/badge/aegis-stack" /></a>
 <a href="https://github.com/copier-org/copier"><img alt="Copier" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-orange.json" /></a></p>
+<p><a href="https://pypi.org/project/aegis-stack/"><img alt="Monthly Downloads" src="https://img.shields.io/pypi/dm/aegis-stack" /></a>
+<a href="https://pepy.tech/project/aegis-stack"><img alt="Total Downloads" src="https://static.pepy.tech/badge/aegis-stack" /></a>
+<a href="https://clickpy.clickhouse.com/dashboard/aegis-stack?min_date=2026-01-01&amp;max_date=2026-12-31"><img alt="PyPI - Top 10% 2026" src="https://img.shields.io/badge/PyPI-Top_10%25_2026-2ea043" /></a></p>
+<p><a href="https://github.com/lbedner/aegis-stack/commits"><img alt="Commits per Month" src="https://img.shields.io/github/commit-activity/m/lbedner/aegis-stack" /></a>
+<a href="https://github.com/lbedner/aegis-stack/commits"><img alt="Total Commits" src="https://img.shields.io/github/commit-activity/t/lbedner/aegis-stack" /></a>
+<a href="https://github.com/lbedner/aegis-stack/commits"><img alt="Last Commit" src="https://img.shields.io/github/last-commit/lbedner/aegis-stack" /></a></p>
 <p>You need to ship reliable software, but management only gave you 2 weeks.</p>
 <p>No time for health checks, proper testing, or clean architecture. Just enough time for duct tape and hope.</p>
 <p><strong>What if you could go from idea to working prototype in the time it takes to grab coffee?</strong></p>
 <p><a class="glightbox" href="images/aegis-demo.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Aegis Stack Quick Start Demo" src="images/aegis-demo.gif" /></a></p>
-<p>Aegis Stack is a system for creating and evolving modular Python applications over time, built on tools you already know.</p>
+<p>A production-ready FastAPI platform with modular components and a built-in control plane.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
 <li><strong>Python 3.11+</strong></li>
@@ -2344,7 +2346,7 @@
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>uvx<span class="w"> </span>aegis-stack<span class="w"> </span>init<span class="w"> </span>task-processor<span class="w"> </span>--components<span class="w"> </span>scheduler,worker
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Start building</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nb">cd</span><span class="w"> </span>my-api<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>uv<span class="w"> </span>sync<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cp<span class="w"> </span>.env.example<span class="w"> </span>.env<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>serve
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nb">cd</span><span class="w"> </span>my-api<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>serve
 </span></code></pre></div>
 <p><strong>Installation alternatives:</strong> See the <a href="installation/">Installation Guide</a> for <code>uv tool install</code>, <code>pip install</code>, and development setup.</p>
 <h2 id="overseer-built-in-system-visibility">Overseer - Built-In System Visibility</h2>
@@ -2415,7 +2417,7 @@
 <li><strong>Database</strong> → Postgres / SQLite</li>
 <li><strong>Cache/Queue</strong> → Redis</li>
 <li><strong>Scheduler</strong> → APScheduler</li>
-<li><strong>Worker</strong> → Arq / Taskiq</li>
+<li><strong>Worker</strong> → Arq / Taskiq / Dramatiq</li>
 </ul>
 <p><strong>Services</strong> (business logic)</p>
 <ul>
@@ -2426,10 +2428,12 @@
 <p><a href="components/">Components Docs →</a> | <a href="services/">Services Docs →</a></p>
 <h2 id="learn-more">Learn More</h2>
 <ul>
+<li><strong><a href="overseer/">Overseer</a></strong> - Built-in system dashboard</li>
+<li><strong><a href="deployment/">Deployment</a></strong> - Deploy with backups, rollback, and health checks</li>
 <li><strong><a href="cli-reference/">CLI Reference</a></strong> - Complete command reference</li>
-<li><strong><a href="about/">About</a></strong> - The philosophy and vision behind Aegis Stack</li>
 <li><strong><a href="evolving-your-stack/">Evolving Your Stack</a></strong> - Add/remove components as needs change</li>
 <li><strong><a href="technology/">Technology Stack</a></strong> - Battle-tested technology choices</li>
+<li><strong><a href="about/">About</a></strong> - The philosophy and vision behind Aegis Stack</li>
 </ul>
 <h2 id="for-the-veterans">For The Veterans</h2>
 <p><a class="glightbox" href="images/ron-swanson.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Ron Swanson" src="images/ron-swanson.gif" /></a></p>
