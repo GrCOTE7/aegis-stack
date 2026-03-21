@@ -12,13 +12,13 @@
         <meta name="author" content="Aegis Stack Contributors">
       
       
-        <link rel="canonical" href="https://lbedner.github.io/aegis-stack/services/ai/providers/">
+        <link rel="canonical" href="https://lbedner.github.io/aegis-stack/services/ai/llm-catalog/">
       
       
-        <link rel="prev" href="../engines/">
+        <link rel="prev" href="../illiana/">
       
       
-        <link rel="next" href="../api/">
+        <link rel="next" href="../rag/">
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Provider Setup - Aegis Stack</title>
+        <title>LLM Catalog - Aegis Stack</title>
       
     
     
@@ -94,7 +94,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ai-providers" class="md-skip">
+        <a href="#llm-catalog" class="md-skip">
           Skip to content
         </a>
       
@@ -128,7 +128,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Provider Setup
+              LLM Catalog
             
           </span>
         </div>
@@ -1502,10 +1502,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../llm-catalog/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    LLM Catalog
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1516,6 +1538,269 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      What You Get
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Start
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLI Commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CLI Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#llm-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      llm sync
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      llm status
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-vendors" class="md-nav__link">
+    <span class="md-ellipsis">
+      llm vendors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-modalities" class="md-nav__link">
+    <span class="md-ellipsis">
+      llm modalities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      llm list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      llm current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      llm use
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      llm info
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Endpoints
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-llmstatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /llm/status
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-llmvendors" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /llm/vendors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-llmmodalities" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /llm/modalities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-llmmodels" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /llm/models
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-llmcurrent" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /llm/current
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database Schema
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Database Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#llmvendor" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLMVendor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#largelanguagemodel" class="md-nav__link">
+    <span class="md-ellipsis">
+      LargeLanguageModel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llmmodality" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLMModality
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llmdeployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLMDeployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llmprice" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLMPrice
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context Injection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source Files
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1617,32 +1902,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Provider Setup
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../providers/" class="md-nav__link">
         
   
   
@@ -1653,161 +1916,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#provider-setup-guides" class="md-nav__link">
-    <span class="md-ellipsis">
-      Provider Setup Guides
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ollama-local" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ollama (Local)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Ollama (Local)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      Setup
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ollama-deployment-modes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ollama Deployment Modes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#switching-models-via-cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      Switching Models via CLI
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#switching-providers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Switching Providers
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Switching Providers">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#via-env" class="md-nav__link">
-    <span class="md-ellipsis">
-      Via .env
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#via-cli-with-llm-catalog" class="md-nav__link">
-    <span class="md-ellipsis">
-      Via CLI (with LLM Catalog)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#missing-api-key-error" class="md-nav__link">
-    <span class="md-ellipsis">
-      "Missing API key" Error
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#provider-not-available-error" class="md-nav__link">
-    <span class="md-ellipsis">
-      "Provider not available" Error
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2393,64 +2501,100 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#what-you-get" class="md-nav__link">
     <span class="md-ellipsis">
-      Overview
+      What You Get
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
+  <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuration
+      Quick Start
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#provider-setup-guides" class="md-nav__link">
+  <a href="#cli-commands" class="md-nav__link">
     <span class="md-ellipsis">
-      Provider Setup Guides
+      CLI Commands
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ollama-local" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ollama (Local)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Ollama (Local)">
+    <nav class="md-nav" aria-label="CLI Commands">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
+  <a href="#llm-sync" class="md-nav__link">
     <span class="md-ellipsis">
-      Setup
+      llm sync
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#ollama-deployment-modes" class="md-nav__link">
+  <a href="#llm-status" class="md-nav__link">
     <span class="md-ellipsis">
-      Ollama Deployment Modes
+      llm status
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#switching-models-via-cli" class="md-nav__link">
+  <a href="#llm-vendors" class="md-nav__link">
     <span class="md-ellipsis">
-      Switching Models via CLI
+      llm vendors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-modalities" class="md-nav__link">
+    <span class="md-ellipsis">
+      llm modalities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      llm list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      llm current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      llm use
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-info" class="md-nav__link">
+    <span class="md-ellipsis">
+      llm info
     </span>
   </a>
   
@@ -2462,28 +2606,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#switching-providers" class="md-nav__link">
+  <a href="#api-endpoints" class="md-nav__link">
     <span class="md-ellipsis">
-      Switching Providers
+      API Endpoints
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Switching Providers">
+    <nav class="md-nav" aria-label="API Endpoints">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#via-env" class="md-nav__link">
+  <a href="#get-llmstatus" class="md-nav__link">
     <span class="md-ellipsis">
-      Via .env
+      GET /llm/status
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#via-cli-with-llm-catalog" class="md-nav__link">
+  <a href="#get-llmvendors" class="md-nav__link">
     <span class="md-ellipsis">
-      Via CLI (with LLM Catalog)
+      GET /llm/vendors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-llmmodalities" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /llm/modalities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-llmmodels" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /llm/models
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-llmcurrent" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /llm/current
     </span>
   </a>
   
@@ -2495,28 +2666,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#database-schema" class="md-nav__link">
     <span class="md-ellipsis">
-      Troubleshooting
+      Database Schema
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Troubleshooting">
+    <nav class="md-nav" aria-label="Database Schema">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#missing-api-key-error" class="md-nav__link">
+  <a href="#llmvendor" class="md-nav__link">
     <span class="md-ellipsis">
-      "Missing API key" Error
+      LLMVendor
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#provider-not-available-error" class="md-nav__link">
+  <a href="#largelanguagemodel" class="md-nav__link">
     <span class="md-ellipsis">
-      "Provider not available" Error
+      LargeLanguageModel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llmmodality" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLMModality
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llmdeployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLMDeployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llmprice" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLMPrice
     </span>
   </a>
   
@@ -2524,6 +2722,24 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context Injection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source Files
+    </span>
+  </a>
   
 </li>
       
@@ -2547,314 +2763,521 @@
   
 
 
-<h1 id="ai-providers">AI Providers</h1>
-<p>Complete setup guide for all supported AI providers.</p>
-<h2 id="overview">Overview</h2>
-<p>The AI service supports multiple providers through either <a href="https://ai.pydantic.dev/">Pydantic AI</a> or <a href="https://python.langchain.com/">LangChain</a> (see <a href="../engines/">Engines</a>), giving you flexibility to choose based on your needs: cost, speed, features, or specific model capabilities.</p>
-<div class="admonition tip">
-<p class="admonition-title">All Providers Work with Both Engines</p>
-<p>Whether you chose Pydantic AI or LangChain as your engine, all 7 providers are fully supported with identical configuration.</p>
+<h1 id="llm-catalog">LLM Catalog</h1>
+<p><a class="glightbox" href="../../../images/llm_catalog.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="LLM Catalog" src="../../../images/llm_catalog.png" /></a></p>
+<p>The LLM Catalog is a local database of ~2000 language models synced from cloud APIs and local Ollama. It provides model discovery, pricing, capabilities, and one-command model switching.</p>
+<div class="admonition info">
+<p class="admonition-title">Requires Database Backend</p>
+<p>The LLM Catalog requires a database backend (<code>ai[sqlite]</code> or <code>ai[postgres]</code>). With the in-memory backend, catalog features are not available.</p>
 </div>
-<p><strong>Quick comparison:</strong></p>
+<h2 id="what-you-get">What You Get</h2>
+<ul>
+<li><strong>~2000 models</strong> synced from OpenRouter, LiteLLM, and local Ollama</li>
+<li><strong>32+ vendors</strong> including OpenAI, Anthropic, Google, Groq, Mistral, DeepSeek, and more</li>
+<li><strong>Pricing data</strong> with per-token input/output costs and price versioning</li>
+<li><strong>Capability tracking</strong> - modalities (text, image, audio, video), function calling, streaming, structured output</li>
+<li><strong>One-command switching</strong> - <code>llm use gpt-4o</code> auto-detects vendor and updates your config</li>
+<li><strong>Context injection</strong> - top models per vendor are injected into Illiana's prompts for model recommendations</li>
+</ul>
+<h2 id="quick-start">Quick Start</h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># 1. Generate project with database backend</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>aegis<span class="w"> </span>init<span class="w"> </span>my-app<span class="w"> </span>--services<span class="w"> </span><span class="s2">&quot;ai[sqlite]&quot;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>my-app<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>uv<span class="w"> </span>sync<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># 2. Sync the catalog (~2000 models, takes ~12 seconds)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>my-app<span class="w"> </span>llm<span class="w"> </span>sync
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># 3. Browse models</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>my-app<span class="w"> </span>llm<span class="w"> </span>list<span class="w"> </span>claude
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>my-app<span class="w"> </span>llm<span class="w"> </span>vendors
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1"># 4. Switch models</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>my-app<span class="w"> </span>llm<span class="w"> </span>use<span class="w"> </span>gpt-4o
+</span></code></pre></div>
+<hr />
+<h2 id="cli-commands">CLI Commands</h2>
+<h3 id="llm-sync">llm sync</h3>
+<p>Sync model data from cloud APIs or local Ollama into the local database.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Default: sync chat models from cloud (OpenRouter + LiteLLM)</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>my-app<span class="w"> </span>llm<span class="w"> </span>sync
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Sync only Ollama models</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>my-app<span class="w"> </span>llm<span class="w"> </span>sync<span class="w"> </span>--source<span class="w"> </span>ollama
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># Sync everything</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>my-app<span class="w"> </span>llm<span class="w"> </span>sync<span class="w"> </span>--source<span class="w"> </span>all<span class="w"> </span>--mode<span class="w"> </span>all
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Preview without saving</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>my-app<span class="w"> </span>llm<span class="w"> </span>sync<span class="w"> </span>--dry-run
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1"># Full refresh (truncate + re-sync)</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>my-app<span class="w"> </span>llm<span class="w"> </span>sync<span class="w"> </span>--refresh
+</span></code></pre></div>
+<p><strong>Options:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Provider</th>
-<th>API Key Required</th>
-<th>Speed</th>
-<th>Best For</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>PUBLIC</strong></td>
-<td>No</td>
-<td>Basic</td>
-<td>Instant testing, no setup</td>
-</tr>
-<tr>
-<td><strong>Ollama</strong></td>
-<td>No (local)</td>
-<td>Varies</td>
-<td>Privacy, offline, no API costs</td>
-</tr>
-<tr>
-<td><strong>Google Gemini</strong></td>
-<td>Yes (free tier)</td>
-<td>Good</td>
-<td>Development, prototyping</td>
-</tr>
-<tr>
-<td><strong>Groq</strong></td>
-<td>Yes (free tier)</td>
-<td>Very fast</td>
-<td>Production, low cost</td>
-</tr>
-<tr>
-<td><strong>OpenAI</strong></td>
-<td>Yes</td>
-<td>Good</td>
-<td>Production, familiar API</td>
-</tr>
-<tr>
-<td><strong>Anthropic</strong></td>
-<td>Yes</td>
-<td>Good</td>
-<td>Claude models</td>
-</tr>
-<tr>
-<td><strong>Mistral</strong></td>
-<td>Yes</td>
-<td>Good</td>
-<td>Open models</td>
-</tr>
-<tr>
-<td><strong>Cohere</strong></td>
-<td>Yes (free tier)</td>
-<td>Good</td>
-<td>Command models</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition tip">
-<p class="admonition-title">Recommendation</p>
-<p><strong>Start:</strong> PUBLIC (no API key, instant) → <strong>Develop:</strong> Google Gemini (free tier) → <strong>Production:</strong> Groq (very fast, low cost)</p>
-</div>
-<h2 id="configuration">Configuration</h2>
-<p>All providers are configured through environment variables in your <code>.env</code> file:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Core AI Service Settings</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">AI_ENABLED</span><span class="o">=</span><span class="nb">true</span><span class="w">                    </span><span class="c1"># Enable/disable service</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nv">AI_PROVIDER</span><span class="o">=</span>public<span class="w">                 </span><span class="c1"># Provider: openai, anthropic, google, groq, mistral, cohere, ollama, public</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">AI_MODEL</span><span class="o">=</span>auto<span class="w">                      </span><span class="c1"># Model name (varies by provider, &quot;auto&quot; for PUBLIC)</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nv">AI_TEMPERATURE</span><span class="o">=</span><span class="m">0</span>.7<span class="w">                 </span><span class="c1"># Response creativity (0.0-2.0)</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nv">AI_MAX_TOKENS</span><span class="o">=</span><span class="m">1000</span><span class="w">                 </span><span class="c1"># Maximum response length</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nv">AI_TIMEOUT_SECONDS</span><span class="o">=</span><span class="m">30</span>.0<span class="w">            </span><span class="c1"># Request timeout</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1"># Provider API Keys (only needed for non-PUBLIC providers)</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nv">OPENAI_API_KEY</span><span class="o">=</span>sk-...<span class="w">              </span><span class="c1"># OpenAI API key</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span>sk-ant-...<span class="w">       </span><span class="c1"># Anthropic API key</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="nv">GOOGLE_API_KEY</span><span class="o">=</span>...<span class="w">                 </span><span class="c1"># Google API key</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="nv">GROQ_API_KEY</span><span class="o">=</span>gsk_...<span class="w">               </span><span class="c1"># Groq API key</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="nv">MISTRAL_API_KEY</span><span class="o">=</span>...<span class="w">                </span><span class="c1"># Mistral API key</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="nv">COHERE_API_KEY</span><span class="o">=</span>...<span class="w">                 </span><span class="c1"># Cohere API key</span>
-</span></code></pre></div>
-<h2 id="provider-setup-guides">Provider Setup Guides</h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:7"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><input id="__tabbed_1_7" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">PUBLIC (Free)</label><label for="__tabbed_1_2">Groq (Production)</label><label for="__tabbed_1_3">Google Gemini (Free Tier)</label><label for="__tabbed_1_4">OpenAI</label><label for="__tabbed_1_5">Anthropic</label><label for="__tabbed_1_6">Mistral</label><label for="__tabbed_1_7">Cohere</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p><strong>No setup required!</strong> Works out of the box with zero configuration.</p>
-<p><strong>Setup:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Already configured by default - just start chatting</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat<span class="w"> </span><span class="s2">&quot;Hello! Can you help me?&quot;</span>
-</span></code></pre></div>
-<p><strong>Best for:</strong> Instant testing, demos, getting started without any setup</p>
-</div>
-<div class="tabbed-block">
-<p>Blazing fast inference with very generous free tier.</p>
-<p><strong>Setup:</strong></p>
-<ol>
-<li>Sign up at <a href="https://console.groq.com/">console.groq.com</a></li>
-<li>Create an API key (free tier available)</li>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_PROVIDER</span><span class="o">=</span>groq
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GROQ_API_KEY</span><span class="o">=</span>gsk_your_key_here
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_MODEL</span><span class="o">=</span>llama-3.1-8b-instant<span class="w">  </span><span class="c1"># Fastest model</span>
-</span></code></pre></div>
-<p><strong>Available Models:</strong> See <a href="https://console.groq.com/docs/models">Groq's model documentation</a> for the latest available models.</p>
-<p><strong>Best for:</strong> Production use (very fast, extremely low cost)</p>
-</div>
-<div class="tabbed-block">
-<p>Generous free tier with daily rate limits. Great for development.</p>
-<p><strong>Setup:</strong></p>
-<ol>
-<li>Get free API key from <a href="https://aistudio.google.com/apikey">aistudio.google.com</a></li>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_PROVIDER</span><span class="o">=</span>google
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GOOGLE_API_KEY</span><span class="o">=</span>your_key_here
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_MODEL</span><span class="o">=</span>gemini-2.0-flash-exp
-</span></code></pre></div>
-<p><strong>Available Models:</strong> See <a href="https://ai.google.dev/gemini-api/docs/models/gemini">Google's model documentation</a> for the latest available models.</p>
-<p><strong>Best for:</strong> Development and prototyping within rate limits</p>
-</div>
-<div class="tabbed-block">
-<p>Industry-standard GPT models. Most widely used and documented.</p>
-<p><strong>Setup:</strong></p>
-<ol>
-<li>Get API key from <a href="https://platform.openai.com/">platform.openai.com</a></li>
-<li>Add payment method (required for API access)</li>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_PROVIDER</span><span class="o">=</span>openai
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span>sk-your_key_here
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_MODEL</span><span class="o">=</span>gpt-3.5-turbo
-</span></code></pre></div>
-<p><strong>Available Models:</strong> See <a href="https://platform.openai.com/docs/models">OpenAI's model documentation</a> for the latest available models.</p>
-<p><strong>Best for:</strong> Production with familiar API, extensive ecosystem</p>
-</div>
-<div class="tabbed-block">
-<p>Claude models from Anthropic. Known for safety and reasoning.</p>
-<p><strong>Setup:</strong></p>
-<ol>
-<li>Get API key from <a href="https://console.anthropic.com/">console.anthropic.com</a></li>
-<li>Add payment method</li>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_PROVIDER</span><span class="o">=</span>anthropic
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span>sk-ant-your_key_here
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_MODEL</span><span class="o">=</span>claude-3-5-sonnet-20241022
-</span></code></pre></div>
-<p><strong>Available Models:</strong> See <a href="https://docs.anthropic.com/en/docs/models-overview">Anthropic's model documentation</a> for the latest available models.</p>
-<p><strong>Best for:</strong> High-quality responses, safety-critical applications</p>
-</div>
-<div class="tabbed-block">
-<p>Open-source Mistral models with European data residency.</p>
-<p><strong>Setup:</strong></p>
-<ol>
-<li>Get API key from <a href="https://console.mistral.ai/">console.mistral.ai</a></li>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_PROVIDER</span><span class="o">=</span>mistral
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">MISTRAL_API_KEY</span><span class="o">=</span>your_key_here
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_MODEL</span><span class="o">=</span>mistral-small-latest
-</span></code></pre></div>
-<p><strong>Available Models:</strong> See <a href="https://docs.mistral.ai/getting-started/models/">Mistral's model documentation</a> for the latest available models.</p>
-<p><strong>Best for:</strong> Open-source preference, European compliance requirements</p>
-</div>
-<div class="tabbed-block">
-<p>Command models optimized for enterprise and RAG use cases.</p>
-<p><strong>Setup:</strong></p>
-<ol>
-<li>Get API key from <a href="https://dashboard.cohere.com/">dashboard.cohere.com</a></li>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_PROVIDER</span><span class="o">=</span>cohere
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">COHERE_API_KEY</span><span class="o">=</span>your_key_here
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_MODEL</span><span class="o">=</span>command-r-plus
-</span></code></pre></div>
-<p><strong>Available Models:</strong> See <a href="https://docs.cohere.com/docs/models">Cohere's model documentation</a> for the latest available models.</p>
-<p><strong>Best for:</strong> Enterprise features, RAG applications</p>
-</div>
-</div>
-</div>
-<h2 id="ollama-local">Ollama (Local)</h2>
-<p>Run models locally with zero API costs. Supports hundreds of open-source models.</p>
-<h3 id="setup">Setup</h3>
-<ol>
-<li>Install Ollama from <a href="https://ollama.ai/">ollama.ai</a></li>
-<li>Pull a model:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ollama<span class="w"> </span>pull<span class="w"> </span>llama3.1
-</span></code></pre></div>
-<ol>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nv">AI_PROVIDER</span><span class="o">=</span>ollama
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nv">AI_MODEL</span><span class="o">=</span>llama3.1
-</span></code></pre></div>
-<h3 id="ollama-deployment-modes">Ollama Deployment Modes</h3>
-<p>Configure at project generation:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Host mode: Ollama runs on your machine (default)</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>aegis<span class="w"> </span>init<span class="w"> </span>my-app<span class="w"> </span>--services<span class="w"> </span>ai
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># Docker mode: Ollama runs in a Docker container</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># (select during aegis init interactive prompts)</span>
-</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th>Mode</th>
+<th>Flag</th>
+<th>Values</th>
+<th>Default</th>
 <th>Description</th>
-<th>Use Case</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>host</code></td>
-<td>Ollama on localhost:11434</td>
-<td>Development, GPU on host</td>
+<td><code>--mode, -m</code></td>
+<td><code>chat</code>, <code>embedding</code>, <code>all</code></td>
+<td><code>chat</code></td>
+<td>Model type filter</td>
 </tr>
 <tr>
-<td><code>docker</code></td>
-<td>Ollama in Docker container</td>
-<td>Portable, CI/CD</td>
+<td><code>--source, -s</code></td>
+<td><code>cloud</code>, <code>ollama</code>, <code>all</code></td>
+<td><code>cloud</code></td>
+<td>Data source</td>
 </tr>
 <tr>
-<td><code>none</code></td>
-<td>No Ollama support</td>
-<td>Cloud-only providers</td>
+<td><code>--dry-run, -n</code></td>
+<td>flag</td>
+<td>off</td>
+<td>Preview without saving</td>
+</tr>
+<tr>
+<td><code>--refresh, -r</code></td>
+<td>flag</td>
+<td>off</td>
+<td>Truncate tables first</td>
 </tr>
 </tbody>
 </table>
-<h3 id="switching-models-via-cli">Switching Models via CLI</h3>
-<p>With the LLM Catalog, you can discover and switch Ollama models:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Sync Ollama models into catalog</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>my-app<span class="w"> </span>llm<span class="w"> </span>sync<span class="w"> </span>--source<span class="w"> </span>ollama
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># List available Ollama models</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>my-app<span class="w"> </span>llm<span class="w"> </span>list<span class="w"> </span>--vendor<span class="w"> </span>ollama
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1"># Switch to an Ollama model</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>my-app<span class="w"> </span>llm<span class="w"> </span>use<span class="w"> </span>llama3.1
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="c1"># Or use /model in interactive chat</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>&gt;<span class="w"> </span>/model<span class="w"> </span>llama3.1
+<p><strong>Sources:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>What It Syncs</th>
+<th>Model Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cloud</code></td>
+<td>OpenRouter + LiteLLM public APIs</td>
+<td>~2000 models</td>
+</tr>
+<tr>
+<td><code>ollama</code></td>
+<td>Locally installed Ollama models</td>
+<td>Varies</td>
+</tr>
+<tr>
+<td><code>all</code></td>
+<td>Both cloud and Ollama</td>
+<td>~2000+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="llm-status">llm status</h3>
+<p>Show catalog statistics:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>my-app<span class="w"> </span>llm<span class="w"> </span>status
 </span></code></pre></div>
-<div class="admonition tip">
-<p class="admonition-title">Cost Tracking with Ollama</p>
-<p>Ollama models show $0.00 cost in usage stats - this is expected and normal since all processing happens locally. Illiana is aware of this and won't flag it as an issue.</p>
-</div>
-<h2 id="switching-providers">Switching Providers</h2>
-<p>You can switch providers at any time by changing your <code>.env</code> file or using the CLI:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Switch from PUBLIC to Groq</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nv">AI_PROVIDER</span><span class="o">=</span>groq
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="nv">GROQ_API_KEY</span><span class="o">=</span>your-key-here
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="nv">AI_MODEL</span><span class="o">=</span>llama-3.1-8b-instant
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>LLM Catalog Summary
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>┏━━━━━━━━━━━━━┳━━━━━━━┓
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>┃ Metric      ┃ Count ┃
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>┡━━━━━━━━━━━━━╇━━━━━━━┩
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>│ Vendors     │ 32    │
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>│ Models      │ 1847  │
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>│ Deployments │ 2103  │
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>│ Prices      │ 1952  │
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>└─────────────┴───────┘
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>Top Vendors by Model Count
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>┏━━━━━━━━━━━━━┳━━━━━━━━┓
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>┃ Vendor      ┃ Models ┃
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>┡━━━━━━━━━━━━━╇━━━━━━━━┩
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>│ OpenAI      │ 156    │
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>│ Google      │ 89     │
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>│ Anthropic   │ 42     │
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>│ Mistral     │ 38     │
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>└─────────────┴────────┘
 </span></code></pre></div>
-<h3 id="via-env">Via .env</h3>
-<p>Edit <code>.env</code> and restart:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>make<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>serve
+<h3 id="llm-vendors">llm vendors</h3>
+<p>List all vendors with model counts:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>my-app<span class="w"> </span>llm<span class="w"> </span>vendors
 </span></code></pre></div>
-<h3 id="via-cli-with-llm-catalog">Via CLI (with LLM Catalog)</h3>
-<p>Update <code>.env</code> from the catalog (takes effect on next CLI invocation or server restart):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Auto-detects provider from model name and updates .env</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>my-app<span class="w"> </span>llm<span class="w"> </span>use<span class="w"> </span>gpt-4o<span class="w">              </span><span class="c1"># → sets AI_PROVIDER=openai</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>my-app<span class="w"> </span>llm<span class="w"> </span>use<span class="w"> </span>claude-sonnet-4-20250514<span class="w">  </span><span class="c1"># → sets AI_PROVIDER=anthropic</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>my-app<span class="w"> </span>llm<span class="w"> </span>use<span class="w"> </span>llama3.1<span class="w">            </span><span class="c1"># → sets AI_PROVIDER=ollama</span>
+<h3 id="llm-modalities">llm modalities</h3>
+<p>List modalities (text, image, audio, video) with model counts:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>my-app<span class="w"> </span>llm<span class="w"> </span>modalities
 </span></code></pre></div>
-<p>Switch instantly within an interactive chat session (refreshes in-process, no restart needed):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>&gt;<span class="w"> </span>/model<span class="w"> </span>gpt-4o
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>✓<span class="w"> </span>Switched<span class="w"> </span>to<span class="w"> </span>OpenAI/gpt-4o
+<h3 id="llm-list">llm list</h3>
+<p>Search and filter models:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Search by pattern</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>my-app<span class="w"> </span>llm<span class="w"> </span>list<span class="w"> </span>claude
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Filter by vendor</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>my-app<span class="w"> </span>llm<span class="w"> </span>list<span class="w"> </span>gpt-4<span class="w"> </span>--vendor<span class="w"> </span>openai
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Filter by modality</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>my-app<span class="w"> </span>llm<span class="w"> </span>list<span class="w"> </span>--vendor<span class="w"> </span>anthropic<span class="w"> </span>--modality<span class="w"> </span>image
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1"># Include disabled models</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>my-app<span class="w"> </span>llm<span class="w"> </span>list<span class="w"> </span>--vendor<span class="w"> </span>openai<span class="w"> </span>--all
 </span></code></pre></div>
-<p><strong>Verify the switch:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>my-app<span class="w"> </span>ai<span class="w"> </span>status
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>my-app<span class="w"> </span>llm<span class="w"> </span>current
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--vendor, -v</code></td>
+<td>Filter by vendor name</td>
+</tr>
+<tr>
+<td><code>--modality, -m</code></td>
+<td>Filter by modality (text, image, audio, video)</td>
+</tr>
+<tr>
+<td><code>--limit, -l</code></td>
+<td>Max results (default: 50)</td>
+</tr>
+<tr>
+<td><code>--all, -a</code></td>
+<td>Include disabled models</td>
+</tr>
+</tbody>
+</table>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>LLM Models (3 results)
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━┓
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>┃ Model ID                     ┃ Vendor    ┃ Context  ┃ Input $/1M┃ Output $/1M┃ Released   ┃
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━┩
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>│ claude-sonnet-4-20250514     │ Anthropic │ 200,000  │ $3.00     │ $15.00     │ 2025-05-14 │
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>│ claude-haiku-4-5-20251001    │ Anthropic │ 200,000  │ $0.80     │ $4.00      │ 2025-10-01 │
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>│ claude-opus-4-6              │ Anthropic │ 200,000  │ $15.00    │ $75.00     │ 2025-06-01 │
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>└──────────────────────────────┴───────────┴──────────┴───────────┴────────────┴────────────┘
 </span></code></pre></div>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<h3 id="missing-api-key-error">"Missing API key" Error</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>❌<span class="w"> </span>Missing<span class="w"> </span>API<span class="w"> </span>key<span class="w"> </span><span class="k">for</span><span class="w"> </span>groq<span class="w"> </span>provider.<span class="w"> </span>Set<span class="w"> </span>GROQ_API_KEY<span class="w"> </span>environment<span class="w"> </span>variable.
+<h3 id="llm-current">llm current</h3>
+<p>Show current LLM configuration from <code>.env</code>, enriched with catalog data:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>my-app<span class="w"> </span>llm<span class="w"> </span>current
 </span></code></pre></div>
-<p><strong>Solution:</strong> Add the API key to your <code>.env</code> file:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nv">GROQ_API_KEY</span><span class="o">=</span>your-actual-key-here
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Current LLM Configuration
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>├── Provider: openai
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>├── Model: gpt-4o
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>├── Temperature: 0.7
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>└── Max Tokens: 1,000
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>Model Details (from catalog)
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>├── Context Window: 128,000
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>├── Input Price: $2.50 / 1M tokens
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>├── Output Price: $10.00 / 1M tokens
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>└── Modalities: text, image
 </span></code></pre></div>
-<h3 id="provider-not-available-error">"Provider not available" Error</h3>
-<p><strong>Check configuration:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>my-app<span class="w"> </span>ai<span class="w"> </span>status
+<h3 id="llm-use">llm use</h3>
+<p>Switch to a different model. Auto-detects vendor and updates <code>AI_PROVIDER</code> in <code>.env</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>my-app<span class="w"> </span>llm<span class="w"> </span>use<span class="w"> </span>gpt-4o<span class="w">                    </span><span class="c1"># → AI_PROVIDER=openai</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>my-app<span class="w"> </span>llm<span class="w"> </span>use<span class="w"> </span>claude-sonnet-4-20250514<span class="w">  </span><span class="c1"># → AI_PROVIDER=anthropic</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>my-app<span class="w"> </span>llm<span class="w"> </span>use<span class="w"> </span>llama3.1<span class="w">                  </span><span class="c1"># → AI_PROVIDER=ollama</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># Force any model string (skip catalog validation)</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>my-app<span class="w"> </span>llm<span class="w"> </span>use<span class="w"> </span>my-custom-model<span class="w"> </span>--force
 </span></code></pre></div>
-<p><strong>Verify provider is installed:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>my-app<span class="w"> </span>ai<span class="w"> </span>providers
+<h3 id="llm-info">llm info</h3>
+<p>Show detailed model information:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>my-app<span class="w"> </span>llm<span class="w"> </span>info<span class="w"> </span>gpt-4o
 </span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>╭─────────────── gpt-4o ───────────────╮
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>│ GPT-4o                               │
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>│                                       │
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>│ Model ID: gpt-4o                     │
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>│ Vendor: OpenAI                       │
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>│                                       │
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>│ Context Window: 128,000 tokens       │
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>│ Streamable: Yes                      │
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>│ Enabled: Yes                         │
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>│ Released: 2024-05-13                 │
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>│                                       │
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>│ Pricing (per 1M tokens)             │
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>│   Input: $2.50                       │
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>│   Output: $10.00                     │
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>│                                       │
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>│ Modalities: text, image              │
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>╰───────────────────────────────────────╯
+</span></code></pre></div>
+<hr />
+<h2 id="api-endpoints">API Endpoints</h2>
+<p>All endpoints are prefixed with <code>/llm</code>.</p>
+<h3 id="get-llmstatus">GET <code>/llm/status</code></h3>
+<p>Catalog statistics including vendor count, model count, and top vendors.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>curl<span class="w"> </span>http://localhost:8000/llm/status<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+</span></code></pre></div>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">{</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nt">&quot;vendor_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="nt">&quot;model_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1847</span><span class="p">,</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="nt">&quot;deployment_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2103</span><span class="p">,</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span><span class="nt">&quot;price_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1952</span><span class="p">,</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span><span class="nt">&quot;top_vendors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OpenAI&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;model_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">156</span><span class="p">},</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Google&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;model_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">89</span><span class="p">}</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="get-llmvendors">GET <code>/llm/vendors</code></h3>
+<p>List all vendors with model counts.</p>
+<h3 id="get-llmmodalities">GET <code>/llm/modalities</code></h3>
+<p>List all modalities with model counts.</p>
+<h3 id="get-llmmodels">GET <code>/llm/models</code></h3>
+<p>Search and filter models.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pattern</code></td>
+<td>string</td>
+<td>null</td>
+<td>Search pattern (model ID or title)</td>
+</tr>
+<tr>
+<td><code>vendor</code></td>
+<td>string</td>
+<td>null</td>
+<td>Filter by vendor</td>
+</tr>
+<tr>
+<td><code>modality</code></td>
+<td>string</td>
+<td>null</td>
+<td>Filter by modality</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>integer</td>
+<td>50</td>
+<td>Max results (1-200)</td>
+</tr>
+<tr>
+<td><code>include_disabled</code></td>
+<td>boolean</td>
+<td>false</td>
+<td>Include disabled models</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:8000/llm/models?pattern=gpt-4&amp;vendor=openai&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+</span></code></pre></div>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">[</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="p">{</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="nt">&quot;model_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">    </span><span class="nt">&quot;vendor&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OpenAI&quot;</span><span class="p">,</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">    </span><span class="nt">&quot;context_window&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">128000</span><span class="p">,</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">    </span><span class="nt">&quot;input_price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.50</span><span class="p">,</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">    </span><span class="nt">&quot;output_price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.00</span><span class="p">,</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">    </span><span class="nt">&quot;released_on&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-05-13&quot;</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="p">]</span>
+</span></code></pre></div>
+<h3 id="get-llmcurrent">GET <code>/llm/current</code></h3>
+<p>Current active LLM configuration enriched with catalog data.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="p">{</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;openai&quot;</span><span class="p">,</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">  </span><span class="nt">&quot;temperature&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">  </span><span class="nt">&quot;max_tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">  </span><span class="nt">&quot;context_window&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">128000</span><span class="p">,</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="w">  </span><span class="nt">&quot;input_price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.50</span><span class="p">,</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">  </span><span class="nt">&quot;output_price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.00</span><span class="p">,</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">  </span><span class="nt">&quot;modalities&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;image&quot;</span><span class="p">]</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="database-schema">Database Schema</h2>
+<p>The catalog uses five tables:</p>
+<h3 id="llmvendor">LLMVendor</h3>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>string, unique</td>
+<td>Vendor name (e.g., "OpenAI")</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>string</td>
+<td>Vendor description</td>
+</tr>
+<tr>
+<td><code>color</code></td>
+<td>string</td>
+<td>UI color code</td>
+</tr>
+<tr>
+<td><code>api_base</code></td>
+<td>string</td>
+<td>API base URL</td>
+</tr>
+<tr>
+<td><code>auth_method</code></td>
+<td>string</td>
+<td>Authentication method</td>
+</tr>
+</tbody>
+</table>
+<p>20+ vendors pre-configured with metadata (OpenAI, Anthropic, Google, Groq, Mistral, DeepSeek, xAI, etc.).</p>
+<h3 id="largelanguagemodel">LargeLanguageModel</h3>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model_id</code></td>
+<td>string, unique</td>
+<td>Canonical model identifier</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>string</td>
+<td>Display name</td>
+</tr>
+<tr>
+<td><code>context_window</code></td>
+<td>integer</td>
+<td>Max tokens</td>
+</tr>
+<tr>
+<td><code>streamable</code></td>
+<td>boolean</td>
+<td>Supports streaming</td>
+</tr>
+<tr>
+<td><code>enabled</code></td>
+<td>boolean</td>
+<td>Available for use</td>
+</tr>
+<tr>
+<td><code>released_on</code></td>
+<td>string</td>
+<td>Release date</td>
+</tr>
+<tr>
+<td><code>family</code></td>
+<td>string</td>
+<td>Model family</td>
+</tr>
+<tr>
+<td><code>llm_vendor_id</code></td>
+<td>FK</td>
+<td>Reference to vendor</td>
+</tr>
+</tbody>
+</table>
+<h3 id="llmmodality">LLMModality</h3>
+<p>Tracks input/output capabilities per model:</p>
+<ul>
+<li><strong>modality</strong>: text, audio, image, video</li>
+<li><strong>direction</strong>: input, output, bidirectional</li>
+<li>Unique constraint: <code>(llm_id, modality, direction)</code></li>
+</ul>
+<h3 id="llmdeployment">LLMDeployment</h3>
+<p>Performance characteristics per vendor deployment:</p>
+<ul>
+<li><code>speed</code>, <code>intelligence</code>, <code>reasoning</code> (0-100 scale)</li>
+<li><code>function_calling</code>, <code>input_cache</code>, <code>structured_output</code> (boolean capabilities)</li>
+<li><code>output_max_tokens</code></li>
+</ul>
+<h3 id="llmprice">LLMPrice</h3>
+<p>Per-token pricing with versioning:</p>
+<ul>
+<li><code>input_cost_per_token</code>, <code>output_cost_per_token</code></li>
+<li><code>cache_input_cost_per_token</code> (for prompt caching)</li>
+<li><code>effective_date</code> - supports price history; latest price selected by <code>ORDER BY effective_date DESC</code></li>
+</ul>
+<hr />
+<h2 id="context-injection">Context Injection</h2>
+<p>The <code>LLMCatalogContext</code> class (<code>app/services/ai/llm_catalog_context.py</code>) builds a compact summary of featured vendors and their top models for injection into Illiana's system prompt.</p>
+<p><strong>Featured vendors</strong> (priority-ordered): OpenAI, Anthropic, Google, xAI, Mistral, Groq, DeepSeek</p>
+<p>For each vendor, the 3 newest models (by release date) are included with:
+- Model ID, title
+- Input/output cost per 1M tokens
+- Context window
+- Key capabilities (function calling, vision, structured output)</p>
+<p>Alias models (ending in <code>-latest</code> or <code>:latest</code>) are filtered out.</p>
+<p>This enables Illiana to recommend models when asked "What's the cheapest model with vision?" or "Which Anthropic model should I use?"</p>
+<hr />
+<h2 id="source-files">Source Files</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app/services/ai/llm_service.py</code></td>
+<td>Service functions (list, search, switch)</td>
+</tr>
+<tr>
+<td><code>app/services/ai/etl/llm_sync_service.py</code></td>
+<td>Catalog sync from APIs</td>
+</tr>
+<tr>
+<td><code>app/services/ai/etl/clients/openrouter_client.py</code></td>
+<td>OpenRouter API client</td>
+</tr>
+<tr>
+<td><code>app/services/ai/etl/clients/litellm_client.py</code></td>
+<td>LiteLLM API client</td>
+</tr>
+<tr>
+<td><code>app/services/ai/etl/mappers/llm_mapper.py</code></td>
+<td>Data transformation</td>
+</tr>
+<tr>
+<td><code>app/services/ai/llm_catalog_context.py</code></td>
+<td>Prompt context injection</td>
+</tr>
+<tr>
+<td><code>app/services/ai/models/llm/</code></td>
+<td>Database models</td>
+</tr>
+<tr>
+<td><code>app/cli/llm.py</code></td>
+<td>CLI commands</td>
+</tr>
+<tr>
+<td><code>app/components/backend/api/llm/router.py</code></td>
+<td>API endpoints</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <p><strong>Next Steps:</strong></p>
 <ul>
-<li><strong><a href="../llm-catalog/">LLM Catalog</a></strong> - Browse and switch between ~2000 models</li>
-<li><strong><a href="../cli/">CLI Commands</a></strong> - Using the AI service from command line</li>
-<li><strong><a href="../api/">API Reference</a></strong> - Using the AI service via REST API</li>
-<li><strong><a href="../integration/">Service Layer</a></strong> - Using the AI service in your code</li>
-<li><strong><a href="../examples/">Examples</a></strong> - Real-world usage patterns</li>
+<li><strong><a href="../cost-tracking/">Cost Tracking</a></strong> - Usage analytics powered by catalog pricing</li>
+<li><strong><a href="../providers/">Provider Setup</a></strong> - Configure providers and switch models</li>
+<li><strong><a href="../cli/">CLI Commands</a></strong> - Complete CLI reference</li>
+<li><strong><a href="../api/">API Reference</a></strong> - All REST endpoints</li>
 </ul>
 
 
