@@ -2083,6 +2083,193 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Insights (Experimental)
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Insights (Experimental)
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="insights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="insights/data-sources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Data Sources
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="insights/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="insights/dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dashboard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="insights/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="insights/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2565,7 +2752,7 @@
 <p>Services are <strong>business-level functionality</strong> that your application provides to users. While Components handle infrastructure concerns (databases, workers, scheduling), Services implement specific business capabilities like authentication, payments, or AI integrations.</p>
 <div class="admonition info">
 <p class="admonition-title">Services vs Components</p>
-<p><strong>Services</strong> = What your app does (auth, payments, AI)
+<p><strong>Services</strong> = What your app does (auth, AI, insights)
 <strong>Components</strong> = How your app works (database, workers, API)</p>
 </div>
 <h2 id="service-architecture">Service Architecture</h2>
@@ -2574,6 +2761,7 @@
         Auth[🔐 Auth Service&lt;br/&gt;JWT + User Management&lt;br/&gt;Registration, Login, Profiles]
         AI[🤖 AI Service&lt;br/&gt;PydanticAI Integration&lt;br/&gt;Multi-Provider Chat]
         Comms[📧 Comms Service&lt;br/&gt;Email, SMS, Voice&lt;br/&gt;Resend + Twilio]
+        Insights[📊 Insights Service&lt;br/&gt;Adoption Metrics&lt;br/&gt;GitHub, PyPI, Plausible]
     end
 
     subgraph "Components Layer (Infrastructure)"
@@ -2589,9 +2777,12 @@
     Auth --&gt; Database
     AI --&gt; Backend
     Comms --&gt; Backend
+    Insights --&gt; Backend
+    Insights --&gt; Database
 
     style Auth fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
     style AI fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
+    style Insights fill:#fff3e0,stroke:#f57c00,stroke-width:2px,stroke-dasharray: 5 5
     style Comms fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
     style Backend fill:#e1f5fe,stroke:#1976d2,stroke-width:2px
     style Database fill:#fff3e0,stroke:#f57c00,stroke-width:2px
@@ -2682,15 +2873,21 @@
 </tr>
 <tr>
 <td><strong>ai</strong></td>
-<td>🧪 Experimental</td>
+<td>✅ Available</td>
 <td>Multi-provider AI chat with PydanticAI (OpenAI, Anthropic, Google, Groq, etc.)</td>
 <td>backend</td>
 </tr>
 <tr>
 <td><strong>comms</strong></td>
-<td>🧪 Experimental</td>
+<td>✅ Available</td>
 <td>Email (Resend), SMS, and voice calls (Twilio)</td>
 <td>backend</td>
+</tr>
+<tr>
+<td><strong>insights</strong></td>
+<td>🧪 Experimental</td>
+<td>Adoption metrics tracking (GitHub, PyPI, Plausible, Reddit)</td>
+<td>backend, database, scheduler</td>
 </tr>
 </tbody>
 </table>
@@ -2712,13 +2909,18 @@
         Push[push&lt;br/&gt;🚧 Future: Push Notifications]
     end
 
+    subgraph "📊 Analytics Services"
+        InsightsService[insights&lt;br/&gt;GitHub, PyPI, Plausible, Reddit]
+    end
+
     style AuthJWT fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
     style AuthOAuth fill:#f0f0f0,stroke:#757575,stroke-dasharray: 5 5
     style AuthSAML fill:#f0f0f0,stroke:#757575,stroke-dasharray: 5 5
     style AIPydantic fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
     style AILangChain fill:#f0f0f0,stroke:#757575,stroke-dasharray: 5 5
     style CommsService fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
-    style Push fill:#f0f0f0,stroke:#757575,stroke-dasharray: 5 5</code></pre>
+    style Push fill:#f0f0f0,stroke:#757575,stroke-dasharray: 5 5
+    style InsightsService fill:#fff3e0,stroke:#f57c00,stroke-width:2px,stroke-dasharray: 5 5</code></pre>
 <h2 id="service-development-patterns">Service Development Patterns</h2>
 <h3 id="service-structure">Service Structure</h3>
 <p>Services follow a consistent structure in generated projects:</p>
@@ -2803,6 +3005,7 @@
 <li><strong><a href="auth/">Authentication Service</a></strong> - Complete JWT auth implementation</li>
 <li><strong><a href="ai/">AI Service</a></strong> - Multi-provider AI chat with PydanticAI</li>
 <li><strong><a href="comms/">Communications Service</a></strong> - Email, SMS, and voice via Resend/Twilio</li>
+<li><strong><a href="insights/">Insights Service</a></strong> - Adoption metrics tracking (GitHub, PyPI, Plausible, Reddit) <em>(experimental)</em></li>
 <li><strong><a href="../cli-reference/">CLI Reference</a></strong> - Service command reference</li>
 <li><strong><a href="../components/">Components Overview</a></strong> - Infrastructure layer</li>
 </ul>

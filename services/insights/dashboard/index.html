@@ -12,28 +12,28 @@
         <meta name="author" content="Aegis Stack Contributors">
       
       
-        <link rel="canonical" href="https://lbedner.github.io/aegis-stack/overseer/">
+        <link rel="canonical" href="https://lbedner.github.io/aegis-stack/services/insights/dashboard/">
       
       
-        <link rel="prev" href="../services/insights/examples/">
+        <link rel="prev" href="../cli/">
       
       
-        <link rel="next" href="story/">
+        <link rel="next" href="../configuration/">
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
     
     
       
-        <title>Overview - Aegis Stack</title>
+        <title>Dashboard - Aegis Stack</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7e37652d.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -52,11 +52,11 @@
       
     
     
-      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../stylesheets/custom.css">
+      <link rel="stylesheet" href="../../../stylesheets/custom.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -66,7 +66,7 @@
   <!-- Plausible Analytics -->
   <script defer data-domain="lbedner.github.io" src="https://plausible.io/js/script.js"></script>
 
-   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
     html.glightbox-open { overflow: initial; height: 100%; }
     .gslide-title { margin-top: 0px; user-select: text; }
     .gslide-desc { color: #666; user-select: text; }
@@ -75,7 +75,7 @@
     .gdesc-inner { font-size: 0.75rem; }
     body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
     body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -94,7 +94,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#overseer" class="md-skip">
+        <a href="#overseer-dashboard" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Aegis Stack" class="md-header__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
+    <a href="../../.." title="Aegis Stack" class="md-header__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -128,7 +128,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Overview
+              Dashboard
             
           </span>
         </div>
@@ -243,7 +243,7 @@
     
     
       <li class="md-tabs__item">
-        <a href=".." class="md-tabs__link">
+        <a href="../../.." class="md-tabs__link">
           
   
   
@@ -263,7 +263,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../about/" class="md-tabs__link">
+        <a href="../../../about/" class="md-tabs__link">
           
   
   
@@ -283,31 +283,11 @@
     
     
       <li class="md-tabs__item">
-        <a href="../components/" class="md-tabs__link">
+        <a href="../../../components/" class="md-tabs__link">
           
   
   
   Components
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../services/" class="md-tabs__link">
-          
-  
-  
-  Services
 
         </a>
       </li>
@@ -325,7 +305,27 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="./" class="md-tabs__link">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  Services
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../overseer/" class="md-tabs__link">
           
   
   
@@ -345,7 +345,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../deployment/" class="md-tabs__link">
+        <a href="../../../deployment/" class="md-tabs__link">
           
   
   
@@ -365,7 +365,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../cli-reference/" class="md-tabs__link">
+        <a href="../../../cli-reference/" class="md-tabs__link">
           
   
   
@@ -399,7 +399,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Aegis Stack" class="md-nav__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
+    <a href="../../.." title="Aegis Stack" class="md-nav__button md-logo" aria-label="Aegis Stack" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -470,7 +470,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -493,7 +493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../installation/" class="md-nav__link">
+      <a href="../../../installation/" class="md-nav__link">
         
   
   
@@ -564,7 +564,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../about/" class="md-nav__link">
+      <a href="../../../about/" class="md-nav__link">
         
   
   
@@ -587,7 +587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../technology/" class="md-nav__link">
+      <a href="../../../technology/" class="md-nav__link">
         
   
   
@@ -610,7 +610,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../process/" class="md-nav__link">
+      <a href="../../../process/" class="md-nav__link">
         
   
   
@@ -681,7 +681,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/" class="md-nav__link">
+      <a href="../../../components/" class="md-nav__link">
         
   
   
@@ -704,7 +704,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/webserver/" class="md-nav__link">
+      <a href="../../../components/webserver/" class="md-nav__link">
         
   
   
@@ -727,7 +727,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/database/" class="md-nav__link">
+      <a href="../../../components/database/" class="md-nav__link">
         
   
   
@@ -750,7 +750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/frontend/" class="md-nav__link">
+      <a href="../../../components/frontend/" class="md-nav__link">
         
   
   
@@ -814,7 +814,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/scheduler/" class="md-nav__link">
+      <a href="../../../components/scheduler/" class="md-nav__link">
         
   
   
@@ -837,7 +837,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/scheduler/examples/" class="md-nav__link">
+      <a href="../../../components/scheduler/examples/" class="md-nav__link">
         
   
   
@@ -860,7 +860,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/scheduler/cli/" class="md-nav__link">
+      <a href="../../../components/scheduler/cli/" class="md-nav__link">
         
   
   
@@ -924,7 +924,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/scheduler/extras/persistence/" class="md-nav__link">
+      <a href="../../../components/scheduler/extras/persistence/" class="md-nav__link">
         
   
   
@@ -1004,7 +1004,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/worker/" class="md-nav__link">
+      <a href="../../../components/worker/" class="md-nav__link">
         
   
   
@@ -1027,7 +1027,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/worker/configuration/" class="md-nav__link">
+      <a href="../../../components/worker/configuration/" class="md-nav__link">
         
   
   
@@ -1050,7 +1050,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/worker/examples/" class="md-nav__link">
+      <a href="../../../components/worker/examples/" class="md-nav__link">
         
   
   
@@ -1114,7 +1114,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/worker/extras/load-testing/" class="md-nav__link">
+      <a href="../../../components/worker/extras/load-testing/" class="md-nav__link">
         
   
   
@@ -1153,7 +1153,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/ingress/" class="md-nav__link">
+      <a href="../../../components/ingress/" class="md-nav__link">
         
   
   
@@ -1176,7 +1176,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../components/observability/" class="md-nav__link">
+      <a href="../../../components/observability/" class="md-nav__link">
         
   
   
@@ -1203,24 +1203,29 @@
       
   
   
+    
   
   
+  
     
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -1233,7 +1238,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Services
@@ -1247,7 +1252,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   
@@ -1311,7 +1316,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/auth/" class="md-nav__link">
+      <a href="../../auth/" class="md-nav__link">
         
   
   
@@ -1334,7 +1339,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/auth/levels/" class="md-nav__link">
+      <a href="../../auth/levels/" class="md-nav__link">
         
   
   
@@ -1357,7 +1362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/auth/api/" class="md-nav__link">
+      <a href="../../auth/api/" class="md-nav__link">
         
   
   
@@ -1380,7 +1385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/auth/integration/" class="md-nav__link">
+      <a href="../../auth/integration/" class="md-nav__link">
         
   
   
@@ -1403,7 +1408,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/auth/cli/" class="md-nav__link">
+      <a href="../../auth/cli/" class="md-nav__link">
         
   
   
@@ -1426,7 +1431,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/auth/examples/" class="md-nav__link">
+      <a href="../../auth/examples/" class="md-nav__link">
         
   
   
@@ -1498,7 +1503,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/ai/" class="md-nav__link">
+      <a href="../../ai/" class="md-nav__link">
         
   
   
@@ -1521,7 +1526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/ai/illiana/" class="md-nav__link">
+      <a href="../../ai/illiana/" class="md-nav__link">
         
   
   
@@ -1544,7 +1549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/ai/llm-catalog/" class="md-nav__link">
+      <a href="../../ai/llm-catalog/" class="md-nav__link">
         
   
   
@@ -1567,7 +1572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/ai/rag/" class="md-nav__link">
+      <a href="../../ai/rag/" class="md-nav__link">
         
   
   
@@ -1590,7 +1595,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/ai/cost-tracking/" class="md-nav__link">
+      <a href="../../ai/cost-tracking/" class="md-nav__link">
         
   
   
@@ -1613,7 +1618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/ai/voice/" class="md-nav__link">
+      <a href="../../ai/voice/" class="md-nav__link">
         
   
   
@@ -1636,7 +1641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/ai/engines/" class="md-nav__link">
+      <a href="../../ai/engines/" class="md-nav__link">
         
   
   
@@ -1659,7 +1664,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/ai/providers/" class="md-nav__link">
+      <a href="../../ai/providers/" class="md-nav__link">
         
   
   
@@ -1682,7 +1687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/ai/api/" class="md-nav__link">
+      <a href="../../ai/api/" class="md-nav__link">
         
   
   
@@ -1705,7 +1710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/ai/integration/" class="md-nav__link">
+      <a href="../../ai/integration/" class="md-nav__link">
         
   
   
@@ -1728,7 +1733,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/ai/cli/" class="md-nav__link">
+      <a href="../../ai/cli/" class="md-nav__link">
         
   
   
@@ -1751,7 +1756,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/ai/examples/" class="md-nav__link">
+      <a href="../../ai/examples/" class="md-nav__link">
         
   
   
@@ -1823,7 +1828,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/comms/" class="md-nav__link">
+      <a href="../../comms/" class="md-nav__link">
         
   
   
@@ -1846,7 +1851,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/comms/setup/" class="md-nav__link">
+      <a href="../../comms/setup/" class="md-nav__link">
         
   
   
@@ -1869,7 +1874,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/comms/api/" class="md-nav__link">
+      <a href="../../comms/api/" class="md-nav__link">
         
   
   
@@ -1892,7 +1897,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/comms/cli/" class="md-nav__link">
+      <a href="../../comms/cli/" class="md-nav__link">
         
   
   
@@ -1920,6 +1925,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1930,11 +1937,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked>
         
           
           <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
@@ -1950,7 +1957,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_5">
             <span class="md-nav__icon md-icon"></span>
             Insights (Experimental)
@@ -1964,7 +1971,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/insights/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -1987,7 +1994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/insights/data-sources/" class="md-nav__link">
+      <a href="../data-sources/" class="md-nav__link">
         
   
   
@@ -2010,7 +2017,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/insights/cli/" class="md-nav__link">
+      <a href="../cli/" class="md-nav__link">
         
   
   
@@ -2030,10 +2037,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../services/insights/dashboard/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Dashboard
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2044,6 +2073,143 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview Tab
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#github-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Tab
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitHub Tab">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Features
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stars-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stars Tab
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pypi-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      PyPI Tab
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PyPI Tab">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Features
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docs-tab-plausible" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs Tab (Plausible)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Docs Tab (Plausible)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Features
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reddit-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reddit Tab
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      Settings Tab
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shared-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shared Controls
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2056,7 +2222,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/insights/configuration/" class="md-nav__link">
+      <a href="../configuration/" class="md-nav__link">
         
   
   
@@ -2079,7 +2245,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../services/insights/examples/" class="md-nav__link">
+      <a href="../examples/" class="md-nav__link">
         
   
   
@@ -2114,29 +2280,24 @@
       
   
   
-    
   
   
-  
     
     
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -2149,7 +2310,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Overseer
@@ -2160,32 +2321,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Overview
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../overseer/" class="md-nav__link">
         
   
   
@@ -2196,89 +2335,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#why-this-exists" class="md-nav__link">
-    <span class="md-ellipsis">
-      Why This Exists
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-it-is" class="md-nav__link">
-    <span class="md-ellipsis">
-      What It Is
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#current-capabilities" class="md-nav__link">
-    <span class="md-ellipsis">
-      Current Capabilities
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    <span class="md-ellipsis">
-      How It Works
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#health-status-indicators" class="md-nav__link">
-    <span class="md-ellipsis">
-      Health Status Indicators
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-story" class="md-nav__link">
-    <span class="md-ellipsis">
-      The Story
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2291,7 +2347,7 @@
   
   
     <li class="md-nav__item">
-      <a href="story/" class="md-nav__link">
+      <a href="../../../overseer/story/" class="md-nav__link">
         
   
   
@@ -2314,7 +2370,7 @@
   
   
     <li class="md-nav__item">
-      <a href="integration/" class="md-nav__link">
+      <a href="../../../overseer/integration/" class="md-nav__link">
         
   
   
@@ -2385,7 +2441,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../deployment/" class="md-nav__link">
+      <a href="../../../deployment/" class="md-nav__link">
         
   
   
@@ -2456,7 +2512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cli-reference/" class="md-nav__link">
+      <a href="../../../cli-reference/" class="md-nav__link">
         
   
   
@@ -2479,7 +2535,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../evolving-your-stack/" class="md-nav__link">
+      <a href="../../../evolving-your-stack/" class="md-nav__link">
         
   
   
@@ -2502,7 +2558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../integration-patterns/" class="md-nav__link">
+      <a href="../../../integration-patterns/" class="md-nav__link">
         
   
   
@@ -2552,63 +2608,117 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-this-exists" class="md-nav__link">
+  <a href="#overview-tab" class="md-nav__link">
     <span class="md-ellipsis">
-      Why This Exists
+      Overview Tab
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-it-is" class="md-nav__link">
+  <a href="#github-tab" class="md-nav__link">
     <span class="md-ellipsis">
-      What It Is
+      GitHub Tab
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitHub Tab">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Features
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stars-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stars Tab
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#current-capabilities" class="md-nav__link">
+  <a href="#pypi-tab" class="md-nav__link">
     <span class="md-ellipsis">
-      Current Capabilities
+      PyPI Tab
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PyPI Tab">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Features
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docs-tab-plausible" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs Tab (Plausible)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Docs Tab (Plausible)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#features_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Features
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reddit-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reddit Tab
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
+  <a href="#settings-tab" class="md-nav__link">
     <span class="md-ellipsis">
-      How It Works
+      Settings Tab
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#health-status-indicators" class="md-nav__link">
+  <a href="#shared-controls" class="md-nav__link">
     <span class="md-ellipsis">
-      Health Status Indicators
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-story" class="md-nav__link">
-    <span class="md-ellipsis">
-      The Story
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
+      Shared Controls
     </span>
   </a>
   
@@ -2634,111 +2744,70 @@
   
 
 
-<h1 id="overseer">Overseer</h1>
-<h2 id="why-this-exists">Why This Exists</h2>
-<p><strong>Nothing is more annoying than the shrug.</strong></p>
-<p><a class="glightbox" href="../images/druski-shrug.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Druski Shrug" src="../images/druski-shrug.gif" /></a></p>
-<p>Something's broken in production. You ask what happened. You get a shrug. You ask when it started. Another shrug. You ask where the logs are. Shrug. You ask how we can fix it. The biggest fucking shrug you've ever seen.</p>
-<p>If something is wrong, I want to know <strong>where</strong>, <strong>when</strong>, <strong>how</strong>, <strong>why</strong>, and <strong>how can we reconcile it</strong>. Christ! Is that too much to ask?</p>
-<p><strong>It shouldn't be so fucking hard to know what happened, when, where.</strong></p>
-<p>You work with Datadog until management decides to migrate to New Relic. Or you're a solo dev who just wants to see if your background jobs are running without paying enterprise prices. Overseer solves this: centralized monitoring that you own, built into every Aegis Stack project from day one.</p>
-<h2 id="what-it-is">What It Is</h2>
-<p><strong>Overseer is a health monitoring dashboard</strong> built into your Aegis Stack application. It provides real-time visibility into component and service health through a web UI.</p>
-<p><a class="glightbox" href="../images/overseer-demo.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Overseer Dashboard" src="../images/overseer-demo.gif" /></a></p>
-<p>The dashboard displays:</p>
+<h1 id="overseer-dashboard">Overseer Dashboard</h1>
+<p>The Insights service integrates with the Overseer dashboard as an interactive modal with 7 tabs.</p>
+<h2 id="overview-tab">Overview Tab</h2>
+<p><a class="glightbox" href="../../../images/insights_dashboard.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Insights Overview" src="../../../images/insights_dashboard.png" /></a></p>
+<p>The landing tab shows a high-level summary with metric cards, a recent activity feed, and a key milestones grid.</p>
+<p>Metric cards show period-over-period change arrows comparing the current 14-day window against the previous 14 days. The milestones grid shows the all-time record for each tracked category - only the highest value per category is displayed.</p>
+<p>The activity feed uses the same expandable row pattern as the main Overseer activity panel. Expanding a release shows a link to the GitHub release page. Expanding a Reddit post shows upvotes, comments, and a link to the post.</p>
+<h2 id="github-tab">GitHub Tab</h2>
+<p>Interactive GitHub Traffic with full clone/view history going back as far as data has been collected.</p>
+<p><a class="glightbox" href="../../../images/insights_clones.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="GitHub Clones" src="../../../images/insights_clones.png" /></a></p>
+<h3 id="features">Features</h3>
 <ul>
-<li><strong>Component Cards</strong>: Backend, Database, Worker, Scheduler health</li>
-<li><strong>Service Cards</strong>: Auth, AI, Comms, Insights health (when included)</li>
-<li><strong>Header</strong>: Overall health summary and theme toggle</li>
-<li><strong>Auto-refresh</strong>: Polls health endpoint every 30 seconds</li>
+<li>Date range selection (7d, 14d, 1m, 3m, 6m, 1y, All)</li>
+<li>Clones + Unique Cloners line chart with release annotation tooltips</li>
+<li>Views + Unique Visitors line chart</li>
+<li>Activity Summary stacked bar chart (Code, Issues, PRs, Community, Releases)</li>
+<li>Clickable referrers and popular paths (links to GitHub)</li>
+<li>Event chips with date highlighting - click a chip to highlight the data point on the chart</li>
 </ul>
-<h2 id="current-capabilities">Current Capabilities</h2>
+<h2 id="stars-tab">Stars Tab</h2>
+<p>Cumulative star history chart showing growth over time.</p>
+<p><a class="glightbox" href="../../../images/insights_stars.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Star History" src="../../../images/insights_stars.png" /></a></p>
 <ul>
-<li>Component health monitoring (Backend, Database, Worker, Scheduler)</li>
-<li>Service health monitoring (Auth, AI, Comms, Insights)</li>
-<li>System metrics (CPU, memory, disk usage)</li>
-<li>Status hierarchy (Healthy, Warning, Unhealthy, Info)</li>
-<li>Web dashboard with auto-refresh (30-second polling)</li>
+<li>One data point per day that had star activity (no gap filling)</li>
+<li>Tooltips show star numbers and usernames</li>
+<li>Dynamic Y-axis scaling at zoomed ranges</li>
+<li>Event chips filtered to only show events on dates with star activity</li>
 </ul>
-<h2 id="how-it-works">How It Works</h2>
-<pre class="mermaid"><code>sequenceDiagram
-    participant C as Components/Services
-    participant R as Health Registry
-    participant E as /health/ Endpoint
-    participant D as Dashboard UI
-
-    Note over C,R: Startup: Registration Phase
-    C-&gt;&gt;R: register_health_check("backend", check_func)
-    C-&gt;&gt;R: register_health_check("database", check_func)
-    C-&gt;&gt;R: register_service_health_check("auth", check_func)
-
-    Note over E,D: Runtime: Monitoring Phase
-    D-&gt;&gt;E: GET /health/ (every 30s)
-    E-&gt;&gt;R: Run all registered checks
-    R-&gt;&gt;C: Execute health check functions
-    C-&gt;&gt;R: Return ComponentStatus
-    R-&gt;&gt;E: Aggregate into SystemStatus
-    E-&gt;&gt;D: Return health data
-    D-&gt;&gt;D: Render component/service cards</code></pre>
-<p><strong>The Flow:</strong></p>
-<ol>
-<li><strong>Registration</strong>: During app startup, components and services register their health check functions with the health registry</li>
-<li><strong>Aggregation</strong>: The <code>/health/</code> endpoint runs all registered checks and aggregates results into a hierarchical status tree</li>
-<li><strong>Polling</strong>: The dashboard polls the health endpoint every 30 seconds</li>
-<li><strong>Display</strong>: Component and service cards render with real-time status, metrics, and details</li>
-</ol>
-<h2 id="health-status-indicators">Health Status Indicators</h2>
-<p>Each card displays a status indicator using the Overseer status hierarchy:</p>
-<table>
-<thead>
-<tr>
-<th>Status</th>
-<th>Color</th>
-<th>Visual</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>✅ Healthy</strong></td>
-<td>Green</td>
-<td>Solid green border</td>
-<td>Component/service fully operational</td>
-</tr>
-<tr>
-<td><strong>ℹ️ Info</strong></td>
-<td>Blue</td>
-<td>Solid blue border</td>
-<td>Informational status, not a problem</td>
-</tr>
-<tr>
-<td><strong>⚠️ Warning</strong></td>
-<td>Yellow</td>
-<td>Orange border</td>
-<td>Operational but with issues</td>
-</tr>
-<tr>
-<td><strong>❌ Unhealthy</strong></td>
-<td>Red</td>
-<td>Red border</td>
-<td>Component/service down or failing</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Status Propagation</strong>: Parent components inherit the worst child status:</p>
+<h2 id="pypi-tab">PyPI Tab</h2>
+<p>Download analytics with human vs bot separation.</p>
+<p><a class="glightbox" href="../../../images/insights_downloads.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="PyPI Downloads" src="../../../images/insights_downloads.png" /></a></p>
+<h3 id="features_1">Features</h3>
 <ul>
-<li>Any child <strong>Unhealthy</strong> → Parent <strong>Unhealthy</strong></li>
-<li>Any child <strong>Warning</strong> (no unhealthy) → Parent <strong>Warning</strong></li>
-<li>Any child <strong>Info</strong> (no unhealthy/warning) → Parent <strong>Info</strong></li>
-<li>All children <strong>Healthy</strong> → Parent <strong>Healthy</strong></li>
+<li><strong>CI/Mirror toggle</strong> - Switch between total downloads (including bots) and human-only (pip + uv)</li>
+<li>Stacked area chart showing bot vs human split when CI toggle is on</li>
+<li>Version breakdown bar chart</li>
+<li>Side-by-side tables: Downloads by Version and Daily Downloads (scrollable)</li>
+<li>Period-over-period arrows on the Total Downloads card</li>
 </ul>
-<h2 id="the-story">The Story</h2>
-<p>Want to know how this came to be?</p>
-<p><strong><a href="story/">Read the full story →</a></strong> - How Overseer evolved from solving real production problems to becoming part of Aegis Stack.</p>
-<h2 id="next-steps">Next Steps</h2>
+<h2 id="docs-tab-plausible">Docs Tab (Plausible)</h2>
+<p>Documentation site analytics from Plausible.</p>
+<p><a class="glightbox" href="../../../images/insights_docs.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Docs Analytics" src="../../../images/insights_docs.png" /></a></p>
+<h3 id="features_2">Features</h3>
 <ul>
-<li><strong><a href="story/">The Overseer Story</a></strong> - Evolution from Streamlit to Aegis Stack and vision</li>
-<li><strong><a href="integration/">Integration Guide</a></strong> - Add health checks to custom components/services</li>
+<li>Visitors + Pageviews dual-series line chart</li>
+<li>Country breakdown bar chart (range-aware - updates with date selection)</li>
+<li>Top Pages table with clickable links to your documentation site</li>
+<li>Bounce rate with inverted arrow (green when it decreases)</li>
+</ul>
+<h2 id="reddit-tab">Reddit Tab</h2>
+<p>Tracked Reddit post performance. Each post shows subreddit, title, upvotes, comments, upvote ratio, and a clickable link.</p>
+<p>Posts are added on-demand via the CLI:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>my-app<span class="w"> </span>insights<span class="w"> </span>reddit<span class="w"> </span>add<span class="w"> </span>https://reddit.com/r/FastAPI/comments/abc123/your-post
+</span></code></pre></div>
+<h2 id="settings-tab">Settings Tab</h2>
+<p>Data source status and configuration. Shows each source with Active/Stale/Disabled status and last collection timestamp.</p>
+<h2 id="shared-controls">Shared Controls</h2>
+<p>All interactive tabs share a common base:</p>
+<ul>
+<li><strong>Date range chips</strong> - 7d, 14d, 1m, 3m, 6m, 1y, All</li>
+<li><strong>Events toggle</strong> - Show/hide event annotation chips</li>
+<li><strong>Event grouping</strong> - At wider ranges, same-type events are grouped (weekly at 3m, monthly at 6m+)</li>
+<li><strong>Date highlighting</strong> - Click an event chip to highlight all chart points in that date range</li>
+<li><strong>Last updated</strong> - Shows the most recent data point date</li>
 </ul>
 
 
@@ -2811,16 +2880,16 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.top", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.50899def.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.50899def.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10.4.0/dist/mermaid.min.js"></script>
       
-        <script src="../javascripts/mermaid-config.js"></script>
+        <script src="../../../javascripts/mermaid-config.js"></script>
       
-        <script src="../javascripts/feedback.js"></script>
+        <script src="../../../javascripts/feedback.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
