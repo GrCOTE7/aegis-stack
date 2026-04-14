@@ -2105,21 +2105,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="GitHub Tab">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    <span class="md-ellipsis">
-      Features
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -2138,21 +2123,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="PyPI Tab">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#features_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Features
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -2161,21 +2131,6 @@
       Docs Tab (Plausible)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Docs Tab (Plausible)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#features_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Features
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2192,6 +2147,15 @@
   <a href="#settings-tab" class="md-nav__link">
     <span class="md-ellipsis">
       Settings Tab
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      API
     </span>
   </a>
   
@@ -2623,21 +2587,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="GitHub Tab">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    <span class="md-ellipsis">
-      Features
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -2656,21 +2605,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="PyPI Tab">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#features_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Features
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -2679,21 +2613,6 @@
       Docs Tab (Plausible)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Docs Tab (Plausible)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#features_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Features
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2710,6 +2629,15 @@
   <a href="#settings-tab" class="md-nav__link">
     <span class="md-ellipsis">
       Settings Tab
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      API
     </span>
   </a>
   
@@ -2749,50 +2677,25 @@
 <h2 id="overview-tab">Overview Tab</h2>
 <p><a class="glightbox" href="../../../images/insights_dashboard.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Insights Overview" src="../../../images/insights_dashboard.png" /></a></p>
 <p>The landing tab shows a high-level summary with metric cards, a recent activity feed, and a key milestones grid.</p>
-<p>Metric cards show period-over-period change arrows comparing the current 14-day window against the previous 14 days. The milestones grid shows the all-time record for each tracked category - only the highest value per category is displayed.</p>
-<p>The activity feed uses the same expandable row pattern as the main Overseer activity panel. Expanding a release shows a link to the GitHub release page. Expanding a Reddit post shows upvotes, comments, and a link to the post.</p>
+<p>Metric cards show period-over-period change arrows comparing the current 14-day window against the previous 14 days. Each card also shows the latest day's value (e.g., "+77 yesterday") for at-a-glance daily monitoring.</p>
+<p>The milestones grid shows all-time records for each tracked category, including Stars Best Day and Stars Best Month. Only the highest value per category is displayed.</p>
+<p>The activity feed uses the same expandable row pattern as the main Overseer activity panel. Expanding a release shows a link to the GitHub release page. Expanding a fork shows a link to the user's GitHub profile. Expanding a Reddit post shows upvotes, comments, and a link to the post.</p>
 <h2 id="github-tab">GitHub Tab</h2>
 <p>Interactive GitHub Traffic with full clone/view history going back as far as data has been collected.</p>
 <p><a class="glightbox" href="../../../images/insights_clones.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="GitHub Clones" src="../../../images/insights_clones.png" /></a></p>
-<h3 id="features">Features</h3>
-<ul>
-<li>Date range selection (7d, 14d, 1m, 3m, 6m, 1y, All)</li>
-<li>Clones + Unique Cloners line chart with release annotation tooltips</li>
-<li>Views + Unique Visitors line chart</li>
-<li>Activity Summary stacked bar chart (Code, Issues, PRs, Community, Releases)</li>
-<li>Clickable referrers and popular paths (links to GitHub)</li>
-<li>Event chips with date highlighting - click a chip to highlight the data point on the chart</li>
-</ul>
+<p>Full clone/view history going back as far as data has been collected. GitHub only retains 14 days of traffic data, but the collector persists it daily so nothing is lost. Metric cards show the latest day's values alongside period-over-period trends. Clones and views charts trim independently so neither shows dead space. Event chips are clickable and highlight the corresponding data point on the chart. Fork data comes from the GitHub API for completeness (ClickHouse misses some).</p>
 <h2 id="stars-tab">Stars Tab</h2>
 <p>Cumulative star history chart showing growth over time.</p>
 <p><a class="glightbox" href="../../../images/insights_stars.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Star History" src="../../../images/insights_stars.png" /></a></p>
-<ul>
-<li>One data point per day that had star activity (no gap filling)</li>
-<li>Tooltips show star numbers and usernames</li>
-<li>Dynamic Y-axis scaling at zoomed ranges</li>
-<li>Event chips filtered to only show events on dates with star activity</li>
-</ul>
+<p>Cumulative star history with one data point per day that had activity. The Y-axis scales dynamically at zoomed ranges, and event chips only appear on dates with star activity. Tooltips show star numbers, usernames, and any events that occurred on that date.</p>
 <h2 id="pypi-tab">PyPI Tab</h2>
 <p>Download analytics with human vs bot separation.</p>
 <p><a class="glightbox" href="../../../images/insights_downloads.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="PyPI Downloads" src="../../../images/insights_downloads.png" /></a></p>
-<h3 id="features_1">Features</h3>
-<ul>
-<li><strong>CI/Mirror toggle</strong> - Switch between total downloads (including bots) and human-only (pip + uv)</li>
-<li>Stacked area chart showing bot vs human split when CI toggle is on</li>
-<li>Version breakdown bar chart</li>
-<li>Side-by-side tables: Downloads by Version and Daily Downloads (scrollable)</li>
-<li>Period-over-period arrows on the Total Downloads card</li>
-</ul>
+<p>Download analytics with human vs bot separation. The CI/Mirror toggle switches between total downloads and human-only (pip + uv). Metric cards show the latest day's downloads alongside period-over-period trends. Donut charts break down downloads by installer, country, and distribution type.</p>
 <h2 id="docs-tab-plausible">Docs Tab (Plausible)</h2>
 <p>Documentation site analytics from Plausible.</p>
 <p><a class="glightbox" href="../../../images/insights_docs.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Docs Analytics" src="../../../images/insights_docs.png" /></a></p>
-<h3 id="features_2">Features</h3>
-<ul>
-<li>Visitors + Pageviews dual-series line chart</li>
-<li>Country breakdown bar chart (range-aware - updates with date selection)</li>
-<li>Top Pages table with clickable links to your documentation site</li>
-<li>Bounce rate with inverted arrow (green when it decreases)</li>
-</ul>
+<p>Documentation site analytics from Plausible. Insight cards surface the most-read page, most-visited page, and top countries with flag emojis. The bounce rate arrow inverts (green when it decreases). All data is range-aware and updates with date selection.</p>
 <h2 id="reddit-tab">Reddit Tab</h2>
 <p>Tracked Reddit post performance. Each post shows subreddit, title, upvotes, comments, upvote ratio, and a clickable link.</p>
 <p>Posts are added on-demand via the CLI:</p>
@@ -2800,6 +2703,12 @@
 </span></code></pre></div>
 <h2 id="settings-tab">Settings Tab</h2>
 <p>Data source status and configuration. Shows each source with Active/Stale/Disabled status and last collection timestamp.</p>
+<h2 id="api">API</h2>
+<p>The dashboard loads all data via a single API call:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>GET /api/v1/insights/all
+</span></code></pre></div>
+<p>Returns a <code>BulkInsightsResponse</code> containing all daily metrics, event metrics, timeline events, sources, and latest snapshots. The response is server-side cached with automatic invalidation when collectors run.</p>
+<p>The dashboard makes zero direct database queries. All data flows through the API.</p>
 <h2 id="shared-controls">Shared Controls</h2>
 <p>All interactive tabs share a common base:</p>
 <ul>
