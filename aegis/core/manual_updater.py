@@ -842,6 +842,31 @@ class ManualUpdater:
             plugin_files = self.install_plugin_template_tree(plugin_module_name)
             files_modified.extend(plugin_files)
 
+            # Migration tail — mirrors the equivalent block in
+            # :meth:`add_service`. Plugins ship their migrations on the
+            # ``PluginSpec.migrations`` field (a list of
+            # ``ServiceMigrationSpec``); generate one Alembic file per
+            # spec, then apply the chain. Best-effort, failures logged
+            # but not fatal — matching add_service's behaviour.
+            spec_migrations = list(getattr(spec, "migrations", []) or [])
+            if spec_migrations:
+                from .migration_generator import (
+                    bootstrap_alembic,
+                    generate_migration_from_spec,
+                    service_has_migration,
+                )
+                from .post_gen_tasks import run_migrations
+
+                alembic_dir = self.project_path / "alembic"
+                if not alembic_dir.exists():
+                    bootstrap_alembic(self.project_path, self.jinja_env, self.answers)
+                for migration_spec in spec_migrations:
+                    if not service_has_migration(
+                        self.project_path, migration_spec.service_name
+                    ):
+                        generate_migration_from_spec(self.project_path, migration_spec)
+                run_migrations(self.project_path, include_migrations=True)
+
             # Post-gen — uv sync picks up the plugin's pyproject deps,
             # make fix re-formats anything we touched. Skipped when the
             # caller (resolver flow) is batching installs and will run

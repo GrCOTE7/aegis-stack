@@ -251,6 +251,16 @@ class PluginSpec:
     # the user and aborts unless ``--force`` is passed.
     aegis_version: str = ""
 
+    # Database namespace this plugin owns (T1 of the schema-isolation
+    # work). When set, every ``TableSpec`` declared by this plugin's
+    # migrations renders with ``schema='<name>'`` on Alembic operations,
+    # and the generated project's runtime DB layer ATTACHes a per-schema
+    # SQLite file. ``None`` means "lives in the unscoped namespace"
+    # (Postgres ``public`` / SQLite ``main``) — the legacy behaviour for
+    # services that haven't migrated yet. Resolved by
+    # ``aegis.core.schemas.iter_schemas``.
+    schema: str | None = None
+
     # ----- Read-only legacy aliases -------------------------------------
 
     @property

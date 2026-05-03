@@ -1,0 +1,54 @@
+"""Project-local database schema registry.
+
+Lists every database namespace this project's services and plugins own.
+Each entry becomes a Postgres ``CREATE SCHEMA`` (real schema) or a
+SQLite ``ATTACH DATABASE`` (per-schema ``.db`` file under ``data/``).
+The same ``schema='<name>'`` qualification on Alembic operations works
+on both dialects.
+
+Auto-generated from ``.copier-answers.yml`` at ``aegis init`` /
+``aegis add`` / ``aegis update`` time. Do not edit by hand — re-run
+``aegis update`` to refresh the list when services or plugins change.
+
+Consumed by:
+- ``app/core/db.py`` to ATTACH per-schema SQLite files at engine init
+- ``alembic/env.py`` so migrations can find their target schemas
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class ProjectSchema:
+    """A database namespace owned by a service or plugin in this project."""
+
+    name: str
+    """Schema name. Becomes the Postgres schema and the SQLite ATTACH alias."""
+
+    sqlite_filename: str
+    """Filename, relative to the SQLite data dir, that backs this schema."""
+
+    owner: str
+    """Service or plugin that registered the schema. For diagnostics only."""
+
+
+# Per-service entries land here as services adopt schema isolation
+# (T1.5/T1.6 in the plugin-system milestone). Until then the in-tree
+# services share the unscoped namespace (Postgres ``public`` / SQLite
+# ``main``) and contribute no entries.
+#
+# Plugins contribute entries via the loop below — anything in
+# ``.copier-answers.yml :: _plugins`` that declares a ``schema`` shows up.
+SCHEMAS: list[ProjectSchema] = [
+{%- for p in _plugins | default([]) %}
+{%- if p.schema %}
+    ProjectSchema(
+        name="{{ p.schema }}",
+        sqlite_filename="{{ p.schema }}.db",
+        owner="{{ p.name }}",
+    ),
+{%- endif %}
+{%- endfor %}
+]

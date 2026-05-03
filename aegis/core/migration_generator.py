@@ -77,13 +77,24 @@ class CheckConstraintSpec:
 
 @dataclass
 class TableSpec:
-    """Specification for a database table."""
+    """Specification for a database table.
+
+    ``schema`` is the database namespace the table lives in. Defaults to
+    ``None`` (unqualified — Postgres ``public``, SQLite ``main``). Set to a
+    string and the migration generator emits ``schema='<name>'`` on every
+    Alembic operation that supports it (``op.create_table``,
+    ``op.create_index``, ``op.drop_index``, ``op.drop_table``). On Postgres
+    this is a real schema. On SQLite it resolves through an attached
+    database file (see ``aegis/core/db/sqlite_attach.py``); the *same*
+    spec works on both dialects.
+    """
 
     name: str
     columns: list[ColumnSpec]
     indexes: list[IndexSpec] = field(default_factory=list)
     foreign_keys: list[ForeignKeySpec] = field(default_factory=list)
     check_constraints: list[CheckConstraintSpec] = field(default_factory=list)
+    schema: str | None = None
 
 
 @dataclass
@@ -98,6 +109,9 @@ class AlterTableSpec:
     Drop operations run BEFORE add operations within the block, since
     a common pattern is "replace this column / index with that one"
     and the new versions can reuse names.
+
+    ``schema`` mirrors ``TableSpec.schema`` and is forwarded to
+    ``op.batch_alter_table`` so alterations target the correct namespace.
     """
 
     name: str
@@ -106,6 +120,7 @@ class AlterTableSpec:
     add_indexes: list[IndexSpec] = field(default_factory=list)
     drop_columns: list[str] = field(default_factory=list)
     drop_indexes: list[str] = field(default_factory=list)
+    schema: str | None = None
 
 
 @dataclass
@@ -1171,6 +1186,18 @@ depends_on = None
 
 def upgrade() -> None:
     """{{ upgrade_description }}"""
+{% if schemas_to_create %}
+    # Per-service schema isolation (Ticket 1 of the plugin-system work).
+    # Postgres needs an explicit CREATE SCHEMA before any table can be
+    # created in it. SQLite has no schemas — the namespace resolves
+    # through ``ATTACH DATABASE`` wired up in ``app/core/db.py`` and
+    # ``alembic/env.py``, so this branch is a no-op there.
+    _bind = op.get_bind()
+    if _bind.dialect.name == "postgresql":
+{% for schema_name in schemas_to_create %}
+        op.execute("CREATE SCHEMA IF NOT EXISTS {{ schema_name }}")
+{% endfor %}
+{% endif %}
 {% for table in tables %}
     # Create {{ table.name }} table
     op.create_table(
@@ -1192,9 +1219,13 @@ def upgrade() -> None:
         sa.CheckConstraint("{{ chk.sqltext }}", name='{{ chk.name }}'){% if not loop.last %},{% endif %}
 
 {% endfor %}
+{% if table.schema %}
+        ,
+        schema='{{ table.schema }}'
+{% endif %}
     )
 {% for index in table.indexes %}
-    op.create_index(op.f('{{ index.name }}'), '{{ table.name }}', {{ index.columns }}{% if index.unique %}, unique=True{% endif %})
+    op.create_index(op.f('{{ index.name }}'), '{{ table.name }}', {{ index.columns }}{% if index.unique %}, unique=True{% endif %}{% if table.schema %}, schema='{{ table.schema }}'{% endif %})
 {% endfor %}
 
 {% endfor %}
@@ -1204,7 +1235,7 @@ def upgrade() -> None:
     # treats it as plain ALTER, so this is portable across both backends.
     # Drops run before adds so names can be reused (e.g. swap an index
     # from one column set to another with the same name).
-    with op.batch_alter_table('{{ alter.name }}') as batch_op:
+    with op.batch_alter_table('{{ alter.name }}'{% if alter.schema %}, schema='{{ alter.schema }}'{% endif %}) as batch_op:
 {% for index_name in alter.drop_indexes %}
         batch_op.drop_index('{{ index_name }}')
 {% endfor %}
@@ -1233,7 +1264,7 @@ def downgrade() -> None:
     )
 {% else %}
 {% for alter in alter_tables|reverse %}
-    with op.batch_alter_table('{{ alter.name }}') as batch_op:
+    with op.batch_alter_table('{{ alter.name }}'{% if alter.schema %}, schema='{{ alter.schema }}'{% endif %}) as batch_op:
 {% for index in alter.add_indexes|reverse %}
         batch_op.drop_index('{{ index.name }}')
 {% endfor %}
@@ -1246,9 +1277,9 @@ def downgrade() -> None:
 {% endfor %}
 {% for table in tables|reverse %}
 {% for index in table.indexes %}
-    op.drop_index(op.f('{{ index.name }}'), table_name='{{ table.name }}')
+    op.drop_index(op.f('{{ index.name }}'), table_name='{{ table.name }}'{% if table.schema %}, schema='{{ table.schema }}'{% endif %})
 {% endfor %}
-    op.drop_table('{{ table.name }}')
+    op.drop_table('{{ table.name }}'{% if table.schema %}, schema='{{ table.schema }}'{% endif %})
 {% endfor %}
 {% endif %}
 '''
@@ -1343,6 +1374,7 @@ def _render_migration(
         tables_data.append(
             {
                 "name": table.name,
+                "schema": table.schema,
                 "columns": [
                     {
                         "name": col.name,
@@ -1415,6 +1447,7 @@ def _render_migration(
         alter_tables_data.append(
             {
                 "name": alter.name,
+                "schema": alter.schema,
                 "add_columns": cols,
                 "add_foreign_keys": fks,
                 "add_indexes": add_idxs,
@@ -1431,6 +1464,13 @@ def _render_migration(
     else:
         upgrade_description = f"Create {spec.service_name} service tables."
 
+    # Unique schemas across the spec's tables and alter_tables. Sorted for
+    # deterministic output (test assertions don't depend on dict ordering).
+    schemas_to_create = sorted(
+        {t.schema for t in spec.tables if t.schema}
+        | {a.schema for a in spec.alter_tables if a.schema}
+    )
+
     return template.render(
         description=spec.description,
         service_name=spec.service_name,
@@ -1442,6 +1482,7 @@ def _render_migration(
         tables=tables_data,
         alter_tables=alter_tables_data,
         forward_only=spec.forward_only,
+        schemas_to_create=schemas_to_create,
     )
 
 
@@ -1467,6 +1508,35 @@ def _resolve_spec(
             return _build_insights_migration(per_user=True)
 
     return migration_specs[service_name]
+
+
+def generate_migration_from_spec(
+    project_path: Path,
+    spec: ServiceMigrationSpec,
+) -> Path:
+    """Generate a migration file from a caller-supplied spec.
+
+    Sister of :func:`generate_migration`, but takes the spec directly
+    instead of looking it up by name in ``MIGRATION_SPECS``. Used by the
+    plugin install path (``ManualUpdater.add_plugin``) — plugin-shipped
+    ``MigrationSpec`` entries live on the ``PluginSpec`` itself, never
+    in the in-tree registry.
+
+    Caller is responsible for skipping if the migration already exists
+    (use ``service_has_migration(project_path, spec.service_name)``).
+    """
+    versions_dir = get_versions_dir(project_path)
+    versions_dir.mkdir(parents=True, exist_ok=True)
+
+    revision = get_next_revision_id(project_path)
+    down_revision = get_previous_revision(project_path)
+
+    content = _render_migration(spec, revision, down_revision)
+
+    filename = f"{revision}_{spec.service_name}.py"
+    migration_path = versions_dir / filename
+    migration_path.write_text(content)
+    return migration_path
 
 
 def generate_migration(

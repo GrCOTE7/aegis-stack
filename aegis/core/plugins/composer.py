@@ -90,6 +90,13 @@ def serialize_plugin_to_answer(
         # data the plugin ships unconditionally.
         "pyproject_deps": list(spec.pyproject_deps),
         "docker_services": list(spec.docker_services),
+        # Database namespace (Ticket 1 of the schema-isolation work). When
+        # set, ``app/core/schemas.py.jinja`` adds an entry for this plugin
+        # so the runtime ATTACHes its ``.db`` file (SQLite) and migrations
+        # qualify their tables with ``schema='<name>'``. ``None`` means
+        # the plugin's tables live in the unscoped namespace alongside
+        # legacy services.
+        "schema": spec.schema,
         "wiring": _serialize_wiring(spec.wiring, opts, spec.name),
     }
 

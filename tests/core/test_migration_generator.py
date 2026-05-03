@@ -1055,3 +1055,245 @@ class TestForeignKeyOnDeleteRendering:
 
         assert "ondelete=" not in content
         assert "CASCADE" not in content
+
+
+class TestSchemaRendering:
+    """Per-service/plugin schema isolation (Ticket 1, T1.1).
+
+    ``TableSpec.schema`` carries the database namespace a table belongs to.
+    On Postgres, this becomes a real ``CREATE SCHEMA`` + ``schema.table``
+    qualification. On SQLite, the same name resolves through an attached
+    database file (see ``aegis/core/db/sqlite_attach.py``). The migration
+    generator must emit ``schema='<name>'`` to every Alembic operation that
+    accepts it so the same migration file works on both dialects without
+    edit.
+    """
+
+    def test_table_spec_accepts_schema(self) -> None:
+        """``TableSpec`` round-trips a ``schema`` field; default is ``None``."""
+        from aegis.core.migration_generator import ColumnSpec, TableSpec
+
+        scoped = TableSpec(
+            "documents",
+            [ColumnSpec("id", "sa.Integer()", primary_key=True, nullable=False)],
+            schema="crawler",
+        )
+        assert scoped.schema == "crawler"
+
+        unscoped = TableSpec("legacy", [ColumnSpec("id", "sa.Integer()")])
+        assert unscoped.schema is None
+
+    def test_create_table_emits_schema(self) -> None:
+        """``op.create_table`` call carries ``schema='<name>'`` when set."""
+        from aegis.core.migration_generator import (
+            ColumnSpec,
+            ServiceMigrationSpec,
+            TableSpec,
+            _render_migration,
+        )
+
+        spec = ServiceMigrationSpec(
+            service_name="crawler",
+            description="Crawler documents",
+            tables=[
+                TableSpec(
+                    name="documents",
+                    schema="crawler",
+                    columns=[
+                        ColumnSpec(
+                            "id", "sa.Integer()", nullable=False, primary_key=True
+                        ),
+                        ColumnSpec("source_url", "sa.String()", nullable=False),
+                    ],
+                )
+            ],
+        )
+
+        rendered = _render_migration(spec, revision="001", down_revision=None)
+
+        assert "op.create_table(" in rendered
+        assert "schema='crawler'" in rendered
+
+    def test_create_index_emits_schema(self) -> None:
+        """``op.create_index`` calls also carry the schema when the table has one."""
+        from aegis.core.migration_generator import (
+            ColumnSpec,
+            IndexSpec,
+            ServiceMigrationSpec,
+            TableSpec,
+            _render_migration,
+        )
+
+        spec = ServiceMigrationSpec(
+            service_name="crawler",
+            description="Crawler documents",
+            tables=[
+                TableSpec(
+                    name="documents",
+                    schema="crawler",
+                    columns=[
+                        ColumnSpec(
+                            "id", "sa.Integer()", nullable=False, primary_key=True
+                        ),
+                        ColumnSpec("source_url", "sa.String()", nullable=False),
+                    ],
+                    indexes=[IndexSpec("ix_documents_url", ["source_url"])],
+                )
+            ],
+        )
+
+        rendered = _render_migration(spec, revision="001", down_revision=None)
+
+        # Both create_index and the matching drop_index in downgrade() must
+        # be schema-qualified or Alembic looks in the wrong namespace.
+        assert "op.create_index(" in rendered
+        assert "op.drop_index(" in rendered
+        # Two schema-bearing operations: create_table, create_index (upgrade)
+        # plus drop_index, drop_table (downgrade) — four total.
+        assert rendered.count("schema='crawler'") >= 4
+
+    def test_drop_table_emits_schema(self) -> None:
+        """downgrade()'s ``op.drop_table`` must qualify the schema too."""
+        from aegis.core.migration_generator import (
+            ColumnSpec,
+            ServiceMigrationSpec,
+            TableSpec,
+            _render_migration,
+        )
+
+        spec = ServiceMigrationSpec(
+            service_name="crawler",
+            description="Crawler documents",
+            tables=[
+                TableSpec(
+                    name="documents",
+                    schema="crawler",
+                    columns=[
+                        ColumnSpec(
+                            "id", "sa.Integer()", nullable=False, primary_key=True
+                        ),
+                    ],
+                )
+            ],
+        )
+
+        rendered = _render_migration(spec, revision="001", down_revision=None)
+
+        assert "op.drop_table('documents', schema='crawler')" in rendered
+
+    def test_unscoped_table_omits_schema_kwarg(self) -> None:
+        """Tables without a schema render unchanged from pre-T1.1 behaviour.
+
+        Existing services (auth, payment, ai, comms, insights) all have
+        ``schema=None`` until T1.5/T1.6 migrate them. This test pins that
+        the additive change is truly additive — no schema field, no schema
+        kwarg in the rendered output.
+        """
+        from aegis.core.migration_generator import (
+            ColumnSpec,
+            IndexSpec,
+            ServiceMigrationSpec,
+            TableSpec,
+            _render_migration,
+        )
+
+        spec = ServiceMigrationSpec(
+            service_name="legacy",
+            description="Legacy unscoped",
+            tables=[
+                TableSpec(
+                    name="thing",
+                    columns=[
+                        ColumnSpec(
+                            "id", "sa.Integer()", nullable=False, primary_key=True
+                        ),
+                    ],
+                    indexes=[IndexSpec("ix_thing_id", ["id"])],
+                )
+            ],
+        )
+
+        rendered = _render_migration(spec, revision="001", down_revision=None)
+
+        assert "schema=" not in rendered
+
+    def test_existing_auth_migration_unchanged(self, tmp_path: Path) -> None:
+        """Generated auth migration today carries no ``schema=`` kwarg.
+
+        Pinpoints regression risk: the additive change must not introduce
+        a stray ``schema=`` into existing services' migrations until they
+        opt in via the per-service migration tickets that follow this
+        foundation work.
+        """
+        from aegis.core.migration_generator import generate_migration
+
+        migration_path = generate_migration(tmp_path, "auth")
+        assert migration_path is not None
+        content = migration_path.read_text()
+
+        assert "schema=" not in content
+
+    def test_create_schema_if_postgres_emitted_when_table_has_schema(self) -> None:
+        """Tables with ``schema=`` need ``CREATE SCHEMA IF NOT EXISTS`` first.
+
+        SQLite uses ATTACH so the namespace exists by the time create_table
+        runs; Postgres needs an explicit CREATE SCHEMA. The migration emits
+        a dialect-gated CREATE SCHEMA at the top of upgrade().
+        """
+        from aegis.core.migration_generator import (
+            ColumnSpec,
+            ServiceMigrationSpec,
+            TableSpec,
+            _render_migration,
+        )
+
+        spec = ServiceMigrationSpec(
+            service_name="crawler",
+            description="Crawler tables",
+            tables=[
+                TableSpec(
+                    name="documents",
+                    schema="crawler",
+                    columns=[
+                        ColumnSpec(
+                            "id", "sa.Integer()", nullable=False, primary_key=True
+                        )
+                    ],
+                )
+            ],
+        )
+
+        rendered = _render_migration(spec, revision="001", down_revision=None)
+
+        # The generator emits a guard so it's a no-op on non-Postgres
+        # backends (SQLite uses ATTACH for namespacing).
+        assert "CREATE SCHEMA IF NOT EXISTS crawler" in rendered
+        assert "postgresql" in rendered.lower()
+
+    def test_create_schema_skipped_when_no_schema_used(self) -> None:
+        """Specs with no schema-bearing tables must not emit CREATE SCHEMA."""
+        from aegis.core.migration_generator import (
+            ColumnSpec,
+            ServiceMigrationSpec,
+            TableSpec,
+            _render_migration,
+        )
+
+        spec = ServiceMigrationSpec(
+            service_name="legacy",
+            description="Legacy unscoped",
+            tables=[
+                TableSpec(
+                    name="thing",
+                    columns=[
+                        ColumnSpec(
+                            "id", "sa.Integer()", nullable=False, primary_key=True
+                        )
+                    ],
+                )
+            ],
+        )
+
+        rendered = _render_migration(spec, revision="001", down_revision=None)
+
+        assert "CREATE SCHEMA" not in rendered

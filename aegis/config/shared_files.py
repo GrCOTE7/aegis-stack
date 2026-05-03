@@ -109,6 +109,12 @@ SHARED_TEMPLATE_FILES: dict[str, SharedFilePolicy] = {
         "backup": True,
         "warn": False,
     },  # Contains database settings (DATABASE_URL, etc.)
+    "app/core/schemas.py": {
+        "overwrite": True,
+        "backup": False,
+        "warn": False,
+    },  # Per-plugin schema registry — regenerates from _plugins on add/remove
+    # so the runtime ATTACH list and the in-tree composer view stay in sync.
     "app/services/system/health.py": {
         "overwrite": True,
         "backup": True,

@@ -156,6 +156,30 @@ class TestSerializer:
         result["options"]["engine"] = "mutated"
         assert opts["engine"] == "playwright"
 
+    def test_schema_field_is_serialized(self) -> None:
+        """``PluginSpec.schema`` reaches the answers file as ``schema``.
+
+        Templates iterate ``_plugins`` and check ``p.schema`` to decide
+        whether to register the plugin in ``app/core/schemas.py``. Without
+        this in the serialized output the runtime would never know to
+        ATTACH the plugin's ``.db`` file on SQLite or qualify its tables
+        in queries.
+        """
+        scoped = PluginSpec(
+            name="crawl4ai",
+            kind=PluginKind.SERVICE,
+            description="",
+            schema="crawler",
+        )
+        unscoped = PluginSpec(
+            name="legacy",
+            kind=PluginKind.SERVICE,
+            description="",
+        )
+
+        assert serialize_plugin_to_answer(scoped)["schema"] == "crawler"
+        assert serialize_plugin_to_answer(unscoped)["schema"] is None
+
     def test_serialized_dict_is_json_safe(self) -> None:
         result = serialize_plugin_to_answer(self._spec())
         json.dumps(result)  # must not raise (no Callable left in payload)
