@@ -1,0 +1,127 @@
+"""
+CopyableCodeBlock control.
+
+Single reusable code-block widget with a floating top-right copy button.
+Wraps the standard ``ft.Markdown`` rendering used everywhere a code
+snippet is shown (Database modal Schema/Migrations tabs, Observability
+modal stack traces, etc.) so the styling is set once and the copy
+affordance lands in the same place users expect (top-right corner —
+mirrors GitHub, MDN, Stripe docs convention).
+
+Usage::
+
+    CopyableCodeBlock(text=schema_sql, language="sql", is_dark_mode=...)
+    CopyableCodeBlock(text=migration_py, language="python", is_dark_mode=...)
+"""
+
+from __future__ import annotations
+
+import asyncio
+
+import flet as ft
+
+from app.components.frontend.theme import AegisTheme as Theme
+
+# Shared styling constants — match what every existing call site already
+# uses, lifted here so the markdown render is consistent across modals.
+_DEFAULT_CODE_SIZE = 13
+_DEFAULT_LINE_HEIGHT = 1.4
+_CODE_FONT = "Roboto Mono"
+_CODE_THEME_DARK = "ir-black"
+_CODE_THEME_LIGHT = "atom-one-light"
+_CODE_RADIUS = 8
+_FEEDBACK_DURATION_S = 1.5
+
+
+class CopyableCodeBlock(ft.Stack):
+    """A markdown code block with a floating top-right copy button.
+
+    Args:
+        text: Raw code text (no fences). Goes verbatim to the clipboard
+            when the copy button is clicked.
+        language: Markdown language tag (``sql``, ``python``, ``json``,
+            ``""`` for plain). Drives syntax highlighting.
+        is_dark_mode: Pick the dark or light syntax-highlighting theme.
+            Caller passes ``page.theme_mode == ft.ThemeMode.DARK``.
+        code_size: Font size in pixels.
+        line_height: Line-height multiplier.
+    """
+
+    def __init__(
+        self,
+        text: str,
+        language: str = "",
+        is_dark_mode: bool = False,
+        code_size: int = _DEFAULT_CODE_SIZE,
+        line_height: float = _DEFAULT_LINE_HEIGHT,
+    ) -> None:
+        self._text = text
+
+        markdown = ft.Markdown(
+            f"```{language}\n{text}\n```",
+            selectable=True,
+            extension_set=ft.MarkdownExtensionSet.GITHUB_FLAVORED,
+            code_theme=_CODE_THEME_DARK if is_dark_mode else _CODE_THEME_LIGHT,
+            md_style_sheet=ft.MarkdownStyleSheet(
+                code_text_style=ft.TextStyle(
+                    size=code_size,
+                    font_family=_CODE_FONT,
+                    weight=ft.FontWeight.W_400,
+                    height=line_height,
+                ),
+                codeblock_decoration=ft.BoxDecoration(
+                    bgcolor=ft.Colors.SURFACE_CONTAINER_HIGHEST,
+                    border_radius=ft.border_radius.all(_CODE_RADIUS),
+                ),
+            ),
+        )
+
+        self._copy_button = ft.IconButton(
+            icon=ft.Icons.CONTENT_COPY,
+            icon_size=16,
+            tooltip="Copy",
+            on_click=self._handle_copy,
+            icon_color=ft.Colors.ON_SURFACE_VARIANT,
+        )
+
+        super().__init__(
+            controls=[
+                markdown,
+                # Position the button in the top-right of the code block,
+                # consistent with the convention every developer recognises
+                # (GitHub, MDN, Stripe docs, ...).
+                ft.Container(
+                    content=self._copy_button,
+                    right=4,
+                    top=4,
+                ),
+            ],
+        )
+
+    def _handle_copy(self, e: ft.ControlEvent) -> None:
+        """Copy ``self._text`` to the clipboard, flash a confirmation icon."""
+        page = e.page
+        if page is None:
+            return
+
+        page.set_clipboard(self._text)
+        self._copy_button.icon = ft.Icons.CHECK
+        self._copy_button.tooltip = "Copied"
+        # Use the project's accent color (teal in dark mode, blue in
+        # light mode) so the feedback matches the rest of the dashboard.
+        self._copy_button.icon_color = Theme.Colors.ACCENT
+        page.update()
+
+        async def _restore() -> None:
+            await asyncio.sleep(_FEEDBACK_DURATION_S)
+            self._copy_button.icon = ft.Icons.CONTENT_COPY
+            self._copy_button.tooltip = "Copy"
+            self._copy_button.icon_color = ft.Colors.ON_SURFACE_VARIANT
+            try:
+                page.update()
+            except Exception:
+                # Page may have been disposed if the modal closed before
+                # the timer fired. Silent — the next render is fine.
+                pass
+
+        page.run_task(_restore)

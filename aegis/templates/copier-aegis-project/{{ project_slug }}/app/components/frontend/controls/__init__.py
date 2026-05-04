@@ -1,6 +1,7 @@
 """Frontend UI controls for styled components."""
 
 from .buttons import ConfirmDialog
+from .code_block import CopyableCodeBlock
 from .data_table import DataTable, DataTableColumn
 from .expand_arrow import ExpandArrow
 from .expandable_data_table import ExpandableDataTable, ExpandableRow
@@ -64,6 +65,8 @@ __all__ = [
     "TechBadge",
     # Card layout controls
     "ServiceCard",
+    # Code block with copy affordance
+    "CopyableCodeBlock",
     # Dialog controls
     "ConfirmDialog",
     # Arrow controls

@@ -81,7 +81,7 @@ from .dashboard.cards import (
     SchedulerCard,
 {% endif %}
     ServerCard,
-{% if include_auth or include_ai or include_comms or include_insights or include_payment or _plugins %}
+{% if include_auth or include_ai or include_comms or include_insights or include_payment %}
     ServicesCard,
 {% endif %}
 {% if include_worker %}
@@ -866,7 +866,7 @@ async def setup_dashboard(view: BaseView) -> None:
                 return {{ c.symbol }}(component_data).build()
 {%- endfor %}
 {%- endfor %}
-{% if include_auth or include_ai or include_comms or include_insights or include_payment or _plugins %}
+{% if include_auth or include_ai or include_comms or include_insights or include_payment %}
             elif component_name.startswith("service_"):
                 # For other services, use generic ServicesCard for now
                 return ServicesCard(component_data).build()

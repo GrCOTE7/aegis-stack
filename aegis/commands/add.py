@@ -222,7 +222,13 @@ def _install_plugin(
     typer.echo(f"\n{t('add.plugin_installing', name=plugin_spec.name)}")
     typer.echo(f"   Description: {plugin_spec.description}")
     typer.echo(f"   Version: {plugin_spec.version}")
+    typer.echo(f"   Kind: {plugin_spec.kind.value}")
     typer.echo(f"   Verified: {plugin_spec.verified}")
+    if plugin_spec.schema:
+        typer.echo(f"   Schema: {plugin_spec.schema}")
+    install_paths = list(getattr(plugin_spec.files, "primary", []) or [])
+    if install_paths:
+        typer.echo(f"   Installs to: {', '.join(install_paths)}")
     if parsed_options:
         typer.echo(f"   Options: {parsed_options}")
 
@@ -360,22 +366,22 @@ def add_command(
     Global options: Use --verbose/-v before the command for detailed output.
     """
 
-    typer.echo(t("add.title"))
-    typer.echo("=" * 50)
-
     # Resolve project path
     target_path = Path(project_path).resolve()
 
     # Validate it's a Copier project
     validate_copier_project(target_path, "add")
 
-    typer.echo(t("add.project", path=target_path))
-
     # Check version compatibility between CLI and project template
     validate_version_compatibility(target_path, command_name="add", force=force)
 
     # Validate components argument or interactive mode
     if not interactive and not components:
+        # Defer the title to the component path so the framing is
+        # honest when no arg is supplied.
+        typer.echo(t("add.title"))
+        typer.echo("=" * 50)
+        typer.echo(t("add.project", path=target_path))
         typer.secho(t("add.error_no_args"), fg="red", err=True)
         typer.echo(f"   {t('add.usage_hint')}", err=True)
         typer.echo(f"   {t('add.interactive_hint')}", err=True)
@@ -385,9 +391,13 @@ def add_command(
     # bracket syntax which doesn't compose with comma-separated lists;
     # services route through the existing add-service implementation
     # (Phase 2 of #771: unify the entry point, defer the
-    # implementation-merge).
+    # implementation-merge). Each path owns its own title so the
+    # framing matches what's actually being installed.
     if components and "," not in components:
         if _resolve_plugin(components) is not None:
+            typer.echo(t("add.plugin_title"))
+            typer.echo("=" * 50)
+            typer.echo(t("add.project", path=target_path))
             validate_git_repository(target_path)
             _install_plugin(components, target_path, yes, force=force)
             return
@@ -399,6 +409,7 @@ def add_command(
         if service_base in SERVICES:
             from .add_service import add_service_command
 
+            # ``add_service_command`` prints its own title.
             add_service_command(
                 services=components,
                 interactive=False,
@@ -406,6 +417,11 @@ def add_command(
                 yes=yes,
             )
             return
+
+    # Component path — falls through to the default title.
+    typer.echo(t("add.title"))
+    typer.echo("=" * 50)
+    typer.echo(t("add.project", path=target_path))
 
     # Interactive mode
     if interactive:

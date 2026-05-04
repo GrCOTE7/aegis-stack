@@ -204,27 +204,53 @@ def _check_schema_mismatch() -> None:
     Compares SQLModel metadata (what the code expects) against
     the actual database schema. Only checks tables registered
     in SQLModel metadata — user-created tables are ignored.
+
+    Walks every registered schema (in addition to the default ``main``
+    on SQLite / ``public`` on Postgres) so plugin-owned tables that
+    live in their own namespace (e.g. ``crawler.documents`` from
+    ``aegis-plugin-crawl4ai``) are inspected against the right
+    attached database / schema, not against ``main`` where they don't
+    exist.
     """
     try:
         from sqlalchemy import inspect as sa_inspect
         from sqlmodel import SQLModel
 
         from app.core.db import engine
+        from app.core.schemas import SCHEMAS
 
         inspector = sa_inspect(engine)
-        existing_tables = set(inspector.get_table_names())
+
+        # Build a set of "schema-qualified or bare" table names that
+        # actually exist on disk. SQLModel metadata keys schema-qualified
+        # tables as ``schema.table`` and bare tables as just ``table``;
+        # match both conventions when populating ``existing_tables``.
+        existing_tables: set[str] = set(inspector.get_table_names())
+        for schema in SCHEMAS:
+            for tbl in inspector.get_table_names(schema=schema.name):
+                existing_tables.add(f"{schema.name}.{tbl}")
 
         # Only check tables in SQLModel metadata (our models)
         expected_tables = set(SQLModel.metadata.tables.keys())
         missing_tables = expected_tables - existing_tables - {"alembic_version"}
 
-        # Check columns for tables that exist in both
+        # Check columns for tables that exist in both. ``inspector.get_columns``
+        # also takes a schema arg; pass it through for qualified names.
         missing_columns: dict[str, set[str]] = {}
         for table_name in expected_tables & existing_tables:
             model_cols = {
                 c.name for c in SQLModel.metadata.tables[table_name].columns
             }
-            db_cols = {c["name"] for c in inspector.get_columns(table_name)}
+            if "." in table_name:
+                schema_name, bare_name = table_name.split(".", 1)
+                db_cols = {
+                    c["name"]
+                    for c in inspector.get_columns(bare_name, schema=schema_name)
+                }
+            else:
+                db_cols = {
+                    c["name"] for c in inspector.get_columns(table_name)
+                }
             missing = model_cols - db_cols
             if missing:
                 missing_columns[table_name] = missing

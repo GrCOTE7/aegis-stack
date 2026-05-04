@@ -10,6 +10,7 @@ from datetime import UTC, datetime
 import flet as ft
 from app.components.frontend.controls import (
     BodyText,
+    CopyableCodeBlock,
     DataTable,
     DataTableColumn,
     H3Text,
@@ -335,27 +336,13 @@ def _build_exception_expanded_content(exc: dict, is_dark_mode: bool) -> ft.Contr
         content.append(
             SecondaryText("Stacktrace:", weight=Theme.Typography.WEIGHT_SEMIBOLD)
         )
-        code_style = ft.TextStyle(
-            size=12,
-            font_family="Roboto Mono",
-            weight=ft.FontWeight.W_400,
-            height=1.2,
-        )
-        codeblock_decoration = ft.BoxDecoration(
-            bgcolor=ft.Colors.SURFACE_CONTAINER_HIGHEST,
-            border_radius=ft.border_radius.all(8),
-        )
-        code_theme = "ir-black" if is_dark_mode else "atom-one-light"
         content.append(
-            ft.Markdown(
-                f"```python\n{stacktrace}\n```",
-                selectable=True,
-                extension_set=ft.MarkdownExtensionSet.GITHUB_FLAVORED,
-                code_theme=code_theme,
-                md_style_sheet=ft.MarkdownStyleSheet(
-                    code_text_style=code_style,
-                    codeblock_decoration=codeblock_decoration,
-                ),
+            CopyableCodeBlock(
+                text=stacktrace,
+                language="python",
+                is_dark_mode=is_dark_mode,
+                code_size=12,
+                line_height=1.2,
             )
         )
 

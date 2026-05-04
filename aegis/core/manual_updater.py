@@ -530,13 +530,11 @@ class ManualUpdater:
             template_file = f"{PROJECT_SLUG_PLACEHOLDER}/{shared_file}"
             output_path = self.project_path / shared_file
 
-            # Skip if file doesn't exist (shouldn't happen for shared files)
-            if not output_path.exists():
-                continue
+            file_existed = output_path.exists()
 
             # For .env.example, extract variables before and after to show diff
             old_env_vars: dict[str, str] = {}
-            if shared_file == ".env.example":
+            if shared_file == ".env.example" and file_existed:
                 old_content = output_path.read_text()
                 old_env_vars = self._extract_env_vars(old_content)
 
@@ -544,9 +542,23 @@ class ManualUpdater:
             content = self._render_template_file(template_file, updated_answers)
 
             if content is None:
-                continue  # Template not found
+                # Template not found in the framework — skip silently.
+                # This is distinct from "file is missing in the project":
+                # a missing project file with a present template means the
+                # project was generated from an older release that didn't
+                # ship the file yet, and we want to create it now.
+                continue
 
-            if policy.get("backup"):
+            # Missing-but-overwriteable files are CREATED on regen so
+            # projects generated before a new shared template was
+            # introduced (e.g. ``app/core/schemas.py`` added by the
+            # schema-isolation work) get the file on the next ``aegis
+            # add`` rather than blowing up at runtime when something
+            # else imports it.
+            if not file_existed and not policy.get("overwrite"):
+                continue
+
+            if policy.get("backup") and file_existed:
                 # Create backup before overwriting
                 backup_path = output_path.with_suffix(output_path.suffix + ".backup")
                 shutil.copy(output_path, backup_path)
@@ -554,7 +566,9 @@ class ManualUpdater:
                 shared_files_backed_up.append(shared_file)
 
             if policy.get("overwrite"):
-                # Regenerate with updated answers
+                # Regenerate with updated answers (creating parent dirs
+                # if this file was missing in an older project layout)
+                output_path.parent.mkdir(parents=True, exist_ok=True)
                 output_path.write_text(content)
                 verbose_print(f"   Updated: {shared_file}")
                 shared_files_updated.append(shared_file)

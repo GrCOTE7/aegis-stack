@@ -254,6 +254,7 @@ MESSAGES: dict[str, str] = {
     "shared.no_services_selected": "No services selected",
     # ── Add command ──────────────────────────────────────────────────
     "add.title": "Aegis Stack - Add Components",
+    "add.plugin_title": "Aegis Stack - Add Plugin",
     "add.project": "Project: {path}",
     "add.error_no_args": (
         "Error: components argument is required (or use --interactive)"

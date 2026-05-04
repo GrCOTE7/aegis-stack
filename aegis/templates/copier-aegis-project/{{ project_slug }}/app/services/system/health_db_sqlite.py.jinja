@@ -101,44 +101,92 @@ async def check_database_health() -> ComponentStatus:
             await session.execute(text("SELECT 1"))
 
             # --- Always live: table names and row counts ---
+            # Walks every registered schema (main + per-plugin ATTACHed
+            # files like ``crawler.db``) so the dashboard's Database modal
+            # surfaces plugin-owned tables next to the core ones.
             table_info: list[dict[str, Any]] = []
             if db_url.startswith("sqlite:///"):
                 try:
-                    def _get_table_names(conn: Any) -> list[str]:
+                    from app.core.schemas import SCHEMAS
+
+                    def _get_table_names(
+                        conn: Any, schema: str | None
+                    ) -> list[str]:
                         from sqlalchemy import inspect
                         inspector = inspect(conn)
-                        return inspector.get_table_names() if inspector else []
+                        if not inspector:
+                            return []
+                        return inspector.get_table_names(schema=schema)
 
-                    table_names = await session.run_sync(
-                        lambda sync_session: _get_table_names(
-                            sync_session.connection()
-                        )
-                    )
+                    # (display_name, qualified_sql_name) — display name
+                    # carries the schema for plugin tables, and the qualified
+                    # SQL form is what we need for ``COUNT(*)`` against the
+                    # ATTACHed database.
+                    inspections: list[tuple[str | None, str]] = [(None, "main")]
+                    for schema in SCHEMAS:
+                        inspections.append((schema.name, schema.name))
 
-                    for table_name in table_names:
+                    table_names_by_schema: list[tuple[str | None, str]] = []
+                    for schema_arg, schema_label in inspections:
+                        try:
+                            names = await session.run_sync(
+                                lambda sync_session, _s=schema_arg: _get_table_names(
+                                    sync_session.connection(), _s
+                                )
+                            )
+                            for n in names:
+                                table_names_by_schema.append((schema_arg, n))
+                        except Exception as e:
+                            logger.debug(
+                                f"Failed to inspect schema {schema_label!r}: {e}"
+                            )
+
+                    for schema_arg, table_name in table_names_by_schema:
                         try:
                             from sqlalchemy import quoted_name
                             quoted_table = quoted_name(table_name, quote=True)
+                            if schema_arg:
+                                # ``crawler.documents`` form — works because
+                                # the ATTACH listener has aliased the file
+                                # under the schema name.
+                                qualified = f"{schema_arg}.{quoted_table}"
+                                display = f"{schema_arg}.{table_name}"
+                            else:
+                                qualified = str(quoted_table)
+                                display = table_name
+
                             count_result = (await session.execute(
-                                text(f"SELECT COUNT(*) FROM {quoted_table}")
+                                text(f"SELECT COUNT(*) FROM {qualified}")
                             )).fetchone()
                             row_count = count_result[0] if count_result else 0
 
                             table_info.append({
-                                "name": table_name,
-                                "rows": row_count
+                                "name": display,
+                                "rows": row_count,
+                                # Track schema + bare name so the schema /
+                                # PRAGMA collection block below can build
+                                # ``PRAGMA <schema>.table_info(...)`` queries
+                                # against attached databases.
+                                "schema": schema_arg,
+                                "bare_name": table_name,
                             })
                         except Exception as e:
                             logger.debug(
                                 f"Failed to count rows for table {table_name}: {e}"
                             )
                             table_info.append({
-                                "name": table_name,
-                                "rows": 0
+                                "name": (
+                                    f"{schema_arg}.{table_name}"
+                                    if schema_arg
+                                    else table_name
+                                ),
+                                "rows": 0,
+                                "schema": schema_arg,
+                                "bare_name": table_name,
                             })
 
                     enhanced_metadata["tables"] = table_info
-                    enhanced_metadata["table_count"] = len(table_names)
+                    enhanced_metadata["table_count"] = len(table_info)
 
                 except Exception:
                     logger.debug(
@@ -293,15 +341,28 @@ async def check_database_health() -> ComponentStatus:
 
                         for table in table_info:
                             table_name = table["name"]
+                            # ``schema`` + ``bare_name`` were added to
+                            # ``table_info`` so PRAGMAs can target the
+                            # right ATTACHed database (None = ``main``).
+                            table_schema = table.get("schema")
+                            bare_name = table.get("bare_name", table_name)
                             schema_info: dict[str, Any] = {
                                 "name": table_name, "rows": table["rows"]
                             }
 
                             columns: list[dict[str, Any]] = []
                             from sqlalchemy import quoted_name
-                            quoted_table = quoted_name(table_name, quote=True)
+                            quoted_table = quoted_name(bare_name, quote=True)
+                            # SQLite PRAGMA syntax for attached schemas:
+                            # ``PRAGMA <schema>.table_info(<table>)``.
+                            pragma_prefix = (
+                                f"{table_schema}." if table_schema else ""
+                            )
                             result = (await session.execute(
-                                text(f"PRAGMA table_info({quoted_table})")
+                                text(
+                                    f"PRAGMA {pragma_prefix}table_info("
+                                    f"{quoted_table})"
+                                )
                             )).fetchall()
                             for row in result:
                                 columns.append({
@@ -319,12 +380,18 @@ async def check_database_health() -> ComponentStatus:
 
                             indexes: list[dict[str, Any]] = []
                             result = (await session.execute(
-                                text(f"PRAGMA index_list({quoted_table})")
+                                text(
+                                    f"PRAGMA {pragma_prefix}index_list("
+                                    f"{quoted_table})"
+                                )
                             )).fetchall()
                             for row in result:
                                 quoted_index = quoted_name(row[1], quote=True)
                                 index_result = (await session.execute(
-                                    text(f"PRAGMA index_info({quoted_index})")
+                                    text(
+                                        f"PRAGMA {pragma_prefix}index_info("
+                                        f"{quoted_index})"
+                                    )
                                 )).fetchall()
                                 column_names = [
                                     idx_row[2] for idx_row in index_result
@@ -342,7 +409,8 @@ async def check_database_health() -> ComponentStatus:
                             foreign_keys: list[dict[str, Any]] = []
                             result = (await session.execute(
                                 text(
-                                    f"PRAGMA foreign_key_list({quoted_table})"
+                                    f"PRAGMA {pragma_prefix}foreign_key_list("
+                                    f"{quoted_table})"
                                 )
                             )).fetchall()
                             for row in result:

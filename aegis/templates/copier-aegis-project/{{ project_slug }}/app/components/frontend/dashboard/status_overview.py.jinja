@@ -150,6 +150,22 @@ def get_component_display_info(
     elif component_name == "frontend":
         return ("Frontend", "Flet")
 
+{%- for p in _plugins | default([]) %}
+{%- for h in p.wiring.health_checks %}
+
+    elif component_name == "service_{{ h.label }}":
+        # Plugin-supplied subtitle flows through health-check metadata
+        # (see e.g. ``crawler_health`` for the convention). Fall back
+        # to the plugin's own name so the row never shows blank.
+        # ``format_versioned_subtitle`` is the single source of truth
+        # for the "<Label> <X.Y.Z>" formatting — same helper the
+        # in-tree services use.
+        from app.services.system.ui import format_versioned_subtitle
+        label = metadata.get("subtitle") or "{{ p.name }}"
+        return ("{{ h.label }}", format_versioned_subtitle(label, metadata))
+{%- endfor %}
+{%- endfor %}
+
     else:
         # Generic fallback
         display_name = component_name.replace("_", " ").replace("service ", "").title()

@@ -120,6 +120,25 @@ def get_component_label(component_name: str) -> str:
     return mapping.get(component_name, component_name.replace("_", " ").title())
 
 
+def format_versioned_subtitle(
+    label: str, metadata: dict[str, object] | None = None
+) -> str:
+    """Append ``metadata['version']`` to ``label`` when it's a real value.
+
+    Single source of truth for the "<Label> <X.Y.Z>" subtitle convention
+    used across the dashboard. In-tree services route through
+    ``get_component_subtitle`` (which looks up the label from the
+    hardcoded dict and delegates here); third-party plugins call this
+    directly with their own label so the formatting stays identical.
+    """
+    if not metadata:
+        return label
+    version = metadata.get("version", "")
+    if version and version != "unknown":
+        return f"{label} {version}"
+    return label
+
+
 def get_component_subtitle(
     component_name: str, metadata: dict[str, object] | None = None
 ) -> str:
@@ -143,12 +162,9 @@ def get_component_subtitle(
         return "Adoption Analytics"
 {% endif %}
 
-    label = get_component_label(component_name)
-    if metadata:
-        version = metadata.get("version", "")
-        if version and version != "unknown":
-            return f"{label} {version}"
-    return label
+    return format_versioned_subtitle(
+        get_component_label(component_name), metadata
+    )
 
 
 {% if include_insights %}

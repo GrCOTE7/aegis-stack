@@ -115,6 +115,16 @@ SHARED_TEMPLATE_FILES: dict[str, SharedFilePolicy] = {
         "warn": False,
     },  # Per-plugin schema registry — regenerates from _plugins on add/remove
     # so the runtime ATTACH list and the in-tree composer view stay in sync.
+    "app/components/frontend/dashboard/status_overview.py": {
+        "overwrite": True,
+        "backup": True,
+        "warn": False,
+    },  # Stack-view title/subtitle dispatch — has plugin loop that picks up
+    # health-check labels so plugin services render with proper subtitles.
+    # Note: ``app/components/frontend/dashboard/cards/card_utils.py`` is
+    # already declared above (line ~57). It already regenerates on add/
+    # remove, so the plugin loop populating ``modal_map`` fires without a
+    # second entry here.
     "app/services/system/health.py": {
         "overwrite": True,
         "backup": True,
