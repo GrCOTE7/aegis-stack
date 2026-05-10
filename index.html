@@ -3226,38 +3226,19 @@
 </table>
 <p><a href="services/">Services Docs →</a></p>
 <h2 id="cicd-for-your-stack">CI/CD for Your Stack</h2>
-<p>Every generated project ships with GitHub Actions and developer tooling pre-wired, so the first push to GitHub runs checks automatically — and one command (<code>aegis deploy-cd-setup</code>) wires up continuous deployment to your server.</p>
+<p>Every generated project ships with GitHub Actions and developer tooling pre-wired, so the first push to GitHub runs checks automatically, and one command wires up continuous deployment to your server.</p>
 <table>
 <thead>
-<tr>
-<th>Capability</th>
-<th>What you get</th>
-<th></th>
-</tr>
+<tr><th>Capability</th><th>What you get</th><th width="80">Status</th></tr>
 </thead>
 <tbody>
-<tr>
-<td><strong>CI Workflow</strong></td>
-<td><code>.github/workflows/ci.yml</code> runs lint, type checking, and tests on every push and PR (parallel jobs, <code>uv</code> cached)</td>
-<td><a class="glightbox" href="https://img.shields.io/badge/-available-2ea043" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Available" src="https://img.shields.io/badge/-available-2ea043" /></a></td>
-</tr>
-<tr>
-<td><strong>Code Scanning</strong></td>
-<td><code>.github/workflows/security.yml</code> runs CodeQL on every PR and weekly</td>
-<td><a class="glightbox" href="https://img.shields.io/badge/-available-2ea043" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Available" src="https://img.shields.io/badge/-available-2ea043" /></a></td>
-</tr>
-<tr>
-<td><strong>Pre-commit</strong></td>
-<td><code>.pre-commit-config.yaml</code> for ruff + ruff-format + ty, opt-in via <code>pre-commit install</code></td>
-<td><a class="glightbox" href="https://img.shields.io/badge/-optional-blue" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Optional" src="https://img.shields.io/badge/-optional-blue" /></a></td>
-</tr>
-<tr>
-<td><strong>Continuous Deploy</strong></td>
-<td><code>aegis deploy-cd-setup</code> generates a dedicated SSH deploy key, installs the public key on your server, pushes secrets to GitHub, and scaffolds <code>.github/workflows/deploy.yml</code> (workflow_dispatch by default)</td>
-<td><a class="glightbox" href="https://img.shields.io/badge/-optional-blue" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Optional" src="https://img.shields.io/badge/-optional-blue" /></a></td>
-</tr>
+<tr><td><b>CI Workflow</b></td><td>Lint, type checking, and tests on every push and PR (parallel jobs, cached)</td><td><a class="glightbox" href="https://img.shields.io/badge/-available-2ea043" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="https://img.shields.io/badge/-available-2ea043" alt="Available" width="64"></a></td></tr>
+<tr><td><b>Code Scanning</b></td><td>CodeQL static analysis on every PR and on a weekly schedule</td><td><a class="glightbox" href="https://img.shields.io/badge/-available-2ea043" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="https://img.shields.io/badge/-available-2ea043" alt="Available" width="64"></a></td></tr>
+<tr><td><b>Pre-commit</b></td><td>Ruff, ruff-format, and type-check hooks (opt-in)</td><td><a class="glightbox" href="https://img.shields.io/badge/-optional-blue" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="https://img.shields.io/badge/-optional-blue" alt="Optional" width="64"></a></td></tr>
+<tr><td><b>Continuous Deploy</b></td><td>Generates a dedicated SSH deploy key, installs it on your server, pushes secrets to GitHub, and scaffolds a deploy workflow (manual trigger by default)</td><td><a class="glightbox" href="https://img.shields.io/badge/-optional-blue" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="https://img.shields.io/badge/-optional-blue" alt="Optional" width="64"></a></td></tr>
 </tbody>
 </table>
+
 <h2 id="deploying-your-stack">Deploying Your Stack</h2>
 <table>
 <thead>
