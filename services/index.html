@@ -701,9 +701,23 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../components/webserver/" class="md-nav__link">
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -712,7 +726,134 @@
   </span>
   
 
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Backend
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../components/backend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../components/backend/middleware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../components/backend/lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lifecycle
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../components/backend/routes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Routes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../components/backend/auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Authentication Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1321,15 +1462,6 @@
   <a href="#dependency-resolution" class="md-nav__link">
     <span class="md-ellipsis">
       Dependency Resolution
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#available-services" class="md-nav__link">
-    <span class="md-ellipsis">
-      Available Services
     </span>
   </a>
   
@@ -2985,15 +3117,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#available-services" class="md-nav__link">
-    <span class="md-ellipsis">
-      Available Services
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#service-categories" class="md-nav__link">
     <span class="md-ellipsis">
       Service Categories
@@ -3211,55 +3334,6 @@
     style DB fill:#fef7e0
     style API fill:#e8f4fd
     style UI fill:#f3e5f5</code></pre>
-<h2 id="available-services">Available Services</h2>
-<table>
-<thead>
-<tr>
-<th>Service</th>
-<th>Status</th>
-<th>Description</th>
-<th>Required Components</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>ai</strong></td>
-<td>✅ Available</td>
-<td>Multi-provider AI chat with PydanticAI (OpenAI, Anthropic, Google, Groq, etc.)</td>
-<td>backend</td>
-</tr>
-<tr>
-<td><strong>auth</strong></td>
-<td>✅ Available</td>
-<td>User authentication and authorization with JWT tokens</td>
-<td>backend, database</td>
-</tr>
-<tr>
-<td><strong>blog</strong></td>
-<td>🧪 Experimental</td>
-<td>Markdown posts with draft/publish workflow, tags, and Overseer editing</td>
-<td>backend, database</td>
-</tr>
-<tr>
-<td><strong>comms</strong></td>
-<td>✅ Available</td>
-<td>Email (Resend), SMS, and voice calls (Twilio)</td>
-<td>backend</td>
-</tr>
-<tr>
-<td><strong>insights</strong></td>
-<td>🧪 Experimental</td>
-<td>Adoption metrics tracking (GitHub, PyPI, Plausible, Reddit)</td>
-<td>backend, database, scheduler</td>
-</tr>
-<tr>
-<td><strong>payment</strong></td>
-<td>🧪 Experimental</td>
-<td>Stripe checkout, subscriptions, refunds, webhooks, disputes</td>
-<td>backend, database</td>
-</tr>
-</tbody>
-</table>
 <h2 id="service-categories">Service Categories</h2>
 <pre class="mermaid"><code>graph TB
     subgraph "🔐 Authentication Services"

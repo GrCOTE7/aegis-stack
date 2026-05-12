@@ -12,13 +12,13 @@
         <meta name="author" content="Aegis Stack Contributors">
       
       
-        <link rel="canonical" href="https://lbedner.github.io/aegis-stack/services/ai/providers/">
+        <link rel="canonical" href="https://lbedner.github.io/aegis-stack/components/backend/routes/">
       
       
-        <link rel="prev" href="../engines/">
+        <link rel="prev" href="../lifecycle/">
       
       
-        <link rel="next" href="../api/">
+        <link rel="next" href="../auth/">
       
       
       <link rel="icon" href="../../../images/aegis_stack_layered_shield.svg">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Provider Setup - Aegis Stack</title>
+        <title>Routes - Aegis Stack</title>
       
     
     
@@ -94,7 +94,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ai-providers" class="md-skip">
+        <a href="#routes" class="md-skip">
           Skip to content
         </a>
       
@@ -127,7 +127,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Provider Setup
+              Routes
             
           </span>
         </div>
@@ -278,11 +278,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../components/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
           
   
   
@@ -298,13 +300,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../services/" class="md-tabs__link">
           
   
   
@@ -635,24 +635,29 @@
       
   
   
+    
   
   
+  
     
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -665,7 +670,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Components
@@ -679,7 +684,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   
@@ -699,6 +704,8 @@
                 
   
   
+    
+  
   
   
     
@@ -709,11 +716,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
         
           
           <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
@@ -729,7 +736,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             Backend
@@ -743,7 +750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/backend/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -766,7 +773,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/backend/middleware/" class="md-nav__link">
+      <a href="../middleware/" class="md-nav__link">
         
   
   
@@ -789,7 +796,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/backend/lifecycle/" class="md-nav__link">
+      <a href="../lifecycle/" class="md-nav__link">
         
   
   
@@ -809,10 +816,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../components/backend/routes/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Routes
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -823,6 +852,71 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Registry
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-a-router" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding A Router
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-routes-in-overseer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspecting Routes In Overseer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#standard-endpoints-provided-by-fastapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Standard Endpoints Provided By FastAPI
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -835,7 +929,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/backend/auth/" class="md-nav__link">
+      <a href="../auth/" class="md-nav__link">
         
   
   
@@ -866,7 +960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/database/" class="md-nav__link">
+      <a href="../../database/" class="md-nav__link">
         
   
   
@@ -889,7 +983,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/frontend/" class="md-nav__link">
+      <a href="../../frontend/" class="md-nav__link">
         
   
   
@@ -953,7 +1047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/scheduler/" class="md-nav__link">
+      <a href="../../scheduler/" class="md-nav__link">
         
   
   
@@ -976,7 +1070,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/scheduler/examples/" class="md-nav__link">
+      <a href="../../scheduler/examples/" class="md-nav__link">
         
   
   
@@ -999,7 +1093,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/scheduler/cli/" class="md-nav__link">
+      <a href="../../scheduler/cli/" class="md-nav__link">
         
   
   
@@ -1063,7 +1157,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/scheduler/extras/persistence/" class="md-nav__link">
+      <a href="../../scheduler/extras/persistence/" class="md-nav__link">
         
   
   
@@ -1143,7 +1237,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/worker/" class="md-nav__link">
+      <a href="../../worker/" class="md-nav__link">
         
   
   
@@ -1166,7 +1260,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/worker/configuration/" class="md-nav__link">
+      <a href="../../worker/configuration/" class="md-nav__link">
         
   
   
@@ -1189,7 +1283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/worker/examples/" class="md-nav__link">
+      <a href="../../worker/examples/" class="md-nav__link">
         
   
   
@@ -1253,7 +1347,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/worker/extras/load-testing/" class="md-nav__link">
+      <a href="../../worker/extras/load-testing/" class="md-nav__link">
         
   
   
@@ -1292,7 +1386,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/ingress/" class="md-nav__link">
+      <a href="../../ingress/" class="md-nav__link">
         
   
   
@@ -1315,7 +1409,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../components/observability/" class="md-nav__link">
+      <a href="../../observability/" class="md-nav__link">
         
   
   
@@ -1342,29 +1436,24 @@
       
   
   
-    
   
   
-  
     
     
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
             
   
   
@@ -1377,7 +1466,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Services
@@ -1391,7 +1480,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../services/" class="md-nav__link">
         
   
   
@@ -1411,8 +1500,6 @@
                 
   
   
-    
-  
   
   
     
@@ -1423,11 +1510,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
         
           
           <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
@@ -1443,7 +1530,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_2">
             <span class="md-nav__icon md-icon"></span>
             AI Service
@@ -1457,7 +1544,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../../services/ai/" class="md-nav__link">
         
   
   
@@ -1480,7 +1567,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../illiana/" class="md-nav__link">
+      <a href="../../../services/ai/illiana/" class="md-nav__link">
         
   
   
@@ -1503,7 +1590,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../llm-catalog/" class="md-nav__link">
+      <a href="../../../services/ai/llm-catalog/" class="md-nav__link">
         
   
   
@@ -1526,7 +1613,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rag/" class="md-nav__link">
+      <a href="../../../services/ai/rag/" class="md-nav__link">
         
   
   
@@ -1549,7 +1636,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cost-tracking/" class="md-nav__link">
+      <a href="../../../services/ai/cost-tracking/" class="md-nav__link">
         
   
   
@@ -1572,7 +1659,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../voice/" class="md-nav__link">
+      <a href="../../../services/ai/voice/" class="md-nav__link">
         
   
   
@@ -1595,7 +1682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../engines/" class="md-nav__link">
+      <a href="../../../services/ai/engines/" class="md-nav__link">
         
   
   
@@ -1615,32 +1702,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Provider Setup
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../services/ai/providers/" class="md-nav__link">
         
   
   
@@ -1651,161 +1716,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuration
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#provider-setup-guides" class="md-nav__link">
-    <span class="md-ellipsis">
-      Provider Setup Guides
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ollama-local" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ollama (Local)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Ollama (Local)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      Setup
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ollama-deployment-modes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ollama Deployment Modes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#switching-models-via-cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      Switching Models via CLI
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#switching-providers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Switching Providers
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Switching Providers">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#via-env" class="md-nav__link">
-    <span class="md-ellipsis">
-      Via .env
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#via-cli-with-llm-catalog" class="md-nav__link">
-    <span class="md-ellipsis">
-      Via CLI (with LLM Catalog)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#missing-api-key-error" class="md-nav__link">
-    <span class="md-ellipsis">
-      "Missing API key" Error
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#provider-not-available-error" class="md-nav__link">
-    <span class="md-ellipsis">
-      "Provider not available" Error
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1818,7 +1728,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/" class="md-nav__link">
+      <a href="../../../services/ai/api/" class="md-nav__link">
         
   
   
@@ -1841,7 +1751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../integration/" class="md-nav__link">
+      <a href="../../../services/ai/integration/" class="md-nav__link">
         
   
   
@@ -1864,7 +1774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
+      <a href="../../../services/ai/cli/" class="md-nav__link">
         
   
   
@@ -1887,7 +1797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../examples/" class="md-nav__link">
+      <a href="../../../services/ai/examples/" class="md-nav__link">
         
   
   
@@ -1959,7 +1869,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../auth/" class="md-nav__link">
+      <a href="../../../services/auth/" class="md-nav__link">
         
   
   
@@ -1982,7 +1892,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../auth/levels/" class="md-nav__link">
+      <a href="../../../services/auth/levels/" class="md-nav__link">
         
   
   
@@ -2005,7 +1915,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../auth/api/" class="md-nav__link">
+      <a href="../../../services/auth/api/" class="md-nav__link">
         
   
   
@@ -2028,7 +1938,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../auth/integration/" class="md-nav__link">
+      <a href="../../../services/auth/integration/" class="md-nav__link">
         
   
   
@@ -2051,7 +1961,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../auth/cli/" class="md-nav__link">
+      <a href="../../../services/auth/cli/" class="md-nav__link">
         
   
   
@@ -2074,7 +1984,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../auth/examples/" class="md-nav__link">
+      <a href="../../../services/auth/examples/" class="md-nav__link">
         
   
   
@@ -2146,7 +2056,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/" class="md-nav__link">
+      <a href="../../../services/blog/" class="md-nav__link">
         
   
   
@@ -2169,7 +2079,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/api/" class="md-nav__link">
+      <a href="../../../services/blog/api/" class="md-nav__link">
         
   
   
@@ -2192,7 +2102,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/dashboard/" class="md-nav__link">
+      <a href="../../../services/blog/dashboard/" class="md-nav__link">
         
   
   
@@ -2215,7 +2125,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/cli/" class="md-nav__link">
+      <a href="../../../services/blog/cli/" class="md-nav__link">
         
   
   
@@ -2238,7 +2148,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../blog/examples/" class="md-nav__link">
+      <a href="../../../services/blog/examples/" class="md-nav__link">
         
   
   
@@ -2310,7 +2220,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../comms/" class="md-nav__link">
+      <a href="../../../services/comms/" class="md-nav__link">
         
   
   
@@ -2333,7 +2243,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../comms/setup/" class="md-nav__link">
+      <a href="../../../services/comms/setup/" class="md-nav__link">
         
   
   
@@ -2356,7 +2266,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../comms/api/" class="md-nav__link">
+      <a href="../../../services/comms/api/" class="md-nav__link">
         
   
   
@@ -2379,7 +2289,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../comms/cli/" class="md-nav__link">
+      <a href="../../../services/comms/cli/" class="md-nav__link">
         
   
   
@@ -2451,7 +2361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../insights/" class="md-nav__link">
+      <a href="../../../services/insights/" class="md-nav__link">
         
   
   
@@ -2474,7 +2384,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../insights/data-sources/" class="md-nav__link">
+      <a href="../../../services/insights/data-sources/" class="md-nav__link">
         
   
   
@@ -2497,7 +2407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../insights/cli/" class="md-nav__link">
+      <a href="../../../services/insights/cli/" class="md-nav__link">
         
   
   
@@ -2520,7 +2430,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../insights/dashboard/" class="md-nav__link">
+      <a href="../../../services/insights/dashboard/" class="md-nav__link">
         
   
   
@@ -2543,7 +2453,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../insights/configuration/" class="md-nav__link">
+      <a href="../../../services/insights/configuration/" class="md-nav__link">
         
   
   
@@ -2566,7 +2476,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../insights/examples/" class="md-nav__link">
+      <a href="../../../services/insights/examples/" class="md-nav__link">
         
   
   
@@ -2638,7 +2548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../payment/" class="md-nav__link">
+      <a href="../../../services/payment/" class="md-nav__link">
         
   
   
@@ -2661,7 +2571,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../payment/setup/" class="md-nav__link">
+      <a href="../../../services/payment/setup/" class="md-nav__link">
         
   
   
@@ -2684,7 +2594,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../payment/dashboard/" class="md-nav__link">
+      <a href="../../../services/payment/dashboard/" class="md-nav__link">
         
   
   
@@ -2707,7 +2617,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../payment/api/" class="md-nav__link">
+      <a href="../../../services/payment/api/" class="md-nav__link">
         
   
   
@@ -2730,7 +2640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../payment/cli/" class="md-nav__link">
+      <a href="../../../services/payment/cli/" class="md-nav__link">
         
   
   
@@ -2753,7 +2663,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../payment/examples/" class="md-nav__link">
+      <a href="../../../services/payment/examples/" class="md-nav__link">
         
   
   
@@ -3116,137 +3026,47 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#the-registry" class="md-nav__link">
     <span class="md-ellipsis">
-      Overview
+      The Registry
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
+  <a href="#adding-a-router" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuration
+      Adding A Router
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#provider-setup-guides" class="md-nav__link">
+  <a href="#inspecting-routes-in-overseer" class="md-nav__link">
     <span class="md-ellipsis">
-      Provider Setup Guides
+      Inspecting Routes In Overseer
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#ollama-local" class="md-nav__link">
+  <a href="#standard-endpoints-provided-by-fastapi" class="md-nav__link">
     <span class="md-ellipsis">
-      Ollama (Local)
+      Standard Endpoints Provided By FastAPI
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Ollama (Local)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      Setup
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ollama-deployment-modes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Ollama Deployment Modes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#switching-models-via-cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      Switching Models via CLI
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#switching-providers" class="md-nav__link">
+  <a href="#reference" class="md-nav__link">
     <span class="md-ellipsis">
-      Switching Providers
+      Reference
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Switching Providers">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#via-env" class="md-nav__link">
-    <span class="md-ellipsis">
-      Via .env
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#via-cli-with-llm-catalog" class="md-nav__link">
-    <span class="md-ellipsis">
-      Via CLI (with LLM Catalog)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#missing-api-key-error" class="md-nav__link">
-    <span class="md-ellipsis">
-      "Missing API key" Error
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#provider-not-available-error" class="md-nav__link">
-    <span class="md-ellipsis">
-      "Provider not available" Error
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -3270,314 +3090,133 @@
   
 
 
-<h1 id="ai-providers">AI Providers</h1>
-<p>Complete setup guide for all supported AI providers.</p>
-<h2 id="overview">Overview</h2>
-<p>The AI service supports multiple providers through either <a href="https://ai.pydantic.dev/">Pydantic AI</a> or <a href="https://python.langchain.com/">LangChain</a> (see <a href="../engines/">Engines</a>), giving you flexibility to choose based on your needs: cost, speed, features, or specific model capabilities.</p>
-<div class="admonition tip">
-<p class="admonition-title">All Providers Work with Both Engines</p>
-<p>Whether you chose Pydantic AI or LangChain as your engine, all 7 providers are fully supported with identical configuration.</p>
-</div>
-<p><strong>Quick comparison:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Provider</th>
-<th>API Key Required</th>
-<th>Speed</th>
-<th>Best For</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>PUBLIC</strong></td>
-<td>No</td>
-<td>Basic</td>
-<td>Instant testing, no setup</td>
-</tr>
-<tr>
-<td><strong>Ollama</strong></td>
-<td>No (local)</td>
-<td>Varies</td>
-<td>Privacy, offline, no API costs</td>
-</tr>
-<tr>
-<td><strong>Google Gemini</strong></td>
-<td>Yes (free tier)</td>
-<td>Good</td>
-<td>Development, prototyping</td>
-</tr>
-<tr>
-<td><strong>Groq</strong></td>
-<td>Yes (free tier)</td>
-<td>Very fast</td>
-<td>Production, low cost</td>
-</tr>
-<tr>
-<td><strong>OpenAI</strong></td>
-<td>Yes</td>
-<td>Good</td>
-<td>Production, familiar API</td>
-</tr>
-<tr>
-<td><strong>Anthropic</strong></td>
-<td>Yes</td>
-<td>Good</td>
-<td>Claude models</td>
-</tr>
-<tr>
-<td><strong>Mistral</strong></td>
-<td>Yes</td>
-<td>Good</td>
-<td>Open models</td>
-</tr>
-<tr>
-<td><strong>Cohere</strong></td>
-<td>Yes (free tier)</td>
-<td>Good</td>
-<td>Command models</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition tip">
-<p class="admonition-title">Recommendation</p>
-<p><strong>Start:</strong> PUBLIC (no API key, instant) → <strong>Develop:</strong> Google Gemini (free tier) → <strong>Production:</strong> Groq (very fast, low cost)</p>
-</div>
-<h2 id="configuration">Configuration</h2>
-<p>All providers are configured through environment variables in your <code>.env</code> file:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Core AI Service Settings</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nv">AI_ENABLED</span><span class="o">=</span><span class="nb">true</span><span class="w">                    </span><span class="c1"># Enable/disable service</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nv">AI_PROVIDER</span><span class="o">=</span>public<span class="w">                 </span><span class="c1"># Provider: openai, anthropic, google, groq, mistral, cohere, ollama, public</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">AI_MODEL</span><span class="o">=</span>auto<span class="w">                      </span><span class="c1"># Model name (varies by provider, &quot;auto&quot; for PUBLIC)</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nv">AI_TEMPERATURE</span><span class="o">=</span><span class="m">0</span>.7<span class="w">                 </span><span class="c1"># Response creativity (0.0-2.0)</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nv">AI_MAX_TOKENS</span><span class="o">=</span><span class="m">1000</span><span class="w">                 </span><span class="c1"># Maximum response length</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nv">AI_TIMEOUT_SECONDS</span><span class="o">=</span><span class="m">30</span>.0<span class="w">            </span><span class="c1"># Request timeout</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1"># Provider API Keys (only needed for non-PUBLIC providers)</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nv">OPENAI_API_KEY</span><span class="o">=</span>sk-...<span class="w">              </span><span class="c1"># OpenAI API key</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span>sk-ant-...<span class="w">       </span><span class="c1"># Anthropic API key</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="nv">GOOGLE_API_KEY</span><span class="o">=</span>...<span class="w">                 </span><span class="c1"># Google API key</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="nv">GROQ_API_KEY</span><span class="o">=</span>gsk_...<span class="w">               </span><span class="c1"># Groq API key</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="nv">MISTRAL_API_KEY</span><span class="o">=</span>...<span class="w">                </span><span class="c1"># Mistral API key</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="nv">COHERE_API_KEY</span><span class="o">=</span>...<span class="w">                 </span><span class="c1"># Cohere API key</span>
+<h1 id="routes">Routes</h1>
+<p>Unlike <a href="../middleware/">middleware</a> and <a href="../lifecycle/">lifecycle hooks</a>,
+routers in Aegis are <strong>explicitly</strong> registered. There is exactly one
+place in the backend where every public route is wired up:
+<code>app/components/backend/api/routing.py</code>.</p>
+<p>That asymmetry is intentional. Middleware and hooks are infrastructure
+that services drop in; the public surface of the application should be
+visible in a single registry so you can audit it at a glance.</p>
+<h2 id="the-registry">The Registry</h2>
+<p><code>include_routers(app)</code> is called by <code>create_backend_app()</code> after
+middleware discovery. The template version reads roughly:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># app/components/backend/api/routing.py</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">include_routers</span><span class="p">(</span><span class="n">app</span><span class="p">:</span> <span class="n">FastAPI</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">health</span><span class="o">.</span><span class="n">router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/health&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;health&quot;</span><span class="p">])</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="c1"># Worker (if include_worker)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">worker</span><span class="o">.</span><span class="n">router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">task_history</span><span class="o">.</span><span class="n">router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">worker_events</span><span class="o">.</span><span class="n">router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/events&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;events&quot;</span><span class="p">])</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="c1"># Scheduler (if scheduler_backend != &quot;memory&quot;)</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">scheduler</span><span class="o">.</span><span class="n">router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">)</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="c1"># Auth (if include_auth)</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">auth_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">)</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="c1"># OAuth (if include_oauth)</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">oauth_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">)</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="c1"># Orgs (if include_auth_org)</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">org_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">)</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="c1"># AI service routers (if include_ai)</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">ai_router</span><span class="p">)</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">voice_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">)</span>   <span class="c1"># ai_voice</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">llm_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">)</span>     <span class="c1"># ai_backend != memory + ollama</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">rag_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">)</span>     <span class="c1"># ai_rag</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="c1"># Other service routers</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">comms_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">)</span>   <span class="c1"># include_comms</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">insights_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">)</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">payment_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">)</span> <span class="c1"># include_payment</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">payment_pages_router</span><span class="p">)</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">blog_router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">)</span>    <span class="c1"># include_blog</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>    <span class="c1"># Plugin routers</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>    <span class="k">for</span> <span class="n">router</span> <span class="ow">in</span> <span class="n">plugin_routers</span><span class="p">:</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>        <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">router</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
 </span></code></pre></div>
-<h2 id="provider-setup-guides">Provider Setup Guides</h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:7"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><input id="__tabbed_1_7" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">PUBLIC (Free)</label><label for="__tabbed_1_2">Groq (Production)</label><label for="__tabbed_1_3">Google Gemini (Free Tier)</label><label for="__tabbed_1_4">OpenAI</label><label for="__tabbed_1_5">Anthropic</label><label for="__tabbed_1_6">Mistral</label><label for="__tabbed_1_7">Cohere</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p><strong>No setup required!</strong> Works out of the box with zero configuration.</p>
-<p><strong>Setup:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Already configured by default - just start chatting</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat<span class="w"> </span><span class="s2">&quot;Hello! Can you help me?&quot;</span>
-</span></code></pre></div>
-<p><strong>Best for:</strong> Instant testing, demos, getting started without any setup</p>
-</div>
-<div class="tabbed-block">
-<p>Blazing fast inference with very generous free tier.</p>
-<p><strong>Setup:</strong></p>
-<ol>
-<li>Sign up at <a href="https://console.groq.com/">console.groq.com</a></li>
-<li>Create an API key (free tier available)</li>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_PROVIDER</span><span class="o">=</span>groq
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GROQ_API_KEY</span><span class="o">=</span>gsk_your_key_here
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_MODEL</span><span class="o">=</span>llama-3.1-8b-instant<span class="w">  </span><span class="c1"># Fastest model</span>
-</span></code></pre></div>
-<p><strong>Available Models:</strong> See <a href="https://console.groq.com/docs/models">Groq's model documentation</a> for the latest available models.</p>
-<p><strong>Best for:</strong> Production use (very fast, extremely low cost)</p>
-</div>
-<div class="tabbed-block">
-<p>Generous free tier with daily rate limits. Great for development.</p>
-<p><strong>Setup:</strong></p>
-<ol>
-<li>Get free API key from <a href="https://aistudio.google.com/apikey">aistudio.google.com</a></li>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_PROVIDER</span><span class="o">=</span>google
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GOOGLE_API_KEY</span><span class="o">=</span>your_key_here
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_MODEL</span><span class="o">=</span>gemini-2.0-flash-exp
-</span></code></pre></div>
-<p><strong>Available Models:</strong> See <a href="https://ai.google.dev/gemini-api/docs/models/gemini">Google's model documentation</a> for the latest available models.</p>
-<p><strong>Best for:</strong> Development and prototyping within rate limits</p>
-</div>
-<div class="tabbed-block">
-<p>Industry-standard GPT models. Most widely used and documented.</p>
-<p><strong>Setup:</strong></p>
-<ol>
-<li>Get API key from <a href="https://platform.openai.com/">platform.openai.com</a></li>
-<li>Add payment method (required for API access)</li>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_PROVIDER</span><span class="o">=</span>openai
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span>sk-your_key_here
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_MODEL</span><span class="o">=</span>gpt-3.5-turbo
-</span></code></pre></div>
-<p><strong>Available Models:</strong> See <a href="https://platform.openai.com/docs/models">OpenAI's model documentation</a> for the latest available models.</p>
-<p><strong>Best for:</strong> Production with familiar API, extensive ecosystem</p>
-</div>
-<div class="tabbed-block">
-<p>Claude models from Anthropic. Known for safety and reasoning.</p>
-<p><strong>Setup:</strong></p>
-<ol>
-<li>Get API key from <a href="https://console.anthropic.com/">console.anthropic.com</a></li>
-<li>Add payment method</li>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_PROVIDER</span><span class="o">=</span>anthropic
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span>sk-ant-your_key_here
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_MODEL</span><span class="o">=</span>claude-3-5-sonnet-20241022
-</span></code></pre></div>
-<p><strong>Available Models:</strong> See <a href="https://docs.anthropic.com/en/docs/models-overview">Anthropic's model documentation</a> for the latest available models.</p>
-<p><strong>Best for:</strong> High-quality responses, safety-critical applications</p>
-</div>
-<div class="tabbed-block">
-<p>Open-source Mistral models with European data residency.</p>
-<p><strong>Setup:</strong></p>
-<ol>
-<li>Get API key from <a href="https://console.mistral.ai/">console.mistral.ai</a></li>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_PROVIDER</span><span class="o">=</span>mistral
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">MISTRAL_API_KEY</span><span class="o">=</span>your_key_here
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_MODEL</span><span class="o">=</span>mistral-small-latest
-</span></code></pre></div>
-<p><strong>Available Models:</strong> See <a href="https://docs.mistral.ai/getting-started/models/">Mistral's model documentation</a> for the latest available models.</p>
-<p><strong>Best for:</strong> Open-source preference, European compliance requirements</p>
-</div>
-<div class="tabbed-block">
-<p>Command models optimized for enterprise and RAG use cases.</p>
-<p><strong>Setup:</strong></p>
-<ol>
-<li>Get API key from <a href="https://dashboard.cohere.com/">dashboard.cohere.com</a></li>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_PROVIDER</span><span class="o">=</span>cohere
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">COHERE_API_KEY</span><span class="o">=</span>your_key_here
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AI_MODEL</span><span class="o">=</span>command-r-plus
-</span></code></pre></div>
-<p><strong>Available Models:</strong> See <a href="https://docs.cohere.com/docs/models">Cohere's model documentation</a> for the latest available models.</p>
-<p><strong>Best for:</strong> Enterprise features, RAG applications</p>
-</div>
-</div>
-</div>
-<h2 id="ollama-local">Ollama (Local)</h2>
-<p>Run models locally with zero API costs. Supports hundreds of open-source models.</p>
-<h3 id="setup">Setup</h3>
-<ol>
-<li>Install Ollama from <a href="https://ollama.ai/">ollama.ai</a></li>
-<li>Pull a model:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ollama<span class="w"> </span>pull<span class="w"> </span>llama3.1
-</span></code></pre></div>
-<ol>
-<li>Configure your environment:</li>
-</ol>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nv">AI_PROVIDER</span><span class="o">=</span>ollama
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nv">AI_MODEL</span><span class="o">=</span>llama3.1
-</span></code></pre></div>
-<h3 id="ollama-deployment-modes">Ollama Deployment Modes</h3>
-<p>Configure at project generation:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Host mode: Ollama runs on your machine (default)</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>aegis<span class="w"> </span>init<span class="w"> </span>my-app<span class="w"> </span>--services<span class="w"> </span>ai
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># Docker mode: Ollama runs in a Docker container</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># (select during aegis init interactive prompts)</span>
-</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th>Mode</th>
-<th>Description</th>
-<th>Use Case</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>host</code></td>
-<td>Ollama on localhost:11434</td>
-<td>Development, GPU on host</td>
-</tr>
-<tr>
-<td><code>docker</code></td>
-<td>Ollama in Docker container</td>
-<td>Portable, CI/CD</td>
-</tr>
-<tr>
-<td><code>none</code></td>
-<td>No Ollama support</td>
-<td>Cloud-only providers</td>
-</tr>
-</tbody>
-</table>
-<h3 id="switching-models-via-cli">Switching Models via CLI</h3>
-<p>With the LLM Catalog, you can discover and switch Ollama models:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Sync Ollama models into catalog</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>my-app<span class="w"> </span>llm<span class="w"> </span>sync<span class="w"> </span>--source<span class="w"> </span>ollama
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># List available Ollama models</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>my-app<span class="w"> </span>llm<span class="w"> </span>list<span class="w"> </span>--vendor<span class="w"> </span>ollama
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1"># Switch to an Ollama model</span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>my-app<span class="w"> </span>llm<span class="w"> </span>use<span class="w"> </span>llama3.1
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="c1"># Or use /model in interactive chat</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>&gt;<span class="w"> </span>/model<span class="w"> </span>llama3.1
-</span></code></pre></div>
-<div class="admonition tip">
-<p class="admonition-title">Cost Tracking with Ollama</p>
-<p>Ollama models show $0.00 cost in usage stats - this is expected and normal since all processing happens locally. Illiana is aware of this and won't flag it as an issue.</p>
-</div>
-<h2 id="switching-providers">Switching Providers</h2>
-<p>You can switch providers at any time by changing your <code>.env</code> file or using the CLI:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Switch from PUBLIC to Groq</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nv">AI_PROVIDER</span><span class="o">=</span>groq
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="nv">GROQ_API_KEY</span><span class="o">=</span>your-key-here
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="nv">AI_MODEL</span><span class="o">=</span>llama-3.1-8b-instant
-</span></code></pre></div>
-<h3 id="via-env">Via .env</h3>
-<p>Edit <code>.env</code> and restart:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>make<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span>serve
-</span></code></pre></div>
-<h3 id="via-cli-with-llm-catalog">Via CLI (with LLM Catalog)</h3>
-<p>Update <code>.env</code> from the catalog (takes effect on next CLI invocation or server restart):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Auto-detects provider from model name and updates .env</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>my-app<span class="w"> </span>llm<span class="w"> </span>use<span class="w"> </span>gpt-4o<span class="w">              </span><span class="c1"># → sets AI_PROVIDER=openai</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>my-app<span class="w"> </span>llm<span class="w"> </span>use<span class="w"> </span>claude-sonnet-4-20250514<span class="w">  </span><span class="c1"># → sets AI_PROVIDER=anthropic</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>my-app<span class="w"> </span>llm<span class="w"> </span>use<span class="w"> </span>llama3.1<span class="w">            </span><span class="c1"># → sets AI_PROVIDER=ollama</span>
-</span></code></pre></div>
-<p>Switch instantly within an interactive chat session (refreshes in-process, no restart needed):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>my-app<span class="w"> </span>ai<span class="w"> </span>chat
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>&gt;<span class="w"> </span>/model<span class="w"> </span>gpt-4o
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>✓<span class="w"> </span>Switched<span class="w"> </span>to<span class="w"> </span>OpenAI/gpt-4o
-</span></code></pre></div>
-<p><strong>Verify the switch:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>my-app<span class="w"> </span>ai<span class="w"> </span>status
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>my-app<span class="w"> </span>llm<span class="w"> </span>current
-</span></code></pre></div>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<h3 id="missing-api-key-error">"Missing API key" Error</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>❌<span class="w"> </span>Missing<span class="w"> </span>API<span class="w"> </span>key<span class="w"> </span><span class="k">for</span><span class="w"> </span>groq<span class="w"> </span>provider.<span class="w"> </span>Set<span class="w"> </span>GROQ_API_KEY<span class="w"> </span>environment<span class="w"> </span>variable.
-</span></code></pre></div>
-<p><strong>Solution:</strong> Add the API key to your <code>.env</code> file:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nv">GROQ_API_KEY</span><span class="o">=</span>your-actual-key-here
-</span></code></pre></div>
-<h3 id="provider-not-available-error">"Provider not available" Error</h3>
-<p><strong>Check configuration:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>my-app<span class="w"> </span>ai<span class="w"> </span>status
-</span></code></pre></div>
-<p><strong>Verify provider is installed:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>my-app<span class="w"> </span>ai<span class="w"> </span>providers
-</span></code></pre></div>
-<hr />
-<p><strong>Next Steps:</strong></p>
+<p>(The actual file is a Copier template; the <code>if include_*</code> gates are
+Jinja conditionals, so a generated project only contains lines for the
+services it enabled.)</p>
+<p>A few conventions to notice:</p>
 <ul>
-<li><strong><a href="../llm-catalog/">LLM Catalog</a></strong> - Browse and switch between ~2000 models</li>
-<li><strong><a href="../cli/">CLI Commands</a></strong> - Using the AI service from command line</li>
-<li><strong><a href="../api/">API Reference</a></strong> - Using the AI service via REST API</li>
-<li><strong><a href="../integration/">Service Layer</a></strong> - Using the AI service in your code</li>
-<li><strong><a href="../examples/">Examples</a></strong> - Real-world usage patterns</li>
+<li><strong><code>/health</code> is always present.</strong> It carries no version prefix because
+  the health surface is used by orchestrators (Docker, Kubernetes,
+  Overseer) that should not have to know about API versions.</li>
+<li><strong>Versioned APIs live under <code>/api/v1</code>.</strong> Every service-owned router
+  mounts there. When the API contract changes incompatibly, the next
+  router goes under <code>/api/v2</code> and lives alongside the old one until
+  consumers migrate.</li>
+<li><strong>Tags are set at registration time when the inner router does not
+  set them.</strong> The auth, AI, payment, and similar routers bring their
+  own <code>tags=</code> declarations because their internal grouping is more
+  nuanced than a single top-level tag.</li>
+<li><strong>Worker events mount at <code>/events</code>.</strong> Server-Sent Events are not a
+  versioned REST surface.</li>
+</ul>
+<h2 id="adding-a-router">Adding A Router</h2>
+<p>The pattern is the one already used by every service:</p>
+<p><strong>1. Define the router.</strong></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># app/components/backend/api/reports.py</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">APIRouter</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">app.services.reports</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_weekly_summary</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">router</span> <span class="o">=</span> <span class="n">APIRouter</span><span class="p">()</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/reports/weekly&quot;</span><span class="p">)</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">weekly</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]:</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="k">return</span> <span class="k">await</span> <span class="n">generate_weekly_summary</span><span class="p">()</span>
+</span></code></pre></div>
+<p><strong>2. Register it explicitly.</strong></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># app/components/backend/api/routing.py</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">app.components.backend.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">reports</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">include_routers</span><span class="p">(</span><span class="n">app</span><span class="p">:</span> <span class="n">FastAPI</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="c1"># ... existing registrations ...</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">reports</span><span class="o">.</span><span class="n">router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/api/v1&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;reports&quot;</span><span class="p">])</span>
+</span></code></pre></div>
+<p>Restart the backend. The route appears in the OpenAPI schema at
+<code>/openapi.json</code>, in Swagger at <code>/docs</code>, and in Overseer's Routes tab.</p>
+<h2 id="inspecting-routes-in-overseer">Inspecting Routes In Overseer</h2>
+<p>The Backend modal's <strong>Routes</strong> tab renders the full registered surface
+grouped by OpenAPI tag. Each route card shows:</p>
+<ul>
+<li>HTTP method badge (color-coded by method).</li>
+<li>Path with parameter slots highlighted.</li>
+<li>Response model name (if declared).</li>
+<li>Dependency chain (<code>Depends(...)</code> callables that resolve before the
+  endpoint runs).</li>
+<li>A security badge when the endpoint requires authentication.</li>
+</ul>
+<p>Because the Routes tab reads from cached metadata built by the
+<code>component_health</code> startup hook, anything you add at runtime (rare, but
+possible via the FastAPI app object) will not appear until the next
+restart. Anything registered through <code>include_routers</code> shows up
+automatically.</p>
+<p><a class="glightbox" href="../../../images/backend_dashboard_routes.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="../../../images/backend_dashboard_routes.png" alt="Overseer Backend modal — Routes tab grouping endpoints by OpenAPI tag"></a></p>
+<h2 id="standard-endpoints-provided-by-fastapi">Standard Endpoints Provided By FastAPI</h2>
+<p>Aegis does not strip FastAPI's defaults:</p>
+<ul>
+<li><code>/openapi.json</code>: machine-readable schema.</li>
+<li><code>/docs</code>: Swagger UI.</li>
+<li><code>/redoc</code>: ReDoc UI.</li>
+</ul>
+<p>These are excluded from Logfire's HTTP instrumentation along with
+<code>/health/*</code> and <code>/dashboard/*</code>. See
+<a href="../middleware/#logfire_tracingpy-observability-only">middleware -&gt; logfire_tracing</a>.</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><code>app/components/backend/api/routing.py</code>: the registry above.</li>
+<li><code>app/components/backend/api/health.py</code>: the health endpoints, always
+  present.</li>
+<li><code>app/components/backend/main.py</code>: <code>create_backend_app</code> calls
+  <code>include_routers(app)</code> right after middleware discovery.</li>
+<li>Service-owned routers live under <code>app/components/backend/api/&lt;service&gt;/</code>
+  for services that ship multiple sub-routers (auth, AI, payment,
+  comms, blog, insights, orgs).</li>
 </ul>
 
 
