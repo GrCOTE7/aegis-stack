@@ -45,10 +45,6 @@
          <lastmod>2026-05-12</lastmod>
     </url>
     <url>
-         <loc>https://lbedner.github.io/aegis-stack/components/frontend/</loc>
-         <lastmod>2026-05-12</lastmod>
-    </url>
-    <url>
          <loc>https://lbedner.github.io/aegis-stack/components/ingress/</loc>
          <lastmod>2026-05-12</lastmod>
     </url>
@@ -81,11 +77,31 @@
          <lastmod>2026-05-12</lastmod>
     </url>
     <url>
-         <loc>https://lbedner.github.io/aegis-stack/components/database/postgresql/</loc>
+         <loc>https://lbedner.github.io/aegis-stack/components/frontend/</loc>
          <lastmod>2026-05-12</lastmod>
     </url>
     <url>
-         <loc>https://lbedner.github.io/aegis-stack/components/database/sqlite/</loc>
+         <loc>https://lbedner.github.io/aegis-stack/components/frontend/api-client/</loc>
+         <lastmod>2026-05-12</lastmod>
+    </url>
+    <url>
+         <loc>https://lbedner.github.io/aegis-stack/components/frontend/architecture/</loc>
+         <lastmod>2026-05-12</lastmod>
+    </url>
+    <url>
+         <loc>https://lbedner.github.io/aegis-stack/components/frontend/events/</loc>
+         <lastmod>2026-05-12</lastmod>
+    </url>
+    <url>
+         <loc>https://lbedner.github.io/aegis-stack/components/frontend/example/</loc>
+         <lastmod>2026-05-12</lastmod>
+    </url>
+    <url>
+         <loc>https://lbedner.github.io/aegis-stack/components/frontend/routing/</loc>
+         <lastmod>2026-05-12</lastmod>
+    </url>
+    <url>
+         <loc>https://lbedner.github.io/aegis-stack/components/frontend/state/</loc>
          <lastmod>2026-05-12</lastmod>
     </url>
     <url>

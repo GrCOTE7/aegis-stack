@@ -888,9 +888,23 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../components/frontend/" class="md-nav__link">
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -899,7 +913,180 @@
   </span>
   
 
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Frontend
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/frontend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/frontend/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/frontend/routing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Routing & Views
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/frontend/state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Session State
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/frontend/api-client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Client
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/frontend/events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Events
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../components/frontend/example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -3409,7 +3596,7 @@
 <h2 id="architecture">Architecture</h2>
 <pre class="mermaid"><code>graph TB
     subgraph "Authentication Service Stack"
-        AuthService[🔐 Auth Service&lt;br/&gt;JWT + Refresh + User Management]
+        AuthService["🔐 Auth Service&lt;br/&gt;JWT + Refresh + User Management"]
 
         subgraph "API Endpoints"
             Register["POST /auth/register&lt;br/&gt;Create new user"]
@@ -3420,15 +3607,15 @@
         end
 
         subgraph "Required Components"
-            Backend[⚡ Backend Component&lt;br/&gt;FastAPI Routes]
-            Database[💾 Database Component&lt;br/&gt;SQLite / PostgreSQL]
+            Backend["⚡ Backend Component&lt;br/&gt;FastAPI Routes"]
+            Database["💾 Database Component&lt;br/&gt;SQLite / PostgreSQL"]
         end
 
         subgraph "Security Layer"
-            JWT[🔑 Access JWT&lt;br/&gt;short-lived, stateless&lt;br/&gt;python-jose]
-            RefreshSvc[♻️ RefreshService&lt;br/&gt;rotation + reuse detection&lt;br/&gt;family-based revocation]
-            Passwords[🔒 Password Hashing&lt;br/&gt;passlib + bcrypt]
-            OAuth2[📋 OAuth2 Flow&lt;br/&gt;FastAPI Security]
+            JWT["🔑 Access JWT&lt;br/&gt;short-lived, stateless&lt;br/&gt;python-jose"]
+            RefreshSvc["♻️ RefreshService&lt;br/&gt;rotation + reuse detection&lt;br/&gt;family-based revocation"]
+            Passwords["🔒 Password Hashing&lt;br/&gt;passlib + bcrypt"]
+            OAuth2["📋 OAuth2 Flow&lt;br/&gt;FastAPI Security"]
         end
 
         subgraph "Database Schema"
@@ -3459,21 +3646,7 @@
     RefreshSvc --&gt; RefreshTokens
     Database --&gt; Users
     Database --&gt; RefreshTokens
-
-    style AuthService fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
-    style Register fill:#f1f8e9,stroke:#388e3c,stroke-width:2px
-    style Login fill:#f1f8e9,stroke:#388e3c,stroke-width:2px
-    style Refresh fill:#f1f8e9,stroke:#388e3c,stroke-width:2px
-    style Profile fill:#f1f8e9,stroke:#388e3c,stroke-width:2px
-    style Logout fill:#f1f8e9,stroke:#388e3c,stroke-width:2px
-    style Backend fill:#e1f5fe,stroke:#1976d2,stroke-width:2px
-    style Database fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    style JWT fill:#fff8e1,stroke:#ffa000,stroke-width:2px
-    style RefreshSvc fill:#fff8e1,stroke:#ffa000,stroke-width:2px
-    style Passwords fill:#fff8e1,stroke:#ffa000,stroke-width:2px
-    style OAuth2 fill:#fff8e1,stroke:#ffa000,stroke-width:2px
-    style Users fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    style RefreshTokens fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px</code></pre>
+</code></pre>
 <h2 id="authentication-flow">Authentication Flow</h2>
 <pre class="mermaid"><code>sequenceDiagram
     participant U as User
