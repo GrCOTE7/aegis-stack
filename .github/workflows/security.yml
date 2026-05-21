@@ -55,9 +55,15 @@ jobs:
         # Ignoring pip 25.2 vulnerabilities (uv manages pip, not user-facing)
         # Risk: Low - only affects installation of malicious packages from untrusted sources
         # Mitigation: All packages installed from trusted PyPI with uv.lock verification
+        #
+        # Ignoring markdown PYSEC-2026-89: no fix version published upstream
+        # (markdown 3.8.2 is the latest release). Used only by the docs
+        # toolchain (mkdocs), not shipped runtime code. Revisit once a
+        # patched release is available.
         uv run pip-audit \
           --ignore-vuln GHSA-4xh5-x5gv-qwph \
           --ignore-vuln GHSA-6vgw-5pg2-w6jp \
           --ignore-vuln GHSA-58qw-9mgm-455v \
           --ignore-vuln ECHO-ffe1-1d3c-d9bc \
-          --ignore-vuln ECHO-7db2-03aa-5591
+          --ignore-vuln ECHO-7db2-03aa-5591 \
+          --ignore-vuln PYSEC-2026-89

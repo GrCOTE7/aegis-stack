@@ -1,7 +1,7 @@
 """Organization and membership models."""
 {% if include_auth_org %}
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 import sqlalchemy as sa
 from sqlmodel import Field, SQLModel
@@ -12,6 +12,14 @@ ORG_ROLE_OWNER = "owner"
 ORG_ROLE_ADMIN = "admin"
 ORG_ROLE_MEMBER = "member"
 VALID_ORG_ROLES = {ORG_ROLE_OWNER, ORG_ROLE_ADMIN, ORG_ROLE_MEMBER}
+
+# Default invite expiry. Pre-fix invites were valid forever, which
+# turned a leaked invite link into a permanent acceptance bearer.
+INVITE_EXPIRY_DAYS = 14
+
+
+def _default_invite_expiry() -> datetime:
+    return (datetime.now(UTC) + timedelta(days=INVITE_EXPIRY_DAYS)).replace(tzinfo=None)
 
 
 class OrganizationBase(SQLModel):
@@ -112,6 +120,12 @@ class OrgInvite(SQLModel, table=True):
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(UTC).replace(tzinfo=None)
     )
+    # Nullable so legacy rows backfilled by the expiry migration don't
+    # break. New invites always get a value via ``_default_invite_expiry``;
+    # the accept paths treat NULL as "no expiry recorded" (pre-migration
+    # behavior) so historical pending invites keep working in the grace
+    # window after upgrade.
+    expires_at: datetime | None = Field(default_factory=_default_invite_expiry)
 
 
 class InviteCreate(SQLModel):
@@ -134,15 +148,22 @@ class TransferOwnershipRequest(SQLModel):
 
 
 class InviteResponse(SQLModel):
-    """Invite response model."""
+    """Invite response model.
+
+    ``token`` is intentionally omitted: it's a bearer credential
+    delivered by email at invite-creation time, not something an
+    admin's listing endpoint should hand back on demand. Re-exposing
+    it via this response would let anyone who briefly had admin (or
+    who leaked the listing payload) accept every still-pending invite.
+    """
 
     id: int
     organization_id: int
     email: str
     role: str
     status: str
-    token: str
     created_at: datetime
+    expires_at: datetime | None = None
 
 
 class MemberDetailResponse(SQLModel):

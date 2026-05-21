@@ -1,6 +1,7 @@
 import secrets
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 import flet.fastapi as flet_fastapi
 from app.components.backend.hooks import backend_hooks
@@ -119,7 +120,13 @@ def create_integrated_app() -> FastAPI:
     # Create and mount the Flet app using the flet.fastapi module
     # First, get the actual session handler function from the factory
     session_handler = create_frontend_app()
-    flet_app = flet_fastapi.app(session_handler, assets_dir=settings.FLET_ASSETS_DIR)
+    # ``assets_dir`` MUST be absolute. ``flet_web/fastapi/flet_static_files.py``
+    # silently nulls relative paths (logs a warning, then falls back to the
+    # bundled stock web dir). Resolve from the project root so anything in
+    # the assets dir (custom favicon, app-icon, override index.html) actually
+    # wins over the bundled defaults.
+    flet_assets = Path(__file__).resolve().parents[2] / settings.FLET_ASSETS_DIR
+    flet_app = flet_fastapi.app(session_handler, assets_dir=str(flet_assets))
     # Mount Flet at /dashboard to avoid intercepting FastAPI routes like /health
     app.mount("/dashboard", flet_app)
     return app

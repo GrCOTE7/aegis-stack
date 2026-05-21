@@ -221,15 +221,15 @@ class TestCheckoutUrlFallback:
                 json={
                     "price_id": "price_xxx",
                     "mode": "payment",
-                    "success_url": "https://app.example.com/thanks",
-                    "cancel_url": "https://app.example.com/abort",
+                    "success_url": "/thanks",
+                    "cancel_url": "/abort",
                 },
             )
 
         assert response.status_code == 200
         call_kwargs = mock_create.call_args.kwargs
-        assert call_kwargs["success_url"] == "https://app.example.com/thanks"
-        assert call_kwargs["cancel_url"] == "https://app.example.com/abort"
+        assert call_kwargs["success_url"] == "/thanks"
+        assert call_kwargs["cancel_url"] == "/abort"
 
     @pytest.mark.asyncio
     async def test_mixed_body_and_settings(
@@ -247,13 +247,13 @@ class TestCheckoutUrlFallback:
                 json={
                     "price_id": "price_xxx",
                     "mode": "payment",
-                    "success_url": "https://only-success.example.com",
+                    "success_url": "/only-success",
                 },
             )
 
         assert response.status_code == 200
         call_kwargs = mock_create.call_args.kwargs
-        assert call_kwargs["success_url"] == "https://only-success.example.com"
+        assert call_kwargs["success_url"] == "/only-success"
         assert call_kwargs["cancel_url"] == settings.PAYMENT_CANCEL_URL
 
 

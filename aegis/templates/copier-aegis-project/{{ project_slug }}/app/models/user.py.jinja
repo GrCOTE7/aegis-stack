@@ -153,9 +153,22 @@ class User(UserBase, table=True):
     locked_until: datetime | None = None
 
 
-class UserCreate(UserBase):
-    """User creation model."""
+class UserCreate(SQLModel):
+    """User creation model.
 
+    Standalone (does NOT inherit from ``UserBase``) so the public
+    /register endpoint can only set ``email``, ``full_name``, and
+    ``password``. Pre-fix this inherited the full base — including
+    ``is_active``, ``is_verified``, and ``role`` — and the service then
+    pass-through ``is_active`` to the DB row. A signup POST could
+    therefore self-deactivate or (more concerning) any future refactor
+    that widened the service call would silently expose role/verified
+    to the wire. Admin-driven user creation, if it ever needs to set
+    those fields, should go through a dedicated model.
+    """
+
+    email: EmailStr = Field(unique=True, index=True)
+    full_name: str | None = None
     password: str = Field(min_length=8)
 
 

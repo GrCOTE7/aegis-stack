@@ -19,9 +19,47 @@ from app.services.scheduler.models import ScheduledTask, TaskStatistics
 class TestSchedulerEndpoints:
     """Test scheduler API endpoints with various states."""
 
+{%- if include_auth and include_database %}
+    @pytest.fixture
+    async def async_client(self, async_db_session) -> AsyncGenerator[AsyncClient, None]:
+        """Async HTTP client for testing.
+
+        Overrides ``get_async_db`` with the in-memory ``async_db_session``
+        from conftest so admin-gated routes can look up the bearer-token
+        user against the test DB (where ``admin_user`` / ``auth_user``
+        actually live) instead of the real asyncpg pool.
+        """
+        from app.core.db import get_async_db
+
+        app = create_integrated_app()
+
+        async def _get_test_async_db():
+            yield async_db_session
+
+        app.dependency_overrides[get_async_db] = _get_test_async_db
+
+        # Manually trigger startup for component registration
+        from app.components.backend.hooks import backend_hooks
+        await backend_hooks.discover_lifespan_hooks()
+        await backend_hooks.execute_startup_hooks()
+
+        transport = ASGITransport(app=app)
+        async with AsyncClient(
+            transport=transport, base_url="http://test"
+        ) as client:
+            yield client
+
+        app.dependency_overrides.clear()
+
+        # Clean up after test
+        await backend_hooks.execute_shutdown_hooks()
+{%- else %}
     @pytest.fixture
     async def async_client(self) -> AsyncGenerator[AsyncClient, None]:
-        """Async HTTP client for testing."""
+        """Async HTTP client for testing.
+
+        No auth or no DB in this stack, so no override needed.
+        """
         app = create_integrated_app()
 
         # Manually trigger startup for component registration
@@ -37,13 +75,16 @@ class TestSchedulerEndpoints:
 
         # Clean up after test
         await backend_hooks.execute_shutdown_hooks()
+{%- endif %}
 
     @pytest.mark.asyncio
     async def test_list_scheduled_jobs_endpoint_accessible(
-        self, async_client: AsyncClient
+        self, async_client: AsyncClient, auth_headers: dict[str, str]
     ) -> None:
         """Test /api/v1/scheduler/jobs endpoint is accessible."""
-        response = await async_client.get("/api/v1/scheduler/jobs")
+        response = await async_client.get(
+            "/api/v1/scheduler/jobs", headers=auth_headers
+        )
 
         # Should return a valid response (200 for success, 503 for unavailable,
         # 500 for dependency issues)
@@ -67,10 +108,12 @@ class TestSchedulerEndpoints:
 
     @pytest.mark.asyncio
     async def test_get_scheduled_job_not_found(
-        self, async_client: AsyncClient
+        self, async_client: AsyncClient, auth_headers: dict[str, str]
     ) -> None:
         """Test /api/v1/scheduler/jobs/{job_id} returns 404 for non-existent job."""
-        response = await async_client.get("/api/v1/scheduler/jobs/non_existent_job")
+        response = await async_client.get(
+            "/api/v1/scheduler/jobs/non_existent_job", headers=auth_headers
+        )
 
         # Should return 404 for non-existent job, 503 if scheduler unavailable,
         # or 500 for dependency issues
@@ -87,10 +130,12 @@ class TestSchedulerEndpoints:
 
     @pytest.mark.asyncio
     async def test_scheduler_statistics_endpoint_accessible(
-        self, async_client: AsyncClient
+        self, async_client: AsyncClient, auth_headers: dict[str, str]
     ) -> None:
         """Test /api/v1/scheduler/statistics endpoint is accessible."""
-        response = await async_client.get("/api/v1/scheduler/statistics")
+        response = await async_client.get(
+            "/api/v1/scheduler/statistics", headers=auth_headers
+        )
 
         # Should return a valid response (200 for success, 503 for unavailable,
         # 500 for dependency issues)
@@ -177,7 +222,7 @@ class TestSchedulerEndpoints:
 
     @pytest.mark.asyncio
     async def test_scheduler_dependency_injection_works(
-        self, async_client: AsyncClient
+        self, async_client: AsyncClient, auth_headers: dict[str, str]
     ) -> None:
         """Test that dependency injection properly provides ScheduledTaskManager."""
         # Mock the service layer to return predictable data
@@ -200,7 +245,9 @@ class TestSchedulerEndpoints:
             mock_manager.list_tasks.return_value = mock_tasks
             mock_manager_class.return_value = mock_manager
 
-            response = await async_client.get("/api/v1/scheduler/jobs")
+            response = await async_client.get(
+                "/api/v1/scheduler/jobs", headers=auth_headers
+            )
 
             # Verify the dependency was called
             mock_manager_class.assert_called_once()

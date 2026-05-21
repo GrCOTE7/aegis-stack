@@ -37,6 +37,28 @@ from app.services.comms.sms import (
 )
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
+{%- if include_auth %}
+from fastapi import Depends
+
+from app.models.user import User
+{%- if include_auth_rbac %}
+from app.services.auth.auth_service import require_role
+{%- else %}
+from app.services.auth.deps import get_current_active_user
+{%- endif %}
+
+# Operator-only: these endpoints proxy directly to the billed Resend /
+# Twilio / voice-provider accounts. Reachable anonymously they're an
+# instant spend-burn vector. RBAC stacks gate on ``role=admin``; basic-
+# auth stacks have no role concept, so fall back to "any authed user."
+# The router-level dep doesn't fit here because the public health /
+# status / version GETs share this router; per-handler instead.
+{%- if include_auth_rbac %}
+_require_admin = require_role("admin")
+{%- else %}
+_require_admin = get_current_active_user
+{%- endif %}
+{%- endif %}
 
 router = APIRouter(prefix="/comms", tags=["communications"])
 
@@ -76,7 +98,12 @@ class CallMakeResponse(BaseModel):
 
 
 @router.post("/email/send", response_model=EmailSendResponse)
-async def send_email_endpoint(request: SendEmailRequest) -> EmailSendResponse:
+async def send_email_endpoint(
+    request: SendEmailRequest,
+{%- if include_auth %}
+    _: User = Depends(_require_admin),
+{%- endif %}
+) -> EmailSendResponse:
     """
     Send an email via Resend.
 
@@ -110,7 +137,12 @@ async def send_email_endpoint(request: SendEmailRequest) -> EmailSendResponse:
 
 
 @router.post("/sms/send", response_model=SMSSendResponse)
-async def send_sms_endpoint(request: SendSMSRequest) -> SMSSendResponse:
+async def send_sms_endpoint(
+    request: SendSMSRequest,
+{%- if include_auth %}
+    _: User = Depends(_require_admin),
+{%- endif %}
+) -> SMSSendResponse:
     """
     Send an SMS via Twilio.
 
@@ -145,7 +177,12 @@ async def send_sms_endpoint(request: SendSMSRequest) -> SMSSendResponse:
 
 
 @router.post("/call/make", response_model=CallMakeResponse)
-async def make_call_endpoint(request: MakeCallRequest) -> CallMakeResponse:
+async def make_call_endpoint(
+    request: MakeCallRequest,
+{%- if include_auth %}
+    _: User = Depends(_require_admin),
+{%- endif %}
+) -> CallMakeResponse:
     """
     Make a voice call via Twilio.
 

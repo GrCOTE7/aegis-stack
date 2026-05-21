@@ -16,7 +16,7 @@ from __future__ import annotations
 import flet as ft
 
 from app.components.frontend.controls.auth.branding_panel import BrandingPanel
-from app.components.frontend.controls.text import BodyText
+from app.components.frontend.controls.brand_mark import BrandMark
 from app.components.frontend.styles import PulseColors
 
 
@@ -31,23 +31,7 @@ class AuthShell(ft.ResponsiveRow):
         project_tagline: str,
         footer: ft.Control | None = None,
     ) -> None:
-        brand = ft.Row(
-            controls=[
-                ft.Container(
-                    width=8,
-                    height=8,
-                    bgcolor=PulseColors.TEAL,
-                    border_radius=4,
-                ),
-                BodyText(
-                    f"Overseer · {project_name}",
-                    color=PulseColors.TEXT,
-                    weight=ft.FontWeight.W_600,
-                ),
-            ],
-            spacing=10,
-            vertical_alignment=ft.CrossAxisAlignment.CENTER,
-        )
+        brand = BrandMark(project_name=project_name)
 
         # Footer is optional — caller supplies one (e.g. cross-link to the
         # other auth view). When omitted, we still hold the bottom slot

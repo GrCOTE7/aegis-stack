@@ -168,15 +168,17 @@ async def login(
     # Get user by email (username field in OAuth2 form)
     user = await user_service.get_user_by_email(form_data.username)
 
-    # Check account lockout before password verification
+    # Locked accounts still emit an audit event but return the same
+    # 401 "Incorrect email or password" response as the missing-user
+    # path. A distinct 403 leaked email existence: hitting /token with
+    # a random password ten times then comparing the 401 vs 403 split
+    # let an attacker enumerate registered accounts.
     if user and await user_service.is_account_locked(user):
         await audit.emit("auth.login_locked", actor_email=form_data.username)
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail=(
-                "Account temporarily locked due to too many failed "
-                "login attempts. Please try again later."
-            ),
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
         )
 
     if not user or not verify_password(form_data.password, user.hashed_password):
