@@ -463,8 +463,38 @@ async def create_invite(
     invite_service: InviteService = Depends(get_invite_service),
     audit: AuditEmitter = Depends(get_audit),
 ) -> InviteResponse:
-    """Invite a user by email. Requires admin or owner role."""
-    await _require_admin_access(membership_service, org_id, user.id)
+    """Invite a user by email. Requires admin or owner role.
+
+    The invited role is capped at the caller's role: owners can invite
+    at any tier, admins can invite admins or members, members can't
+    invite at all (the access check above already rejects them). Pre-
+    fix this was uncapped, so an admin could invite a sock-puppet email
+    at role=owner and then call /transfer-ownership or /delete-org from
+    the controlled inbox.
+    """
+    caller_member = await _require_admin_access(
+        membership_service, org_id, user.id
+    )
+
+    # caller_member is None only when AUTH_ENABLED=False (dev bypass);
+    # skip the cap in that case so local dev iteration isn't gated.
+    if caller_member is not None:
+        rank = {ORG_ROLE_MEMBER: 1, ORG_ROLE_ADMIN: 2, ORG_ROLE_OWNER: 3}
+        caller_rank = rank.get(caller_member.role, 0)
+        target_rank = rank.get(body.role, 0)
+        if target_rank == 0:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid invite role: {body.role}",
+            )
+        if target_rank > caller_rank:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=(
+                    f"Cannot invite at role '{body.role}' — your role "
+                    f"is '{caller_member.role}'."
+                ),
+            )
 
     try:
         invite = await invite_service.create_invite(

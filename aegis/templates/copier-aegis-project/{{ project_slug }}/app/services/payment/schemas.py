@@ -5,10 +5,62 @@ Pydantic schemas for payment API requests and responses.
 from __future__ import annotations
 
 from datetime import datetime
+from urllib.parse import urlparse
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 from .constants import RefundReason
+
+
+def _validate_redirect_url(value: str | None) -> str | None:
+    """Reject Stripe redirect URLs that point off our own domain.
+
+    Client-supplied ``success_url`` / ``cancel_url`` / ``return_url`` get
+    forwarded to Stripe verbatim and used as the post-checkout / post-
+    portal redirect target. Without this guard an attacker can craft
+    ``/checkout`` with ``success_url=https://evil.com/?session_id=
+    {CHECKOUT_SESSION_ID}`` and use the Stripe-hosted page as a phishing
+    relay that leaks the session ID. We constrain redirect targets to
+    the deploy's public host (relative paths are also allowed because
+    they resolve against ``PUBLIC_BASE_URL`` server-side).
+    """
+    if value is None or value == "":
+        return value
+    # Lazy import — keeps the schemas module side-effect free for tests
+    # that import without a fully-wired settings object.
+    from app.core.config import settings
+
+    # Reject protocol-relative URLs (``//evil.com/path``) BEFORE the
+    # root-relative check below — browsers resolve ``//host`` as an
+    # absolute URL inheriting the current scheme, so treating it as a
+    # local path lets an attacker host-spoof via a single extra slash.
+    if value.startswith("//"):
+        raise ValueError("Redirect URL must not be protocol-relative.")
+
+    if value.startswith("/"):
+        # Root-relative path — no host to spoof, resolves against
+        # PUBLIC_BASE_URL server-side.
+        return value
+
+    parsed = urlparse(value)
+    allowed_host = urlparse(settings.PUBLIC_BASE_URL).hostname
+    if parsed.scheme not in ("http", "https") or not parsed.hostname:
+        raise ValueError("Redirect URL must be absolute http(s) or root-relative.")
+    # Fail closed if the deploy is misconfigured: without a hostname on
+    # ``PUBLIC_BASE_URL`` we can't compare anything, and silently
+    # accepting any host would defeat the validator entirely.
+    if not allowed_host:
+        raise ValueError(
+            "PUBLIC_BASE_URL is misconfigured (no hostname); cannot "
+            "validate absolute redirect URL."
+        )
+    if parsed.hostname != allowed_host:
+        raise ValueError(
+            f"Redirect URL host '{parsed.hostname}' does not match the "
+            f"deploy's public host. Use a relative path or a URL on "
+            f"'{allowed_host}'."
+        )
+    return value
 
 # ---------------------------------------------------------------------------
 # Request schemas
@@ -35,6 +87,11 @@ class CheckoutRequest(BaseModel):
             "setting when omitted."
         ),
     )
+
+    @field_validator("success_url", "cancel_url")
+    @classmethod
+    def _validate_urls(cls, v: str | None) -> str | None:
+        return _validate_redirect_url(v)
 
     @model_validator(mode="after")
     def _enforce_subscription_quantity(self) -> "CheckoutRequest":

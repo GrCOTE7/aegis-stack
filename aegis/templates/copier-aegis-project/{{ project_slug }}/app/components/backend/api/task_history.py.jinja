@@ -20,8 +20,32 @@ from app.components.worker.task_history import (
 from app.core.config import settings
 from app.core.log import logger
 from fastapi import APIRouter, HTTPException
+{%- if include_auth %}
+from fastapi import Depends
+{%- if include_auth_rbac %}
+from app.services.auth.auth_service import require_role
+{%- else %}
+from app.services.auth.deps import get_current_active_user
+{%- endif %}
 
-router = APIRouter(prefix="/tasks/history", tags=["task-history"])
+# Operator-only: task records can contain serialized arguments with
+# user IDs, emails, or PII. Plus the clear-queue action is destructive.
+# RBAC stacks gate on ``role=admin``; basic-auth stacks have no role
+# concept, so fall back to "any authed user."
+{%- if include_auth_rbac %}
+_require_admin = require_role("admin")
+{%- else %}
+_require_admin = get_current_active_user
+{%- endif %}
+{%- endif %}
+
+router = APIRouter(
+    prefix="/tasks/history",
+    tags=["task-history"],
+{%- if include_auth %}
+    dependencies=[Depends(_require_admin)],
+{%- endif %}
+)
 
 # Lazy-initialized Redis client
 _redis: aioredis.Redis | None = None

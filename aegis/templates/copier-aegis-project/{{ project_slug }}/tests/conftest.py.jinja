@@ -313,6 +313,44 @@ async def owner_with_org(async_db_session: AsyncSession, user_factory, org_facto
     return user, org
 {% endif %}
 {%- endif %}
+@pytest.fixture
+async def authenticated_client(
+    async_client_with_db: TestClient,
+    auth_headers: dict[str, str],
+) -> TestClient:
+    """``async_client_with_db`` with ``auth_headers`` pre-injected.
+
+    Use this when a test needs "an authenticated request, don't care
+    who" — write ``authenticated_client.get(url)`` instead of plumbing
+    ``headers={"Authorization": ...}`` on every call. Eliminates the
+    per-request boilerplate without hiding which user is acting (the
+    seeded ``auth_user`` / ``admin_user`` is the actor).
+
+    Auth-mode behavior:
+
+    - ``include_auth_rbac``: signs requests as ``admin_user``.
+    - ``include_auth``: signs requests as ``auth_user``.
+    - no auth: ``auth_headers`` is ``{}``; this fixture is a passthrough.
+
+    For tests that need multiple distinct identities or want to pin a
+    specific user / role, skip this and compose ``user_factory`` +
+    ``create_access_token`` inline so the identity choice is visible.
+    """
+    async_client_with_db.headers.update(auth_headers)
+    return async_client_with_db
+{% endif %}
+
+
+# ---------------------------------------------------------------------------
+# Auth headers fixture chain — kept OUTSIDE the ``include_database`` block
+# above so the no-op fallback is available even in stacks without a DB
+# (e.g. ``worker``-only). ``test_worker_endpoints.py.jinja`` always asks
+# for ``auth_headers``; without this it would error with "fixture not
+# found" in DB-less stacks. The RBAC / basic-auth branches still need
+# ``async_db_session`` to seed users, which only exists when
+# ``include_database`` is true — the template never enables auth without
+# a database, so those branches are safe to reference it.
+# ---------------------------------------------------------------------------
 {%- if include_auth_rbac %}
 
 
@@ -381,33 +419,5 @@ def auth_headers() -> dict[str, str]:
     ``auth_headers`` and get ``{}`` here; the endpoints aren't gated.
     """
     return {}
-{% endif %}
-
-
-@pytest.fixture
-async def authenticated_client(
-    async_client_with_db: TestClient,
-    auth_headers: dict[str, str],
-) -> TestClient:
-    """``async_client_with_db`` with ``auth_headers`` pre-injected.
-
-    Use this when a test needs "an authenticated request, don't care
-    who" — write ``authenticated_client.get(url)`` instead of plumbing
-    ``headers={"Authorization": ...}`` on every call. Eliminates the
-    per-request boilerplate without hiding which user is acting (the
-    seeded ``auth_user`` / ``admin_user`` is the actor).
-
-    Auth-mode behavior:
-
-    - ``include_auth_rbac``: signs requests as ``admin_user``.
-    - ``include_auth``: signs requests as ``auth_user``.
-    - no auth: ``auth_headers`` is ``{}``; this fixture is a passthrough.
-
-    For tests that need multiple distinct identities or want to pin a
-    specific user / role, skip this and compose ``user_factory`` +
-    ``create_access_token`` inline so the identity choice is visible.
-    """
-    async_client_with_db.headers.update(auth_headers)
-    return async_client_with_db
 {% endif %}
 

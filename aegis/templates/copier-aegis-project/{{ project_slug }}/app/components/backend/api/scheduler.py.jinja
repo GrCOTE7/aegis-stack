@@ -10,8 +10,32 @@ from app.components.backend.api.models import (
 )
 from app.core.log import logger
 from app.services.scheduler import ScheduledTaskManager
+{%- if include_auth %}
+{%- if include_auth_rbac %}
+from app.services.auth.auth_service import require_role
+{%- else %}
+from app.services.auth.deps import get_current_active_user
+{%- endif %}
 
-router = APIRouter(prefix="/scheduler", tags=["scheduler"])
+# Operator-only: scheduled job names + recent stats leak internals
+# (job args may carry user IDs / emails); the run-now action is a
+# trivial DoS vector if reachable anonymously. RBAC stacks gate on
+# ``role=admin``; basic-auth stacks have no role concept, so fall
+# back to "any authed user."
+{%- if include_auth_rbac %}
+_require_admin = require_role("admin")
+{%- else %}
+_require_admin = get_current_active_user
+{%- endif %}
+{%- endif %}
+
+router = APIRouter(
+    prefix="/scheduler",
+    tags=["scheduler"],
+{%- if include_auth %}
+    dependencies=[Depends(_require_admin)],
+{%- endif %}
+)
 
 
 async def get_task_manager() -> ScheduledTaskManager:

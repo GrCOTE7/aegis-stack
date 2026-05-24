@@ -8,7 +8,15 @@ from environment variables for easy configuration in different environments.
 
 from typing import Any
 
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# Default placeholder bundled with the template — anyone reading the
+# template source knows this value, so leaving it unchanged in a non-dev
+# deploy would let an attacker forge JWTs. Pinned as a module constant
+# so the startup guard below has a single source of truth and a renamed
+# placeholder doesn't accidentally bypass the check.
+_SECRET_KEY_PLACEHOLDER = "change-this-secret-key-in-production-use-env-variable"
 {%- for p in _plugins | default([]) %}
 {%- for s in p.wiring.settings_mixins %}
 from {{ s.module }} import {{ s.symbol }}
@@ -104,7 +112,7 @@ class Settings(
     # ``.env`` as a JSON list: ``ADMIN_USER_EMAILS=["you@example.com"]``.
     ADMIN_USER_EMAILS: list[str] = []
     INVITE_ACCEPTANCE_MODE: str = "email"  # "email" requires email match, "token" allows anyone with token
-    SECRET_KEY: str = "change-this-secret-key-in-production-use-env-variable"
+    SECRET_KEY: str = _SECRET_KEY_PLACEHOLDER
     # Distinct secret for column-level at-rest encryption (AES-GCM v2 in
     # ``app/core/encryption.py``). Splits JWT-signing and credential-
     # encryption blast radii so leaking one secret doesn't compromise
@@ -315,6 +323,25 @@ class Settings(
 {% endif %}
 {% endif %}
 
+    # Operations / registrar configuration (always present — the `dns`
+    # CLI and the ops/ adapters ride alongside any component selection).
+    #
+    # Porkbun registrar API keys — used by the `dns` CLI and by
+    # ``app/services/ops/`` to read and write DNS records. Grab them
+    # at porkbun.com/account/api. Strongly recommend the per-domain
+    # "API ACCESS" toggle inside each domain's detail page
+    # (porkbun.com -> Domain Management -> click the domain -> toggle
+    # API ACCESS on) so the master key's blast radius is limited to
+    # the domains you've enabled.
+    PORKBUN_API_KEY: str | None = None
+    PORKBUN_SECRET_KEY: str | None = None
+
+    # Apex domain managed by the registrar adapter. Used by the `dns`
+    # CLI as the default -d/--domain so commands like `dns set app`
+    # know which registered domain to touch. Leave unset and the CLI
+    # errors with a clear message.
+    BASE_DOMAIN: str | None = None
+
 {% if include_comms %}
     # Communications Service Configuration
     # Email (Resend) - Sign up at https://resend.com (free: 100 emails/day)
@@ -507,6 +534,24 @@ class Settings(
 {% endif %}
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+
+    @model_validator(mode="after")
+    def _guard_against_placeholder_secret_in_prod(self) -> "Settings":
+        """Refuse to boot a prod-shaped deploy with the template SECRET_KEY.
+
+        Anyone reading the public template knows this value, so leaving it
+        unchanged would let an attacker forge JWTs against the deploy. We
+        only enforce when APP_ENV != "dev" so local development keeps
+        working without forcing every contributor to set the env var.
+        """
+        if self.APP_ENV != "dev" and self.SECRET_KEY == _SECRET_KEY_PLACEHOLDER:
+            raise ValueError(
+                "SECRET_KEY is set to the template placeholder. Generate a "
+                "random value (e.g. `python -c 'import secrets;"
+                " print(secrets.token_urlsafe(64))'`) and set it via the "
+                "SECRET_KEY env var before booting outside dev."
+            )
+        return self
 
     def reload(self) -> None:
         """

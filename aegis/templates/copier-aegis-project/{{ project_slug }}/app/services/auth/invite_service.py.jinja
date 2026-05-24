@@ -1,6 +1,7 @@
 """Invite service for managing organization invitations."""
 {% if include_auth_org %}
 
+from datetime import UTC, datetime
 import secrets
 
 from sqlmodel import select
@@ -83,7 +84,17 @@ class InviteService:
             OrgInvite.status == "pending",
         )
         result = await self.db.exec(statement)
-        invites = list(result.all())
+        # Drop expired invites from the post-signup sweep too — otherwise
+        # someone invited a year ago, never signed up, and finally
+        # registers would silently join the org as if the TTL didn't exist.
+        # NULL expiry treated as "still valid" for the pre-migration grace
+        # window, matching ``accept_invite_by_token``.
+        now = datetime.now(UTC).replace(tzinfo=None)
+        invites = [
+            inv
+            for inv in result.all()
+            if inv.expires_at is None or inv.expires_at >= now
+        ]
 
         if not invites:
             return 0
@@ -118,6 +129,16 @@ class InviteService:
 
         if not invite:
             raise ValueError("Invalid or expired invite")
+
+        # Reject expired tokens. ``expires_at`` is naive UTC (the rest of
+        # the codebase strips tzinfo at write time), so compare against a
+        # similarly-naive now. NULL ``expires_at`` rows are pre-migration
+        # invites that pre-date the TTL — we still honor them rather than
+        # invalidating outstanding invites during the upgrade window.
+        if invite.expires_at is not None:
+            now = datetime.now(UTC).replace(tzinfo=None)
+            if invite.expires_at < now:
+                raise ValueError("Invalid or expired invite")
 
         # In email mode, verify the caller's email matches
         if settings.INVITE_ACCEPTANCE_MODE == "email":

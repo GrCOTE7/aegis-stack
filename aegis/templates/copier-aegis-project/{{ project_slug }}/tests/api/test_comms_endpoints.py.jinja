@@ -1,6 +1,7 @@
 """
 Tests for communications service API endpoints.
 """
+{%- if include_comms %}
 
 from unittest.mock import patch
 
@@ -8,16 +9,43 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
+{%- if include_auth and include_database %}
+
+
+@pytest.fixture
+def test_client(app: FastAPI, async_db_session) -> TestClient:
+    """Create a test client with the test DB wired into async deps.
+
+    Uses the top-level ``app`` fixture from ``tests/conftest.py``. Also
+    overrides ``get_async_db`` with the in-memory ``async_db_session``
+    so admin-gated send endpoints can resolve the bearer-token user
+    against the test DB (where ``auth_headers``'s user actually lives)
+    instead of the real asyncpg pool. Without this override the gate
+    fires before ``mock_send`` is reached and the tests 401.
+    """
+    from app.core.db import get_async_db
+
+    async def _get_test_async_db():
+        yield async_db_session
+
+    app.dependency_overrides[get_async_db] = _get_test_async_db
+    client = TestClient(app)
+    try:
+        yield client
+    finally:
+        app.dependency_overrides.clear()
+{%- else %}
+
 
 @pytest.fixture
 def test_client(app: FastAPI) -> TestClient:
     """Create a test client for the FastAPI app.
 
-    Uses the top-level ``app`` fixture from ``tests/conftest.py`` (which
-    calls ``create_integrated_app()``) rather than a stale
-    ``app.components.backend.main`` import that no longer exists.
+    No admin gate in non-auth stacks, so no async-db override needed —
+    the send endpoints are reachable without a bearer token.
     """
     return TestClient(app)
+{%- endif %}
 
 
 class TestCommsHealthEndpoints:
@@ -61,7 +89,11 @@ class TestCommsHealthEndpoints:
 class TestEmailSendEndpoint:
     """Test email send endpoint."""
 
-    def test_send_email_success(self, test_client: TestClient) -> None:
+    def test_send_email_success(
+        self,
+        test_client: TestClient,
+        auth_headers: dict[str, str],
+    ) -> None:
         """Test successful email send via API."""
         with patch("app.components.backend.api.comms.router.send_email") as mock_send:
             from datetime import UTC, datetime
@@ -82,6 +114,7 @@ class TestEmailSendEndpoint:
                     "subject": "Test Subject",
                     "text": "Test body",
                 },
+                headers=auth_headers,
             )
 
             assert response.status_code == 200
@@ -90,7 +123,11 @@ class TestEmailSendEndpoint:
             assert data["to"] == ["user@example.com"]
             assert data["message"] == "Email sent successfully"
 
-    def test_send_email_validation_error(self, test_client: TestClient) -> None:
+    def test_send_email_validation_error(
+        self,
+        test_client: TestClient,
+        auth_headers: dict[str, str],
+    ) -> None:
         """Test email send with invalid request."""
         response = test_client.post(
             "/api/v1/comms/email/send",
@@ -98,6 +135,7 @@ class TestEmailSendEndpoint:
                 # Missing required fields
                 "to": "invalid-email",  # Invalid format
             },
+            headers=auth_headers,
         )
 
         assert response.status_code == 422  # Validation error
@@ -106,7 +144,11 @@ class TestEmailSendEndpoint:
 class TestSMSSendEndpoint:
     """Test SMS send endpoint."""
 
-    def test_send_sms_success(self, test_client: TestClient) -> None:
+    def test_send_sms_success(
+        self,
+        test_client: TestClient,
+        auth_headers: dict[str, str],
+    ) -> None:
         """Test successful SMS send via API."""
         with patch("app.components.backend.api.comms.router.send_sms") as mock_send:
             from datetime import UTC, datetime
@@ -127,6 +169,7 @@ class TestSMSSendEndpoint:
                     "to": "+15559876543",
                     "body": "Test SMS message",
                 },
+                headers=auth_headers,
             )
 
             assert response.status_code == 200
@@ -139,7 +182,11 @@ class TestSMSSendEndpoint:
 class TestCallMakeEndpoint:
     """Test call make endpoint."""
 
-    def test_make_call_success(self, test_client: TestClient) -> None:
+    def test_make_call_success(
+        self,
+        test_client: TestClient,
+        auth_headers: dict[str, str],
+    ) -> None:
         """Test successful call initiation via API."""
         with patch("app.components.backend.api.comms.router.make_call") as mock_make:
             from datetime import UTC, datetime
@@ -159,9 +206,11 @@ class TestCallMakeEndpoint:
                     "to": "+15559876543",
                     "twiml_url": "https://example.com/twiml",
                 },
+                headers=auth_headers,
             )
 
             assert response.status_code == 200
             data = response.json()
             assert data["sid"] == "CA123456"
             assert data["to"] == "+15559876543"
+{% endif %}

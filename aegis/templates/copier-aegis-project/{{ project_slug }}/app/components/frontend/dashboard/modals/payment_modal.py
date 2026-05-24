@@ -333,7 +333,19 @@ class SettingsTab(ft.Container):
         healthy = metadata.get("healthy", False)
         api_version = metadata.get("api_version") or "Unknown"
         health_msg = metadata.get("health_message", "") or ""
-        mode_text = "Test Mode" if is_test else "Live Mode"
+        # ProviderHealth.is_test_mode defaults to True, so when a
+        # provider isn't configured (e.g. STRIPE_SECRET_KEY unset →
+        # health_check returns early without populating is_test_mode)
+        # the modal would render "Test Mode" alongside the "not
+        # configured" detail line, which reads as "half working"
+        # instead of "nothing wired up." Detect the unconfigured combo
+        # from the health message and surface "Not Configured" instead.
+        # The proper fix is making is_test_mode tri-state on the schema,
+        # but this UI-side guard is the minimal correct read.
+        if not healthy and "not configured" in health_msg.lower():
+            mode_text = "Not Configured"
+        else:
+            mode_text = "Test Mode" if is_test else "Live Mode"
         status_text = "Connected" if healthy else "Disconnected"
 
         provider_stats: dict[str, str] = {

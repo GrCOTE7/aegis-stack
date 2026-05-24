@@ -5,6 +5,14 @@ from datetime import datetime, timedelta
 from typing import Any
 
 from fastapi import APIRouter, HTTPException
+{%- if include_auth %}
+from fastapi import Depends
+{%- if include_auth_rbac %}
+from app.services.auth.auth_service import require_role
+{%- else %}
+from app.services.auth.deps import get_current_active_user
+{%- endif %}
+{%- endif %}
 
 from app.components.backend.api.models import (
     LoadTestRequest,
@@ -21,7 +29,29 @@ from app.components.worker.tasks import get_task_by_name, list_available_tasks
 from app.core.config import get_default_queue
 from app.core.log import logger
 
-router = APIRouter(prefix="/tasks", tags=["worker"])
+{%- if include_auth %}
+
+# Operator-only surface: enqueue, load-test, status/result lookups all
+# expose worker internals (task names, args, broker state) that can leak
+# user data or burn capacity if reachable by anonymous callers. RBAC
+# stacks gate on ``role=admin`` (DB column is source of truth); basic-
+# auth stacks have no role concept, so fall back to "any authed user."
+# Stored at module level so tests can override the closure via
+# ``app.dependency_overrides``.
+{%- if include_auth_rbac %}
+_require_admin = require_role("admin")
+{%- else %}
+_require_admin = get_current_active_user
+{%- endif %}
+{%- endif %}
+
+router = APIRouter(
+    prefix="/tasks",
+    tags=["worker"],
+{%- if include_auth %}
+    dependencies=[Depends(_require_admin)],
+{%- endif %}
+)
 
 
 @router.get("/", response_model=TaskListResponse)

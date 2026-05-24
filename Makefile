@@ -58,6 +58,14 @@ docs-serve: ## Serve documentation locally on port 8001 (no live reload, avoids 
 docs-build: ## Build the static documentation site
 	@uv run mkdocs build
 
+# Serve already-built static docs (threaded, no rebuilds) — use when mkdocs serve struggles
+docs-static: ## Build once into .docs-static/aegis-stack/, then serve with a threaded HTTP server on port 8001
+	@rm -rf .docs-static
+	@mkdir -p .docs-static
+	@uv run mkdocs build -d .docs-static/aegis-stack
+	@echo "Serving static docs at http://localhost:8001/aegis-stack/  (Ctrl+C to stop)"
+	@cd .docs-static && python3 -m http.server 8001
+
 # CLI Development Commands
 cli-test: ## Test CLI commands locally  
 	@uv run python -m aegis --help
