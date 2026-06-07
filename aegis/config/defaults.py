@@ -110,12 +110,20 @@ def version_to_git_tag(version: str) -> str:
     PEP 440 uses no separator before pre-release identifiers (e.g., 0.6.0rc1),
     but our git tags use a dash (e.g., v0.6.0-rc1).
 
+    Accepts either a PEP 440 version ("0.6.0rc1") or an already-tagged
+    form ("v0.6.0-rc1"); a leading "v" is stripped first so the result is
+    idempotent (passing a tag back in won't produce "vv0.6.0-rc1").
+
     Args:
-        version: PEP 440 version string (e.g., "0.6.0rc1", "0.5.4")
+        version: PEP 440 version string (e.g., "0.6.0rc1", "0.5.4") or a
+            git tag (e.g., "v0.6.0-rc1")
 
     Returns:
         Git tag string (e.g., "v0.6.0-rc1", "v0.5.4")
     """
+    # Strip a single leading "v" so tag-form input round-trips cleanly.
+    if version.startswith("v"):
+        version = version[1:]
     # Insert dash before pre-release identifiers: rc, alpha, beta, dev
     # Negative lookbehind ensures we don't double-dash if already present
     normalized = re.sub(r"(?<!-)(rc|alpha|beta|dev)(\d+)", r"-\1\2", version)

@@ -71,25 +71,17 @@ def test_helper_scripts_exist() -> None:
 # --------------------------------------------------------------------------- #
 
 
-def _is_bindable(port: int) -> bool:
-    """True if nothing else holds the port (i.e. it is genuinely free)."""
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        sock.bind(("127.0.0.1", port))
-        return True
-    except OSError:
-        return False
-    finally:
-        sock.close()
-
-
 def test_find_free_port_returns_a_free_port_at_or_above_start() -> None:
-    """Given a free start port, the result is >= start and actually free.
+    """Given a free start port, the script returns a port >= start.
 
     Asserting `>= start` (rather than exact equality) keeps the test
     deterministic on busy hosts where `start` may get grabbed between the
-    probe and the bind. The "increments past a taken port" guarantee is
-    covered by test_find_free_port_skips_taken_port.
+    probe and the result. We deliberately do NOT re-bind the returned
+    port to assert it is "still free": that is an inherent TOCTOU race
+    (another process can grab it the instant after the script returns)
+    and was the source of cross-worker flakiness under `pytest -n`. The
+    "skips a port that is actually in use" guarantee is covered
+    deterministically by test_find_free_port_skips_taken_port.
     """
     with occupy_port() as taken:
         start = taken + 1
@@ -97,7 +89,6 @@ def test_find_free_port_returns_a_free_port_at_or_above_start() -> None:
     assert result.returncode == 0, result.stderr
     chosen = int(result.stdout.strip())
     assert chosen >= start
-    assert _is_bindable(chosen), f"returned port {chosen} is not actually free"
 
 
 def test_find_free_port_skips_taken_port() -> None:

@@ -22,11 +22,15 @@ import socket
 import sys
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.settimeout(0.3)
+sock.settimeout(1.0)
 try:
     sock.connect(("127.0.0.1", int(sys.argv[1])))
-except OSError:
+except ConnectionRefusedError:
     sys.exit(0)  # nothing listening -> port is free
+except OSError:
+    # Timed out / unreachable: we couldn't confirm the port is free, so
+    # treat it as unavailable rather than risk handing out a busy port.
+    sys.exit(1)
 else:
     sys.exit(1)  # connection accepted -> port is in use
 finally:

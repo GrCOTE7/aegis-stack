@@ -192,6 +192,16 @@ class TestVersionToGitTag:
         # If someone passes "0.6.0-rc1" it should become "v0.6.0-rc1", not "v0.6.0--rc1"
         assert version_to_git_tag("0.6.0-rc1") == "v0.6.0-rc1"
 
+    def test_already_has_v_prefix(self) -> None:
+        """Tag-form input must be idempotent, not double-prefixed.
+
+        Regression: ``aegis update --to-version v0.7.0-rc1`` produced
+        ``vv0.7.0-rc1`` and failed the git checkout.
+        """
+        assert version_to_git_tag("v0.7.0-rc1") == "v0.7.0-rc1"
+        assert version_to_git_tag("v0.7.0rc1") == "v0.7.0-rc1"
+        assert version_to_git_tag("v0.5.4") == "v0.5.4"
+
 
 class TestIntegration:
     """Integration tests for configuration system."""
