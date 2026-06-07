@@ -283,6 +283,8 @@ MESSAGES: dict[str, str] = {
     "add.valid_backends": "Opciones válidas: {options}",
     "add.postgres_coming": "Nota: Soporte para PostgreSQL disponible en versión futura",
     "add.auto_added_db": "Componente de base de datos agregado automáticamente para persistencia de scheduler",
+    "add.generated_migration": "Migración generada: {name}",
+    "add.scheduler_db_engine_mismatch": "No se puede usar el backend de scheduler '{backend}': el motor de base de datos del proyecto es '{engine}'. Deben coincidir.",
     # ── Remove command ────────────────────────────────────────────────
     "remove.title": "Aegis Stack - Eliminar componentes",
     "remove.project": "Proyecto: {path}",
@@ -331,6 +333,9 @@ MESSAGES: dict[str, str] = {
     # ── Manual updater ─────────────────────────────────────────────────
     "updater.processing_files": "Procesando {count} archivos de componentes...",
     "updater.updating_shared": "Actualizando archivos de plantilla compartidos...",
+    "updater.shared_preserved": "Cambios locales conservados (regeneración omitida, combina manualmente): {file}",
+    "updater.shared_merged": "Cambios de plantilla combinados en tu archivo personalizado: {file}",
+    "updater.shared_conflict": "Conflicto de combinación (marcadores escritos, resuelve manualmente): {file}",
     "updater.running_postgen": "Ejecutando tareas post-generación...",
     "updater.deps_synced": "Dependencias sincronizadas (uv sync)",
     "updater.code_formatted": "Código formateado (make fix)",
@@ -460,6 +465,7 @@ MESSAGES: dict[str, str] = {
     "add_service.failed_component": "Error al agregar componente {component}: {error}",
     "add_service.added_files": "{count} archivos agregados",
     "add_service.skipped_files": "{count} archivos existentes omitidos",
+    "add_service.preserved_files": "{count} archivo(s) compartido(s) requieren revisión manual (ver mensajes arriba)",
     "add_service.adding_service": "Agregando servicio: {service}...",
     "add_service.failed_service": "Error al agregar servicio {service}: {error}",
     "add_service.resolve_failed": "Error al resolver dependencias de servicio: {error}",

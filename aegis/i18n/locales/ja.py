@@ -273,6 +273,8 @@ MESSAGES: dict[str, str] = {
     "add.valid_backends": "有効なオプション：{options}",
     "add.postgres_coming": "注意：PostgreSQL 対応は今後のリリースで追加予定です",
     "add.auto_added_db": "スケジューラ永続化のためデータベースコンポーネントを自動追加",
+    "add.generated_migration": "マイグレーションを生成しました: {name}",
+    "add.scheduler_db_engine_mismatch": "スケジューラバックエンド '{backend}' は使用できません。プロジェクトのデータベースエンジンは '{engine}' です。両者は一致する必要があります。",
     # ── remove コマンド ────────────────────────────────────────────────
     "remove.title": "Aegis Stack — コンポーネント削除",
     "remove.project": "プロジェクト：{path}",
@@ -321,6 +323,9 @@ MESSAGES: dict[str, str] = {
     # ── 手動アップデーター ──────────────────────────────────────────────
     "updater.processing_files": "{count} コンポーネントファイルを処理中...",
     "updater.updating_shared": "共通テンプレートファイルを更新中...",
+    "updater.shared_preserved": "ローカルの変更を保持しました（再生成をスキップ、手動でマージしてください）: {file}",
+    "updater.shared_merged": "テンプレートの変更をカスタマイズ済みファイルにマージしました: {file}",
+    "updater.shared_conflict": "マージ競合（マーカーを書き込みました、手動で解決してください）: {file}",
     "updater.running_postgen": "生成後タスクを実行中...",
     "updater.deps_synced": "依存パッケージ同期完了（uv sync）",
     "updater.code_formatted": "コード整形完了（make fix）",
@@ -446,6 +451,7 @@ MESSAGES: dict[str, str] = {
     "add_service.failed_component": "コンポーネント {component} の追加失敗：{error}",
     "add_service.added_files": "{count} ファイル追加",
     "add_service.skipped_files": "{count} ファイルスキップ（既存）",
+    "add_service.preserved_files": "{count} 件の共有ファイルは手動での確認が必要です（上記のメッセージを参照）",
     "add_service.adding_service": "サービスを追加中：{service}...",
     "add_service.failed_service": "サービス {service} の追加失敗：{error}",
     "add_service.resolve_failed": "サービス依存の解決に失敗：{error}",

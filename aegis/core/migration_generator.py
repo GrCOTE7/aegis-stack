@@ -23,6 +23,8 @@ from typing import Any
 
 from jinja2 import Environment, Template, TemplateNotFound
 
+from ..constants import AnswerKeys, AuthLevels, StorageBackends
+
 
 @dataclass
 class ColumnSpec:
@@ -70,6 +72,10 @@ class ForeignKeySpec:
     ref_table: str
     ref_columns: list[str]
     ondelete: str | None = None
+    # Postgres schema of the referenced table, for cross-schema FKs
+    # (e.g. payment.payment_customer -> auth.user). When None, the
+    # referenced table is assumed to live in the owning spec's schema.
+    ref_schema: str | None = None
 
 
 @dataclass
@@ -131,6 +137,11 @@ class ServiceMigrationSpec:
     description: str
     alter_tables: list[AlterTableSpec] = field(default_factory=list)
     forward_only: bool = False
+    # Postgres schema all of this spec's tables live in. None keeps them
+    # in the default schema (``public``) and renders byte-identically to
+    # pre-schema migrations. Schemas are Postgres-only: SQLite ignores
+    # this (it has no CREATE SCHEMA) and keeps every table in one DB.
+    schema: str | None = None
 
 
 # ============================================================================
@@ -1231,6 +1242,52 @@ BLOG_MIGRATION = ServiceMigrationSpec(
     ],
 )
 
+
+# ============================================================================
+# Component Migration Definitions
+# ============================================================================
+
+# The scheduler is a COMPONENT (not a service) and this is the first
+# component-owned table. It lives in a dedicated ``scheduler`` Postgres
+# schema so component tables stay namespaced apart from service tables.
+# On SQLite (no schema support) the table lands unqualified in the single
+# database file — see the model's engine-gated ``__table_args__``.
+SCHEDULER_MIGRATION = ServiceMigrationSpec(
+    service_name="scheduler",
+    description="Scheduler job execution history",
+    schema="scheduler",
+    tables=[
+        TableSpec(
+            name="job_execution",
+            columns=[
+                ColumnSpec("id", "sa.Integer()", nullable=False, primary_key=True),
+                # job_id is APScheduler's job id (e.g. "insight_plausible"),
+                # not an FK: the apscheduler_jobs row can be deleted while
+                # history is retained, so job_name is denormalized too.
+                ColumnSpec("job_id", "sa.String(191)", nullable=False),
+                ColumnSpec("job_name", "sa.String(255)", nullable=False, default="''"),
+                ColumnSpec("scheduled_run_time", "sa.DateTime()", nullable=True),
+                ColumnSpec("started_at", "sa.DateTime()", nullable=False),
+                ColumnSpec("finished_at", "sa.DateTime()", nullable=True),
+                ColumnSpec("duration_ms", "sa.Float()", nullable=True),
+                # running | success | failed | missed
+                ColumnSpec(
+                    "status", "sa.String(16)", nullable=False, default="'running'"
+                ),
+                ColumnSpec("error_message", "sa.Text()", nullable=True),
+                ColumnSpec("traceback", "sa.Text()", nullable=True),
+            ],
+            indexes=[
+                IndexSpec("ix_job_execution_job_id", ["job_id"]),
+                IndexSpec("ix_job_execution_started_at", ["started_at"]),
+                IndexSpec("ix_job_execution_status", ["status"]),
+                # Composite for the dominant query: last N runs of one job.
+                IndexSpec("ix_job_execution_job_started", ["job_id", "started_at"]),
+            ],
+        ),
+    ],
+)
+
 # Registry of all service migrations.
 #
 # R4-A: derived lazily from each ``PluginSpec.migrations`` list (see
@@ -1261,10 +1318,17 @@ def _get_migration_specs() -> dict[str, ServiceMigrationSpec]:
     """
     global _MIGRATION_SPECS_CACHE
     if _MIGRATION_SPECS_CACHE is None:
+        from .components import COMPONENTS
         from .migration_spec import collect_migrations
         from .services import SERVICES
 
-        _MIGRATION_SPECS_CACHE = collect_migrations(SERVICES.values())
+        # Components are collected alongside services so component-owned
+        # tables (e.g. the scheduler's job_execution) get the same
+        # spec-driven migration rail. Both subclass PluginSpec, so
+        # collect_migrations reads ``.migrations`` off either uniformly.
+        _MIGRATION_SPECS_CACHE = collect_migrations(
+            [*SERVICES.values(), *COMPONENTS.values()]
+        )
     return _MIGRATION_SPECS_CACHE
 
 
@@ -1308,6 +1372,9 @@ depends_on = None
 
 def upgrade() -> None:
     """{{ upgrade_description }}"""
+{%- if schema %}
+    op.execute('CREATE SCHEMA IF NOT EXISTS "{{ schema }}"')
+{%- endif %}
 {% for table in tables %}
     # Create {{ table.name }} table
     op.create_table(
@@ -1318,20 +1385,23 @@ def upgrade() -> None:
         sa.Column('{{ column.name }}', {{ column.type }}, nullable={{ column.nullable }}{{ pk_attr }}{{ default_attr }}),
 {% endfor %}
 {% if table.primary_keys %}
-        sa.PrimaryKeyConstraint({% for pk in table.primary_keys %}'{{ pk }}'{% if not loop.last %}, {% endif %}{% endfor %}){% if table.foreign_keys or table.check_constraints %},{% endif %}
+        sa.PrimaryKeyConstraint({% for pk in table.primary_keys %}'{{ pk }}'{% if not loop.last %}, {% endif %}{% endfor %}){% if table.foreign_keys or table.check_constraints or schema %},{% endif %}
 
 {% endif %}
 {% for fk in table.foreign_keys %}
-        sa.ForeignKeyConstraint({{ fk.columns }}, ['{{ fk.ref_table }}.{{ fk.ref_columns[0] }}']{% if fk.ondelete %}, ondelete='{{ fk.ondelete }}'{% endif %}){% if not loop.last or table.check_constraints %},{% endif %}
+        sa.ForeignKeyConstraint({{ fk.columns }}, ['{{ fk.ref_schema_qualified }}{{ fk.ref_table }}.{{ fk.ref_columns[0] }}']{% if fk.ondelete %}, ondelete='{{ fk.ondelete }}'{% endif %}){% if not loop.last or table.check_constraints or schema %},{% endif %}
 
 {% endfor %}
 {% for chk in table.check_constraints %}
-        sa.CheckConstraint("{{ chk.sqltext }}", name='{{ chk.name }}'){% if not loop.last %},{% endif %}
+        sa.CheckConstraint("{{ chk.sqltext }}", name='{{ chk.name }}'){% if not loop.last or schema %},{% endif %}
 
 {% endfor %}
+{%- if schema %}
+        schema='{{ schema }}',
+{%- endif %}
     )
 {% for index in table.indexes %}
-    op.create_index(op.f('{{ index.name }}'), '{{ table.name }}', {{ index.columns }}{% if index.unique %}, unique=True{% endif %}{% if index.where %}, sqlite_where=sa.text("{{ index.where }}"), postgresql_where=sa.text("{{ index.where }}"){% endif %})
+    op.create_index(op.f('{{ index.name }}'), '{{ table.name }}', {{ index.columns }}{% if index.unique %}, unique=True{% endif %}{% if index.where %}, sqlite_where=sa.text("{{ index.where }}"), postgresql_where=sa.text("{{ index.where }}"){% endif %}{% if schema %}, schema='{{ schema }}'{% endif %})
 {% endfor %}
 
 {% endfor %}
@@ -1341,7 +1411,7 @@ def upgrade() -> None:
     # treats it as plain ALTER, so this is portable across both backends.
     # Drops run before adds so names can be reused (e.g. swap an index
     # from one column set to another with the same name).
-    with op.batch_alter_table('{{ alter.name }}') as batch_op:
+    with op.batch_alter_table('{{ alter.name }}'{% if schema %}, schema='{{ schema }}'{% endif %}) as batch_op:
 {% for index_name in alter.drop_indexes %}
         batch_op.drop_index('{{ index_name }}')
 {% endfor %}
@@ -1352,7 +1422,7 @@ def upgrade() -> None:
         batch_op.add_column(sa.Column('{{ column.name }}', {{ column.type }}, nullable={{ column.nullable }}{% if column.server_default %}, server_default={{ column.server_default }}{% endif %}))
 {% endfor %}
 {% for fk in alter.add_foreign_keys %}
-        batch_op.create_foreign_key('fk_{{ alter.name }}_{{ fk.columns[0] }}_{{ fk.ref_table }}', '{{ fk.ref_table }}', {{ fk.columns }}, {{ fk.ref_columns }}{% if fk.ondelete %}, ondelete='{{ fk.ondelete }}'{% endif %})
+        batch_op.create_foreign_key('fk_{{ alter.name }}_{{ fk.columns[0] }}_{{ fk.ref_table }}', '{{ fk.ref_table }}', {{ fk.columns }}, {{ fk.ref_columns }}{% if fk.ondelete %}, ondelete='{{ fk.ondelete }}'{% endif %}{% if fk.ref_schema %}, referent_schema='{{ fk.ref_schema }}'{% endif %})
 {% endfor %}
 {% for index in alter.add_indexes %}
         batch_op.create_index('{{ index.name }}', {{ index.columns }}{% if index.unique %}, unique=True{% endif %}{% if index.where %}, sqlite_where=sa.text("{{ index.where }}"), postgresql_where=sa.text("{{ index.where }}"){% endif %})
@@ -1370,7 +1440,7 @@ def downgrade() -> None:
     )
 {% else %}
 {% for alter in alter_tables|reverse %}
-    with op.batch_alter_table('{{ alter.name }}') as batch_op:
+    with op.batch_alter_table('{{ alter.name }}'{% if schema %}, schema='{{ schema }}'{% endif %}) as batch_op:
 {% for index in alter.add_indexes|reverse %}
         batch_op.drop_index('{{ index.name }}')
 {% endfor %}
@@ -1383,9 +1453,9 @@ def downgrade() -> None:
 {% endfor %}
 {% for table in tables|reverse %}
 {% for index in table.indexes %}
-    op.drop_index(op.f('{{ index.name }}'), table_name='{{ table.name }}')
+    op.drop_index(op.f('{{ index.name }}'), table_name='{{ table.name }}'{% if schema %}, schema='{{ schema }}'{% endif %})
 {% endfor %}
-    op.drop_table('{{ table.name }}')
+    op.drop_table('{{ table.name }}'{% if schema %}, schema='{{ schema }}'{% endif %})
 {% endfor %}
 {% endif %}
 '''
@@ -1505,6 +1575,14 @@ def _render_migration(
                         "ref_table": fk.ref_table,
                         "ref_columns": fk.ref_columns,
                         "ondelete": fk.ondelete,
+                        # Cross-schema FKs qualify the referent; intra-spec
+                        # FKs default to the spec's own schema. Empty string
+                        # when neither is set (unqualified, == today).
+                        "ref_schema_qualified": (
+                            f"{fk.ref_schema or spec.schema}."
+                            if (fk.ref_schema or spec.schema)
+                            else ""
+                        ),
                     }
                     for fk in table.foreign_keys
                 ],
@@ -1539,6 +1617,7 @@ def _render_migration(
                 "ref_table": fk.ref_table,
                 "ref_columns": fk.ref_columns,
                 "ondelete": fk.ondelete,
+                "ref_schema": fk.ref_schema or spec.schema,
             }
             for fk in alter.add_foreign_keys
         ]
@@ -1581,6 +1660,7 @@ def _render_migration(
         tables=tables_data,
         alter_tables=alter_tables_data,
         forward_only=spec.forward_only,
+        schema=spec.schema,
     )
 
 
@@ -1600,7 +1680,7 @@ def _resolve_spec(
         return None
 
     if service_name == "insights" and context is not None:
-        flag = context.get("insights_per_user")
+        flag = context.get(AnswerKeys.INSIGHTS_PER_USER)
         per_user = flag == "yes" or flag is True
         if per_user:
             return _build_insights_migration(per_user=True)
@@ -1699,7 +1779,7 @@ def get_services_needing_migrations(context: dict[str, Any]) -> list[str]:
     services = []
 
     # Auth service (base user table)
-    include_auth = context.get("include_auth")
+    include_auth = context.get(AnswerKeys.AUTH)
     if include_auth == "yes" or include_auth is True:
         services.append("auth")
 
@@ -1708,49 +1788,54 @@ def get_services_needing_migrations(context: dict[str, Any]) -> list[str]:
         services.append("auth_tokens")
 
     # Auth RBAC columns (rbac or org level)
-    include_auth_rbac = context.get("include_auth_rbac")
-    auth_level = context.get("auth_level")
+    include_auth_rbac = context.get(AnswerKeys.AUTH_RBAC)
+    auth_level = context.get(AnswerKeys.AUTH_LEVEL)
     rbac_enabled = (
         include_auth_rbac == "yes"
         or include_auth_rbac is True
-        or (isinstance(auth_level, str) and auth_level.lower() in ("rbac", "org"))
+        or (
+            isinstance(auth_level, str)
+            and auth_level.lower() in (AuthLevels.RBAC, AuthLevels.ORG)
+        )
     )
     if (include_auth == "yes" or include_auth is True) and rbac_enabled:
         services.append("auth_rbac")
 
     # Auth org tables (only with org-level auth)
-    include_auth_org = context.get("include_auth_org")
+    include_auth_org = context.get(AnswerKeys.AUTH_ORG)
     org_enabled = (
         include_auth_org == "yes"
         or include_auth_org is True
-        or (isinstance(auth_level, str) and auth_level.lower() == "org")
+        or (isinstance(auth_level, str) and auth_level.lower() == AuthLevels.ORG)
     )
     if (include_auth == "yes" or include_auth is True) and org_enabled:
         services.append("auth_org")
 
     # AI service (only with persistence backend)
-    include_ai = context.get("include_ai")
-    ai_backend = context.get("ai_backend", "memory")
-    if (include_ai == "yes" or include_ai is True) and ai_backend != "memory":
+    include_ai = context.get(AnswerKeys.AI)
+    ai_backend = context.get(AnswerKeys.AI_BACKEND, StorageBackends.MEMORY)
+    if (
+        include_ai == "yes" or include_ai is True
+    ) and ai_backend != StorageBackends.MEMORY:
         services.append("ai")
 
     # AI Voice service (only if AI with persistence and voice enabled)
-    ai_voice = context.get("ai_voice")
+    ai_voice = context.get(AnswerKeys.AI_VOICE)
     if (
         (include_ai == "yes" or include_ai is True)
-        and ai_backend != "memory"
+        and ai_backend != StorageBackends.MEMORY
         and (ai_voice == "yes" or ai_voice is True)
     ):
         services.append("ai_voice")
 
     # Insights service (always needs database)
-    include_insights = context.get("include_insights")
+    include_insights = context.get(AnswerKeys.INSIGHTS)
     include_insights_on = include_insights == "yes" or include_insights is True
     if include_insights_on:
         services.append("insights")
 
     # Payment service (always needs database)
-    include_payment = context.get("include_payment")
+    include_payment = context.get(AnswerKeys.PAYMENT)
     include_payment_on = include_payment == "yes" or include_payment is True
     if include_payment_on:
         services.append("payment")
@@ -1763,10 +1848,25 @@ def get_services_needing_migrations(context: dict[str, Any]) -> list[str]:
         services.append("payment_auth_link")
 
     # Blog service (always needs database)
-    include_blog = context.get("include_blog")
+    include_blog = context.get(AnswerKeys.BLOG)
     include_blog_on = include_blog == "yes" or include_blog is True
     if include_blog_on:
         services.append("blog")
+
+    # Scheduler component — the job_execution history table. Postgres ONLY:
+    # the table lives in a ``scheduler`` schema, and the migration emits
+    # ``CREATE SCHEMA`` which SQLite can't run. SQLite scheduler stacks
+    # create the (unqualified) table via SQLModel.metadata.create_all
+    # instead, so they need no migration file. A component, not a service,
+    # but it rides the same rail. Appended last: no FK to any service table.
+    include_scheduler = context.get(AnswerKeys.SCHEDULER)
+    scheduler_backend = context.get(
+        AnswerKeys.SCHEDULER_BACKEND, StorageBackends.MEMORY
+    )
+    if (
+        include_scheduler == "yes" or include_scheduler is True
+    ) and scheduler_backend == StorageBackends.POSTGRES:
+        services.append("scheduler")
 
     # Per-user vs shared insights is one folded migration — generation
     # picks the shape from the context flag (see ``generate_migration``).

@@ -287,6 +287,11 @@ MESSAGES: dict[str, str] = {
     "add.valid_backends": "Valid options: {options}",
     "add.postgres_coming": "Note: PostgreSQL support coming in future release",
     "add.auto_added_db": ("Auto-added database component for scheduler persistence"),
+    "add.generated_migration": "Generated migration: {name}",
+    "add.scheduler_db_engine_mismatch": (
+        "Cannot use scheduler backend '{backend}': the project's database "
+        "engine is '{engine}'. They must match."
+    ),
     # ── Remove command ────────────────────────────────────────────────
     "remove.title": "Aegis Stack - Remove Components",
     "remove.project": "Project: {path}",
@@ -335,6 +340,9 @@ MESSAGES: dict[str, str] = {
     # ── Manual updater ─────────────────────────────────────────────────
     "updater.processing_files": "Processing {count} component files...",
     "updater.updating_shared": "Updating shared template files...",
+    "updater.shared_preserved": "Preserved local changes (skipped regen, merge manually): {file}",
+    "updater.shared_merged": "Merged template changes into your customized file: {file}",
+    "updater.shared_conflict": "Merge conflict (markers written, resolve manually): {file}",
     "updater.running_postgen": "Running post-generation tasks...",
     "updater.deps_synced": "Dependencies synced (uv sync)",
     "updater.code_formatted": "Code formatted (make fix)",
@@ -464,6 +472,7 @@ MESSAGES: dict[str, str] = {
     "add_service.failed_component": ("Failed to add component {component}: {error}"),
     "add_service.added_files": "Added {count} files",
     "add_service.skipped_files": "Skipped {count} existing files",
+    "add_service.preserved_files": "{count} shared file(s) need manual review (see messages above)",
     "add_service.adding_service": "Adding service: {service}...",
     "add_service.failed_service": ("Failed to add service {service}: {error}"),
     "add_service.resolve_failed": ("Failed to resolve service dependencies: {error}"),
@@ -890,7 +899,8 @@ MESSAGES: dict[str, str] = {
         "Comma-separated list of components to add (scheduler,worker,database)"
     ),
     "add.help_opt_scheduler_backend": (
-        "Scheduler backend: 'memory' (default) or 'sqlite' (enables persistence)"
+        "Scheduler backend: 'memory' (default), 'sqlite', or 'postgres' "
+        "(the latter two enable persistence; must match the database engine)"
     ),
     # ── update CLI help ────────────────────────────────────────────────
     "update.help_opt_to_version": "Update to specific version (default: latest)",

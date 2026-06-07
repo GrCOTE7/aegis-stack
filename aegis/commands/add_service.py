@@ -15,6 +15,7 @@ from ..cli.validation import (
     validate_git_repository,
 )
 from ..constants import (
+    AIProviders,
     AnswerKeys,
     AuthLevels,
     ComponentNames,
@@ -382,6 +383,11 @@ def add_service_command(
                     f"   Cleaned {len(result.files_deleted)} empty stub file(s)",
                     fg="cyan",
                 )
+            if result.shared_files_need_manual_merge:
+                typer.secho(
+                    f"   {t('add_service.preserved_files', count=len(result.shared_files_need_manual_merge))}",
+                    fg="yellow",
+                )
 
         # Now add each service sequentially
         for service in services_to_add:
@@ -411,7 +417,7 @@ def add_service_command(
             # For AI service, use the captured configuration
             if base_service == AnswerKeys.SERVICE_AI:
                 # Use providers from interactive config, or default to openai
-                providers = ai_config.get("providers", ["openai"])
+                providers = ai_config.get("providers", [AIProviders.OPENAI])
                 if isinstance(providers, list):
                     service_data[AnswerKeys.AI_PROVIDERS] = ",".join(providers)
                 else:
@@ -476,6 +482,11 @@ def add_service_command(
                 typer.secho(
                     f"   Cleaned {len(result.files_deleted)} empty stub file(s)",
                     fg="cyan",
+                )
+            if result.shared_files_need_manual_merge:
+                typer.secho(
+                    f"   {t('add_service.preserved_files', count=len(result.shared_files_need_manual_merge))}",
+                    fg="yellow",
                 )
 
         # Generate migrations for services that need them

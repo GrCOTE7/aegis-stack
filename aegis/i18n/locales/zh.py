@@ -216,6 +216,8 @@ MESSAGES: dict[str, str] = {
     "add.valid_backends": "可选项：{options}",
     "add.postgres_coming": "注：PostgreSQL 支持将在后续版本提供",
     "add.auto_added_db": "已自动添加数据库组件用于调度器持久化",
+    "add.generated_migration": "已生成迁移：{name}",
+    "add.scheduler_db_engine_mismatch": "无法使用调度器后端 '{backend}'：项目的数据库引擎是 '{engine}'，两者必须一致。",
     # ── remove 命令 ───────────────────────────────────────────────────
     "remove.title": "Aegis Stack — 移除组件",
     "remove.project": "项目：{path}",
@@ -250,6 +252,9 @@ MESSAGES: dict[str, str] = {
     # ── 手动更新器 ────────────────────────────────────────────────────
     "updater.processing_files": "正在处理 {count} 个文件……",
     "updater.updating_shared": "正在更新共享模板文件……",
+    "updater.shared_preserved": "已保留本地更改（已跳过重新生成，请手动合并）：{file}",
+    "updater.shared_merged": "已将模板更改合并到你的自定义文件中：{file}",
+    "updater.shared_conflict": "合并冲突（已写入标记，请手动解决）：{file}",
     "updater.running_postgen": "正在执行生成后任务……",
     "updater.deps_synced": "依赖已同步（uv sync）",
     "updater.code_formatted": "代码已格式化（make fix）",
@@ -352,6 +357,7 @@ MESSAGES: dict[str, str] = {
     "add_service.failed_component": "添加组件 {component} 失败：{error}",
     "add_service.added_files": "添加了 {count} 个文件",
     "add_service.skipped_files": "跳过了 {count} 个已有文件",
+    "add_service.preserved_files": "{count} 个共享文件需要手动检查（见上方消息）",
     "add_service.adding_service": "正在添加服务：{service}……",
     "add_service.failed_service": "添加服务 {service} 失败：{error}",
     "add_service.resolve_failed": "服务依赖解析失败：{error}",

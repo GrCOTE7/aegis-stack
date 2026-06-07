@@ -11,9 +11,48 @@ from typing import Any
 
 import yaml
 
+from ..constants import AnswerKeys, ComponentNames, StorageBackends
+
 # Constants
 PROJECT_SLUG_PLACEHOLDER = "{{ project_slug }}"
 JINJA_EXTENSION = ".jinja"
+
+# Tooling/cache directories and compiled or binary artefacts that may appear
+# in the template tree locally (e.g. ``__pycache__`` from importing a
+# template's raw ``.py`` files). They are never authored template content,
+# and the downstream renderer reads files as UTF-8 text, so a stray ``.pyc``
+# crashes the walk. Skip them when expanding component directories.
+_SKIP_DIRS = frozenset({"__pycache__", ".pytest_cache", ".mypy_cache", ".ruff_cache"})
+_SKIP_SUFFIXES = frozenset(
+    {
+        # compiled python
+        ".pyc",
+        ".pyo",
+        ".pyd",
+        # images / fonts / archives that aren't UTF-8 text
+        ".png",
+        ".jpg",
+        ".jpeg",
+        ".gif",
+        ".ico",
+        ".webp",
+        ".woff",
+        ".woff2",
+        ".ttf",
+        ".otf",
+        ".eot",
+        ".pdf",
+        ".zip",
+        ".gz",
+    }
+)
+
+
+def _is_skippable_template_file(file_path: Path) -> bool:
+    """True for tooling-cache or binary files that aren't template content."""
+    if any(part in _SKIP_DIRS for part in file_path.parts):
+        return True
+    return file_path.suffix.lower() in _SKIP_SUFFIXES
 
 
 def get_template_path() -> Path:
@@ -159,7 +198,7 @@ def _expand_directories_to_files(paths: list[str]) -> list[str]:
         if template_dir.exists() and template_dir.is_dir():
             # Recursively find all files in this directory
             for file_path in template_dir.rglob("*"):
-                if file_path.is_file():
+                if file_path.is_file() and not _is_skippable_template_file(file_path):
                     # Convert back to relative path
                     # /path/to/template/{{ project_slug }}/app/components/scheduler/main.py.jinja
                     # -> app/components/scheduler/main.py.jinja
@@ -211,7 +250,10 @@ def get_component_files(
     component_files = mapping.get(component, []).copy()
 
     # For scheduler, handle backend variants
-    if component == "scheduler" and backend_variant == "sqlite":
+    if (
+        component == ComponentNames.SCHEDULER
+        and backend_variant == StorageBackends.SQLITE
+    ):
         # Add persistence files for sqlite backend
         persistence_files = mapping.get("scheduler_persistence", [])
         component_files.extend(persistence_files)
@@ -236,8 +278,6 @@ def get_all_component_files() -> dict[str, list[str]]:
     """
     # List of known components and services (from copier.yml variables)
     # Uses constants where available via ComponentNames and AnswerKeys
-    from ..constants import AnswerKeys, ComponentNames
-
     components = [
         ComponentNames.SCHEDULER,
         ComponentNames.WORKER,
@@ -256,8 +296,12 @@ def get_all_component_files() -> dict[str, list[str]]:
             result[component] = files
 
     # Add scheduler backend variants
-    result["scheduler_memory"] = get_component_files("scheduler", "memory")
-    result["scheduler_sqlite"] = get_component_files("scheduler", "sqlite")
+    result["scheduler_memory"] = get_component_files(
+        ComponentNames.SCHEDULER, StorageBackends.MEMORY
+    )
+    result["scheduler_sqlite"] = get_component_files(
+        ComponentNames.SCHEDULER, StorageBackends.SQLITE
+    )
 
     return result
 

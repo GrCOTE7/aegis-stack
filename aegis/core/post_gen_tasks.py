@@ -16,6 +16,7 @@ import typer
 from aegis.constants import (
     AnswerKeys,
     ComponentNames,
+    OllamaMode,
     StorageBackends,
     WorkerBackends,
 )
@@ -536,8 +537,8 @@ def cleanup_components(project_path: Path, context: dict[str, Any]) -> None:
     # ``app.services.ai.ollama`` (which is a stub when ``ollama_mode=none``)
     # and from ``app.services.ai.etl``. When Ollama is off the whole
     # chain must come out so the module graph stays importable.
-    ollama_mode = context.get(AnswerKeys.OLLAMA_MODE, "none")
-    if ollama_mode == "none":
+    ollama_mode = context.get(AnswerKeys.OLLAMA_MODE, OllamaMode.NONE)
+    if ollama_mode == OllamaMode.NONE:
         remove_dir(project_path, "tests/services/ai/etl")
         remove_dir(project_path, "app/services/ai/etl")
         # llm router + API imports ``app.services.ai.etl`` at module load.
@@ -587,8 +588,10 @@ def cleanup_components(project_path: Path, context: dict[str, Any]) -> None:
             project_path, "app/components/frontend/dashboard/cards/services_card.py"
         )
 
-    # Remove Alembic directory only if NO service needs migrations
-    # Alembic is needed when: auth, insights, payment, or (AI with non-memory backend)
+    # Remove Alembic directory only if NOTHING needs migrations.
+    # Alembic is needed when: auth, insights, payment, blog, AI with a
+    # non-memory backend, or a Postgres-backed scheduler (its execution
+    # history table ships as a schema-qualified migration).
     include_auth = is_enabled(AnswerKeys.AUTH)
     include_ai = is_enabled(AnswerKeys.AI)
     include_insights = is_enabled(AnswerKeys.INSIGHTS)
@@ -596,12 +599,20 @@ def cleanup_components(project_path: Path, context: dict[str, Any]) -> None:
     include_blog = is_enabled(AnswerKeys.BLOG)
     ai_backend = context.get(AnswerKeys.AI_BACKEND, StorageBackends.MEMORY)
     ai_needs_migrations = include_ai and ai_backend != StorageBackends.MEMORY
+    scheduler_backend = context.get(
+        AnswerKeys.SCHEDULER_BACKEND, StorageBackends.MEMORY
+    )
+    scheduler_needs_migrations = (
+        is_enabled(AnswerKeys.SCHEDULER)
+        and scheduler_backend == StorageBackends.POSTGRES
+    )
     needs_migrations = (
         include_auth
         or ai_needs_migrations
         or include_insights
         or include_payment
         or include_blog
+        or scheduler_needs_migrations
     )
 
     if not needs_migrations:

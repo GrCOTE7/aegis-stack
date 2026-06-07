@@ -283,6 +283,8 @@ MESSAGES: dict[str, str] = {
     "add.valid_backends": "Options valides : {options}",
     "add.postgres_coming": "Note : le support PostgreSQL arrive dans une prochaine version",
     "add.auto_added_db": "Composant base de données ajouté automatiquement pour la persistance du scheduler",
+    "add.generated_migration": "Migration générée : {name}",
+    "add.scheduler_db_engine_mismatch": "Impossible d'utiliser le backend de scheduler '{backend}' : le moteur de base de données du projet est '{engine}'. Ils doivent correspondre.",
     # ── Remove command ────────────────────────────────────────────────
     "remove.title": "Aegis Stack - Suppression de composants",
     "remove.project": "Projet : {path}",
@@ -331,6 +333,9 @@ MESSAGES: dict[str, str] = {
     # ── Manual updater ─────────────────────────────────────────────────
     "updater.processing_files": "Traitement de {count} fichiers de composants...",
     "updater.updating_shared": "Mise à jour des fichiers de modèle partagés...",
+    "updater.shared_preserved": "Modifications locales conservées (régénération ignorée, fusionnez manuellement) : {file}",
+    "updater.shared_merged": "Modifications du modèle fusionnées dans votre fichier personnalisé : {file}",
+    "updater.shared_conflict": "Conflit de fusion (marqueurs écrits, résolvez manuellement) : {file}",
     "updater.running_postgen": "Exécution des tâches post-génération...",
     "updater.deps_synced": "Dépendances synchronisées (uv sync)",
     "updater.code_formatted": "Code formaté (make fix)",
@@ -460,6 +465,7 @@ MESSAGES: dict[str, str] = {
     "add_service.failed_component": "Échec de l'ajout du composant {component} : {error}",
     "add_service.added_files": "{count} fichiers ajoutés",
     "add_service.skipped_files": "{count} fichiers existants ignorés",
+    "add_service.preserved_files": "{count} fichier(s) partagé(s) nécessitent une révision manuelle (voir les messages ci-dessus)",
     "add_service.adding_service": "Ajout du service : {service}...",
     "add_service.failed_service": "Échec de l'ajout du service {service} : {error}",
     "add_service.resolve_failed": "Échec de la résolution des dépendances de services : {error}",
