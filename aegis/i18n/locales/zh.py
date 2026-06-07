@@ -652,7 +652,9 @@ MESSAGES: dict[str, str] = {
         "worker 未在限时内完成，已清除暂停标志，部署中止。"
     ),
     "deploy.rolling_recreating": "正在重建：{services}",
-    "deploy.rolling_webserver": ("正在滚动重启 Web 服务器（docker-rollout）..."),
+    "deploy.rolling_webserver": (
+        "正在滚动重启 Web 服务器（最多等待 {seconds} 秒直到健康）..."
+    ),
     "deploy.rolling_rollout_failed": (
         "docker rollout 执行失败。部署主机的 ~/.docker/cli-plugins/ "
         "中是否已安装该插件？"
@@ -740,6 +742,11 @@ MESSAGES: dict[str, str] = {
     ),
     "deploy.help_opt_drain_timeout": (
         "滚动部署时暂停队列后，等待 worker 完成处理的秒数（默认 90）。"
+    ),
+    "deploy.help_opt_rollout_timeout": (
+        "滚动部署时 docker-rollout 等待新 Web 服务器变为健康的秒数。"
+        "请按容器自身的 HEALTHCHECK 预算（start_period + retries × "
+        "interval）设置，而不是 60 秒的固定时限（默认 900）。"
     ),
     "deploy.help_opt_rollback_backup": "要回滚到的备份时间戳（默认值：最新备份）",
     "deploy.help_opt_logs_follow": "持续跟踪日志输出",

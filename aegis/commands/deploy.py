@@ -378,6 +378,12 @@ def _run_health_check(
 ROLLING_PAUSE_KEY = "aegis:queue:paused"
 ROLLING_DRAIN_TIMEOUT_DEFAULT = 90  # seconds
 ROLLING_DRAIN_POLL_SECONDS = 1
+# docker-rollout's healthcheck timeout (its ``-t``). Default to a long
+# ceiling so the webserver's own HEALTHCHECK budget (start_period +
+# retries x interval) decides the outcome. docker-rollout's built-in
+# default is only 60s, which rolls back a still-``starting`` but
+# perfectly healthy container.
+ROLLING_ROLLOUT_TIMEOUT_DEFAULT = 900  # seconds
 
 
 def _rolling_compose_prefix(deploy_path: str) -> str:
@@ -389,6 +395,22 @@ def _rolling_compose_prefix(deploy_path: str) -> str:
     return (
         f"cd {safe_path} && "
         f"docker compose -f docker-compose.yml -f docker-compose.prod.yml"
+    )
+
+
+def _rolling_rollout_command(deploy_path: str, timeout_seconds: int) -> str:
+    """Build the ``docker rollout`` shell command for the webserver.
+
+    Passes ``-t`` (docker-rollout's healthcheck timeout) so the rollout
+    waits out the container's own HEALTHCHECK budget (``start_period +
+    retries x interval``) instead of docker-rollout's 60s default, which
+    can roll back a container that is still ``starting`` but on track to
+    come up healthy.
+    """
+    safe_deploy = shlex.quote(deploy_path)
+    return (
+        f"cd {safe_deploy} && docker rollout -t {timeout_seconds} "
+        "-f docker-compose.yml -f docker-compose.prod.yml webserver"
     )
 
 
@@ -451,11 +473,14 @@ def _run_rolling_deploy(
     health_check: bool,
     health_cfg: dict,
     drain_timeout: int,
+    rollout_timeout: int,
 ) -> None:
     """Zero-HTTP-downtime deploy of code-only changes.
 
-    Webserver rolls via ``docker-rollout`` so HTTP keeps serving the old
-    container until the new one is healthy. Scheduler and workers hard-
+    Webserver rolls via ``docker-rollout`` (with ``-t rollout_timeout`` so
+    the container's own HEALTHCHECK budget, not a 60s wall clock, decides
+    success) so HTTP keeps serving the old container until the new one is
+    healthy. Scheduler and workers hard-
     restart, but the worker queue is paused first so in-flight jobs
     complete cleanly instead of being SIGTERMed. Database, Redis, and
     Traefik are untouched.
@@ -572,13 +597,11 @@ def _run_rolling_deploy(
 
         # Step 7: rolling-restart the webserver via docker-rollout
         if has_webserver:
-            typer.echo(t("deploy.rolling_webserver"))
-            safe_deploy = shlex.quote(deploy_path)
+            typer.echo(t("deploy.rolling_webserver", seconds=rollout_timeout))
             rollout = _run_remote(
                 host,
                 user,
-                f"cd {safe_deploy} && docker rollout "
-                "-f docker-compose.yml -f docker-compose.prod.yml webserver",
+                _rolling_rollout_command(deploy_path, rollout_timeout),
             )
             if rollout.returncode != 0:
                 typer.secho(t("deploy.rolling_rollout_failed"), fg="red", err=True)
@@ -834,6 +857,11 @@ def deploy_command(
         "--drain-timeout",
         help=lazy_t("deploy.help_opt_drain_timeout"),
     ),
+    rollout_timeout: int = typer.Option(
+        ROLLING_ROLLOUT_TIMEOUT_DEFAULT,
+        "--rollout-timeout",
+        help=lazy_t("deploy.help_opt_rollout_timeout"),
+    ),
 ) -> None:
     """
     Deploy the project to the configured server.
@@ -881,6 +909,7 @@ def deploy_command(
             health_check=health_check,
             health_cfg=health_cfg,
             drain_timeout=drain_timeout,
+            rollout_timeout=rollout_timeout,
         )
         return
 

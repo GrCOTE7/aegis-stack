@@ -779,7 +779,9 @@ MESSAGES: dict[str, str] = {
         "Воркеры не завершились вовремя. Флаг паузы очищен; прерываем."
     ),
     "deploy.rolling_recreating": "Пересоздание: {services}",
-    "deploy.rolling_webserver": ("Плавный перезапуск веб-сервера (docker-rollout)..."),
+    "deploy.rolling_webserver": (
+        "Плавный перезапуск веб-сервера (ожидание готовности до {seconds}с)..."
+    ),
     "deploy.rolling_rollout_failed": (
         "docker rollout завершился ошибкой. Установлен ли плагин в "
         "~/.docker/cli-plugins/ на хосте развёртывания?"
@@ -871,6 +873,12 @@ MESSAGES: dict[str, str] = {
     "deploy.help_opt_drain_timeout": (
         "Секунд ожидания завершения работы воркеров после приостановки "
         "очереди при плавном развёртывании (по умолчанию: 90)."
+    ),
+    "deploy.help_opt_rollout_timeout": (
+        "Сколько секунд docker-rollout ждёт готовности нового веб-сервера "
+        "при плавном развёртывании. Задавайте по бюджету HEALTHCHECK "
+        "контейнера (start_period + retries × interval), а не по "
+        "60-секундному таймеру (по умолчанию: 900)."
     ),
     "deploy.help_opt_rollback_backup": "Метка времени бэкапа для отката (по умолчанию: последний)",
     "deploy.help_opt_logs_follow": "Следить за выводом логов в реальном времени",

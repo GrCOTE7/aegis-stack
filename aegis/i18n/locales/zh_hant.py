@@ -652,7 +652,9 @@ MESSAGES: dict[str, str] = {
         "worker 未在限時內完成，已清除暫停旗標，部署中止。"
     ),
     "deploy.rolling_recreating": "正在重建：{services}",
-    "deploy.rolling_webserver": ("正在滾動重啟 Web 伺服器（docker-rollout）..."),
+    "deploy.rolling_webserver": (
+        "正在滾動重啟 Web 伺服器（最多等待 {seconds} 秒直到健康）..."
+    ),
     "deploy.rolling_rollout_failed": (
         "docker rollout 執行失敗。部署主機的 ~/.docker/cli-plugins/ "
         "中是否已安裝該外掛？"
@@ -740,6 +742,11 @@ MESSAGES: dict[str, str] = {
     ),
     "deploy.help_opt_drain_timeout": (
         "滾動部署時暫停佇列後，等待 worker 完成處理的秒數（預設 90）。"
+    ),
+    "deploy.help_opt_rollout_timeout": (
+        "滾動部署時 docker-rollout 等待新 Web 伺服器變為健康的秒數。"
+        "請依容器自身的 HEALTHCHECK 預算（start_period + retries × "
+        "interval）設定，而非 60 秒的固定時限（預設 900）。"
     ),
     "deploy.help_opt_rollback_backup": "要回復到的備份時間戳記（預設值：最新備份）",
     "deploy.help_opt_logs_follow": "持續追蹤日誌輸出",

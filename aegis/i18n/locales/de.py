@@ -810,7 +810,8 @@ MESSAGES: dict[str, str] = {
     ),
     "deploy.rolling_recreating": "Neuerstellung: {services}",
     "deploy.rolling_webserver": (
-        "Webserver wird rollend neugestartet (docker-rollout)..."
+        "Webserver wird rollend neugestartet "
+        "(Warten auf Health-Status, bis zu {seconds}s)..."
     ),
     "deploy.rolling_rollout_failed": (
         "docker rollout ist fehlgeschlagen. Ist das Plugin unter "
@@ -905,6 +906,12 @@ MESSAGES: dict[str, str] = {
         "Sekunden, die auf das Leeren der Worker gewartet wird, nachdem "
         "die Queue während eines Rolling-Deployments pausiert wurde "
         "(Standard: 90)."
+    ),
+    "deploy.help_opt_rollout_timeout": (
+        "Sekunden, die docker-rollout bei einem Rolling-Deployment auf den "
+        "Health-Status des neuen Webservers wartet. Orientiere dich am "
+        "HEALTHCHECK-Budget des Containers (start_period + retries × "
+        "interval), nicht an einer 60s-Uhr (Standard: 900)."
     ),
     "deploy.help_opt_rollback_backup": "Backup-Zeitstempel, auf den zurückgerollt werden soll (Standardwert: neuestes)",
     "deploy.help_opt_logs_follow": "Logausgabe live mitlesen",

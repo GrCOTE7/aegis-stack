@@ -18,9 +18,11 @@ import pytest
 import yaml
 
 from aegis.commands.deploy import (
+    ROLLING_ROLLOUT_TIMEOUT_DEFAULT,
     _detect_github_repo,
     _project_python_minor,
     _render_deploy_workflow,
+    _rolling_rollout_command,
 )
 
 
@@ -103,6 +105,28 @@ def test_render_deploy_workflow_references_required_secrets() -> None:
     out = _render_deploy_workflow(on_tag=False)
     assert "${{ secrets.DEPLOY_SSH_KEY }}" in out
     assert "${{ secrets.DEPLOY_HOST }}" in out
+
+
+def test_rolling_rollout_command_passes_timeout_flag() -> None:
+    cmd = _rolling_rollout_command("/srv/app", 900)
+    # ``-t`` is the healthcheck timeout knob; without it docker-rollout
+    # defaults to 60s and can roll back a still-``starting`` healthy container.
+    assert "docker rollout -t 900 " in cmd
+    assert "webserver" in cmd
+    assert "-f docker-compose.yml -f docker-compose.prod.yml" in cmd
+
+
+def test_rolling_rollout_command_quotes_deploy_path() -> None:
+    cmd = _rolling_rollout_command("/srv/my app", 120)
+    assert "cd '/srv/my app'" in cmd
+    assert "docker rollout -t 120 " in cmd
+
+
+def test_rolling_rollout_timeout_default_is_generous() -> None:
+    # A long ceiling so the container's own HEALTHCHECK budget
+    # (start_period + retries x interval) decides the outcome, not a
+    # 60s wall clock.
+    assert ROLLING_ROLLOUT_TIMEOUT_DEFAULT >= 600
 
 
 def test_project_python_minor_parses_requires_python(tmp_path: Path) -> None:

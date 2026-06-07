@@ -793,7 +793,7 @@ MESSAGES: dict[str, str] = {
     ),
     "deploy.rolling_recreating": "再作成中：{services}",
     "deploy.rolling_webserver": (
-        "Webサーバーをローリング再起動中（docker-rollout）..."
+        "Webサーバーをローリング再起動中（正常化まで最大{seconds}秒待機）..."
     ),
     "deploy.rolling_rollout_failed": (
         "docker rollout に失敗しました。デプロイ先ホストの "
@@ -889,6 +889,12 @@ MESSAGES: dict[str, str] = {
     "deploy.help_opt_drain_timeout": (
         "ローリングデプロイでキューを一時停止した後、ワーカーが "
         "ドレインされるまで待機する秒数（既定：90）。"
+    ),
+    "deploy.help_opt_rollout_timeout": (
+        "ローリングデプロイで docker-rollout が新しいWebサーバーの "
+        "正常化を待つ秒数。60秒の固定値ではなく、コンテナの HEALTHCHECK "
+        "予算（start_period + retries × interval）に合わせて設定します"
+        "（既定：900）。"
     ),
     "deploy.help_opt_rollback_backup": "ロールバック先のバックアップタイムスタンプ（デフォルト：最新）",
     "deploy.help_opt_logs_follow": "ログ出力を継続して表示",
