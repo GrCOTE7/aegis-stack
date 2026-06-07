@@ -812,7 +812,8 @@ MESSAGES: dict[str, str] = {
     ),
     "deploy.rolling_recreating": "Recreando: {services}",
     "deploy.rolling_webserver": (
-        "Reinicio continuo del servidor web (docker-rollout)..."
+        "Reinicio continuo del servidor web "
+        "(esperando hasta {seconds}s a que esté sano)..."
     ),
     "deploy.rolling_rollout_failed": (
         "docker rollout falló. ¿Está el plugin instalado en "
@@ -907,6 +908,12 @@ MESSAGES: dict[str, str] = {
     "deploy.help_opt_drain_timeout": (
         "Segundos a esperar a que los workers se vacíen tras pausar la "
         "cola durante un despliegue continuo (por defecto: 90)."
+    ),
+    "deploy.help_opt_rollout_timeout": (
+        "Segundos que docker-rollout espera a que el nuevo servidor web "
+        "esté sano durante un despliegue continuo. Ajústalo al "
+        "presupuesto del HEALTHCHECK del contenedor (start_period + "
+        "retries × interval), no a un reloj de 60s (por defecto: 900)."
     ),
     "deploy.help_opt_rollback_backup": "Marca de tiempo del respaldo al que hacer rollback (por defecto: el más reciente)",
     "deploy.help_opt_logs_follow": "Seguir la salida de los logs en tiempo real",

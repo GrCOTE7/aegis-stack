@@ -815,7 +815,9 @@ MESSAGES: dict[str, str] = {
         "Workers did not drain in time. Pause flag cleared; aborting."
     ),
     "deploy.rolling_recreating": "Recreating: {services}",
-    "deploy.rolling_webserver": "Rolling-restarting webserver (docker-rollout)...",
+    "deploy.rolling_webserver": (
+        "Rolling-restarting webserver (waiting up to {seconds}s for healthy)..."
+    ),
     "deploy.rolling_rollout_failed": (
         "docker rollout failed. Is the plugin installed under ~/.docker/cli-plugins/ "
         "on the deploy host?"
@@ -943,6 +945,12 @@ MESSAGES: dict[str, str] = {
     "deploy.help_opt_drain_timeout": (
         "Seconds to wait for workers to drain after pausing the queue "
         "during a rolling deploy (default: 90)."
+    ),
+    "deploy.help_opt_rollout_timeout": (
+        "Seconds docker-rollout waits for the new webserver to become "
+        "healthy during a rolling deploy. Size this to the container's "
+        "HEALTHCHECK budget (start_period + retries x interval), not a "
+        "60s wall clock (default: 900)."
     ),
     "deploy.help_opt_rollback_backup": (
         "Backup timestamp to rollback to (default: latest)"

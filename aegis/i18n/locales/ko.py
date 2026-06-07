@@ -765,7 +765,9 @@ MESSAGES: dict[str, str] = {
         "워커가 시간 내에 드레인되지 않았습니다. 일시중지 플래그를 해제하고 중단합니다."
     ),
     "deploy.rolling_recreating": "재생성: {services}",
-    "deploy.rolling_webserver": ("웹서버 롤링 재시작 중(docker-rollout)..."),
+    "deploy.rolling_webserver": (
+        "웹서버 롤링 재시작 중(정상 상태까지 최대 {seconds}초 대기)..."
+    ),
     "deploy.rolling_rollout_failed": (
         "docker rollout 실패. 배포 호스트의 ~/.docker/cli-plugins/에 "
         "플러그인이 설치되어 있나요?"
@@ -854,6 +856,12 @@ MESSAGES: dict[str, str] = {
     "deploy.help_opt_drain_timeout": (
         "롤링 배포 시 큐를 일시중지한 후 워커가 드레인될 때까지 "
         "기다리는 시간(초). 기본값: 90."
+    ),
+    "deploy.help_opt_rollout_timeout": (
+        "롤링 배포 시 docker-rollout이 새 웹서버가 정상 상태가 될 때까지 "
+        "기다리는 시간(초). 60초 고정값이 아니라 컨테이너의 HEALTHCHECK "
+        "예산(start_period + retries × interval)에 맞춰 설정하세요. "
+        "기본값: 900."
     ),
     "deploy.help_opt_rollback_backup": "롤백할 백업의 타임스탬프 (기본값: 가장 최근)",
     "deploy.help_opt_logs_follow": "로그 출력을 계속 따라가며 표시",
