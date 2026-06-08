@@ -151,6 +151,64 @@ def _get_template_changed_files(
     return changed
 
 
+def _template_version_for_ref(target_ref: str) -> str:
+    """Map a git ref to the ``_template_version`` value stored in answers.
+
+    A version tag (``v0.7.0-rc3``) is recorded without the leading ``v``
+    (``0.7.0-rc3``), matching ``copier_manager``. Anything else — ``HEAD``,
+    a commit hash, or a branch that merely starts with ``v`` like
+    ``v-next`` — is kept verbatim, so only genuine version tags get the
+    prefix stripped.
+    """
+    from packaging.version import parse
+
+    if target_ref.startswith("v"):
+        try:
+            parse(target_ref[1:])
+        except Exception:
+            return target_ref
+        return target_ref[1:]
+    return target_ref
+
+
+def _advance_copier_tracking(
+    project_path: Path, target_ref: str, template_root: Path
+) -> None:
+    """Stamp ``.copier-answers.yml`` with the version we just applied.
+
+    Copier's native answer write-back is unreliable for these
+    ``{{ project_slug }}``-wrapped projects (we run our own
+    ``sync_template_changes`` instead of copier's git-apply), so after a
+    clean update ``_commit`` / ``_template_version`` are left pointing at
+    the OLD version. The next ``aegis update`` would then diff from that
+    stale baseline and re-apply changes that are already present. This
+    advances both keys, mirroring how ``copier_manager`` records them on
+    ``init``, so a subsequent update is a correct no-op.
+    """
+    import yaml
+
+    answers_file = project_path / ".copier-answers.yml"
+    if not answers_file.exists():
+        return
+
+    answers = yaml.safe_load(answers_file.read_text()) or {}
+
+    target_commit = resolve_ref_to_commit(target_ref, template_root)
+    if target_commit:
+        answers["_commit"] = target_commit
+
+    # Mirror copier_manager: a version tag ("v0.7.0-rc3") is stored
+    # without the leading "v"; "HEAD", commit refs, and branches are
+    # stored as-is. Only strip the "v" when the remainder is a real
+    # version, so a branch like "v-next" isn't mangled into "-next".
+    if target_ref:
+        answers["_template_version"] = _template_version_for_ref(target_ref)
+
+    answers_file.write_text(
+        yaml.safe_dump(answers, default_flow_style=False, sort_keys=False)
+    )
+
+
 def update_command(
     to_version: str | None = typer.Option(
         None,
@@ -610,6 +668,13 @@ def update_command(
             if updated_content != content:
                 init_file.write_text(updated_content)
                 typer.echo(t("update.version_updated", version=aegis_version))
+
+        # Advance the copier tracking keys so a re-run is a no-op. Only on
+        # a fully clean update — with conflicts outstanding the baseline
+        # must stay put so re-running still re-applies the same diff once
+        # the user resolves the markers.
+        if not sync_result.conflicts:
+            _advance_copier_tracking(target_path, target_ref, template_root)
 
         # Show update result
         typer.echo("")
