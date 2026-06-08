@@ -938,3 +938,96 @@ class TestUpdateCommandVersionInfo:
         assert result.success
         # Should display CLI version
         assert "cli" in result.stdout.lower()
+
+
+class TestAdvanceCopierTracking:
+    """``_advance_copier_tracking`` must stamp the copier baseline forward.
+
+    Regression: after a clean ``aegis update`` the ``.copier-answers.yml``
+    ``_commit`` / ``_template_version`` were left at the OLD version, so a
+    re-run re-applied the same diff and a future update would diff from a
+    stale baseline (risking spurious re-conflicts on customized files).
+    """
+
+    def test_advances_commit_and_strips_v_from_tag(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        import yaml
+
+        import aegis.commands.update as upd
+
+        answers = tmp_path / ".copier-answers.yml"
+        answers.write_text(
+            "_commit: oldsha\n"
+            "_src_path: gh:lbedner/aegis-stack\n"
+            "_template_version: v0.7.0-rc1\n"
+            "project_slug: demo\n"
+        )
+        monkeypatch.setattr(upd, "resolve_ref_to_commit", lambda ref, root: "newsha123")
+
+        upd._advance_copier_tracking(tmp_path, "v0.7.0-rc2", tmp_path)
+
+        data = yaml.safe_load(answers.read_text())
+        assert data["_commit"] == "newsha123"
+        # "vX.Y.Z" tag stored without the leading "v" (mirrors init).
+        assert data["_template_version"] == "0.7.0-rc2"
+        # Unrelated answers must be preserved.
+        assert data["project_slug"] == "demo"
+        assert data["_src_path"] == "gh:lbedner/aegis-stack"
+
+    def test_head_ref_stored_as_is(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        import yaml
+
+        import aegis.commands.update as upd
+
+        answers = tmp_path / ".copier-answers.yml"
+        answers.write_text("_commit: oldsha\n_template_version: v0.6.13\n")
+        monkeypatch.setattr(upd, "resolve_ref_to_commit", lambda ref, root: "headsha")
+
+        upd._advance_copier_tracking(tmp_path, "HEAD", tmp_path)
+
+        data = yaml.safe_load(answers.read_text())
+        assert data["_commit"] == "headsha"
+        assert data["_template_version"] == "HEAD"
+
+    def test_noop_when_answers_file_missing(self, tmp_path: Path) -> None:
+        import aegis.commands.update as upd
+
+        # No .copier-answers.yml present — must not raise.
+        upd._advance_copier_tracking(tmp_path, "v1.0.0", tmp_path)
+
+    def test_branch_starting_with_v_is_not_stripped(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """A branch like ``v-next`` must be stored verbatim, not ``-next``.
+
+        Only genuine version tags (``v0.7.0-rc3``) get the leading ``v``
+        stripped; stripping a non-version ``v`` ref would persist a bogus
+        ``_template_version``.
+        """
+        import yaml
+
+        import aegis.commands.update as upd
+
+        answers = tmp_path / ".copier-answers.yml"
+        answers.write_text("_commit: oldsha\n_template_version: v0.6.13\n")
+        monkeypatch.setattr(upd, "resolve_ref_to_commit", lambda ref, root: "branchsha")
+
+        upd._advance_copier_tracking(tmp_path, "v-next", tmp_path)
+
+        data = yaml.safe_load(answers.read_text())
+        assert data["_template_version"] == "v-next"
+
+    def test_template_version_for_ref_mapping(self) -> None:
+        from aegis.commands.update import _template_version_for_ref
+
+        # Version tags: leading "v" stripped.
+        assert _template_version_for_ref("v0.7.0-rc3") == "0.7.0-rc3"
+        assert _template_version_for_ref("v1.0.0") == "1.0.0"
+        # Non-version refs: kept verbatim.
+        assert _template_version_for_ref("v-next") == "v-next"
+        assert _template_version_for_ref("vfeature") == "vfeature"
+        assert _template_version_for_ref("HEAD") == "HEAD"
+        assert _template_version_for_ref("main") == "main"
