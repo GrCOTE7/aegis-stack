@@ -91,9 +91,17 @@ class ServiceSpec(PluginSpec):
 SERVICES: dict[str, ServiceSpec] = {
     "auth": ServiceSpec(
         name="auth",
+        docs_path="services/auth",
         marker_path="app/services/auth",
         type=ServiceType.AUTH,
         description="User authentication and authorization with JWT tokens",
+        long_description=(
+            "Complete user management with JWT authentication, session "
+            "cookies, and refresh-token rotation. Three levels: basic "
+            "email/password, RBAC roles and permissions, or multi-tenant "
+            "organizations. Includes registration, login, and an admin "
+            "dashboard tab."
+        ),
         required_components=[ComponentNames.BACKEND, ComponentNames.DATABASE],
         # Round 7 wiring: routers + dashboard card/modal. Mirrors what
         # ``app/components/backend/api/routing.py.jinja`` and the
@@ -304,9 +312,17 @@ SERVICES: dict[str, ServiceSpec] = {
     ),
     "ai": ServiceSpec(
         name="ai",
+        docs_path="services/ai",
         marker_path="app/services/ai",
         type=ServiceType.AI,
         description="AI chatbot service with multi-framework support",
+        long_description=(
+            "A complete AI platform: multi-provider chat, an LLM catalog "
+            "with roughly 2000 models, cost tracking with usage analytics, "
+            "optional RAG for codebase-aware conversations, and optional "
+            "voice (TTS/STT). Pick Pydantic AI or LangChain as the "
+            "framework."
+        ),
         required_components=[ComponentNames.BACKEND],
         # Round 7 wiring: 4 conditional routers + dashboard card/modal.
         # Predicates read both this plugin's options ("voice", "rag")
@@ -471,9 +487,15 @@ SERVICES: dict[str, ServiceSpec] = {
     ),
     "comms": ServiceSpec(
         name="comms",
+        docs_path="services/comms",
         marker_path="app/services/comms",
         type=ServiceType.NOTIFICATION,
         description="Communications service with email (Resend), SMS and voice (Twilio)",
+        long_description=(
+            "Email, SMS, and voice calls using industry providers: Resend "
+            "for email, Twilio for SMS and voice. Both have free tiers, so "
+            "you can start without a credit card."
+        ),
         required_components=[ComponentNames.BACKEND],
         # Round 7 wiring: single router + dashboard card/modal.
         wiring=PluginWiring(
@@ -526,9 +548,16 @@ SERVICES: dict[str, ServiceSpec] = {
     ),
     "insights": ServiceSpec(
         name="insights",
+        docs_path="services/insights",
         marker_path="app/services/insights",
         type=ServiceType.ANALYTICS,
         description="Adoption metrics and analytics with automated data collection",
+        long_description=(
+            "Automated tracking of your project's adoption across GitHub, "
+            "PyPI, Plausible Analytics, and Reddit. Collects on a "
+            "schedule, stores history, and visualizes growth in the "
+            "dashboard."
+        ),
         required_components=[
             ComponentNames.BACKEND,
             ComponentNames.DATABASE,
@@ -646,9 +675,16 @@ SERVICES: dict[str, ServiceSpec] = {
     ),
     "payment": ServiceSpec(
         name="payment",
+        docs_path="services/payment",
         marker_path="app/services/payment",
         type=ServiceType.PAYMENT,
         description="Payment processing with Stripe (checkout, subscriptions, webhooks)",
+        long_description=(
+            "Payment processing with Stripe: checkout sessions, "
+            "subscriptions, webhooks, and refunds. Stripe's test mode "
+            "needs no credit card, so you can build the full flow before "
+            "going live."
+        ),
         required_components=[
             ComponentNames.BACKEND,
             ComponentNames.DATABASE,
@@ -726,9 +762,15 @@ SERVICES: dict[str, ServiceSpec] = {
     ),
     "blog": ServiceSpec(
         name="blog",
+        docs_path="services/blog",
         marker_path="app/services/blog",
         type=ServiceType.CONTENT,
         description="Markdown blog with draft/publish workflow and tags",
+        long_description=(
+            "First-party Markdown publishing with database-backed posts, "
+            "tags, drafts, and an editor UI in the dashboard. Import and "
+            "export posts as plain Markdown with frontmatter."
+        ),
         required_components=[
             ComponentNames.BACKEND,
             ComponentNames.DATABASE,

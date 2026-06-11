@@ -7,8 +7,9 @@ prep): the worker+redis bundling, auth's database-confirmation dance, the
 plain content-service path, and the decline-everything baseline.
 
 Prompt order (must hold for the scripted side_effect lists):
-redis, worker, scheduler, database, ingress, observability, then services
-auth, ai, blog. Accepting scheduler inserts a persistence prompt; accepting
+worker, scheduler, database, redis, ingress, observability, then every
+service grouped by ServiceType order: auth, payment, ai, comms, insights,
+blog. Accepting worker bundles redis AND skips the redis prompt; accepting
 auth without a database inserts a database-confirmation prompt.
 """
 
@@ -24,7 +25,7 @@ from aegis.constants import WorkerBackends
 class TestProjectSelectionBaseline:
     @patch("typer.confirm")
     def test_decline_everything(self, mock_confirm: Any) -> None:
-        mock_confirm.side_effect = [False] * 9
+        mock_confirm.side_effect = [False] * 12
         components, scheduler_backend, services, skip_llm = (
             interactive_project_selection()
         )
@@ -32,7 +33,7 @@ class TestProjectSelectionBaseline:
         assert scheduler_backend == "memory"
         assert services == []
         assert skip_llm is False
-        assert mock_confirm.call_count == 9
+        assert mock_confirm.call_count == 12
 
 
 class TestWorkerRedisBundling:
@@ -42,23 +43,25 @@ class TestWorkerRedisBundling:
         self, mock_confirm: Any, mock_backend: Any
     ) -> None:
         mock_backend.return_value = WorkerBackends.ARQ
-        # redis=no, worker(+redis)=yes, then decline the rest
-        mock_confirm.side_effect = [False, True] + [False] * 7
+        # worker=yes bundles redis and SKIPS the redis prompt; decline the
+        # remaining 4 components and 6 services.
+        mock_confirm.side_effect = [True] + [False] * 10
         components, _, _, _ = interactive_project_selection()
         assert "redis" in components
         assert "worker" in components
+        assert mock_confirm.call_count == 11  # redis prompt never shown
 
     @patch("aegis.cli.interactive.select_worker_backend")
     @patch("typer.confirm")
-    def test_worker_with_redis_already_selected(
+    def test_redis_still_asked_without_worker(
         self, mock_confirm: Any, mock_backend: Any
     ) -> None:
         mock_backend.return_value = WorkerBackends.ARQ
-        # redis=yes, worker=yes, decline the rest
-        mock_confirm.side_effect = [True, True] + [False] * 7
+        # worker=no -> redis gets its own prompt (4th) and can be accepted.
+        mock_confirm.side_effect = [False, False, False, True] + [False] * 8
         components, _, _, _ = interactive_project_selection()
-        assert components.count("redis") == 1
-        assert "worker" in components
+        assert components == ["redis"]
+        assert mock_confirm.call_count == 12
 
     @patch("aegis.cli.interactive.select_worker_backend")
     @patch("typer.confirm")
@@ -66,7 +69,7 @@ class TestWorkerRedisBundling:
         self, mock_confirm: Any, mock_backend: Any
     ) -> None:
         mock_backend.return_value = WorkerBackends.TASKIQ
-        mock_confirm.side_effect = [False, True] + [False] * 7
+        mock_confirm.side_effect = [True] + [False] * 10
         components, _, _, _ = interactive_project_selection()
         assert "worker[taskiq]" in components
         assert "worker" not in components  # bracket form replaces plain name
@@ -79,11 +82,12 @@ class TestAuthDatabaseDance:
         self, mock_confirm: Any, mock_auth_config: Any
     ) -> None:
         mock_auth_config.return_value = "basic"
-        # 6 components declined, auth=yes, db-confirm=yes, ai=no, blog=no
-        mock_confirm.side_effect = [False] * 6 + [True, True, False, False]
+        # 6 components declined, auth=yes, db-confirm=yes, then decline
+        # payment, ai, comms, insights, blog
+        mock_confirm.side_effect = [False] * 6 + [True, True] + [False] * 5
         components, _, services, _ = interactive_project_selection()
         assert "auth[basic]" in services
-        assert mock_confirm.call_count == 10  # db-confirm prompt was inserted
+        assert mock_confirm.call_count == 13  # db-confirm prompt was inserted
 
     @patch("aegis.cli.interactive.interactive_auth_service_config")
     @patch("typer.confirm")
@@ -92,7 +96,7 @@ class TestAuthDatabaseDance:
     ) -> None:
         mock_auth_config.return_value = "basic"
         # auth=yes but decline the database confirmation -> auth dropped
-        mock_confirm.side_effect = [False] * 6 + [True, False, False, False]
+        mock_confirm.side_effect = [False] * 6 + [True, False] + [False] * 5
         _, _, services, _ = interactive_project_selection()
         assert services == []
 
@@ -102,23 +106,22 @@ class TestAuthDatabaseDance:
         self, mock_confirm: Any, mock_auth_config: Any
     ) -> None:
         mock_auth_config.return_value = "rbac"
-        # database=yes among components, auth=yes -> no extra db prompt
-        mock_confirm.side_effect = [False, False, False, True, False, False] + [
-            True,
-            False,
-            False,
-        ]
+        # database=yes among components (3rd prompt), auth=yes -> no extra
+        # db prompt
+        mock_confirm.side_effect = (
+            [False, False, True, False, False, False] + [True] + [False] * 5
+        )
         components, _, services, _ = interactive_project_selection()
         assert "database" in components
         assert "auth[rbac]" in services
-        assert mock_confirm.call_count == 9  # no inserted db-confirm prompt
+        assert mock_confirm.call_count == 12  # no inserted db-confirm prompt
 
 
 class TestContentServices:
     @patch("typer.confirm")
     def test_blog_selected_as_plain_name(self, mock_confirm: Any) -> None:
-        # decline all components + auth + ai, accept blog
-        mock_confirm.side_effect = [False] * 8 + [True]
+        # decline everything except blog (the final service prompt)
+        mock_confirm.side_effect = [False] * 11 + [True]
         _, _, services, _ = interactive_project_selection()
         assert services == ["blog"]
 
@@ -136,6 +139,7 @@ class ScriptedUI:
         confirms: list[bool],
         *,
         worker_backend: str = "arq",
+        scheduler_backend: str = "memory",
         database_engine: str = "sqlite",
         auth_level: str = "basic",
         ai_config: tuple[str, str, list[str], bool, bool] = (
@@ -148,6 +152,7 @@ class ScriptedUI:
     ) -> None:
         self._confirms = iter(confirms)
         self._worker_backend = worker_backend
+        self._scheduler_backend = scheduler_backend
         self._database_engine = database_engine
         self._auth_level = auth_level
         self._ai_config = ai_config
@@ -156,7 +161,7 @@ class ScriptedUI:
     def section(self, title: str, *, newline_before: bool = False) -> None:
         self.transcript.append(f"[section] {title}")
 
-    def confirm(self, prompt: str, *, default: bool = True) -> bool:
+    def confirm(self, prompt: str, *, default: bool = True, context=None) -> bool:
         self.transcript.append(f"[confirm] {prompt}")
         return next(self._confirms)
 
@@ -166,8 +171,15 @@ class ScriptedUI:
     def success(self, message: str) -> None:
         self.transcript.append(message)
 
+    def note_auto_added(self, name: str, detail: str = "") -> None:
+        self.transcript.append(f"[auto-added {name}{f' {detail}' if detail else ''}]")
+
     def choose_worker_backend(self) -> str:
         return self._worker_backend
+
+    def choose_scheduler_backend(self) -> str:
+        self.transcript.append("[scheduler backend]")
+        return self._scheduler_backend
 
     def choose_database_engine(self, context: str) -> str:
         self.transcript.append(f"[engine for {context}]")
@@ -176,7 +188,9 @@ class ScriptedUI:
     def configure_auth(self, service_name: str) -> str:
         return self._auth_level
 
-    def configure_ai(self, service_name: str) -> tuple[str, str, list[str], bool, bool]:
+    def configure_ai(
+        self, service_name: str, existing_engine: str | None = None
+    ) -> tuple[str, str, list[str], bool, bool]:
         return self._ai_config
 
 
@@ -186,11 +200,15 @@ class TestEngineWithScriptedUI:
     def test_full_stack_selection_no_patching(self) -> None:
         from aegis.cli.interactive import run_project_selection
 
-        # redis=y, worker=y, scheduler=y, persistence=y, (db skipped),
-        # ingress=n, observability=n, auth=y, ai=y, blog=y
+        # worker=y (bundles redis, redis prompt skipped), scheduler=y
+        # (backend via choose_scheduler_backend, db auto-added and skipped),
+        # ingress=n, observability=n, auth=y, payment=n, ai=y, comms=n,
+        # insights=n, blog=y
         ui = ScriptedUI(
-            confirms=[True, True, True, True, False, False, True, True, True],
+            confirms=[True, True, False, False]
+            + [True, False, True, False, False, True],
             worker_backend="taskiq",
+            scheduler_backend="postgres",
             database_engine="postgres",
             auth_level="rbac",
             ai_config=("sqlite", "langchain", ["openai"], True, False),
@@ -204,21 +222,22 @@ class TestEngineWithScriptedUI:
             "database[postgres]",
         ]
         assert state.scheduler_backend == "postgres"
+        # One datastore, used everywhere: the renderer's canned "sqlite"
+        # backend is overridden by the project engine (postgres), and no
+        # second database is appended.
         assert state.services == [
             "auth[rbac]",
-            "ai[sqlite,langchain,openai,rag]",
+            "ai[postgres,langchain,openai,rag]",
             "blog",
         ]
-        # AI wanted sqlite but a database (postgres) already existed -> no
-        # second database appended.
         assert sum("database" in c for c in state.components) == 1
 
     def test_transcript_captures_flow(self) -> None:
         from aegis.cli.interactive import run_project_selection
 
-        ui = ScriptedUI(confirms=[False] * 9)
+        ui = ScriptedUI(confirms=[False] * 12)
         state = run_project_selection(ui)
         assert state.components == []
         assert state.services == []
         confirms = [line for line in ui.transcript if line.startswith("[confirm]")]
-        assert len(confirms) == 9
+        assert len(confirms) == 12

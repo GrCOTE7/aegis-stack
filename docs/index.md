@@ -14,6 +14,7 @@ Aegis Stack is a CLI that scaffolds modular Python applications. Select exactly 
 
 ```bash
 # Run instantly without installation
+# (opens a full-screen guided setup; add --quick for one-line prompts)
 uvx aegis-stack init my-api
 
 # Create with user authentication

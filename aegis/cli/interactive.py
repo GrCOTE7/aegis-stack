@@ -26,6 +26,7 @@ from ..constants import (
     WorkerBackends,
 )
 from ..core.components import COMPONENTS, CORE_COMPONENTS, ComponentSpec, ComponentType
+from ..core.plugins.spec import PluginSpec
 from ..core.services import (
     SERVICE_TYPE_I18N_KEYS,
     SERVICES,
@@ -221,20 +222,30 @@ class SelectionUI(Protocol):
 
     def section(self, title: str, *, newline_before: bool = False) -> None: ...
 
-    def confirm(self, prompt: str, *, default: bool = True) -> bool: ...
+    def confirm(
+        self,
+        prompt: str,
+        *,
+        default: bool = True,
+        context: PluginSpec | None = None,
+    ) -> bool: ...
 
     def echo(self, message: str = "") -> None: ...
 
     def success(self, message: str) -> None: ...
 
+    def note_auto_added(self, name: str, detail: str = "") -> None: ...
+
     def choose_worker_backend(self) -> str: ...
 
     def choose_database_engine(self, context: str) -> str: ...
 
+    def choose_scheduler_backend(self) -> str: ...
+
     def configure_auth(self, service_name: str) -> str: ...
 
     def configure_ai(
-        self, service_name: str
+        self, service_name: str, existing_engine: str | None = None
     ) -> tuple[str, str, list[str], bool, bool]: ...
 
 
@@ -249,7 +260,15 @@ class TyperSelectionUI:
     def section(self, title: str, *, newline_before: bool = False) -> None:
         Messages.print_section_header(title, newline_before=newline_before)
 
-    def confirm(self, prompt: str, *, default: bool = True) -> bool:
+    def confirm(
+        self,
+        prompt: str,
+        *,
+        default: bool = True,
+        context: PluginSpec | None = None,
+    ) -> bool:
+        # ``context`` carries the spec for renderers that show editorial
+        # copy (the guided setup); the quick one-line prompt ignores it.
         return typer.confirm(prompt, default=default)
 
     def echo(self, message: str = "") -> None:
@@ -258,17 +277,33 @@ class TyperSelectionUI:
     def success(self, message: str) -> None:
         typer.secho(message, fg="green")
 
+    def note_auto_added(self, name: str, detail: str = "") -> None:
+        # A step auto-added a component the user didn't pick directly.
+        # Quick mode already narrates this through its success/echo
+        # messages; renderers with a selection sidebar surface it there.
+        pass
+
     def choose_worker_backend(self) -> str:
         return select_worker_backend()
 
     def choose_database_engine(self, context: str) -> str:
         return select_database_engine(context=context)
 
+    def choose_scheduler_backend(self) -> str:
+        # Quick-mode shape preserved exactly: the persistence yes/no, then
+        # the engine picker (which reuses a previously chosen engine).
+        typer.echo(f"\n{t('interactive.scheduler_persistence')}")
+        if not typer.confirm(f"  {t('interactive.persist_prompt')}", default=True):
+            return StorageBackends.MEMORY
+        return select_database_engine(context="Scheduler")
+
     def configure_auth(self, service_name: str) -> str:
         return interactive_auth_service_config(service_name)
 
-    def configure_ai(self, service_name: str) -> tuple[str, str, list[str], bool, bool]:
-        return interactive_ai_service_config(service_name)
+    def configure_ai(
+        self, service_name: str, existing_engine: str | None = None
+    ) -> tuple[str, str, list[str], bool, bool]:
+        return interactive_ai_service_config(service_name, existing_engine)
 
 
 def _step_worker(spec: ComponentSpec, state: ProjectSelection, ui: SelectionUI) -> None:
@@ -278,7 +313,7 @@ def _step_worker(spec: ComponentSpec, state: ProjectSelection, ui: SelectionUI) 
     prompt_key = (
         "interactive.add_prompt" if redis_selected else "interactive.add_with_redis"
     )
-    if not ui.confirm(f"  {t(prompt_key, description=desc)}"):
+    if not ui.confirm(f"  {t(prompt_key, description=desc)}", context=spec):
         return
 
     backend = ui.choose_worker_backend()
@@ -289,6 +324,7 @@ def _step_worker(spec: ComponentSpec, state: ProjectSelection, ui: SelectionUI) 
     )
     if not redis_selected:
         state.components.append(ComponentNames.REDIS)
+        ui.note_auto_added(ComponentNames.REDIS)
     state.components.append(worker)
     ui.success(t("interactive.worker_configured", backend=backend))
 
@@ -296,16 +332,22 @@ def _step_worker(spec: ComponentSpec, state: ProjectSelection, ui: SelectionUI) 
 def _step_scheduler(
     spec: ComponentSpec, state: ProjectSelection, ui: SelectionUI
 ) -> None:
-    """Scheduler prompt with the persistence mini-wizard (engine + database)."""
+    """Scheduler prompt; the backend (memory/sqlite/postgres) is ONE decision.
+
+    ``choose_scheduler_backend`` owns the persistence question: memory means
+    no persistence, a database engine means persistent jobs plus the
+    database component.
+    """
     desc = _translated_desc(spec.name, spec.description)
-    if not ui.confirm(f"  {t('interactive.add_prompt', description=desc)}"):
+    if not ui.confirm(
+        f"  {t('interactive.add_prompt', description=desc)}", context=spec
+    ):
         return
 
     state.components.append(ComponentNames.SCHEDULER)
 
-    ui.echo(f"\n{t('interactive.scheduler_persistence')}")
-    if ui.confirm(f"  {t('interactive.persist_prompt')}"):
-        engine = ui.choose_database_engine("Scheduler")
+    engine = ui.choose_scheduler_backend()
+    if engine != StorageBackends.MEMORY:
         if engine == StorageBackends.POSTGRES:
             state.components.append(
                 f"{ComponentNames.DATABASE}[{StorageBackends.POSTGRES}]"
@@ -315,6 +357,7 @@ def _step_scheduler(
         state.database_engine = engine
         state.database_added_by_scheduler = True
         state.scheduler_backend = engine
+        ui.note_auto_added(ComponentNames.DATABASE, engine)
         ui.success(t("interactive.scheduler_db_configured", engine=engine.upper()))
 
         # Bonus backup job only applies once a database is in the mix.
@@ -332,7 +375,9 @@ def _step_database(
         return
 
     desc = _translated_desc(spec.name, spec.description)
-    if not ui.confirm(f"  {t('interactive.add_prompt', description=desc)}"):
+    if not ui.confirm(
+        f"  {t('interactive.add_prompt', description=desc)}", context=spec
+    ):
         return
 
     state.components.append(ComponentNames.DATABASE)
@@ -344,9 +389,16 @@ def _step_database(
 def _step_generic_component(
     spec: ComponentSpec, state: ProjectSelection, ui: SelectionUI
 ) -> None:
-    """Plain confirm-and-add for components without special rules."""
+    """Plain confirm-and-add for components without special rules.
+
+    Skipped when an earlier step already added the component (worker
+    bundles redis) — asking again would either duplicate it or read as
+    undoing a rule the user just opted into.
+    """
+    if any(comp.partition("[")[0] == spec.name for comp in state.components):
+        return
     desc = _translated_desc(spec.name, spec.description)
-    if ui.confirm(f"  {t('interactive.add_prompt', description=desc)}"):
+    if ui.confirm(f"  {t('interactive.add_prompt', description=desc)}", context=spec):
         state.components.append(spec.name)
 
 
@@ -400,103 +452,149 @@ def run_project_selection(ui: SelectionUI) -> ProjectSelection:
             f"{ComponentNames.SCHEDULER}[{state.scheduler_backend}]"
         )
 
-    # Service selection
+    # Service selection: every registered service, grouped by type in
+    # ServiceType declaration order. Derived from the registry so a new
+    # service (or type) is offered automatically — the hand-written
+    # AUTH/AI/CONTENT trio this replaced silently skipped comms, insights,
+    # and payment at init.
     if SERVICES:  # Only show services if any are available
         ui.section(t("interactive.service_selection"), newline_before=True)
         ui.echo(t("interactive.services_intro") + "\n")
-        _step_auth_services(state, ui)
-        _step_ai_services(state, ui)
-        _step_content_services(state, ui)
+        first = True
+        for service_type in ServiceType:
+            shown = _step_services_of_type(state, ui, service_type, first=first)
+            first = first and not shown
 
     return state
 
 
-def _step_auth_services(state: ProjectSelection, ui: SelectionUI) -> None:
-    """Auth prompts: level configuration plus the database confirmation."""
-    auth_services = get_services_by_type(ServiceType.AUTH)
-    if not auth_services:
+def _step_services_of_type(
+    state: ProjectSelection,
+    ui: SelectionUI,
+    service_type: ServiceType,
+    *,
+    first: bool,
+) -> bool:
+    """Offer every service of one type. Returns True when any were shown.
+
+    Services with extra interactive configuration (auth's level + database
+    dance, AI's full setup) run their configurator from
+    ``_SERVICE_INIT_CONFIGURATORS``; everything else is confirm-and-add.
+    """
+    type_services = get_services_by_type(service_type)
+    if not type_services:
+        return False
+
+    header = t(SERVICE_TYPE_I18N_KEYS[service_type])
+    ui.echo(header if first else f"\n{header}")
+    for service_name, service_spec in type_services.items():
+        desc = _translated_desc(service_name, service_spec.description)
+        if not ui.confirm(
+            f"  {t('interactive.add_prompt', description=desc)}",
+            context=service_spec,
+        ):
+            continue
+        configure = _SERVICE_INIT_CONFIGURATORS.get(service_name)
+        if configure is not None:
+            configure(state, ui, service_name)
+        else:
+            state.services.append(service_name)
+    return True
+
+
+def _configure_auth_init(
+    state: ProjectSelection, ui: SelectionUI, service_name: str
+) -> None:
+    """Auth acceptance: level configuration plus the database confirmation."""
+    # Prompt for auth level first
+    level = ui.configure_auth(service_name)
+
+    # Auth service requires database - provide explicit confirmation
+    ui.echo(f"\n{t('interactive.auth_db_required')}")
+    ui.echo(f"  {t('interactive.auth_db_reason')}")
+    ui.echo(f"  {t('interactive.auth_db_details')}")
+
+    # Substring check on purpose: catches "database[postgres]" too.
+    database_already_selected = any(
+        ComponentNames.DATABASE in comp for comp in state.components
+    )
+    if database_already_selected:
+        ui.success(t("interactive.auth_db_already"))
+    elif not ui.confirm(f"  {t('interactive.auth_db_confirm')}"):
+        ui.echo(t("interactive.auth_cancelled"))
         return
 
-    ui.echo(t("interactive.auth_header"))
-    for service_name, service_spec in auth_services.items():
-        desc = _translated_desc(service_name, service_spec.description)
-        if not ui.confirm(f"  {t('interactive.add_prompt', description=desc)}"):
-            continue
+    state.services.append(f"{service_name}[{level}]")
 
-        # Prompt for auth level first
-        level = ui.configure_auth(service_name)
+    # Note: Database will be auto-added by service resolution in init.py
+    if not database_already_selected:
+        ui.note_auto_added(ComponentNames.DATABASE)
+        ui.success(t("interactive.auth_db_configured"))
 
-        # Auth service requires database - provide explicit confirmation
-        ui.echo(f"\n{t('interactive.auth_db_required')}")
-        ui.echo(f"  {t('interactive.auth_db_reason')}")
-        ui.echo(f"  {t('interactive.auth_db_details')}")
 
-        # Substring check on purpose: catches "database[postgres]" too.
+def _project_database_engine(state: ProjectSelection) -> str | None:
+    """The engine of the project's already-selected database, if any.
+
+    One project has ONE database engine: when an earlier step picked it
+    (scheduler persistence, an explicit database[postgres]), later
+    engine-flavored questions must reuse it instead of re-asking. A plain
+    ``database`` selection means the default engine (sqlite).
+    """
+    if state.database_engine:
+        return state.database_engine
+    for comp in state.components:
+        base, _, rest = comp.partition("[")
+        if base == ComponentNames.DATABASE:
+            return rest.rstrip("]") if rest else StorageBackends.SQLITE
+    return None
+
+
+def _configure_ai_init(
+    state: ProjectSelection, ui: SelectionUI, service_name: str
+) -> None:
+    """AI acceptance: full configuration plus database auto-add."""
+    existing_engine = _project_database_engine(state)
+    backend, framework, providers, rag_enabled, voice_enabled = ui.configure_ai(
+        service_name, existing_engine
+    )
+    if existing_engine is not None:
+        # One datastore, used everywhere: with a database in the project,
+        # conversations persist to it — renderers skip the storage question
+        # and this enforces the rule regardless of what they returned.
+        backend = existing_engine
+
+    # Handle database auto-add for database backends
+    if backend in (StorageBackends.SQLITE, StorageBackends.POSTGRES):
         database_already_selected = any(
             ComponentNames.DATABASE in comp for comp in state.components
         )
         if database_already_selected:
-            ui.success(t("interactive.auth_db_already"))
-        elif not ui.confirm(f"  {t('interactive.auth_db_confirm')}"):
-            ui.echo(t("interactive.auth_cancelled"))
-            continue
+            ui.success(f"  {t('interactive.ai_db_already')}")
+        else:
+            state.components.append(f"{ComponentNames.DATABASE}[{backend}]")
+            # The AI choice just fixed the project's database engine.
+            state.database_engine = backend
+            ui.note_auto_added(ComponentNames.DATABASE, backend)
+            ui.success(f"  {t('interactive.ai_db_added', backend=backend)}")
 
-        state.services.append(f"{service_name}[{level}]")
-
-        # Note: Database will be auto-added by service resolution in init.py
-        if not database_already_selected:
-            ui.success(t("interactive.auth_db_configured"))
-
-
-def _step_ai_services(state: ProjectSelection, ui: SelectionUI) -> None:
-    """AI prompts: full configuration plus database auto-add for db backends."""
-    ai_services = get_services_by_type(ServiceType.AI)
-    if not ai_services:
-        return
-
-    ui.echo(f"\n{t('interactive.ai_header')}")
-    for service_name, service_spec in ai_services.items():
-        desc = _translated_desc(service_name, service_spec.description)
-        if not ui.confirm(f"  {t('interactive.add_prompt', description=desc)}"):
-            continue
-
-        backend, framework, providers, rag_enabled, voice_enabled = ui.configure_ai(
-            service_name
-        )
-
-        # Handle database auto-add for database backends
-        if backend in (StorageBackends.SQLITE, StorageBackends.POSTGRES):
-            database_already_selected = any(
-                ComponentNames.DATABASE in comp for comp in state.components
-            )
-            if database_already_selected:
-                ui.success(f"  {t('interactive.ai_db_already')}")
-            else:
-                state.components.append(f"{ComponentNames.DATABASE}[{backend}]")
-                ui.success(f"  {t('interactive.ai_db_added', backend=backend)}")
-
-        # Bracket syntax for TemplateGenerator:
-        # ai[backend,framework,provider1,...,rag,voice]
-        options = [backend, framework] + providers
-        if rag_enabled:
-            options.append("rag")
-        if voice_enabled:
-            options.append("voice")
-        state.services.append(f"{service_name}[{','.join(options)}]")
-        ui.success(t("interactive.ai_configured"))
+    # Bracket syntax for TemplateGenerator:
+    # ai[backend,framework,provider1,...,rag,voice]
+    options = [backend, framework] + providers
+    if rag_enabled:
+        options.append("rag")
+    if voice_enabled:
+        options.append("voice")
+    state.services.append(f"{service_name}[{','.join(options)}]")
+    ui.success(t("interactive.ai_configured"))
 
 
-def _step_content_services(state: ProjectSelection, ui: SelectionUI) -> None:
-    """Plain confirm-and-add for content services."""
-    content_services = get_services_by_type(ServiceType.CONTENT)
-    if not content_services:
-        return
-
-    ui.echo(f"\n{t('services.type_content')}")
-    for service_name, service_spec in content_services.items():
-        desc = _translated_desc(service_name, service_spec.description)
-        if ui.confirm(f"  {t('interactive.add_prompt', description=desc)}"):
-            state.services.append(service_name)
+# Services whose acceptance needs more than confirm-and-add.
+_SERVICE_INIT_CONFIGURATORS: dict[
+    str, Callable[[ProjectSelection, SelectionUI, str], None]
+] = {
+    AnswerKeys.SERVICE_AUTH: _configure_auth_init,
+    AnswerKeys.SERVICE_AI: _configure_ai_init,
+}
 
 
 def interactive_project_selection() -> tuple[list[str], str, list[str], bool]:
@@ -794,6 +892,7 @@ def interactive_auth_service_config(
 
 def interactive_ai_service_config(
     service_name: str = AnswerKeys.SERVICE_AI,
+    existing_engine: str | None = None,
 ) -> tuple[str, str, list[str], bool, bool]:
     """
     Interactive AI service configuration prompts.
@@ -803,6 +902,9 @@ def interactive_ai_service_config(
 
     Args:
         service_name: Name of the AI service (defaults to "ai")
+        existing_engine: The project's already-selected database engine, if
+            any. One datastore, used everywhere: when set, the usage-tracking
+            question is skipped and conversations persist to that database.
 
     Returns:
         Tuple of (backend, framework, providers, rag_enabled)
@@ -831,12 +933,16 @@ def interactive_ai_service_config(
 
     # AI Backend Selection
     typer.echo(f"\n{t('interactive.ai_tracking_label')}")
-    enable_tracking = typer.confirm(
+    if existing_engine is not None:
+        backend = existing_engine
+        typer.secho(
+            f"  {t('interactive.db_reuse', engine=existing_engine.upper())}",
+            fg="green",
+        )
+    elif typer.confirm(
         f"  {t('interactive.ai_tracking_prompt')}",
         default=True,
-    )
-
-    if enable_tracking:
+    ):
         # Database engine selection with arrow keys (reuses previous selection)
         backend = select_database_engine(context=t("interactive.ai_tracking_context"))
     else:
@@ -878,9 +984,12 @@ def interactive_ai_service_config(
         recommend_text = (
             f" {t('interactive.ai_provider_recommended')}" if recommended else ""
         )
+        # Opt-in by default: only recommended providers (LLM7.io, which
+        # needs no API key) pre-answer Yes. Enter-through no longer adds
+        # seven providers (and an Ollama install) by accident.
         if typer.confirm(
             f"    \u2610 {provider_label}{recommend_text}?",
-            default=True,
+            default=recommended,
         ):
             providers.append(provider_id)
 

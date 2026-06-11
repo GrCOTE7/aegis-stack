@@ -99,6 +99,12 @@ def post_to_markdown(post: ExportedPost) -> str:
         meta["seo_description"] = post.seo_description
     if post.hero_image_url:
         meta["hero_image_url"] = post.hero_image_url
+    if post.syndicate_targets:
+        meta["syndicate_targets"] = list(post.syndicate_targets)
+    # Origin URL so syndicated copies point rel=canonical back here.
+    # Dev.to and Hashnode read this frontmatter key natively.
+    if post.canonical_url:
+        meta["canonical_url"] = post.canonical_url
     if post.created_at:
         meta["created_at"] = post.created_at.isoformat()
     if post.updated_at:
@@ -151,6 +157,8 @@ def markdown_to_post(
         hero_image_url=_first(
             meta, "hero_image_url", "image", "cover", "coverImage"
         ),
+        syndicate_targets=_coerce_tags(_first(meta, "syndicate_targets")) or None,
+        canonical_url=_first(meta, "canonical_url", "canonical", "canonicalUrl"),
         tag_slugs=_coerce_tags(_first(meta, "tags")),
     )
 

@@ -39,9 +39,11 @@ class TestAIProviderSelection:
             False,  # ingress
             False,  # observability
             False,  # auth service
+            False,  # payment
             True,  # AI service
             False,  # Use PydanticAI? (framework, default True)
             False,  # Enable usage tracking with SQLite? No (memory backend)
+            False,  # public (LLM7.io)
             False,  # openai
             False,  # anthropic
             False,  # google
@@ -51,6 +53,8 @@ class TestAIProviderSelection:
             False,  # ollama
             True,  # Enable RAG? Yes (default)
             True,  # Enable voice?
+            False,  # comms
+            False,  # insights
             False,  # blog service
         ]
 
@@ -62,7 +66,7 @@ class TestAIProviderSelection:
 
         # Verify default providers were selected
         providers = get_ai_provider_selection("ai")
-        assert providers == ["groq", "google"]  # Interactive defaults when all declined
+        assert providers == ["public"]  # Interactive default when all declined
 
     @patch("typer.confirm")
     def test_ai_service_with_custom_providers(self, mock_confirm: Any) -> None:
@@ -76,9 +80,11 @@ class TestAIProviderSelection:
             False,  # ingress
             False,  # observability
             False,  # auth service
+            False,  # payment
             True,  # AI service
             True,  # Use LangChain? Yes
             False,  # Enable usage tracking with SQLite? No (memory backend)
+            False,  # public (LLM7.io)
             True,  # openai
             True,  # anthropic
             False,  # google
@@ -88,6 +94,8 @@ class TestAIProviderSelection:
             False,  # ollama
             True,  # Enable RAG? Yes (default)
             True,  # Enable voice?
+            False,  # comms
+            False,  # insights
             False,  # blog service
         ]
 
@@ -114,9 +122,11 @@ class TestAIProviderSelection:
             False,  # ingress
             False,  # observability
             False,  # auth service
+            False,  # payment
             True,  # AI service
             False,  # Use LangChain? No (use PydanticAI)
             False,  # Enable usage tracking with SQLite? No (memory backend)
+            False,  # public (LLM7.io)
             False,  # openai
             False,  # anthropic
             True,  # google (recommended)
@@ -126,6 +136,8 @@ class TestAIProviderSelection:
             False,  # ollama
             True,  # Enable RAG? Yes (default)
             True,  # Enable voice?
+            False,  # comms
+            False,  # insights
             False,  # blog service
         ]
 
@@ -152,7 +164,10 @@ class TestAIProviderSelection:
             False,  # ingress
             False,  # observability
             False,  # auth service
+            False,  # payment
             False,  # AI service
+            False,  # comms
+            False,  # insights
             False,  # blog service
         ]
 
@@ -187,17 +202,19 @@ class TestAIBackendSelection:
         try:
             # Mock user responses: no components, yes AI service, yes SQLite tracking with sync
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 False,  # scheduler
                 False,  # database
+                False,  # redis
                 False,  # ingress
                 False,  # observability
                 False,  # auth service
+                False,  # payment
                 True,  # AI service
                 False,  # Use LangChain? No (use PydanticAI)
                 True,  # Enable usage tracking? Yes
                 True,  # Sync LLM catalog during project generation? Yes
+                False,  # public (LLM7.io)
                 False,  # openai
                 False,  # anthropic
                 True,  # google
@@ -207,6 +224,8 @@ class TestAIBackendSelection:
                 False,  # ollama
                 True,  # Enable RAG? Yes (default)
                 True,  # Enable voice?
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -228,24 +247,30 @@ class TestAIBackendSelection:
     def test_ai_backend_selection_sqlite_with_existing_database(
         self, mock_confirm: Any
     ) -> None:
-        """Test SQLite backend with database already selected doesn't duplicate."""
+        """Test SQLite backend with database already selected doesn't duplicate.
+
+        One datastore, used everywhere: with a database in the project, the
+        usage-tracking confirm is never asked — AI persists to it.
+        """
         # Pre-set database engine (avoids interactive questionary prompt)
         set_database_engine_selection("sqlite")
 
         try:
-            # Mock user responses: yes database, yes AI service, yes SQLite tracking with sync
+            # Mock user responses: yes database, yes AI service, sync prompt
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 False,  # scheduler
                 True,  # database (yes)
+                False,  # redis
                 False,  # ingress
                 False,  # observability
                 False,  # auth service
+                False,  # payment
                 True,  # AI service
                 False,  # Use LangChain? No (use PydanticAI)
-                True,  # Enable usage tracking? Yes
+                # (no usage-tracking confirm: project database is reused)
                 True,  # Sync LLM catalog during project generation? Yes
+                False,  # public (LLM7.io)
                 False,  # openai
                 False,  # anthropic
                 True,  # google
@@ -255,6 +280,8 @@ class TestAIBackendSelection:
                 False,  # ollama
                 True,  # Enable RAG? Yes (default)
                 True,  # Enable voice?
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -285,9 +312,11 @@ class TestAIBackendSelection:
             False,  # ingress
             False,  # observability
             False,  # auth service
+            False,  # payment
             True,  # AI service
             False,  # Use LangChain? No (use PydanticAI)
             False,  # Enable usage tracking with SQLite? No (memory)
+            False,  # public (LLM7.io)
             False,  # openai
             False,  # anthropic
             True,  # google
@@ -297,6 +326,8 @@ class TestAIBackendSelection:
             False,  # ollama
             True,  # Enable RAG? Yes (default)
             True,  # Enable voice?
+            False,  # comms
+            False,  # insights
             False,  # blog service
         ]
 
@@ -446,18 +477,22 @@ class TestAIConfigurationEndToEnd:
             False,  # ingress
             False,  # observability
             False,  # No auth service
+            False,  # payment
             True,  # Yes AI service
             True,  # Use LangChain? Yes
             False,  # Enable usage tracking with SQLite? No (memory backend)
+            False,  # public (LLM7.io) no
             True,
             False,
             True,
             True,
             False,
             False,
-            False,  # Provider selection (7 providers: openai yes, anthropic no, google yes, groq yes, mistral no, cohere no, ollama no)
+            False,  # Provider selection (openai yes, anthropic no, google yes, groq yes, mistral no, cohere no, ollama no)
             True,  # Enable RAG? Yes (default)
             True,  # Enable voice?
+            False,  # comms
+            False,  # insights
             False,  # blog service
         ]
 
@@ -546,9 +581,11 @@ class TestOllamaModeSelection:
             False,  # ingress
             False,  # observability
             False,  # auth service
+            False,  # payment
             True,  # AI service
             False,  # Use LangChain? No
             False,  # Enable usage tracking? No
+            False,  # public (LLM7.io)
             False,  # openai
             False,  # anthropic
             False,  # google
@@ -559,6 +596,8 @@ class TestOllamaModeSelection:
             True,  # Ollama mode: connect to host (True = HOST)
             True,  # Enable RAG
             True,  # Enable voice?
+            False,  # comms
+            False,  # insights
             False,  # blog service
         ]
 

@@ -5,6 +5,10 @@ This module centralizes magic strings and configuration keys used throughout
 the CLI to improve maintainability and reduce duplication.
 """
 
+# Published documentation site (mkdocs ``site_url``). Joined with each
+# spec's ``docs_path`` to build the terminal hyperlinks in the guided setup.
+DOCS_BASE_URL = "https://docs.aegis-stack.io/"
+
 
 class ComponentNames:
     """Standard component names used throughout the CLI."""
@@ -18,8 +22,12 @@ class ComponentNames:
     INGRESS = "ingress"
     OBSERVABILITY = "observability"
 
-    # Ordered list for interactive selection
-    INFRASTRUCTURE_ORDER = [REDIS, WORKER, SCHEDULER, DATABASE, INGRESS, OBSERVABILITY]
+    # Ordered list for interactive selection. Worker leads and redis
+    # follows the steps that auto-add it (worker bundles redis), so most
+    # users never see the redis question; scheduler/database sit early
+    # because their answers fix the project's database engine, which
+    # later questions (AI storage) reuse.
+    INFRASTRUCTURE_ORDER = [WORKER, SCHEDULER, DATABASE, REDIS, INGRESS, OBSERVABILITY]
 
 
 class StorageBackends:
@@ -68,18 +76,25 @@ class AIProviders:
     # Default providers for bracket syntax (non-interactive)
     DEFAULT = [PUBLIC]
 
-    # Default providers for interactive mode (free tier recommendations)
-    INTERACTIVE_DEFAULTS = [GROQ, GOOGLE]
+    # Default providers for interactive mode. LLM7.io (the "public"
+    # provider) is the only one that works immediately with no signup or
+    # API key, so it is the only default.
+    INTERACTIVE_DEFAULTS = [PUBLIC]
 
     # Provider display information: (id, display_name, description, pricing, is_recommended)
+    # Only LLM7.io is recommended/pre-checked: everything else (including
+    # Ollama, which needs a local install) is a deliberate opt-in. Pricing
+    # notes verified 2026-06: Google's free tier covers Flash models only
+    # since April 2026; Groq's free tier survives the Nvidia licensing deal.
     PROVIDER_INFO: list[tuple[str, str, str, str, bool]] = [
+        (PUBLIC, "LLM7.io", "Free public endpoint", "Free, no API key", True),
         (OPENAI, "OpenAI", "GPT models", "Paid", False),
         (ANTHROPIC, "Anthropic", "Claude models", "Paid", False),
-        (GOOGLE, "Google", "Gemini models", "Free tier", True),
-        (GROQ, "Groq", "Fast inference", "Free tier", True),
+        (GOOGLE, "Google", "Gemini models", "Free tier (Flash only)", False),
+        (GROQ, "Groq", "Fast inference", "Free tier", False),
         (MISTRAL, "Mistral", "Open models", "Mostly paid", False),
         (COHERE, "Cohere", "Enterprise focus", "Limited free", False),
-        (OLLAMA, "Ollama", "Local inference", "Free (local)", True),
+        (OLLAMA, "Ollama", "Local inference", "Free (local)", False),
     ]
 
 

@@ -43,6 +43,7 @@ MESSAGES: dict[str, str] = {
     "init.removing_dir": "正在清理已有目录：{path}",
     "init.creating": "正在创建项目：{name}",
     "init.error": "项目创建失败：{error}",
+    "init.replay_hint": "Recreate this stack anytime:",
     # ── 交互：板块标题 ────────────────────────────────────────────────
     "interactive.component_selection": "组件选择",
     "interactive.service_selection": "服务选择",
@@ -125,6 +126,7 @@ MESSAGES: dict[str, str] = {
     "interactive.ai_provider_intro": "请选择要集成的供应商（支持多选）",
     "interactive.ai_provider_options": "可选供应商：",
     "interactive.ai_provider_recommended": "（推荐）",
+    "interactive.ai_provider.public": "LLM7.io - Free public endpoint (No API key)",
     "interactive.ai_provider.openai": "OpenAI — GPT 系列（付费）",
     "interactive.ai_provider.anthropic": "Anthropic — Claude 系列（付费）",
     "interactive.ai_provider.google": "Google — Gemini 系列（免费额度）",

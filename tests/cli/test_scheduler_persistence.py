@@ -31,14 +31,17 @@ class TestSchedulerPersistenceTracking:
             # Simulate: no redis, no worker, yes scheduler, yes persistence, no ingress, no observability, no auth, no AI
             # Note: database is skipped because scheduler adds it
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 True,  # scheduler
                 True,  # persistence
+                False,  # redis
                 False,  # ingress
                 False,  # observability
                 False,  # auth service
+                False,  # payment
                 False,  # AI service
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -57,15 +60,18 @@ class TestSchedulerPersistenceTracking:
         try:
             # Simulate: no redis, no worker, yes scheduler, no persistence, no database, no ingress, no observability, no auth, no AI
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 True,  # scheduler
                 False,  # persistence
                 False,  # database
+                False,  # redis
                 False,  # ingress
                 False,  # observability
                 False,  # auth service
+                False,  # payment
                 False,  # AI service
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -84,14 +90,17 @@ class TestSchedulerPersistenceTracking:
         try:
             # Simulate: no redis, no worker, no scheduler, yes database, no ingress, no observability, no auth, no AI
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 False,  # scheduler
                 True,  # database
+                False,  # redis
                 False,  # ingress
                 False,  # observability
                 False,  # auth service
+                False,  # payment
                 False,  # AI service
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -112,14 +121,17 @@ class TestSchedulerPersistenceTracking:
         try:
             # Simulate: no redis, no worker, no scheduler, yes database, no ingress, no observability, no auth, no AI
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 False,  # scheduler
                 True,  # database
+                False,  # redis
                 False,  # ingress
                 False,  # observability
                 False,  # auth service
+                False,  # payment
                 False,  # AI service
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -138,15 +150,18 @@ class TestSchedulerPersistenceTracking:
         try:
             # Simulate: no redis, no worker, yes scheduler, no persistence, yes database, no ingress, no observability, no auth, no AI
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 True,  # scheduler
                 False,  # persistence
                 True,  # database
+                False,  # redis
                 False,  # ingress
                 False,  # observability
                 False,  # auth service
+                False,  # payment
                 False,  # AI service
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -181,7 +196,10 @@ class TestSchedulerPersistenceTracking:
                 False,  # ingress
                 False,  # observability
                 False,  # auth service
+                False,  # payment
                 False,  # AI service
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -205,14 +223,17 @@ class TestSchedulerPersistenceTracking:
             # Simulate: no redis, no worker, yes scheduler, yes persistence, no ingress, no observability, no auth, no AI
             # Note: database is skipped because scheduler adds it
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 True,  # scheduler
                 True,  # persistence
+                False,  # redis
                 False,  # ingress
                 False,  # observability
                 False,  # auth service
+                False,  # payment
                 False,  # AI service
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -367,15 +388,18 @@ class TestSchedulerPersistenceLogic:
         try:
             # We can't easily test the echo output, but we can test the logic flow
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 True,  # scheduler
                 True,  # persistence
+                False,  # redis
                 # database skipped (added by scheduler)
                 False,  # ingress
                 False,  # observability
                 False,  # auth service
+                False,  # payment
                 False,  # AI service
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -404,7 +428,10 @@ class TestSchedulerPersistenceLogic:
                     False,  # ingress
                     False,  # observability
                     False,  # auth service
+                    False,  # payment
                     False,  # AI service
+                    False,  # comms
+                    False,  # insights
                     False,  # blog service
                 ]
 

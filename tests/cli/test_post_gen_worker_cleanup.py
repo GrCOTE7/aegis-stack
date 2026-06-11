@@ -35,9 +35,23 @@ def _make_post_init_worker_project(
     project = tmp_path / "demo"
     queues_dir = project / "app/components/worker/queues"
     worker_dir = project / "app/components/worker"
+    lt_worker_dir = project / "app/services/load_test/worker"
     queues_dir.mkdir(parents=True)
     (project / "app/components/backend/api").mkdir(parents=True)
-    (project / "app/services").mkdir(parents=True)
+    lt_worker_dir.mkdir(parents=True)
+
+    # The load_test package's worker service: the template ships the arq
+    # canonical plus suffixed backend variants; cleanup renames the chosen
+    # backend's variant over the canonical (the package shadows any flat
+    # ``app/services/load_test.py``, so the variant MUST land here).
+    if with_renamed_files:
+        (lt_worker_dir / "service.py").write_text("# arq load test service\n")
+        (lt_worker_dir / "service_taskiq.py").write_text("# taskiq load test service\n")
+        (lt_worker_dir / "service_dramatiq.py").write_text(
+            "# dramatiq load test service\n"
+        )
+    else:
+        (lt_worker_dir / "service.py").write_text(f"# {backend} load test service\n")
 
     # Canonical queue files always present after a first init.
     (queues_dir / "__init__.py").write_text("")
@@ -155,6 +169,57 @@ def test_init_renames_sources_and_strips_arq_only_files(
         f"media.py (arq-only canonical) should be stripped on a fresh "
         f"{backend} init but survived"
     )
+
+
+@pytest.mark.parametrize(
+    "backend",
+    [WorkerBackends.ARQ, WorkerBackends.TASKIQ, WorkerBackends.DRAMATIQ],
+)
+def test_init_installs_backend_load_test_service(tmp_path: Path, backend: str) -> None:
+    """
+    The load_test worker service must match the chosen backend.
+
+    Regression for the dramatiq/taskiq webserver crash-loop: the backend
+    variants used to be renamed to a flat ``app/services/load_test.py``,
+    which the ``load_test/`` package silently shadowed — every non-arq stack
+    imported the arq-only ``worker/service.py`` (``get_queue_pool``) and
+    died at import. The variants now live INSIDE the package and cleanup
+    must install the chosen one as ``worker/service.py``.
+    """
+    project = _make_post_init_worker_project(
+        tmp_path, backend=backend, with_renamed_files=True
+    )
+    lt_worker_dir = project / "app/services/load_test/worker"
+
+    cleanup_components(project, _worker_context(backend))
+
+    service = lt_worker_dir / "service.py"
+    assert service.exists()
+    assert f"# {backend} load test service" in service.read_text(), (
+        f"worker/service.py is not the {backend} variant after cleanup"
+    )
+    assert not (lt_worker_dir / "service_taskiq.py").exists()
+    assert not (lt_worker_dir / "service_dramatiq.py").exists()
+
+
+@pytest.mark.parametrize(
+    "backend",
+    [WorkerBackends.ARQ, WorkerBackends.TASKIQ, WorkerBackends.DRAMATIQ],
+)
+def test_update_preserves_backend_load_test_service(
+    tmp_path: Path, backend: str
+) -> None:
+    """Re-running cleanup post-init must not delete or replace the installed
+    load_test worker service (issue #672 class)."""
+    project = _make_post_init_worker_project(
+        tmp_path, backend=backend, with_renamed_files=False
+    )
+    service = project / "app/services/load_test/worker/service.py"
+
+    cleanup_components(project, _worker_context(backend))
+
+    assert service.exists()
+    assert f"# {backend} load test service" in service.read_text()
 
 
 def _snapshot(root: Path) -> dict[str, str]:

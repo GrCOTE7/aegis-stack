@@ -122,14 +122,18 @@ aegis init PROJECT_NAME [OPTIONS]
 - `--components, -c TEXT` - Comma-separated list of components
 - `--services, -s TEXT` - Comma-separated list of services
 - `--interactive / --no-interactive, -i / -ni` - Use interactive selection (default: interactive)
+- `--guided / --quick` - Interactive style: the full-screen guided setup (default) or the classic one-line prompts (`--quick`). Guided needs a real terminal of at least 60x20; anything else falls back to quick prompts automatically.
 - `--force, -f` - Overwrite existing directory if it exists
 - `--output-dir, -o PATH` - Directory to create the project in (default: current directory)
 - `--yes, -y` - Skip confirmation prompt
 
 **Examples:**
 ```bash
-# Simple API project
+# Simple API project (full-screen guided setup)
 aegis init my-api
+
+# Classic one-line prompts instead
+aegis init my-api --quick
 
 # Background processing with scheduler
 aegis init task-processor --components scheduler
@@ -146,6 +150,28 @@ aegis init full-app --services auth,ai --components database,scheduler
 # Non-interactive with custom location
 aegis init my-app --services auth --components database --no-interactive --output-dir /projects --yes
 ```
+
+**The guided setup:**
+
+![The guided setup: the Worker component screen with the selections sidebar](images/guided-setup.png)
+
+Running `aegis init my-app` in a normal terminal opens a full-screen guided setup: one page per component and service, each with a short explanation, its hard requirements, what it pairs well with, and a link to its documentation page. A sidebar tracks your selections as you go.
+
+The flow is welcome page, the preselected foundation (backend + frontend), one question per building block, a review screen showing the resolved plan (with file and dependency detail panes), then the build itself with live progress and a closing summary that includes a copyable one-liner to recreate the same stack anywhere.
+
+Keys:
+
+- `←/→` move, `enter` select
+- `esc` go back one question (your previous answer is re-asked; every downstream effect is recomputed)
+- `s` skip the remaining component questions and jump to services
+- `f` finish: keep what you have picked so far and go straight to review
+- `q` quit
+- On the review screen: `f` shows the files to be created, `d` the dependencies, `enter` builds
+- On checklist screens (AI providers): `enter`/`space` toggle an entry, pick `Continue` to move on
+
+Selections follow the same rules as every other mode: accepting worker pulls in redis (and skips the redis question), a persistent scheduler backend or AI conversation storage brings the database with it, and one database engine serves the whole project.
+
+The guided setup needs a real terminal of at least 60x20. Pipes, CI, and small terminals fall back to the classic prompts automatically, and `--quick` forces them.
 
 **Service Auto-Resolution:**
 

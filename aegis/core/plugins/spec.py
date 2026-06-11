@@ -19,7 +19,7 @@ plugin needs them, not speculatively.
 
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any
@@ -203,6 +203,21 @@ class PluginSpec:
     kind: PluginKind
     description: str
 
+    # Longer, terminal-clean editorial copy (2-4 sentences) shown by the
+    # guided init setup. Curated from each plugin's docs intro rather than
+    # read from ``docs/`` at runtime: the wheel only ships the ``aegis``
+    # package, and the markdown carries admonitions/links that don't render
+    # in a terminal. Empty string degrades to ``description``.
+    long_description: str = ""
+
+    # Site-relative path of this plugin's documentation page (e.g.
+    # ``components/worker``), joined onto the published docs base URL by
+    # renderers that emit terminal hyperlinks. Empty string means the
+    # plugin has no docs page yet — render no link rather than a dead one.
+    # ``tests/core/test_spec_docs_paths.py`` pins every non-empty value to
+    # a real source file under ``docs/``.
+    docs_path: str = ""
+
     # Sub-classification — ServiceType when kind=SERVICE,
     # ComponentType when kind=COMPONENT.
     type: Any = None
@@ -273,3 +288,63 @@ class PluginSpec:
     def recommends(self) -> list[str]:
         """Component-style alias for ``recommended_components``."""
         return self.recommended_components
+
+
+def required_names(
+    spec: PluginSpec,
+    *,
+    exclude: Iterable[str] = (),
+) -> list[str]:
+    """This plugin's hard dependencies, for display ("Requires: ...").
+
+    Order-stable, de-duplicated, bracket syntax stripped. ``exclude`` drops
+    names that are uninformative in context (e.g. always-on CORE components
+    like backend/frontend).
+    """
+    excluded = set(exclude) | {spec.name}
+    seen: set[str] = set()
+    out: list[str] = []
+    for raw in [*spec.required_components, *spec.required_services]:
+        base = raw.split("[", 1)[0]
+        if base in excluded or base in seen:
+            continue
+        seen.add(base)
+        out.append(base)
+    return out
+
+
+def pairs_well_with(
+    spec: PluginSpec,
+    registry: Iterable[PluginSpec],
+    *,
+    exclude: Iterable[str] = (),
+) -> list[str]:
+    """Names this plugin combines with, for display ("Pairs well with: ...").
+
+    Order-stable and de-duplicated: the spec's own soft recommendations
+    first, then the reverse direction (every plugin in ``registry`` that
+    requires or recommends this one — that's what makes "database pairs
+    with auth, payment, blog" derivable instead of hand-maintained). The
+    spec's own hard dependencies are NOT pairings — they belong under
+    "Requires:" via :func:`required_names`. ``exclude`` drops names that
+    are uninformative in context (e.g. always-on CORE components).
+    """
+    excluded = set(exclude) | {spec.name} | set(required_names(spec))
+    names = [*spec.recommended_components]
+    for other in registry:
+        if spec.name in (
+            *other.required_components,
+            *other.recommended_components,
+            *other.required_services,
+        ):
+            names.append(other.name)
+
+    seen: set[str] = set()
+    out: list[str] = []
+    for raw in names:
+        base = raw.split("[", 1)[0]
+        if base in excluded or base in seen:
+            continue
+        seen.add(base)
+        out.append(base)
+    return out

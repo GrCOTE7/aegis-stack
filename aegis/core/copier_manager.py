@@ -32,6 +32,7 @@ from ..constants import (
     StorageBackends,
     WorkerBackends,
 )
+from .build_reporter import BuildReporter
 from .migration_generator import (
     generate_migrations_for_services,
     get_services_needing_migrations,
@@ -60,6 +61,7 @@ def generate_with_copier(
     vcs_ref: str | None = None,
     skip_llm_sync: bool = False,
     dev_mode: bool = False,
+    reporter: "BuildReporter | None" = None,
 ) -> Path:
     """
     Generate project using Copier template engine.
@@ -238,6 +240,8 @@ def generate_with_copier(
     # Generate project - Copier creates output_dir/project_slug via {{ project_slug }}/ wrapper
     # NOTE: _tasks removed from copier.yml - we run them ourselves below
     # Suppress Copier output unless --verbose flag is passed
+    if reporter is not None:
+        reporter.step("render", "Rendering project files")
     try:
         run_copy(
             template_source,
@@ -388,6 +392,9 @@ def generate_with_copier(
     # Skip LLM sync for postgres (requires running database server)
     should_skip_llm_sync = skip_llm_sync or not is_sqlite
 
+    if reporter is not None:
+        reporter.done("render")
+
     run_post_generation_tasks(
         project_path,
         include_migrations=run_migrations,
@@ -395,6 +402,7 @@ def generate_with_copier(
         seed_ai=ai_needs_seeding,
         skip_llm_sync=should_skip_llm_sync,
         project_slug=template_context["project_slug"],
+        reporter=reporter,
     )
 
     # Initialize git repository for Copier updates
@@ -425,8 +433,20 @@ def generate_with_copier(
             check=True,
             capture_output=True,
         )
+        # gc.auto=0: a plain commit may spawn a DETACHED background
+        # ``git gc --auto`` that keeps repacking .git/objects after this
+        # call returns — anything copying the fresh project (the test
+        # cache, user scripts) then races loose-object deletion. The
+        # user's own later git activity will gc normally.
         subprocess.run(
-            ["git", "commit", "-m", "Initial commit from Aegis Stack"],
+            [
+                "git",
+                "-c",
+                "gc.auto=0",
+                "commit",
+                "-m",
+                "Initial commit from Aegis Stack",
+            ],
             cwd=project_path,
             check=True,
             capture_output=True,

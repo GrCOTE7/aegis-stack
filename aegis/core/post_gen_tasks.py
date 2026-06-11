@@ -19,6 +19,7 @@ from aegis.constants import (
     StorageBackends,
     WorkerBackends,
 )
+from aegis.core.build_reporter import BuildReporter
 from aegis.core.components import COMPONENTS, ComponentType
 from aegis.core.file_manifest import (
     apply_cleanup_path,
@@ -167,6 +168,7 @@ def cleanup_components(project_path: Path, context: dict[str, Any]) -> None:
         worker_dir = project_path / "app/components/worker"
         api_dir = project_path / "app/components/backend/api"
         services_dir = project_path / "app/services"
+        lt_worker_dir = project_path / "app/services/load_test/worker"
 
         # Helper: remove all files matching a suffix pattern
         def _remove_backend_files(suffix: str) -> None:
@@ -185,9 +187,14 @@ def cleanup_components(project_path: Path, context: dict[str, Any]) -> None:
             api_file = api_dir / f"worker{suffix}"
             if api_file.exists():
                 api_file.unlink()
+            # Legacy flat variant (pre-package layout); newer templates ship
+            # the variant inside the load_test package instead.
             load_test_file = services_dir / f"load_test{suffix}"
             if load_test_file.exists():
                 load_test_file.unlink()
+            lt_service = lt_worker_dir / f"service{suffix}"
+            if lt_service.exists():
+                lt_service.unlink()
 
         # Helper: rename backend-specific files to canonical names
         def _rename_backend_files(suffix: str) -> set[str]:
@@ -221,7 +228,19 @@ def cleanup_components(project_path: Path, context: dict[str, Any]) -> None:
                     api_canonical.unlink()
                 api_backend.rename(api_canonical)
 
-            # Rename load_test service file
+            # Rename the load_test worker service variant INSIDE the package.
+            # (The legacy flat ``load_test_<backend>.py`` rename produced
+            # ``app/services/load_test.py``, which the ``load_test/`` package
+            # shadowed — non-arq stacks then imported the arq-only service
+            # and crashed at startup.)
+            lt_service_backend = lt_worker_dir / f"service{suffix}"
+            lt_service_canonical = lt_worker_dir / "service.py"
+            if lt_service_backend.exists():
+                if lt_service_canonical.exists():
+                    lt_service_canonical.unlink()
+                lt_service_backend.rename(lt_service_canonical)
+
+            # Legacy flat variant (pre-package layout) for older trees.
             lt_backend = services_dir / f"load_test{suffix}"
             lt_canonical = services_dir / "load_test.py"
             if lt_backend.exists():
@@ -968,6 +987,7 @@ def run_post_generation_tasks(
     seed_ai: bool = False,
     skip_llm_sync: bool = False,
     project_slug: str | None = None,
+    reporter: "BuildReporter | None" = None,
 ) -> bool:
     """
     Run all post-generation tasks for a project.
@@ -999,6 +1019,8 @@ def run_post_generation_tasks(
     typer.secho(t("postgen.setup_start"), fg=typer.colors.BLUE, bold=True)
 
     # Task 1: Install dependencies (CRITICAL - fails entire generation if this fails)
+    if reporter is not None:
+        reporter.step("deps", "Installing dependencies", "uv sync")
     deps_success = install_dependencies(project_path, python_version)
 
     if not deps_success:
@@ -1015,14 +1037,27 @@ def run_post_generation_tasks(
             f"Failed to install dependencies for project at {project_path}"
         )
 
+    if reporter is not None:
+        reporter.done("deps")
+
     # Task 2: Setup .env file (non-critical)
+    if reporter is not None:
+        reporter.step("env", "Environment configuration")
     setup_env_file(project_path)
+    if reporter is not None:
+        reporter.done("env")
 
     # Task 3: Run migrations if needed (non-critical)
+    if reporter is not None and include_migrations:
+        reporter.step("migrate", "Applying migrations", "alembic upgrade head")
     run_migrations(project_path, include_migrations, python_version)
+    if reporter is not None and include_migrations:
+        reporter.done("migrate")
 
     # Task 4: Seed LLM fixtures and optionally sync from APIs (non-critical)
     if seed_ai:
+        if reporter is not None:
+            reporter.step("llm", "Syncing LLM catalog")
         # Derive project_slug from path if not provided
         slug = project_slug or project_path.name
 
@@ -1039,9 +1074,15 @@ def run_post_generation_tasks(
             sync_success = sync_llm_catalog(project_path, slug, python_version)
             if not sync_success and fixtures_loaded:
                 typer.secho(t("postgen.llm_fixtures_fallback"), dim=True)
+        if reporter is not None:
+            reporter.done("llm")
 
     # Task 5: Format code (non-critical)
+    if reporter is not None:
+        reporter.step("format", "Formatting code", "ruff")
     format_code(project_path)
+    if reporter is not None:
+        reporter.done("format")
 
     # Print final status (only reached if deps succeeded)
     typer.echo()

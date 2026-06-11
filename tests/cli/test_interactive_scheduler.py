@@ -30,14 +30,17 @@ class TestInteractiveSchedulerFlow:
             # persistence=yes, ingress=no, observability=no, no auth service, no AI service
             # Note: database is skipped because scheduler adds it
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 True,  # scheduler
                 True,  # persistence
+                False,  # redis
                 False,  # ingress
                 False,  # observability
                 False,  # auth
+                False,  # payment
                 False,  # AI
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -50,7 +53,7 @@ class TestInteractiveSchedulerFlow:
             assert services == []  # No services selected
 
             # Verify correct calls were made (including blog service prompt)
-            assert mock_confirm.call_count == 9
+            assert mock_confirm.call_count == 12
         finally:
             clear_database_engine_selection()
 
@@ -65,14 +68,17 @@ class TestInteractiveSchedulerFlow:
             # persistence=yes, ingress=no, observability=no, no auth service, no AI service
             # Note: database is skipped because scheduler adds it
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 True,  # scheduler
                 True,  # persistence
+                False,  # redis
                 False,  # ingress
                 False,  # observability
                 False,  # auth
+                False,  # payment
                 False,  # AI
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -94,15 +100,18 @@ class TestInteractiveSchedulerFlow:
             # Mock user responses: redis=no, worker=no, scheduler=yes,
             # persistence=no, database=no, ingress=no, observability=no, no auth, no AI
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 True,  # scheduler
                 False,  # no persistence
                 False,  # database=no
+                False,  # redis
                 False,  # ingress=no
                 False,  # observability=no
                 False,  # no auth
+                False,  # payment
                 False,  # no AI
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -121,14 +130,17 @@ class TestInteractiveSchedulerFlow:
         try:
             # Mock user responses: scheduler=no, database=no, ingress=no, observability=no (other components)
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 False,  # scheduler
                 False,  # database
+                False,  # redis
                 False,  # ingress
                 False,  # observability
                 False,  # no auth
+                False,  # payment
                 False,  # no AI
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -153,14 +165,17 @@ class TestInteractiveSchedulerFlow:
             # persistence=yes, ingress=no, observability=no, no auth, no AI
             # The database prompt should be skipped since scheduler adds it
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 True,  # scheduler
                 True,  # persistence
+                False,  # redis
                 False,  # ingress
                 False,  # observability
                 False,  # no auth
+                False,  # payment
                 False,  # no AI
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -171,8 +186,8 @@ class TestInteractiveSchedulerFlow:
             assert any(c.startswith("database") for c in components)
             assert scheduler_backend == "sqlite"
 
-            # Should not have been prompted for generic database (9 confirms total, including blog)
-            assert mock_confirm.call_count == 9
+            # Should not have been prompted for generic database (12 confirms total, including blog)
+            assert mock_confirm.call_count == 12
         finally:
             clear_database_engine_selection()
 
@@ -188,18 +203,20 @@ class TestInteractiveSchedulerFlow:
         set_database_engine_selection("sqlite")
 
         try:
-            # Mock responses: redis=no, worker=yes (adds redis), scheduler=yes,
-            # persistence=yes, ingress=no, observability=no, no auth, no AI
+            # Mock responses: worker=yes (adds redis, redis prompt skipped),
+            # scheduler=yes, persistence=yes, ingress=no, observability=no
             # Note: database is skipped because scheduler adds it
             mock_confirm.side_effect = [
-                False,  # redis=no
-                True,  # worker=yes (auto-adds redis)
+                True,  # worker=yes (auto-adds redis; redis prompt skipped)
                 True,  # scheduler=yes
                 True,  # persistence=yes
                 False,  # ingress=no
                 False,  # observability=no
                 False,  # no auth
+                False,  # payment
                 False,  # no AI
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 
@@ -221,14 +238,17 @@ class TestInteractiveSchedulerFlow:
         try:
             # Mock responses: redis=no, worker=no, scheduler=no, database=yes, ingress=no, observability=no, no auth, no AI
             mock_confirm.side_effect = [
-                False,  # redis
                 False,  # worker
                 False,  # scheduler
                 True,  # database
+                False,  # redis
                 False,  # ingress
                 False,  # observability
                 False,  # no auth
+                False,  # payment
                 False,  # no AI
+                False,  # comms
+                False,  # insights
                 False,  # blog service
             ]
 

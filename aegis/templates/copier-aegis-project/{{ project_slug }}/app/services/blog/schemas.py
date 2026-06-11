@@ -41,6 +41,7 @@ class BlogPostCreate(BaseModel):
     seo_title: str | None = Field(default=None, max_length=200)
     seo_description: str | None = Field(default=None, max_length=320)
     hero_image_url: str | None = Field(default=None, max_length=1024)
+    syndicate_targets: list[str] | None = None
 
 
 class BlogPostUpdate(BaseModel):
@@ -54,6 +55,7 @@ class BlogPostUpdate(BaseModel):
     seo_title: str | None = Field(default=None, max_length=200)
     seo_description: str | None = Field(default=None, max_length=320)
     hero_image_url: str | None = Field(default=None, max_length=1024)
+    syndicate_targets: list[str] | None = None
 
 
 class BlogPostResponse(BaseModel):
@@ -73,6 +75,7 @@ class BlogPostResponse(BaseModel):
     seo_title: str | None
     seo_description: str | None
     hero_image_url: str | None
+    syndicate_targets: list[str] | None = None
     tags: list[BlogTagResponse] = Field(default_factory=list)
 
 
@@ -112,6 +115,12 @@ class ExportedPost(BaseModel):
     seo_title: str | None = None
     seo_description: str | None = None
     hero_image_url: str | None = None
+    syndicate_targets: list[str] | None = None
+    # Absolute origin URL for this post, injected on export so syndicated
+    # copies (Dev.to / Hashnode read this frontmatter key) point rel=canonical
+    # back here. Recomputed from PUBLIC_BASE_URL on every export; on import a
+    # foreign value is ignored so it can't override the local origin.
+    canonical_url: str | None = None
     tag_slugs: list[str] = Field(default_factory=list)
 
 

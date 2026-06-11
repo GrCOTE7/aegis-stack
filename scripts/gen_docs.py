@@ -10,32 +10,15 @@ import mkdocs_gen_files
 
 print("--- Running gen_docs.py ---")
 
-# Image path mappings: GitHub path -> MkDocs path
-# Maps docs/images/* references in README.md to images/* for MkDocs
+# Special-case image rewrites that need more than a path fix. Plain
+# ``![...](docs/images/...)`` references are handled generically below —
+# new README images need no entry here.
 IMAGE_PATH_MAPPINGS = {
-    # GIFs
-    "![Aegis Stack Quick Start Demo](docs/images/aegis-demo.gif)": "![Aegis Stack Quick Start Demo](images/aegis-demo.gif)",
-    "![Component Evolution Demo](docs/images/aegis-evolution-demo.gif)": "![Component Evolution Demo](images/aegis-evolution-demo.gif)",
-    "![AI Service Demo](docs/images/aegis-ai-demo.gif)": "![AI Service Demo](images/aegis-ai-demo.gif)",
-    "![Ron Swanson](docs/images/ron-swanson.gif)": "![Ron Swanson](images/ron-swanson.gif)",
-    # Static images
-    "![CLI Health Check](docs/images/cli_health_check.png)": "![CLI Health Check](images/cli_health_check.png)",
-    # Overseer Dashboard
-    "![Overseer](docs/images/overseer-demo.gif)": "![Overseer](images/overseer-demo.gif)",
-    # CLI Demo
-    "![CLI Demo](docs/images/cli-demo.gif)": "![CLI Demo](images/cli-demo.gif)",
-    # Illiana Demo
-    "![Illiana Demo](docs/images/illiana-demo.gif)": "![Illiana Demo](images/illiana-demo.gif)",
     # Dashboard - single dark image -> dual light/dark
     "![System Health Dashboard](docs/images/dashboard-dark.png)": (
         "![System Health Dashboard](images/dashboard-light.png#only-light)\n"
         "![System Health Dashboard](images/dashboard-dark.png#only-dark)"
     ),
-    # Dashboard - light/dark syntax (remove docs/ prefix)
-    "![System Health Dashboard](docs/images/dashboard-light.png#only-light)": "![System Health Dashboard](images/dashboard-light.png#only-light)",
-    "![System Health Dashboard](docs/images/dashboard-dark.png#only-dark)": "![System Health Dashboard](images/dashboard-dark.png#only-dark)",
-    # Legacy dashboard image
-    "![System Health Dashboard](docs/images/dashboard.png)": "![System Health Dashboard](images/dashboard.png)",
 }
 
 # Copy the root README.md to be the documentation's index page.
@@ -44,9 +27,13 @@ IMAGE_PATH_MAPPINGS = {
 with open("README.md") as readme:
     content = readme.read()
 
-    # Apply all image path mappings
+    # Apply the special-case image rewrites first (their keys still carry
+    # the ``docs/`` prefix), then strip the prefix from every remaining
+    # markdown image: GitHub renders README images from ``docs/images/...``
+    # but the docs root has no ``docs/`` segment.
     for github_path, mkdocs_path in IMAGE_PATH_MAPPINGS.items():
         content = content.replace(github_path, mkdocs_path)
+    content = content.replace("](docs/images/", "](images/")
     # Strip the ``docs/`` prefix from any ``<img src="docs/images/...">`` so
     # MkDocs serves them from ``images/...`` (the docs root has no ``docs/``
     # segment, but GitHub's renderer needs the prefix). Catches the hero SVG

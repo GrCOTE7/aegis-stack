@@ -7,7 +7,7 @@ from enum import StrEnum
 from typing import Any
 
 from pydantic import BaseModel
-from sqlalchemy import CheckConstraint, Column, String, Text, UniqueConstraint
+from sqlalchemy import JSON, CheckConstraint, Column, String, Text, UniqueConstraint
 from sqlmodel import Field, SQLModel
 
 from .constants import BlogPostStatus
@@ -54,6 +54,13 @@ class BlogPost(SQLModel, table=True):
     seo_title: str | None = Field(default=None, max_length=200)
     seo_description: str | None = Field(default=None, max_length=320)
     hero_image_url: str | None = Field(default=None, max_length=1024)
+    # Platforms this post is syndicated to (slugs: "devto", "hashnode",
+    # "medium"). Record-keeping for the syndication workflow; the export
+    # frontmatter carries it so platform tooling can route the post. NULL =
+    # not syndicated anywhere.
+    syndicate_targets: list[str] | None = Field(
+        default=None, sa_column=Column(JSON, nullable=True)
+    )
 
 
 class BlogTag(SQLModel, table=True):

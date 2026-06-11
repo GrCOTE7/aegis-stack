@@ -7,6 +7,8 @@ from sqlalchemy import func
 from sqlmodel import delete, select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
+from app.core.config import settings
+
 from .constants import STALE_DRAFT_DAYS, BlogPostStatus, ImportConflictPolicy
 from .models import (
     BlogHealthSummary,
@@ -137,6 +139,10 @@ class BlogService:
             seo_title=payload.seo_title,
             seo_description=payload.seo_description,
             hero_image_url=payload.hero_image_url,
+            # Empty list == not syndicated; collapse to NULL so the column
+            # has a single "empty" representation (no NULL-vs-[] ambiguity
+            # in queries).
+            syndicate_targets=payload.syndicate_targets or None,
         )
         self.db.add(post)
         await self.db.flush()
@@ -170,6 +176,10 @@ class BlogService:
             post.seo_description = payload.seo_description
         if payload.hero_image_url is not None:
             post.hero_image_url = payload.hero_image_url
+        if payload.syndicate_targets is not None:
+            # ``[]`` clears targets (stored as NULL); ``None`` leaves them
+            # untouched for partial updates.
+            post.syndicate_targets = payload.syndicate_targets or None
 
         post.updated_at = utcnow_naive()
         self.db.add(post)
@@ -344,6 +354,15 @@ class BlogService:
                     seo_title=post.seo_title,
                     seo_description=post.seo_description,
                     hero_image_url=post.hero_image_url,
+                    syndicate_targets=post.syndicate_targets,
+                    # Origin URL, recomputed from PUBLIC_BASE_URL every export so
+                    # syndicated copies (Dev.to/Hashnode read this frontmatter
+                    # key) point rel=canonical back here. Built from the
+                    # normalized ``post.slug`` — the canonical form the
+                    # /blog/{slug} page resolves to.
+                    canonical_url=(
+                        f"{settings.PUBLIC_BASE_URL.rstrip('/')}/blog/{post.slug}"
+                    ),
                     tag_slugs=[tag.slug for tag in tags],
                 )
             )
@@ -402,6 +421,10 @@ class BlogService:
                     seo_title=incoming.seo_title,
                     seo_description=incoming.seo_description,
                     hero_image_url=incoming.hero_image_url,
+                    syndicate_targets=incoming.syndicate_targets or None,
+                    # ``canonical_url`` from the import is intentionally
+                    # dropped — a foreign origin must not override the local
+                    # one; export recomputes it from PUBLIC_BASE_URL.
                 )
                 self.db.add(created)
                 await self.db.flush()
@@ -446,6 +469,9 @@ class BlogService:
         post.seo_title = payload.seo_title
         post.seo_description = payload.seo_description
         post.hero_image_url = payload.hero_image_url
+        if payload.syndicate_targets is not None:
+            post.syndicate_targets = payload.syndicate_targets or None
+        # ``canonical_url`` is not persisted — see import_posts create path.
 
     async def _get_post_by_slug_any_status(self, slug: str) -> BlogPost | None:
         result = await self.db.exec(
@@ -558,6 +584,7 @@ class BlogService:
             seo_title=post.seo_title,
             seo_description=post.seo_description,
             hero_image_url=post.hero_image_url,
+            syndicate_targets=post.syndicate_targets,
             tags=[self._tag_response(tag) for tag in tags],
         )
 
