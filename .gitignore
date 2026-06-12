@@ -144,3 +144,7 @@ my-app/
 
 # Translation review artifacts
 aegis_*_review.csv
+demo-*/
+
+# Generated-project artifact if aegis init ever runs at repo root
+/.copier-answers.yml

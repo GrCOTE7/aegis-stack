@@ -101,7 +101,9 @@ class TestComponentIntegration:
             assert cache_status.metadata["connected_clients"] == 2
 {% endif %}
 
-{%- if include_worker %}
+{#- These worker-health tests mock arq queue inspection (zcard on
+    sorted sets); the dramatiq/taskiq health paths need their own. -#}
+{%- if include_worker and worker_backend == "arq" %}
     @pytest.mark.asyncio
     async def test_worker_health_redis_connection_failure(self) -> None:
         """Test worker health check when Redis connection fails."""

@@ -68,6 +68,22 @@ class TestPostToMarkdown:
         assert "release" in result
         assert "2024-01-15T10:30:00" in result
 
+    def test_post_to_markdown_syndication_fields(self) -> None:
+        """canonical_url + syndicate_targets land in frontmatter."""
+        post = ExportedPost(
+            title="Syndicated",
+            slug="syndicated",
+            content="body",
+            syndicate_targets=["devto", "hashnode"],
+            canonical_url="https://pulse.example.com/blog/syndicated",
+        )
+        result = post_to_markdown(post)
+
+        assert "canonical_url: https://pulse.example.com/blog/syndicated" in result
+        assert "syndicate_targets:" in result
+        assert "devto" in result
+        assert "hashnode" in result
+
 
 class TestMarkdownToPost:
     """Tests for markdown_to_post parsing."""
@@ -213,6 +229,21 @@ class TestRoundTrip:
         assert result.content == original.content
         assert result.status == original.status
         assert set(result.tag_slugs) == set(original.tag_slugs)
+
+    def test_syndication_roundtrip(self) -> None:
+        """syndicate_targets + canonical_url survive markdown round-trip."""
+        original = ExportedPost(
+            title="Syndicated",
+            slug="syndicated",
+            content="body",
+            syndicate_targets=["devto", "hashnode"],
+            canonical_url="https://pulse.example.com/blog/syndicated",
+        )
+
+        result = markdown_to_post(post_to_markdown(original))
+
+        assert set(result.syndicate_targets or []) == {"devto", "hashnode"}
+        assert result.canonical_url == original.canonical_url
 
 
 class TestPostsToJson:

@@ -47,6 +47,7 @@ MESSAGES: dict[str, str] = {
     "init.removing_dir": "既存ディレクトリを削除中：{path}",
     "init.creating": "プロジェクトを作成中：{name}",
     "init.error": "プロジェクト作成エラー：{error}",
+    "init.replay_hint": "Recreate this stack anytime:",
     # ── 対話モード：セクション見出し ───────────────────────────────────
     "interactive.component_selection": "コンポーネント選択",
     "interactive.service_selection": "サービス選択",
@@ -151,6 +152,7 @@ MESSAGES: dict[str, str] = {
     ),
     "interactive.ai_provider_options": "プロバイダー一覧：",
     "interactive.ai_provider_recommended": "（推奨）",
+    "interactive.ai_provider.public": "LLM7.io - Free public endpoint (No API key)",
     "interactive.ai_provider.openai": "OpenAI — GPT モデル（有料）",
     "interactive.ai_provider.anthropic": "Anthropic — Claude モデル（有料）",
     "interactive.ai_provider.google": "Google — Gemini モデル（無料枠あり）",

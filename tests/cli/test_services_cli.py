@@ -264,7 +264,10 @@ class TestInteractiveServiceSelection:
                 False,  # observability
                 True,  # auth service
                 True,  # database confirmation for auth
+                False,  # payment service
                 False,  # AI service
+                False,  # comms service
+                False,  # insights service
                 False,  # blog service
             ]
 
@@ -290,7 +293,10 @@ class TestInteractiveServiceSelection:
                 False,  # ingress
                 False,  # observability
                 False,  # auth service
+                False,  # payment service
                 False,  # AI service
+                False,  # comms service
+                False,  # insights service
                 False,  # blog service
             ]
 

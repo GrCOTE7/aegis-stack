@@ -43,6 +43,7 @@ MESSAGES: dict[str, str] = {
     "init.removing_dir": "正在清理已有目錄：{path}",
     "init.creating": "正在創建專案：{name}",
     "init.error": "專案創建失敗：{error}",
+    "init.replay_hint": "Recreate this stack anytime:",
     # ── 交互：板塊標題 ────────────────────────────────────────────────
     "interactive.component_selection": "元件選擇",
     "interactive.service_selection": "服務選擇",
@@ -125,6 +126,7 @@ MESSAGES: dict[str, str] = {
     "interactive.ai_provider_intro": "請選擇要集成的供應商（支援多選）",
     "interactive.ai_provider_options": "可選供應商：",
     "interactive.ai_provider_recommended": "（推薦）",
+    "interactive.ai_provider.public": "LLM7.io - Free public endpoint (No API key)",
     "interactive.ai_provider.openai": "OpenAI — GPT 系列（付費）",
     "interactive.ai_provider.anthropic": "Anthropic — Claude 系列（付費）",
     "interactive.ai_provider.google": "Google — Gemini 系列（免費額度）",

@@ -5,7 +5,9 @@ Pytest configuration for CLI integration tests.
 import hashlib
 import os
 import shutil
+import subprocess
 import tempfile
+import time
 from collections.abc import Callable, Generator, Iterable
 from dataclasses import dataclass
 from pathlib import Path
@@ -175,6 +177,17 @@ def project_template_cache(
                         raise FileNotFoundError(
                             f"Generated project not found at expected staging path: {staged}"
                         )
+                    # Pack the repo BEFORE publish: generation's git commit
+                    # can leave (or detach) a ``git gc`` that deletes loose
+                    # .git/objects/* dirs after the cache goes live, racing
+                    # every concurrent copytree reader. A synchronous gc
+                    # here leaves a stable, packed object store (and makes
+                    # the per-test copies faster: fewer files).
+                    subprocess.run(
+                        ["git", "-c", "gc.autoDetach=false", "gc", "--quiet"],
+                        cwd=staged,
+                        capture_output=True,
+                    )
                     # Atomic publish: rename only succeeds whole or not at all,
                     # so a partial project is never visible to other workers.
                     staged.rename(target)
@@ -220,7 +233,15 @@ def project_factory(
 
         source = project_template_cache(spec)
         destination = temp_output_dir / source.name
-        shutil.copytree(source, destination)
+        try:
+            shutil.copytree(source, destination)
+        except shutil.Error:
+            # Residual safety net for source churn mid-copy (a lingering
+            # git gc in the cached repo): the churn settles in seconds,
+            # so one clean retry is enough.
+            shutil.rmtree(destination, ignore_errors=True)
+            time.sleep(2)
+            shutil.copytree(source, destination)
         return destination
 
     return _factory

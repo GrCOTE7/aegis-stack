@@ -73,6 +73,9 @@ class TestWorkerEndpoints:
             yield client
 {%- endif %}
 
+{% if worker_backend == "arq" %}
+    # These two enqueue tests patch arq's ``create_pool``; dramatiq and
+    # taskiq pools expose a broker API instead and need their own tests.
     @patch("app.components.worker.pools.create_pool")
     async def test_enqueue_task_with_kwargs(
         self, mock_create_pool, async_client, auth_headers
@@ -169,6 +172,8 @@ class TestWorkerEndpoints:
             _queue_name="arq:queue:system",
             _defer_by=None
         )
+
+{% endif %}
 
     async def test_enqueue_task_invalid_queue_type(self, async_client, auth_headers):
         """Test error handling for invalid queue type."""

@@ -62,7 +62,7 @@ async def test_publish_event_swallows_redis_errors() -> None:
 # Group 2: EventPublishMiddleware (TaskIQ only)
 # ---------------------------------------------------------------------------
 
-from app.components.worker.middleware_taskiq import EventPublishMiddleware  # noqa: E402
+from app.components.worker.middleware import EventPublishMiddleware  # noqa: E402
 
 
 def test_set_queue_name_fluent() -> None:
@@ -138,7 +138,7 @@ async def test_post_execute_failed() -> None:
 # Group 2: EventPublishMiddleware (Dramatiq only)
 # ---------------------------------------------------------------------------
 
-from app.components.worker.middleware_dramatiq import EventPublishMiddleware  # noqa: E402
+from app.components.worker.middleware import EventPublishMiddleware  # noqa: E402
 
 
 def test_before_process_message_publishes_job_started() -> None:

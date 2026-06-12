@@ -50,6 +50,7 @@ MESSAGES: dict[str, str] = {
     "init.removing_dir": "기존 디렉토리 삭제 중: {path}",
     "init.creating": "프로젝트 생성 중: {name}",
     "init.error": "프로젝트 생성 오류: {error}",
+    "init.replay_hint": "Recreate this stack anytime:",
     # ── Interactive: section headers ───────────────────────────────────
     "interactive.component_selection": "컴포넌트 선택",
     "interactive.service_selection": "서비스 선택",
@@ -142,6 +143,7 @@ MESSAGES: dict[str, str] = {
     "interactive.ai_provider_intro": ("포함할 AI 제공자를 선택하세요 (다중 선택 가능)"),
     "interactive.ai_provider_options": "제공자 옵션:",
     "interactive.ai_provider_recommended": "(권장)",
+    "interactive.ai_provider.public": "LLM7.io - Free public endpoint (No API key)",
     "interactive.ai_provider.openai": "OpenAI - GPT 모델 (유료)",
     "interactive.ai_provider.anthropic": "Anthropic - Claude 모델 (유료)",
     "interactive.ai_provider.google": "Google - Gemini 모델 (무료 티어)",

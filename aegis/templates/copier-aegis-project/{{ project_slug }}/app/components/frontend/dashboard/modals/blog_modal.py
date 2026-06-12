@@ -825,6 +825,107 @@ class TagPicker(ft.Container):
         await self._load()
 
 
+# Platforms the export frontmatter understands (see
+# app/services/blog/models.py ``syndicate_targets``): slug -> display label.
+_SYNDICATE_PLATFORMS: list[tuple[str, str]] = [
+    ("devto", "Dev.to"),
+    ("hashnode", "Hashnode"),
+    ("medium", "Medium"),
+]
+
+
+class SyndicatePicker(ft.Container):
+    """Toggle-chip picker for syndication targets.
+
+    Mirrors the form-field shape used elsewhere in the editor: a label
+    above a control area. Unlike TagPicker the platform set is fixed, so
+    each platform renders as a single toggleable chip instead of a
+    dropdown-plus-chips arrangement. The export pipeline injects the
+    canonical URL regardless; these targets are routing metadata so
+    platform tooling knows where each post goes.
+    """
+
+    def __init__(self, on_change: Callable[[], None] | None = None) -> None:
+        super().__init__()
+        self._on_change_cb = on_change
+        self._selected: list[str] = []
+        self._chip_row = ft.Row(wrap=True, spacing=Theme.Spacing.SM)
+        self.content = ft.Column(
+            [
+                LabelText("Syndicate to"),
+                ft.Container(height=4),
+                self._chip_row,
+                ft.Container(height=4),
+                SecondaryText(
+                    "Exports include a canonical link back to the original post.",
+                    size=Theme.Typography.BODY_SMALL,
+                ),
+            ],
+            spacing=0,
+            tight=True,
+        )
+        self._refresh()
+
+    def _refresh(self) -> None:
+        self._chip_row.controls = [
+            self._chip(slug, label) for slug, label in _SYNDICATE_PLATFORMS
+        ]
+        if self.page:
+            self.update()
+
+    def _chip(self, slug: str, label: str) -> ft.Control:
+        selected = slug in self._selected
+        return ft.GestureDetector(
+            content=ft.Container(
+                content=ft.Text(
+                    label,
+                    size=12,
+                    color=(
+                        ft.Colors.ON_SURFACE
+                        if selected
+                        else ft.Colors.ON_SURFACE_VARIANT
+                    ),
+                ),
+                padding=ft.padding.symmetric(horizontal=10, vertical=2),
+                bgcolor=(
+                    ft.Colors.with_opacity(0.10, ft.Colors.PRIMARY)
+                    if selected
+                    else ft.Colors.TRANSPARENT
+                ),
+                border=ft.border.all(
+                    1, ft.Colors.PRIMARY if selected else ft.Colors.OUTLINE
+                ),
+                border_radius=10,
+                height=22,
+            ),
+            on_tap=lambda _, s=slug: self._toggle(s),
+            mouse_cursor=ft.MouseCursor.CLICK,
+        )
+
+    def _toggle(self, slug: str) -> None:
+        if slug in self._selected:
+            self._selected = [s for s in self._selected if s != slug]
+        else:
+            self._selected.append(slug)
+        # Keep storage order stable (platform order, not click order) so
+        # repeated saves don't churn the JSON column.
+        self._selected = [s for s, _ in _SYNDICATE_PLATFORMS if s in self._selected]
+        self._refresh()
+        if self._on_change_cb is not None:
+            self._on_change_cb()
+
+    @property
+    def targets(self) -> list[str]:
+        return list(self._selected)
+
+    def set_targets(self, targets: list[str]) -> None:
+        # Unknown slugs are dropped defensively; the picker can only
+        # represent the platforms it knows how to render.
+        wanted = set(targets)
+        self._selected = [s for s, _ in _SYNDICATE_PLATFORMS if s in wanted]
+        self._refresh()
+
+
 class EditorTab(ft.Container):
     """Create and edit blog posts."""
 
@@ -888,6 +989,7 @@ class EditorTab(ft.Container):
             label="Hero Image URL",
             on_change=lambda _: self._mark_dirty(),
         )
+        self._syndicate = SyndicatePicker(on_change=self._mark_dirty)
         self._preview = ft.Container(
             content=SecondaryText("Markdown preview"),
             padding=ft.padding.all(Theme.Spacing.MD),
@@ -932,6 +1034,7 @@ class EditorTab(ft.Container):
                         spacing=Theme.Spacing.MD,
                         vertical_alignment=ft.CrossAxisAlignment.START,
                     ),
+                    self._syndicate,
                 ],
                 spacing=Theme.Spacing.SM,
             ),
@@ -1100,6 +1203,8 @@ class EditorTab(ft.Container):
         self._seo_title.value = str(post.get("seo_title") or "")
         self._seo_description.value = str(post.get("seo_description") or "")
         self._hero.value = str(post.get("hero_image_url") or "")
+        targets = post.get("syndicate_targets")
+        self._syndicate.set_targets(targets if isinstance(targets, list) else [])
         # Advanced stays collapsed on load; the user opens it explicitly
         # via the Advanced toggle if they want to edit those fields.
         self._set_advanced_visible(False)
@@ -1164,6 +1269,7 @@ class EditorTab(ft.Container):
         ):
             field.value = ""
         self._tags.clear_tags()
+        self._syndicate.set_targets([])
         self._set_advanced_visible(False)
         self._update_preview()
         self._dirty = False
@@ -1277,6 +1383,11 @@ class EditorTab(ft.Container):
             "seo_title": (self._seo_title.value or "").strip() or None,
             "seo_description": (self._seo_description.value or "").strip() or None,
             "hero_image_url": (self._hero.value or "").strip() or None,
+            # Always send the full list: ``[]`` clears targets on update
+            # (the service collapses it to NULL); ``None`` would mean
+            # "leave untouched", which an editor sending full state never
+            # wants.
+            "syndicate_targets": self._syndicate.targets,
         }
 
     @staticmethod

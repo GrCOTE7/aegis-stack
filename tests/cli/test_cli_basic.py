@@ -36,6 +36,10 @@ class TestCLIBasics:
         )  # Updated to match actual available components
         assert "--no-interactive" in clean_output
         assert "--force" in clean_output
+        # Guided is the interactive default; --quick is the escape hatch
+        # back to the classic one-line prompts.
+        assert "--guided" in clean_output
+        assert "--quick" in clean_output
 
     def test_version_command(self) -> None:
         """Test version command."""

@@ -7,27 +7,29 @@ from typing import cast
 
 import typer
 
+from ..cli.build_plan import BuildPlan, resolve_build_plan
 from ..cli.callbacks import (
     validate_and_resolve_components,
     validate_and_resolve_services,
 )
-from ..cli.interactive import interactive_project_selection
+from ..cli.guided import GuidedBuildError, run_guided_init_flow
+from ..cli.interactive import (
+    get_skip_llm_sync_selection,
+    interactive_project_selection,
+)
 from ..cli.utils import detect_scheduler_backend
 from ..cli.validators import validate_project_name
 from ..config.defaults import DEFAULT_PYTHON_VERSION, SUPPORTED_PYTHON_VERSIONS
 from ..constants import StorageBackends
 from ..core.ai_service_parser import BACKENDS, FRAMEWORKS, PROVIDERS
 from ..core.component_utils import (
-    clean_component_names,
     extract_base_component_name,
-    restore_engine_info,
 )
 from ..core.components import (
     COMPONENTS,
     CORE_COMPONENTS,
     ComponentType,
 )
-from ..core.dependency_resolver import DependencyResolver
 from ..core.service_resolver import ServiceResolver
 from ..core.template_generator import TemplateGenerator
 from ..i18n import lazy_t, t
@@ -39,6 +41,183 @@ _SERVICES_HELP = lazy_t(
     backends="|".join(sorted(BACKENDS)),
     providers="|".join(sorted(PROVIDERS)),
 )
+
+
+def build_replay_command(
+    project_name: str,
+    components: list[str],
+    services: list[str],
+) -> str:
+    """The uvx one-liner that reproduces this exact stack non-interactively.
+
+    Selections carry their bracket syntax (``scheduler[sqlite]``,
+    ``auth[rbac]``, ``ai[memory,pydantic-ai,public,rag]``), so feeding them
+    back through ``--components``/``--services`` re-resolves to the same
+    project. CORE components ship in every project and are dropped.
+    """
+    parts = [f"uvx aegis-stack init {project_name}"]
+    # Defensive base-name dedupe: prefer the bracketed variant when both a
+    # plain and a configured form of the same component slipped through.
+    by_base: dict[str, str] = {}
+    order: list[str] = []
+    for comp in components:
+        base = comp.split("[", 1)[0]
+        if base in CORE_COMPONENTS:
+            continue
+        if base not in by_base:
+            by_base[base] = comp
+            order.append(base)
+        elif "[" in comp and "[" not in by_base[base]:
+            by_base[base] = comp
+    non_core = [by_base[base] for base in order]
+    # Quoted: bracket syntax is a glob pattern to zsh (and friends), so an
+    # unquoted database[postgres] makes the shell error before uvx runs.
+    if non_core:
+        parts.append(f'--components "{",".join(non_core)}"')
+    if services:
+        parts.append(f'--services "{",".join(services)}"')
+    parts.append("--no-interactive")
+    return " ".join(parts)
+
+
+def _remove_existing_project(project_path: Path) -> None:
+    """Remove an existing project dir, tolerating git background races."""
+    import errno
+    import shutil
+
+    typer.echo(t("init.removing_dir", path=project_path))
+
+    def _ignore_vanished(_func: object, path: str, exc_info: object) -> None:
+        # Two symmetric races against background git activity
+        # (pack-refs, gc, fsmonitor) on a ``.git`` we just created:
+        #
+        # 1. A file is enumerated then unlinked by git before we
+        #    can ``unlink`` it ourselves. Manifests as
+        #    ``FileNotFoundError`` — safe to ignore, the walk has
+        #    already done the work.
+        # 2. New files appear inside a directory between our walk
+        #    and the final ``rmdir`` of that directory, leaving it
+        #    non-empty. Manifests as ``OSError`` with
+        #    ``errno.ENOTEMPTY``. Re-rmtree the offending subdir;
+        #    its fresh contents will get cleaned up. The recursion
+        #    is bounded by how many times git can race us, which
+        #    in practice is once.
+        exc = exc_info[1] if isinstance(exc_info, tuple) else None
+        if isinstance(exc, FileNotFoundError):
+            return
+        if isinstance(exc, OSError) and exc.errno == errno.ENOTEMPTY:
+            shutil.rmtree(path, onerror=_ignore_vanished)
+            return
+        raise exc  # type: ignore[misc]
+
+    shutil.rmtree(project_path, onerror=_ignore_vanished)
+
+
+def _print_guided_receipt(plan: BuildPlan, project_path: Path) -> None:
+    """Persistent scrollback summary after the guided experience closes.
+
+    The full journey lived in the (ephemeral) alternate screen; this is
+    the part worth keeping: what was built, how to run it, how to rebuild
+    it. Reuses the post-gen i18n strings so quick and guided stay in step.
+    """
+    from rich.console import Console
+    from rich.text import Text
+
+    from ..cli.brand import AEGIS_TEAL
+
+    typer.echo()
+    typer.secho(t("postgen.ready"), fg=typer.colors.GREEN, bold=True)
+    typer.echo(t("postgen.next_cd", path=project_path))
+    typer.echo(t("postgen.next_serve"))
+    typer.echo(t("postgen.next_dashboard"))
+    typer.echo()
+    typer.secho(t("init.replay_hint"), fg=typer.colors.CYAN, bold=True)
+    replay = build_replay_command(plan.project_name, plan.components, plan.services)
+    # soft_wrap: emit one logical line. Rich would otherwise hard-wrap to
+    # the terminal width with REAL newlines, breaking copy-paste of the
+    # command; soft-wrapped output copies clean even when it displays
+    # across multiple rows.
+    Console(highlight=False).print(
+        Text(f"   {replay}", style=AEGIS_TEAL), soft_wrap=True
+    )
+
+
+def _show_config_and_confirm(
+    project_name: str,
+    selected_components: list[str],
+    selected_services: list[str],
+    template_gen: TemplateGenerator,
+    yes: bool,
+) -> None:
+    """Quick-mode preview: the terminal config dump plus the [Y/n] confirm.
+
+    The guided flow renders the same information as its REVIEW screen and
+    skips this entirely.
+    """
+    typer.echo()
+    typer.secho(t("init.config_title"), fg=typer.colors.CYAN, bold=True)
+    typer.echo(
+        f"   {typer.style(t('init.config_name'), fg=typer.colors.CYAN)} {project_name}"
+    )
+    typer.echo(
+        f"   {typer.style(t('init.config_core'), fg=typer.colors.CYAN)} {', '.join(CORE_COMPONENTS)}"
+    )
+
+    # Show infrastructure components
+    infra_components = []
+    for name in selected_components:
+        # Handle database[engine] format
+        base_name = extract_base_component_name(name)
+        if (
+            base_name in COMPONENTS
+            and COMPONENTS[base_name].type == ComponentType.INFRASTRUCTURE
+        ):
+            infra_components.append(name)
+
+    if infra_components:
+        typer.echo(
+            f"   {typer.style(t('init.config_infra'), fg=typer.colors.CYAN)} {', '.join(infra_components)}"
+        )
+
+    # Show selected services
+    if selected_services:
+        typer.echo(
+            f"   {typer.style(t('init.config_services'), fg=typer.colors.CYAN)} {', '.join(selected_services)}"
+        )
+
+    # Show template files that will be generated
+    template_files = template_gen.get_template_files()
+    if template_files:
+        typer.secho("\n" + t("init.component_files"), fg=typer.colors.CYAN, bold=True)
+        for file_path in template_files:
+            typer.echo(f"   • {file_path}")
+
+    # Show entrypoints that will be created
+    entrypoints = template_gen.get_entrypoints()
+    if entrypoints:
+        typer.secho("\n" + t("init.entrypoints"), fg=typer.colors.CYAN, bold=True)
+        for entrypoint in entrypoints:
+            typer.echo(f"   • {entrypoint}")
+
+    # Show worker queues that will be created
+    worker_queues = template_gen.get_worker_queues()
+    if worker_queues:
+        typer.secho("\n" + t("init.worker_queues"), fg=typer.colors.CYAN, bold=True)
+        for queue in worker_queues:
+            typer.echo(f"   • {queue}")
+
+    # Show dependency information using template generator
+    deps = template_gen._get_pyproject_deps()
+    if deps:
+        typer.secho("\n" + t("init.dependencies"), fg=typer.colors.CYAN, bold=True)
+        for dep in deps:
+            typer.echo(f"   • {dep}")
+
+    # Confirm before proceeding
+    typer.echo()
+    if not yes and not typer.confirm(t("init.confirm_create"), default=True):
+        typer.secho(t("init.cancelled"), fg="red")
+        raise typer.Exit(0)
 
 
 def init_command(
@@ -92,6 +271,14 @@ def init_command(
         False,
         "--dev",
         help=lazy_t("init.help_opt_dev"),
+    ),
+    guided: bool = typer.Option(
+        True,
+        "--guided/--quick",
+        help=(
+            "Full-screen guided setup (the default). --quick uses the "
+            "classic one-line prompts instead."
+        ),
     ),
 ) -> None:
     """
@@ -229,192 +416,131 @@ def init_command(
             )
 
     if interactive and not components and not services:
-        (
-            selected_components,
-            scheduler_backend,
-            interactive_services,
-            interactive_skip_llm_sync,
-        ) = interactive_project_selection()
-        # Use interactive selection if user chose to skip (overrides CLI default)
-        if interactive_skip_llm_sync:
-            skip_llm_sync = True
+        import shutil as _shutil
+        import sys as _sys
 
-        # Resolve dependencies for interactively selected components
-        if selected_components:
-            # Clean component names for dependency resolution (remove engine info)
-            # Save original with engine info
-            original_selected = list(selected_components)
-            clean_components = clean_component_names(selected_components)
+        from ..cli.guided import MIN_HEIGHT, MIN_WIDTH
 
-            resolved_clean = DependencyResolver.resolve_dependencies(clean_components)
+        # Guided is the default but needs a real, big-enough terminal
+        # (raw keys + alternate screen). Anything else — CI, piped stdin,
+        # tiny terminals — quietly falls back to the quick prompts.
+        term = _shutil.get_terminal_size()
+        use_guided = (
+            guided
+            and _sys.stdin.isatty()
+            and _sys.stdout.isatty()
+            and term.columns >= MIN_WIDTH
+            and term.lines >= MIN_HEIGHT
+        )
+        if use_guided:
+            # The full-screen experience end to end: welcome, questions,
+            # REVIEW (replacing the config dump + [Y/n]), the build itself
+            # (output captured; a building screen holds the frame), and the
+            # DONE card. Same engine, same resolution, same generation —
+            # only the rendering differs. A compact receipt persists in
+            # normal scrollback afterwards.
+            project_path = base_output_dir / project_name
 
-            # Restore engine info for display components
-            selected_components = restore_engine_info(resolved_clean, original_selected)
+            from ..core.build_reporter import BuildReporter
 
-            # Calculate auto-added components using clean names
-            clean_selected_only = clean_component_names(
-                [c for c in selected_components if c not in CORE_COMPONENTS]
+            def _guided_builder(plan: "BuildPlan", reporter: BuildReporter) -> Path:
+                if force and project_path.exists():
+                    _remove_existing_project(project_path)
+                from ..core.copier_manager import generate_with_copier
+
+                assert plan.template_gen is not None
+                generate_with_copier(
+                    plan.template_gen,
+                    base_output_dir,
+                    vcs_ref=to_version,
+                    skip_llm_sync=skip_llm_sync or get_skip_llm_sync_selection(),
+                    dev_mode=dev,
+                    reporter=reporter,
+                )
+                return project_path
+
+            try:
+                plan, _ = run_guided_init_flow(
+                    project_name,
+                    python_version,
+                    yes=yes,
+                    builder=_guided_builder,
+                    replay_command=lambda p: build_replay_command(
+                        p.project_name, p.components, p.services
+                    ),
+                )
+            except GuidedBuildError as exc:
+                # The screen is gone; put the full captured build log and
+                # the error into persistent scrollback.
+                if exc.log.strip():
+                    typer.echo(exc.log)
+                typer.secho(t("init.error", error=exc.__cause__), fg="red", err=True)
+                raise typer.Exit(1) from exc
+
+            _print_guided_receipt(plan, project_path)
+            return
+        else:
+            (
+                selected_components,
+                scheduler_backend,
+                interactive_services,
+                interactive_skip_llm_sync,
+            ) = interactive_project_selection()
+            # Use interactive selection if user chose to skip (overrides CLI default)
+            if interactive_skip_llm_sync:
+                skip_llm_sync = True
+
+            plan = resolve_build_plan(
+                project_name,
+                selected_components,
+                scheduler_backend,
+                list(set(selected_services + interactive_services)),
+                python_version,
             )
-            auto_added = DependencyResolver.get_missing_dependencies(
-                clean_selected_only
-            )
-            if auto_added:
+            selected_components = plan.components
+            selected_services = plan.services
+
+            if plan.auto_added_components:
                 typer.secho(
-                    "\n" + t("init.auto_added_deps", deps=", ".join(auto_added)),
+                    "\n"
+                    + t(
+                        "init.auto_added_deps",
+                        deps=", ".join(plan.auto_added_components),
+                    ),
                     fg=typer.colors.YELLOW,
                 )
-
-        # Merge interactively selected services with any already selected services
-        selected_services = list(set(selected_services + interactive_services))
-
-        # Handle service dependencies for interactively selected services
-        if interactive_services:
-            # Track originally selected components before service resolution
-            originally_selected_components = selected_components.copy()
-
-            service_components, _ = ServiceResolver.resolve_service_dependencies(
-                interactive_services
-            )
-            # Merge service-required components with selected components
-            all_components = list(set(selected_components + service_components))
-            selected_components = all_components
-
-            # Show which components were auto-added by services
-            service_added_components = [
-                comp
-                for comp in service_components
-                if comp not in originally_selected_components
-                and comp not in CORE_COMPONENTS
-            ]
-            if service_added_components:
-                # Create a mapping of which services require which components
-                service_component_map = {}
-                for service_name in interactive_services:
-                    service_deps = ServiceResolver.resolve_service_dependencies(
-                        [service_name]
-                    )[0]
-                    for comp in service_deps:
-                        if comp in service_added_components:
-                            if comp not in service_component_map:
-                                service_component_map[comp] = []
-                            service_component_map[comp].append(service_name)
-
+            if plan.service_component_map:
                 typer.secho(
                     "\n" + t("init.auto_added_by_services"),
                     fg=typer.colors.YELLOW,
                 )
-                for comp, requiring_services in service_component_map.items():
+                for comp, requiring_services in plan.service_component_map.items():
                     services_str = ", ".join(requiring_services)
                     typer.echo(
                         f"   • {comp} {typer.style(t('init.required_by', services=services_str), dim=True)}"
                     )
-
-    # Create template generator with scheduler backend context
-    template_gen = TemplateGenerator(
-        project_name,
-        list(selected_components),
-        scheduler_backend,
-        selected_services,
-        python_version,
-    )
-
-    # Show selected configuration
-    typer.echo()
-    typer.secho(t("init.config_title"), fg=typer.colors.CYAN, bold=True)
-    typer.echo(
-        f"   {typer.style(t('init.config_name'), fg=typer.colors.CYAN)} {project_name}"
-    )
-    typer.echo(
-        f"   {typer.style(t('init.config_core'), fg=typer.colors.CYAN)} {', '.join(CORE_COMPONENTS)}"
-    )
-
-    # Show infrastructure components
-    infra_components = []
-    for name in selected_components:
-        # Handle database[engine] format
-        base_name = extract_base_component_name(name)
-        if (
-            base_name in COMPONENTS
-            and COMPONENTS[base_name].type == ComponentType.INFRASTRUCTURE
-        ):
-            infra_components.append(name)
-
-    if infra_components:
-        typer.echo(
-            f"   {typer.style(t('init.config_infra'), fg=typer.colors.CYAN)} {', '.join(infra_components)}"
+        template_gen = plan.template_gen
+        assert template_gen is not None
+    else:
+        # Non-interactive: callbacks already validated and resolved.
+        template_gen = TemplateGenerator(
+            project_name,
+            list(selected_components),
+            scheduler_backend,
+            selected_services,
+            python_version,
         )
 
-    # Show selected services
-    if selected_services:
-        typer.echo(
-            f"   {typer.style(t('init.config_services'), fg=typer.colors.CYAN)} {', '.join(selected_services)}"
-        )
-
-    # Show template files that will be generated
-    template_files = template_gen.get_template_files()
-    if template_files:
-        typer.secho("\n" + t("init.component_files"), fg=typer.colors.CYAN, bold=True)
-        for file_path in template_files:
-            typer.echo(f"   • {file_path}")
-
-    # Show entrypoints that will be created
-    entrypoints = template_gen.get_entrypoints()
-    if entrypoints:
-        typer.secho("\n" + t("init.entrypoints"), fg=typer.colors.CYAN, bold=True)
-        for entrypoint in entrypoints:
-            typer.echo(f"   • {entrypoint}")
-
-    # Show worker queues that will be created
-    worker_queues = template_gen.get_worker_queues()
-    if worker_queues:
-        typer.secho("\n" + t("init.worker_queues"), fg=typer.colors.CYAN, bold=True)
-        for queue in worker_queues:
-            typer.echo(f"   • {queue}")
-
-    # Show dependency information using template generator
-    deps = template_gen._get_pyproject_deps()
-    if deps:
-        typer.secho("\n" + t("init.dependencies"), fg=typer.colors.CYAN, bold=True)
-        for dep in deps:
-            typer.echo(f"   • {dep}")
-
-    # Confirm before proceeding
-    typer.echo()
-    if not yes and not typer.confirm(t("init.confirm_create"), default=True):
-        typer.secho(t("init.cancelled"), fg="red")
-        raise typer.Exit(0)
+    # Show selected configuration and confirm. (The guided flow never
+    # reaches here: it reviews, builds, and returns inside its branch.)
+    _show_config_and_confirm(
+        project_name, selected_components, selected_services, template_gen, yes
+    )
 
     # Handle force overwrite by completely removing existing directory
     project_path = base_output_dir / project_name
     if force and project_path.exists():
-        typer.echo(t("init.removing_dir", path=project_path))
-        import errno
-        import shutil
-
-        def _ignore_vanished(_func: object, path: str, exc_info: object) -> None:
-            # Two symmetric races against background git activity
-            # (pack-refs, gc, fsmonitor) on a ``.git`` we just created:
-            #
-            # 1. A file is enumerated then unlinked by git before we
-            #    can ``unlink`` it ourselves. Manifests as
-            #    ``FileNotFoundError`` — safe to ignore, the walk has
-            #    already done the work.
-            # 2. New files appear inside a directory between our walk
-            #    and the final ``rmdir`` of that directory, leaving it
-            #    non-empty. Manifests as ``OSError`` with
-            #    ``errno.ENOTEMPTY``. Re-rmtree the offending subdir;
-            #    its fresh contents will get cleaned up. The recursion
-            #    is bounded by how many times git can race us, which
-            #    in practice is once.
-            exc = exc_info[1] if isinstance(exc_info, tuple) else None
-            if isinstance(exc, FileNotFoundError):
-                return
-            if isinstance(exc, OSError) and exc.errno == errno.ENOTEMPTY:
-                shutil.rmtree(path, onerror=_ignore_vanished)
-                return
-            raise exc  # type: ignore[misc]
-
-        shutil.rmtree(project_path, onerror=_ignore_vanished)
+        _remove_existing_project(project_path)
 
     # Create project using Copier template engine
     typer.echo()
@@ -433,6 +559,26 @@ def init_command(
 
         # Note: Comprehensive setup output is now handled by the post-generation hook
         # which provides better status reporting and automated setup
+
+        # Replay hint: the exact command that recreates this stack without
+        # the prompts.
+        from rich.console import Console
+
+        from ..cli.brand import AEGIS_TEAL
+
+        replay = build_replay_command(
+            project_name, list(selected_components), selected_services
+        )
+        typer.echo()
+        typer.secho(t("init.replay_hint"), fg=typer.colors.CYAN, bold=True)
+        # Text, not markup interpolation: bracket syntax like worker[taskiq]
+        # would be parsed (and swallowed) as rich markup tags.
+        from rich.text import Text as _RichText
+
+        # soft_wrap: one logical line; see _print_guided_receipt.
+        Console(highlight=False).print(
+            _RichText(f"   {replay}", style=AEGIS_TEAL), soft_wrap=True
+        )
 
     except Exception as e:
         typer.secho(t("init.error", error=e), fg="red", err=True)

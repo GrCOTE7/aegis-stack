@@ -33,6 +33,33 @@ async def test_create_post_assigns_slug_and_tags(
 
 
 @pytest.mark.asyncio
+async def test_syndicate_targets_empty_list_stored_as_none(
+    async_db_session: AsyncSession,
+) -> None:
+    service = BlogService(async_db_session)
+
+    # Empty list on create collapses to NULL (single "empty" representation).
+    empty = await service.create_post(
+        BlogPostCreate(title="No Targets", slug="no-targets", syndicate_targets=[])
+    )
+    assert empty.syndicate_targets is None
+
+    # A real list round-trips.
+    listed = await service.create_post(
+        BlogPostCreate(
+            title="Has Targets",
+            slug="has-targets",
+            syndicate_targets=["devto", "hashnode"],
+        )
+    )
+    assert listed.syndicate_targets == ["devto", "hashnode"]
+
+    # Updating with [] clears; None on a separate update leaves them untouched.
+    cleared = await service.update_post(listed.id, BlogPostUpdate(syndicate_targets=[]))
+    assert cleared.syndicate_targets is None
+
+
+@pytest.mark.asyncio
 async def test_public_list_only_returns_published_posts(
     async_db_session: AsyncSession,
 ) -> None:

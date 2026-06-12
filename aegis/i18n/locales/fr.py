@@ -52,6 +52,7 @@ MESSAGES: dict[str, str] = {
     "init.removing_dir": "Suppression du répertoire existant : {path}",
     "init.creating": "Création du projet : {name}",
     "init.error": "Erreur lors de la création du projet : {error}",
+    "init.replay_hint": "Recreate this stack anytime:",
     # ── Interactive: section headers ───────────────────────────────────
     "interactive.component_selection": "Sélection des composants",
     "interactive.service_selection": "Sélection des services",
@@ -159,6 +160,7 @@ MESSAGES: dict[str, str] = {
     ),
     "interactive.ai_provider_options": "Options de fournisseurs :",
     "interactive.ai_provider_recommended": "(Recommandé)",
+    "interactive.ai_provider.public": "LLM7.io - Free public endpoint (No API key)",
     "interactive.ai_provider.openai": "OpenAI - Modèles GPT (Payant)",
     "interactive.ai_provider.anthropic": "Anthropic - Modèles Claude (Payant)",
     "interactive.ai_provider.google": "Google - Modèles Gemini (Offre gratuite)",

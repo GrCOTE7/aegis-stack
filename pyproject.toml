@@ -129,6 +129,7 @@ extend-exclude = [
     "aegis/templates",
     "test-project",
     "my-app",
+    "demo-*",
 ]
 
 [tool.ruff.lint]
@@ -181,4 +182,5 @@ exclude = [
     "my-app/**",
     "test-*/**",
     "*-test/**",
+    "demo-*/**",
 ]

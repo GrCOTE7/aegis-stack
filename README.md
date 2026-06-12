@@ -30,6 +30,8 @@ Aegis Stack scaffolds complete FastAPI applications with auth, payments, workers
 uvx aegis-stack init my-api && cd my-api && make serve
 ```
 
+`init` opens a full-screen guided setup that walks through every component and service with explanations. Prefer the classic one-line prompts? Pass `--quick`.
+
 <details>
 <summary><strong>More examples</strong></summary>
 
@@ -51,6 +53,8 @@ uvx aegis-stack init full-app --services auth,payment,comms --components worker,
 **Installation alternatives:** See the [Installation Guide](https://docs.aegis-stack.io/installation/) for `uv tool install`, `pip install`, and development setup.
 
 ## Customizing Your Stack
+
+![Aegis Stack spinning up a new project](docs/images/aegis-spinup-demo.gif)
 
 **Components** are infrastructure pieces (database, workers, scheduler, cache). **Services** are business capabilities (auth, AI, payments, comms).
 
@@ -151,20 +155,6 @@ Every generated project ships with GitHub Actions and developer tooling pre-wire
 | **[TLS / HTTPS](https://docs.aegis-stack.io/deployment/#tlshttps-with-lets-encrypt)** | Let's Encrypt via the Traefik ingress component, zero config when a domain is set | ![Optional](https://img.shields.io/badge/-optional-blue) |
 
 [Deployment Docs →](https://docs.aegis-stack.io/deployment/)
-
-Components compose into capabilities you didn't have to build:
-
-```mermaid
-graph LR
-    Auth[Auth] --> A[User-specific AI conversations]
-    AI[AI] --> A
-    AI --> B[Persistent history &<br/>token analytics]
-    DB[(Database)] --> B
-    AI --> C[Background AI pipelines]
-    Worker[Worker] --> C
-    Scheduler[Scheduler] --> D[Persistent job scheduling]
-    DB --> D
-```
 
 ## Your Stack Grows With You
 
