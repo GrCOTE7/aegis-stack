@@ -12,6 +12,7 @@ from aegis.cli.interactive import (
     clear_database_engine_selection,
     interactive_project_selection,
     set_database_engine_selection,
+    set_postgres_provider_selection,
 )
 from aegis.constants import WorkerBackends
 
@@ -36,6 +37,7 @@ class TestInteractiveSchedulerFlow:
                 False,  # redis
                 False,  # ingress
                 False,  # observability
+                False,  # htmx
                 False,  # auth
                 False,  # payment
                 False,  # AI
@@ -54,15 +56,17 @@ class TestInteractiveSchedulerFlow:
             assert services == []  # No services selected
 
             # Verify correct calls were made (including blog service prompt)
-            assert mock_confirm.call_count == 13
+            assert mock_confirm.call_count == 14
         finally:
             clear_database_engine_selection()
 
     @patch("typer.confirm")
     def test_scheduler_with_postgres_persistence(self, mock_confirm: Any) -> None:
         """Test scheduler selection with PostgreSQL database persistence."""
-        # Pre-set database engine to PostgreSQL
+        # Pre-set database engine to PostgreSQL and its host (the scheduler
+        # step now asks container-vs-Neon when it adds the database).
         set_database_engine_selection("postgres")
+        set_postgres_provider_selection("container")
 
         try:
             # Mock user responses: redis=no, worker=no, scheduler=yes,
@@ -75,6 +79,7 @@ class TestInteractiveSchedulerFlow:
                 False,  # redis
                 False,  # ingress
                 False,  # observability
+                False,  # htmx
                 False,  # auth
                 False,  # payment
                 False,  # AI
@@ -109,6 +114,7 @@ class TestInteractiveSchedulerFlow:
                 False,  # redis
                 False,  # ingress=no
                 False,  # observability=no
+                False,  # htmx
                 False,  # no auth
                 False,  # payment
                 False,  # no AI
@@ -139,6 +145,7 @@ class TestInteractiveSchedulerFlow:
                 False,  # redis
                 False,  # ingress
                 False,  # observability
+                False,  # htmx
                 False,  # no auth
                 False,  # payment
                 False,  # no AI
@@ -175,6 +182,7 @@ class TestInteractiveSchedulerFlow:
                 False,  # redis
                 False,  # ingress
                 False,  # observability
+                False,  # htmx
                 False,  # no auth
                 False,  # payment
                 False,  # no AI
@@ -191,8 +199,9 @@ class TestInteractiveSchedulerFlow:
             assert any(c.startswith("database") for c in components)
             assert scheduler_backend == "sqlite"
 
-            # Should not have been prompted for generic database (12 confirms total, including blog)
-            assert mock_confirm.call_count == 13
+            # Should not have been prompted for generic database (14 confirms
+            # total: database auto-skipped, htmx and every service asked)
+            assert mock_confirm.call_count == 14
         finally:
             clear_database_engine_selection()
 
@@ -217,6 +226,7 @@ class TestInteractiveSchedulerFlow:
                 True,  # persistence=yes
                 False,  # ingress=no
                 False,  # observability=no
+                False,  # htmx
                 False,  # no auth
                 False,  # payment
                 False,  # no AI
@@ -253,6 +263,7 @@ class TestInteractiveSchedulerFlow:
                 False,  # redis
                 False,  # ingress
                 False,  # observability
+                False,  # htmx
                 False,  # no auth
                 False,  # payment
                 False,  # no AI

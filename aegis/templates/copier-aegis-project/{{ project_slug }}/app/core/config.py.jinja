@@ -97,6 +97,18 @@ class Settings(
 
     # Flet frontend settings
     FLET_ASSETS_DIR: str = "assets"  # Directory for Flet static assets (images, etc.)
+{%- if include_htmx %}
+
+    # Web frontend settings (server-rendered pages at /). Both paths are
+    # relative to the project root; the static dir holds the sources, and a
+    # build writes fingerprinted output into its ``dist/`` subdirectory.
+    WEB_TEMPLATES_DIR: str = "app/components/web_frontend/templates"
+    WEB_STATIC_DIR: str = "app/components/web_frontend/static"
+    # One-liner describing the project. Rendered in the landing hero and
+    # in its SEO meta description; defaults to what you typed when
+    # generating the project.
+    PROJECT_DESCRIPTION: str = "{{ project_description }}"
+{%- endif %}
 
     # Authentication settings
 {%- if include_auth %}
@@ -217,6 +229,13 @@ class Settings(
     # arq worker settings (shared across all workers)
     WORKER_KEEP_RESULT_SECONDS: int = 3600  # Keep job results for 1 hour
     WORKER_MAX_TRIES: int = 3
+{%- if worker_backend == "taskiq" %}
+    # Poison-message guard: drop a Redis-stream message redelivered past this
+    # many times, so a task that kills its worker every run (OOM/SIGKILL never
+    # acks, so xautoclaim re-yields it forever) can't loop and re-bill paid
+    # work. 0 disables the guard.
+    WORKER_MAX_REDELIVERIES: int = 5
+{%- endif %}
 
     # Redis connection settings for arq workers
     REDIS_CONN_TIMEOUT: int = 5  # Connection timeout in seconds (default: 1)
@@ -289,6 +308,10 @@ class Settings(
     AI_MODEL: str = "auto"  # Default model (public provider uses available models)
     AI_TEMPERATURE: float = 0.7
     AI_MAX_TOKENS: int = 1000
+    # Anthropic-only thinking depth (low|medium|high|xhigh|max). None = the API
+    # default; other providers ignore it. Most of a call's cost is thinking
+    # tokens, so "low" cuts spend several-fold on constrained tasks.
+    AI_EFFORT: str | None = None
     AI_TIMEOUT_SECONDS: float = 120.0
 
     # Provider API Keys (optional - many providers offer free tiers)

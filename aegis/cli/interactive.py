@@ -196,6 +196,16 @@ def clear_postgres_provider_selection() -> None:
     _postgres_provider_selection = None
 
 
+def set_postgres_provider_selection(provider: str | None) -> None:
+    """Pre-set the PostgreSQL host selection (for testing or CLI args).
+
+    Args:
+        provider: PostgresProviders value (container, neon) or None to clear
+    """
+    global _postgres_provider_selection
+    _postgres_provider_selection = provider
+
+
 def select_worker_backend() -> str:
     """
     Interactive worker backend selection using arrow keys.
@@ -245,11 +255,15 @@ def set_database_engine_selection(engine: str | None) -> None:
 
 
 def get_interactive_infrastructure_components() -> list[ComponentSpec]:
-    """Get infrastructure components available for interactive selection."""
-    # Get all infrastructure components
+    """Get optional components available for interactive selection.
+
+    Everything non-CORE is offered — infrastructure and optional
+    frontends alike; CORE components are always present so there is
+    nothing to ask.
+    """
     infra_components = []
     for component_spec in COMPONENTS.values():
-        if component_spec.type == ComponentType.INFRASTRUCTURE:
+        if component_spec.type != ComponentType.CORE:
             infra_components.append(component_spec)
 
     # Sort by name for consistent ordering
@@ -305,6 +319,8 @@ class SelectionUI(Protocol):
 
     def choose_database_engine(self, context: str) -> tuple[str, str | None]: ...
 
+    def choose_postgres_provider(self, context: str) -> str: ...
+
     def choose_scheduler_backend(self) -> str: ...
 
     def configure_auth(self, service_name: str) -> str: ...
@@ -356,6 +372,9 @@ class TyperSelectionUI:
         if engine == StorageBackends.POSTGRES:
             return engine, select_postgres_provider(context=context)
         return engine, None
+
+    def choose_postgres_provider(self, context: str) -> str:
+        return select_postgres_provider(context=context)
 
     def choose_scheduler_backend(self) -> str:
         # Quick-mode shape preserved exactly: the persistence yes/no, then
@@ -416,16 +435,23 @@ def _step_scheduler(
 
     engine = ui.choose_scheduler_backend()
     if engine != StorageBackends.MEMORY:
+        token = engine
         if engine == StorageBackends.POSTGRES:
-            state.components.append(
-                f"{ComponentNames.DATABASE}[{StorageBackends.POSTGRES}]"
-            )
+            # The scheduler is what pulls the database in, so IT owns the
+            # container-vs-Neon question the skipped database step would
+            # have asked. Neon encodes as database[neon], same as the
+            # direct path.
+            provider = ui.choose_postgres_provider("Scheduler")
+            state.postgres_provider = provider
+            if provider == PostgresProviders.NEON:
+                token = PostgresProviders.NEON
+            state.components.append(f"{ComponentNames.DATABASE}[{token}]")
         else:
             state.components.append(ComponentNames.DATABASE)
         state.database_engine = engine
         state.database_added_by_scheduler = True
         state.scheduler_backend = engine
-        ui.note_auto_added(ComponentNames.DATABASE, engine)
+        ui.note_auto_added(ComponentNames.DATABASE, token)
         ui.success(t("interactive.scheduler_db_configured", engine=engine.upper()))
 
         # Bonus backup job only applies once a database is in the mix.
@@ -505,10 +531,11 @@ def run_project_selection(ui: SelectionUI) -> ProjectSelection:
     )
     ui.echo(t("interactive.infra_header"))
 
-    # Process components in registry order to handle dependencies.
+    # Process components in registry order to handle dependencies. Every
+    # non-CORE type (infrastructure, frontend) is a real question.
     for component_name in ComponentNames.INFRASTRUCTURE_ORDER:
         spec = COMPONENTS.get(component_name)
-        if spec is None or spec.type != ComponentType.INFRASTRUCTURE:
+        if spec is None or spec.type == ComponentType.CORE:
             continue
         step = _COMPONENT_STEPS.get(component_name, _step_generic_component)
         step(spec, state, ui)
@@ -659,10 +686,18 @@ def _configure_ai_init(
         if database_already_selected:
             ui.success(f"  {t('interactive.ai_db_already')}")
         else:
-            state.components.append(f"{ComponentNames.DATABASE}[{backend}]")
+            token = backend
+            if backend == StorageBackends.POSTGRES:
+                # AI is what pulls the database in: ask the container-vs-Neon
+                # question the skipped database step would have asked.
+                provider = ui.choose_postgres_provider("AI")
+                state.postgres_provider = provider
+                if provider == PostgresProviders.NEON:
+                    token = PostgresProviders.NEON
+            state.components.append(f"{ComponentNames.DATABASE}[{token}]")
             # The AI choice just fixed the project's database engine.
             state.database_engine = backend
-            ui.note_auto_added(ComponentNames.DATABASE, backend)
+            ui.note_auto_added(ComponentNames.DATABASE, token)
             ui.success(f"  {t('interactive.ai_db_added', backend=backend)}")
 
     # Bracket syntax for TemplateGenerator:

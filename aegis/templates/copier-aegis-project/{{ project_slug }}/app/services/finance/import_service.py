@@ -13,9 +13,9 @@ sentinel for those two tables (transactions stay nullable).
 
 from __future__ import annotations
 
-import hashlib
 from collections import defaultdict
 from datetime import UTC, datetime
+import hashlib
 
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -385,6 +385,20 @@ async def ingest_transactions(
     db.add(batch)
     await db.flush()
 
+    # Reconcile the freshly imported rows: pair internal transfers (so a
+    # card payment doesn't double-count as spend), detect recurring streams,
+    # and generate "wasting money" insights.
+    if inserted:
+        from app.services.finance.categorize import (
+            detect_recurring,
+            detect_transfers,
+            generate_insights,
+        )
+
+        await detect_transfers(db, owner_user_id=owner_user_id)
+        await detect_recurring(db, owner_user_id=owner_user_id)
+        await generate_insights(db, owner_user_id=owner_user_id)
+
     return ImportResult(
         batch_id=batch.id,
         rows_total=len(parsed),
@@ -439,10 +453,10 @@ async def import_csv(
             finished_at=_utcnow(),
         )
         db.add(failed)
-        # Commit the audit row explicitly: this method raises below, and the
-        # request/CLI transaction rolls back on that exception — without the
-        # commit the failed batch (and the batch_id handed to the caller) would
-        # never persist. Nothing else is pending here, so only this row commits.
+        # Commit the failed batch before raising: get_async_db rolls the session
+        # back on any exception, so a bare flush would discard this row and the
+        # batch_id handed to the caller would reference nothing. Only the failed
+        # batch is pending here, so this commit persists just that row.
         await db.commit()
         raise csv_profiles.UnknownCsvLayoutError(
             header, [p.name for p in profiles], batch_id=failed.id

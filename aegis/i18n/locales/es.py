@@ -44,6 +44,7 @@ MESSAGES: dict[str, str] = {
     "init.config_name": "Nombre:",
     "init.config_core": "Core:",
     "init.config_infra": "Infraestructura:",
+    "init.config_web_frontend": "Web frontend:",
     "init.config_services": "Servicios:",
     "init.component_files": "Archivos de componentes:",
     "init.entrypoints": "Puntos de entrada:",
@@ -74,6 +75,7 @@ MESSAGES: dict[str, str] = {
     "component.database": "Base de datos con SQLModel ORM (SQLite o PostgreSQL)",
     "component.ingress": "Traefik reverse proxy y balanceador de carga",
     "component.observability": "Logfire observabilidad, trazas y métricas",
+    "component.htmx": "Server-rendered htmx web frontend",
     # ── Service descriptions ────────────────────────────────────────────
     "service.auth": "Autenticación y autorización de usuarios con tokens JWT",
     "service.ai": "Servicio de chatbot IA con soporte multi-framework",
@@ -289,6 +291,7 @@ MESSAGES: dict[str, str] = {
         "Sintaxis de corchetes 'scheduler[{engine}]' sobrescribe --backend {backend}"
     ),
     "add.invalid_scheduler_backend": "Backend de scheduler inválido: '{backend}'",
+    "add.invalid_worker_backend": "Invalid worker backend: '{backend}'",
     "add.valid_backends": "Opciones válidas: {options}",
     "add.postgres_coming": "Nota: Soporte para PostgreSQL disponible en versión futura",
     "add.auto_added_db": "Componente de base de datos agregado automáticamente para persistencia de scheduler",
@@ -549,6 +552,7 @@ MESSAGES: dict[str, str] = {
         "  frontend     - Interfaz frontend Flet (siempre incluido)"
     ),
     "components.infra_title": "COMPONENTES DE INFRAESTRUCTURA",
+    "components.frontend_title": "FRONTEND COMPONENTS",
     "components.requires": "Requiere: {deps}",
     "components.recommends": "Recomienda: {deps}",
     "components.usage_hint": (
@@ -1034,6 +1038,8 @@ MESSAGES: dict[str, str] = {
     "guided.prompt.ai_storage": "Almacenamiento de conversaciones de IA",
     "guided.prompt.ai_rag": "Añadir RAG: ¿chat basado en tus propios documentos y código?",
     "guided.prompt.ai_voice": "Añadir voz: ¿texto a voz y voz a texto?",
+    "guided.note.one_datastore": "Un almacén de datos por proyecto: el motor que elijas aquí define la base de datos del proyecto, compartida por todo lo demás que guarde datos.",
+    "guided.note.one_database_host": "Una base de datos por proyecto: este host sirve a todo lo que guarda datos.",
     "guided.multi.hint": "Marca tantos como quieras y luego elige Continuar.",
     "guided.choice.add": "Añadir",
     "guided.choice.skip": "Omitir",
@@ -1072,6 +1078,7 @@ MESSAGES: dict[str, str] = {
     "guided.hint.files": "archivos",
     "guided.review.core": "Núcleo:",
     "guided.review.infrastructure": "Infraestructura:",
+    "guided.review.web_frontend": "Web frontend:",
     "guided.review.services": "Servicios:",
     "guided.review.auto": "auto",
     "guided.review.build": "Generar {name}",
@@ -1088,6 +1095,7 @@ MESSAGES: dict[str, str] = {
     "component.redis.long": "Almacén de datos en memoria que actúa como caché y agente de mensajes. Impulsa las colas de tareas en segundo plano y la mensajería pub/sub entre tus servicios, y ofrece a los manejadores de peticiones una caché compartida y rápida.",
     "component.ingress.long": "Proxy inverso y enrutamiento de tráfico con Traefik: descubrimiento automático de servicios, protección de endpoints de administración y TLS opcional mediante Let's Encrypt. La puerta de entrada para los despliegues.",
     "component.observability.long": "Trazado distribuido, métricas y correlación de registros con Pydantic Logfire. Instrumenta tu aplicación automáticamente y se adapta a los componentes que actives, para que veas qué está haciendo realmente producción.",
+    "component.htmx.long": "Server-rendered pages with Jinja2, htmx, and Alpine.js, styled with Tailwind and DaisyUI, served at / by the existing webserver alongside the Flet dashboard at /dashboard. Ships a generic landing page ready to grow into your own pages.",
     "service.auth.long": "Gestión completa de usuarios con autenticación JWT, cookies de sesión y rotación de tokens de actualización. Tres niveles: correo/contraseña básico, roles y permisos RBAC, u organizaciones multiinquilino. Incluye registro, inicio de sesión y una pestaña de panel de administración.",
     "service.ai.long": "Una plataforma de IA completa: chat multiproveedor, un catálogo de LLM con unos 2000 modelos, seguimiento de costes con analíticas de uso, RAG opcional para conversaciones que conocen tu código y voz opcional (TTS/STT). Elige Pydantic AI o LangChain como framework.",
     "service.comms.long": "Correo, SMS y llamadas de voz con proveedores del sector: Resend para correo, Twilio para SMS y voz. Ambos tienen planes gratuitos, así que puedes empezar sin tarjeta de crédito.",

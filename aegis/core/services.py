@@ -279,6 +279,15 @@ SERVICES: dict[str, ServiceSpec] = {
                 "app/services/auth",
                 "app/core/security.py",
                 "app/cli/auth.py",
+                ".claude/skills/protect-an-endpoint",
+                # htmx web frontend auth surface. Owned here, not by the htmx
+                # component: these exist only when auth does, and an
+                # htmx-without-auth project must not carry them. The reverse
+                # gate (no htmx) is covered by the htmx spec owning the whole
+                # web_frontend tree, so dropping either one removes them.
+                "app/components/web_frontend/templates/pages/auth",
+                "app/components/web_frontend/templates/components/auth_macros.html",
+                "app/components/web_frontend/static/js/auth.js",
                 "tests/api/test_auth_endpoints.py",
                 "tests/services/test_auth_integration.py",
                 # Goal service is auth-coupled (Goal.user_id FK to user table);
@@ -843,8 +852,10 @@ SERVICES: dict[str, ServiceSpec] = {
         docs_path="",
         marker_path="app/services/finance",
         type=ServiceType.FINANCE,
-        description="Personal finance aggregation (accounts, transactions, net worth, import)",
+        description="Experimental: personal finance aggregation (accounts, transactions, net worth, import)",
         long_description=(
+            "EXPERIMENTAL: schema, APIs, and CLI surface may change between "
+            "releases. "
             "Aggregates bank, credit-card, and brokerage accounts, imports "
             "Quicken/OFX/CSV files, tracks net worth over time, and surfaces "
             "recurring-spend insights. Connectivity ships behind provider "
@@ -919,8 +930,14 @@ SERVICES: dict[str, ServiceSpec] = {
                 "tests/services/test_finance_models.py",
                 "tests/services/test_finance_service.py",
                 "tests/services/test_finance_import.py",
+                "tests/services/test_finance_investments.py",
+                "tests/services/test_finance_insights.py",
+                "tests/services/test_finance_plaid.py",
+                "tests/services/test_finance_snaptrade.py",
+                "tests/services/test_finance_transfers.py",
                 "tests/services/finance",
                 "tests/api/test_finance_endpoints.py",
+                "tests/cli/test_finance_cli.py",
             ],
         ),
     ),

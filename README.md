@@ -12,6 +12,8 @@
 [![Total Commits](https://img.shields.io/github/commit-activity/t/lbedner/aegis-stack)](https://github.com/lbedner/aegis-stack/commits)
 [![Last Commit](https://img.shields.io/github/last-commit/lbedner/aegis-stack)](https://github.com/lbedner/aegis-stack/commits)
 
+**Aegis Stack is an open-source CLI that scaffolds production-ready FastAPI applications and lets you add, remove, and update components and services on existing projects without rewrites.**
+
 You need to ship reliable software, but management only gave you 2 weeks.
 
 No time for health checks, proper testing, or clean architecture. Just enough time for duct tape and hope.
@@ -70,6 +72,7 @@ uvx aegis-stack init full-app --services auth,payment,comms --components worker,
 | **[Backend](https://docs.aegis-stack.io/components/backend/)** | FastAPI + lifecycle hooks, in-memory request metrics, API load testing for every route | ![Always](https://img.shields.io/badge/-always_on-2ea043) |
 | **[CLI](https://docs.aegis-stack.io/cli-reference/)** | Typer, first-class system interface | ![Always](https://img.shields.io/badge/-always_on-2ea043) |
 | **[Frontend](https://docs.aegis-stack.io/components/frontend/)** | Flet, ships with the Overseer system dashboard | ![Always](https://img.shields.io/badge/-always_on-2ea043) |
+| **[Web Frontend](https://docs.aegis-stack.io/components/web-frontend/)** | Server-rendered pages at `/`: Jinja2 + htmx + Alpine, Tailwind/DaisyUI styling | ![Optional](https://img.shields.io/badge/-optional-blue) |
 | **[Cache](https://docs.aegis-stack.io/components/)** | Redis for caching, sessions, pub/sub | ![Optional](https://img.shields.io/badge/-optional-blue) |
 | **[Database](https://docs.aegis-stack.io/components/database/)** | Postgres (self-hosted or Neon serverless) or SQLite + SQLModel ORM | ![Optional](https://img.shields.io/badge/-optional-blue) |
 | **[Inference](https://docs.aegis-stack.io/components/)** | Local AI models via Ollama | ![Optional](https://img.shields.io/badge/-optional-blue) |

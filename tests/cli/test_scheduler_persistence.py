@@ -13,6 +13,7 @@ from aegis.cli.interactive import (
     clear_database_engine_selection,
     interactive_project_selection,
     set_database_engine_selection,
+    set_postgres_provider_selection,
 )
 from aegis.constants import WorkerBackends
 from aegis.core.template_generator import TemplateGenerator
@@ -37,6 +38,7 @@ class TestSchedulerPersistenceTracking:
                 False,  # redis
                 False,  # ingress
                 False,  # observability
+                False,  # htmx
                 False,  # auth service
                 False,  # payment
                 False,  # AI service
@@ -68,6 +70,7 @@ class TestSchedulerPersistenceTracking:
                 False,  # redis
                 False,  # ingress
                 False,  # observability
+                False,  # htmx
                 False,  # auth service
                 False,  # payment
                 False,  # AI service
@@ -99,6 +102,7 @@ class TestSchedulerPersistenceTracking:
                 False,  # redis
                 False,  # ingress
                 False,  # observability
+                False,  # htmx
                 False,  # auth service
                 False,  # payment
                 False,  # AI service
@@ -132,6 +136,7 @@ class TestSchedulerPersistenceTracking:
                 False,  # redis
                 False,  # ingress
                 False,  # observability
+                False,  # htmx
                 False,  # auth service
                 False,  # payment
                 False,  # AI service
@@ -166,6 +171,7 @@ class TestSchedulerPersistenceTracking:
                 False,  # redis
                 False,  # ingress
                 False,  # observability
+                False,  # htmx
                 False,  # auth service
                 False,  # payment
                 False,  # AI service
@@ -205,6 +211,7 @@ class TestSchedulerPersistenceTracking:
                 True,  # persistence
                 False,  # ingress
                 False,  # observability
+                False,  # htmx
                 False,  # auth service
                 False,  # payment
                 False,  # AI service
@@ -227,8 +234,10 @@ class TestSchedulerPersistenceTracking:
     @patch("typer.confirm")
     def test_scheduler_with_postgres_persistence(self, mock_confirm: Any) -> None:
         """Test scheduler + persistence with PostgreSQL."""
-        # Pre-set database engine to PostgreSQL
+        # Pre-set database engine to PostgreSQL and its host (the scheduler
+        # step now asks container-vs-Neon when it adds the database).
         set_database_engine_selection("postgres")
+        set_postgres_provider_selection("container")
 
         try:
             # Simulate: no redis, no worker, yes scheduler, yes persistence, no ingress, no observability, no auth, no AI
@@ -240,6 +249,7 @@ class TestSchedulerPersistenceTracking:
                 False,  # redis
                 False,  # ingress
                 False,  # observability
+                False,  # htmx
                 False,  # auth service
                 False,  # payment
                 False,  # AI service
@@ -407,6 +417,7 @@ class TestSchedulerPersistenceLogic:
                 # database skipped (added by scheduler)
                 False,  # ingress
                 False,  # observability
+                False,  # htmx
                 False,  # auth service
                 False,  # payment
                 False,  # AI service
@@ -440,6 +451,7 @@ class TestSchedulerPersistenceLogic:
                     # database skipped (added by scheduler)
                     False,  # ingress
                     False,  # observability
+                    False,  # htmx
                     False,  # auth service
                     False,  # payment
                     False,  # AI service

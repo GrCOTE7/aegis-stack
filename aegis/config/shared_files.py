@@ -42,6 +42,13 @@ _WARN_ONLY: SharedFilePolicy = {"overwrite": False, "backup": False, "warn": Tru
 
 # Shared files handled with the default overwrite + backup policy. One line each.
 _DEFAULT_POLICY_FILES: tuple[str, ...] = (
+    # ---- Agent guidance ----
+    "CLAUDE.md",  # selection-aware agent guidance, regenerated on update
+    # Always-on skills (backend is core). Conditional skills are owned by their
+    # component/service spec and flow through the add/remove/update footprint.
+    ".claude/skills/add-api-endpoint/SKILL.md",
+    ".claude/skills/add-cli-command/SKILL.md",
+    ".claude/skills/change-the-stack/SKILL.md",
     # ---- Infrastructure ----
     "docker-compose.yml",
     "docker-compose.dev.yml",
@@ -59,6 +66,7 @@ _DEFAULT_POLICY_FILES: tuple[str, ...] = (
     "app/components/frontend/core/routing.py",  # auth redirect-to-login guard
     "app/components/frontend/core/events.py",  # auth check on page reconnect
     "app/components/frontend/state/session_state.py",  # auth session state
+    "app/integrations/main.py",  # htmx router + /static mount
     "app/components/backend/api/routing.py",  # conditional router includes
     "app/components/backend/api/deps.py",  # conditional dependency providers
     "app/components/backend/api/models.py",  # worker + scheduler API models
@@ -70,6 +78,9 @@ _DEFAULT_POLICY_FILES: tuple[str, ...] = (
     "app/services/system/backup.py",  # database backup functionality
     "tests/conftest.py",  # component-specific test fixtures
     ".env.example",  # component configuration env vars
+    ".gitignore",  # node_modules + built CSS for the htmx frontend
+    "scripts/entrypoint.sh",  # worker backend + build-watch dispatch
+    "scripts/dev_tasks.py",  # serve/serve-prod compose flags vary by stack
 )
 
 

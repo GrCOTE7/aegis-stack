@@ -7,7 +7,10 @@
 This Aegis Stack project includes the following components:
 
 - **Backend**: FastAPI-based async web server
-- **Frontend**: Flet-based Python UI framework
+- **Frontend**: Flet-based Python UI framework (Overseer dashboard at `/dashboard`)
+{%- if include_htmx %}
+- **Web Frontend**: Server-rendered pages at `/` (Jinja2 + htmx + Alpine, Tailwind/DaisyUI)
+{%- endif %}
 {%- if include_scheduler %}
 - **Scheduler**: APScheduler-based async task scheduling
 {%- endif %}
@@ -97,6 +100,11 @@ This Aegis Stack project includes the following components:
 The application will be available at `http://127.0.0.1:8000`. If port 8000 is
 already taken, `make serve` picks the next free port and prints the URL it
 chose, so two stacks can run side by side without editing any config.
+
+No `make` on Windows? After installing the dev dependencies once
+(`uv sync --all-extras`), every command in this README also works as
+`uv run poe <target>` (for example `uv run poe serve`); run `uv run poe -h`
+for the full list.
 
 ## Development
 
@@ -292,6 +300,9 @@ avoid lock-out — set a password or link another provider first.
 │   ├── components/         # Component implementations
 │   │   ├── backend/       # FastAPI backend
 │   │   └── frontend/      # Flet frontend
+{%- if include_htmx %}
+│   │   └── web_frontend/  # htmx web frontend (pages at /)
+{%- endif %}
 {%- if include_scheduler %}
 │   │   └── scheduler/     # APScheduler background tasks
 {%- endif %}

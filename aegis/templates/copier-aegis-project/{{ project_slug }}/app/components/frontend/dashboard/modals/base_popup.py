@@ -21,7 +21,7 @@ class BasePopup(ft.Container):
 
     Features:
     - Semi-transparent backdrop overlay
-    - Click-to-close on backdrop
+    - Click-to-close on backdrop by default (opt-out per popup if needed)
     - Programmatic show()/hide() control
     - Customizable borders and shadows
     - Full Container property access
@@ -54,6 +54,7 @@ class BasePopup(ft.Container):
         bgcolor: str | None = None,
         shadow: ft.BoxShadow | None = None,
         padding: int | ft.Padding | None = None,
+        dismiss_on_backdrop: bool = True,
     ) -> None:
         """
         Initialize the base popup.
@@ -67,9 +68,13 @@ class BasePopup(ft.Container):
             bgcolor: Background color
             shadow: BoxShadow for elevation effect
             padding: Padding around content
+            dismiss_on_backdrop: When True (default), a click outside the
+                panel closes the popup. Set False to require the explicit
+                close affordance instead.
         """
         super().__init__()
         self.page = page
+        self._dismiss_on_backdrop = dismiss_on_backdrop
 
         # Semi-transparent backdrop overlay
         self.overlay = ft.Container(
@@ -137,6 +142,8 @@ class BasePopup(ft.Container):
 
     def _handle_backdrop_click(self, e: ft.ControlEvent) -> None:
         """Close popup when backdrop is clicked (not the panel itself)."""
+        if not self._dismiss_on_backdrop:
+            return
         # Only close if the click was on the backdrop container, not the panel
         # The event control should be the wrapping Container, not the panel
         if e.control == self.panel:

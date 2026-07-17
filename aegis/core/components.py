@@ -14,10 +14,17 @@ from .plugins.spec import PluginKind, PluginSpec
 
 
 class ComponentType(Enum):
-    """Component type classifications."""
+    """Component type classifications.
+
+    Anything non-CORE is optional: prompted by the interactive flows,
+    addable/removable via ``aegis add``/``aegis remove``. Consumers that
+    mean "optional" must filter on ``!= CORE``, never on one specific
+    optional type.
+    """
 
     CORE = "core"  # Always included (backend, frontend)
     INFRASTRUCTURE = "infra"  # Redis, workers - foundation for services to use
+    FRONTEND = "frontend"  # Optional UI layers (htmx web frontend)
 
 
 class SchedulerBackend(str, Enum):
@@ -104,6 +111,7 @@ COMPONENTS: dict[str, ComponentSpec] = {
             # leaves it. worker_taskiq.py IS here — cleanup removes it.
             primary=[
                 "app/components/worker",
+                ".claude/skills/add-background-job",
                 "app/cli/load_test.py",
                 # The worker subpackage of the load_test service, including
                 # the ``service_<backend>.py`` variants Pattern D resolves
@@ -159,6 +167,7 @@ COMPONENTS: dict[str, ComponentSpec] = {
             primary=[
                 "app/entrypoints/scheduler.py",
                 "app/components/scheduler",
+                ".claude/skills/add-scheduled-job",
                 "app/services/scheduler/execution_log.py",
                 "tests/components/test_scheduler.py",
                 "tests/services/test_scheduler_execution_log.py",
@@ -279,6 +288,37 @@ COMPONENTS: dict[str, ComponentSpec] = {
                 "app/components/backend/middleware/logfire_tracing.py",
                 "app/components/frontend/dashboard/cards/observability_card.py",
                 "app/components/frontend/dashboard/modals/observability_modal.py",
+            ],
+        ),
+    ),
+    "htmx": ComponentSpec(
+        name="htmx",
+        docs_path="components/web-frontend",
+        type=ComponentType.FRONTEND,
+        description="Server-rendered htmx web frontend",
+        long_description=(
+            "Server-rendered pages with Jinja2, htmx, and Alpine.js, styled "
+            "with Tailwind and DaisyUI, served at / by the existing "
+            "webserver alongside the Flet dashboard at /dashboard. Ships a "
+            "generic landing page ready to grow into your own pages."
+        ),
+        pyproject_deps=["jinja2>=3.1.0"],
+        # The htmx tree renders under app/components/web_frontend; the
+        # directory is the on-disk marker. Docker watcher services and
+        # docs_path land with the asset pipeline and the docs page.
+        marker_path="app/components/web_frontend",
+        files=FileManifest(
+            # The whole tree, its test module, and the node-side build
+            # files. Nothing else: app/components/frontend is the CORE Flet
+            # frontend and is never gated.
+            primary=[
+                "app/components/web_frontend",
+                "tests/components/test_web_frontend.py",
+                # The Tailwind/DaisyUI pipeline. Non-.jinja assets can't be
+                # body-gated, so post-gen cleanup is what keeps them out of
+                # projects without the htmx frontend.
+                "package.json",
+                "tailwind.config.js",
             ],
         ),
     ),

@@ -7,6 +7,152 @@
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-07-16
+
+### Added
+
+- **htmx web frontend** (`include_htmx`): an additive server-rendered web
+  frontend component alongside the Flet Overseer, with a Tailwind build
+  pipeline, landing page, and Docker wiring. Selection-gated like every
+  component; existing stacks are untouched unless opted in.
+- **SnapTrade brokerage integration for the finance service**
+  (`finance_snaptrade`): a second aggregator alongside Plaid, proving the
+  provider abstraction, so a SnapTrade-connected brokerage lands in the same
+  tables and UI with zero schema changes. Connect portal flow, authorization
+  adoption, and polling sync for accounts, positions, and activities within
+  SnapTrade's polling budget. Supports both commercial keys (per-user
+  registration) and personal `PERS-` keys (the key is the user; no
+  registration). Securities reported by multiple aggregators merge to one
+  catalog row via FIGI/CUSIP/ISIN.
+- **Plaid live connectivity for the finance service** (`finance_plaid`):
+  hosted-link connect flow, token exchange with AES-GCM-encrypted storage,
+  account ingestion, cursor-based transactions sync, webhook handling, and a
+  failure-isolated nightly sync job on the scheduler.
+- **Finance categorization and insights**: internal transfer detection and
+  pairing (a card payment no longer double-counts as spend),
+  recurring-stream detection, and "wasting money" insights, recomputed
+  post-sync and nightly; plus investment trades in the register and account
+  detail.
+- **Finance provider CLI commands**: `finance sync` refreshes every provider
+  connection; `finance snaptrade connect` / `complete` drive the brokerage
+  connect flow end to end from the terminal.
+- **AI chat kit** (`app/services/ai/chat_kit`): a reusable conversation
+  toolkit for generated projects (agent wrapper, token budgeting, context
+  assembly, persistent history), with a TaskIQ broker for background AI
+  work.
+- **Agent skills**: generated projects now ship a selection-aware
+  `CLAUDE.md` and `.claude/skills/` workflow skills gated by what the stack
+  includes (add an endpoint, add a model and migration, add a scheduled job,
+  protect an endpoint, change the stack). Skills ride
+  `aegis add`/`remove`/`update`, so pre-skills projects gain them on update.
+  The framework repo itself carries contributor workflow skills
+  (add-service, add-component, i18n, release, template-dev) with a slimmed
+  CLAUDE.md.
+- **Windows-friendly dev commands**: generated projects now ship a
+  `[tool.poe.tasks]` table (via `poethepoet`) covering the `Makefile`
+  workflow, so `uv run poe <target>` (e.g. `uv run poe serve`, `uv run poe
+  check`) can be used on Windows, where `make` isn't a native binary (after
+  a one-time `uv sync --all-extras`). `make` itself is unchanged for existing
+  users. The bash-only `resolve-ports.sh` / `find-free-port.sh`
+  port-resolution scripts are replaced by a single Python implementation
+  (`scripts/resolve_ports.py`, `scripts/dev_tasks.py`) shared by both
+  interfaces.
+
+### Changed
+
+- **Connections tab redesign**: one card anatomy for every connection
+  (collapsible, dot-style status indicators matching the rest of the
+  Overseer, destructive actions behind a kebab menu), a fluid two-column
+  grid, a Connect menu on the Accounts sidebar and Connections tab, and in
+  sandbox mode a Plaid card with click-to-copy test credentials. The All
+  Accounts register now folds investment activity in with transactions.
+- **Disconnecting a provider connection is now instant**: local teardown
+  happens in the request; the provider-side revoke runs after the response
+  as a background task (it was always best-effort).
+- **Larger default Overseer cards**: component tiles get room to render
+  their metric grids cleanly at first paint. Thanks @GrCOTE7.
+
+### Fixed
+
+- **Second browser tab no longer renders blank**: the Overseer's route
+  reentrancy guard was process-wide, so two sessions routing at the same
+  instant (a second tab, a reconnect) blocked each other and the loser
+  never built its view. The guard is now session-scoped.
+- **Overseer modals no longer close on stray clicks**: detail popups are
+  explicit-close only (backdrop click-through is opt-in), and every modal's
+  Close is a themed button.
+- **Finance provider syncs can no longer erase catalog data**: partial
+  payloads (e.g. an activities row without pricing) update only the fields
+  they carry, and the destructive SnapTrade delete-and-re-register recovery
+  is gated on the specific "user already exists" error code instead of any
+  failure. An undecryptable stored credential no longer blocks disconnect.
+
+## [0.9.1] - 2026-07-12
+
+### Added
+
+- **Finance service (experimental)** (`aegis init --services finance`,
+  `aegis add-service finance`): a personal-finance aggregator service, marked
+  experimental in this release (schema, APIs, and CLI surface may change
+  between releases). Ships a 33-table schema
+  covering currencies and FX rates, institutions and connections (inline
+  AES-GCM-encrypted credentials), accounts, liabilities, valuations, balance
+  and net-worth snapshots, and a transaction ledger with splits, transfer
+  pairing, and two-lane provider/import dedup. Ships file import for CSV
+  (Chase and Quicken profiles), OFX/QFX, and QIF, a net-worth service, API
+  endpoints, seeded demo data, and a full test suite. Optional flags gate
+  Plaid (`finance_plaid`) and SnapTrade (`finance_snaptrade`) integration
+  scaffolding. Requires database and scheduler; recommends worker.
+- **Neon setup guide**: dedicated `components/database/neon.md` page in the
+  tool docs, plus expanded database component docs.
+
+### Fixed
+
+- **`aegis update` no longer invents merge conflicts on pristine projects**:
+  generated projects are ruff-formatted at init while template renders are
+  raw Jinja output, so the byte-level 3-way merge misread formatting as user
+  edits and conflicted wherever real template changes landed nearby. Python
+  files are now compared and merged through ruff normalization, matching
+  what the add/remove path already did, and the fallback path warns instead
+  of degrading silently.
+- **ruff is now a runtime dependency**: installs without dev extras (uvx,
+  pip) previously had no ruff binary, so every Python merge silently fell
+  back to the raw byte-level path. A test now guards the dependency.
+- **`find-free-port.sh` false-busy on macOS**: Darwin allocates ephemeral
+  source ports sequentially, so probing a port near a recent bind made
+  connect() pick source == destination and fail with EINVAL, which read as
+  busy for every candidate. The probe retries on EINVAL, keeping `make
+  serve` port autodiscovery reliable in and near the ephemeral range.
+
+## [0.9.0] - 2026-07-06
+
+### Added
+
+- **Neon Postgres provider**: new `postgres_provider` template question
+  (`container` or `neon`). Local development keeps the Postgres container;
+  production points at Neon, with pooler-safe connection arguments detected
+  from the URL. No new dependencies. Guided and interactive init prompt for
+  the provider on Postgres stacks.
+
+### Fixed
+
+- **`aegis update` backfills new template questions**: questions added by a
+  newer template version (such as `postgres_provider`) are reconciled into
+  the project's preserved answers file during update instead of being lost.
+- **Stripe webhook forwarder no longer stalls on chatty output**: the
+  dev-mode stripe-cli forwarder drains stdout in the background so a full
+  pipe cannot block secret capture, with timeout handling around reads.
+
+### Changed
+
+- **Dependency pins hardened**: `typer` pinned to 0.26.8 (newer releases
+  fail at class-body evaluation on Python 3.11/3.12); `copier` held below
+  9.15 (9.15 relocates the answers file out of the generated project, which
+  breaks `aegis update`), with a dependabot ignore rule so the ceiling is
+  not silently widened.
+
+## [0.8.1] - 2026-06-28
+
 ### Added
 
 - **Traffic monitor ("who's hammering you")**: Overseer's Backend modal gains a
@@ -33,6 +179,13 @@
   is the single source of truth, so a slow-but-healthy boot is never rolled
   back by a wall clock, and no extra tooling needs to be installed on the
   deploy host. `--rollout-timeout` is now only a long runaway-guard ceiling.
+
+### Fixed
+
+- **`aegis update` records the correct template commit**: the commit stamped
+  into the answers file after an update could be wrong, which skewed the
+  starting point of the next update; it is now derived and verified
+  explicitly.
 
 ## [0.8.0] - 2026-06-15
 
